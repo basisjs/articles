@@ -6,3 +6,4 @@
 * [Ресурсы (модульность)](ru-RU/resources.md)
 * [basis.event](ru-RU/basis.event.md)
 * [basis.data](ru-RU/basis.data.md)
+  * [Value](ru-RU/basis.data.Value.md)
