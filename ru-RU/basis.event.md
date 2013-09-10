@@ -4,9 +4,9 @@
 
 `basis.event` предоставляет единственный класс Emitter и вспомогательные функции.
 
-## basis.event.Emitter
+## Emitter
 
-`Emitter` ([docs](http://www.w1.ru/basis/svn/docs/#basis.event.Emitter)) является предком для большинства классов basisjs. 
+Класс `basis.event.Emitter` ([docs](http://basisjs.com/docs#basis.event.Emitter)) является предком для большинства классов basisjs. 
 
 Инициация события осуществляется вызовом специального метода. Такие методы принято называть с префиксом `emit_`, а функция метода создается с помощью функции `basis.event.create`. (см. Событийные методы)
 
