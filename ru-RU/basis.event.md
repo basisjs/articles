@@ -24,6 +24,8 @@ foo.emit_myEvent(); // инициация события
 
 Повторный вызов `Emitter#addHandler` с теми же самыми аргументами приведет к выводу предупреждения в консоли, так как это, скорее всего, ошибка. Количество добавляемых экземпляру обработчиков не ограничивается.
 
+При вызове событийного метода (инициации события) указываются параметры которые должны получить обработчики. Но обработчикам, помимо этих аргументов, первым аргументом всегда передается инициатор события `sender`. Это единственный способ получить ссылку на инициатора события, так как контекст обработчика может быть переопределен.
+
 ```js
 var Example = basis.event.Emitter.subclass({
   emit_testEvent: basis.event.create('testEvent'),
@@ -41,7 +43,7 @@ foo.addHandler({
 });                             // контекст не указан
 
 foo.addHandler({
-  testEvent: function(){
+  testEvent: function(sender){
     // sender -> foo
     // this -> bar
     console.log('testEvent: event context is', this.name);
@@ -92,8 +94,6 @@ foo.removeHandler(FOO_HANDLER, bar);
 ```
 
 Порядок выполнения добавленных обработчиков может быть произвольным, программная логика не должна от него зависеть. Прекратить выполнение обработчиков события нельзя. Обработчики не должны влиять друг на друга, т.е. не должны знать друг о друге.
-
-[TODO] sender
 
 ### Обработчик по умолчанию
 
@@ -156,13 +156,36 @@ var ClassC = ClassA.subclass({
 
 ### Событийные методы
 
-// Название события может быть любым.
-// 
-// > Единственное исключение - имя события не должно быть `*`.
-// 
-// Функции для событий методов создаются функцией `basis.event.create`.
+Событийные методы создаются с помощью функции `basis.event.create`, которой передается название события. Такие функции обходят список обработчиков и вызывают функции для конкретного события. Такие функции сохраняются в прототип класса или экземпляр с префиксом `emit_`, после чего идет имя события.
 
-[TODO]
+Имя события может быть любым, за исключением `*`.
+
+Ключ `*` в обработчике используется для назначения функции, которая будет выполняться на любое событие. Такая функция получает объект описывающий событие, где:
+
+  * type - название события;
+
+  * serder - инициатор события (чей emit_* метод был вызван);
+  
+  * args - аргументы, с которыми было инициировано событие.
+
+```js
+var emitter = new basis.event.Emitter({
+  emit_customEvent: basis.event.create('customEvent')
+});
+
+emitter.addHandler({
+  customEvent: function(sender, arg){
+    console.log('customEvent', sender, [arg]);
+  },
+  '*': function(event){
+    console.log('*', event.type, event.sender, event.args);
+  }
+});
+
+emitter.emit_customEvent('test');
+// console> customEvent [object basis.event.Emitter] ['test']
+// console> '*' customEvent [object basis.event.Emitter] ['test']
+```
 
 В случае если для экземпляров класса требуется определить некоторую логику, которая должна выполняться при наступлении события, можно переопредить необходимый `emit_` метод.
 
@@ -200,15 +223,62 @@ var Example = basis.event.Emitter.subclass({
 
 ### listen
 
-[TODO]
+Класс `Emitter` определяет расширяемое свойство (`basis.Class.nestedExtendProperty`), для хранения обработчиков на вложенные объекты (экземпляры `Emitter` или его наследников). Сам `Emitter` не использует это свойство, однако его широко используют классы унаследованные от него.
+
+```js
+// класс
+var Foo = basis.event.Emitter.subclass({
+  listen: {
+    bar: {
+      event: function(sender){
+        // sender -> foo.bar
+        // this -> foo
+      }
+    }
+  },
+
+ /**
+  * @type {basis.event.Emitter}
+  */
+  bar: null,
+
+  setBar: function(bar){
+    if (this.bar !== bar)
+    {
+      if (this.bar && this.listen.bar)
+        this.bar.removeHandler(this.listen.bar, this);
+
+      this.bar = bar;
+
+      if (this.bar && this.listen.bar)
+        this.bar.addHandler(this.listen.bar, this);
+    }
+  }
+});
+
+// экземпляр
+var list = new basis.ui.Node({
+  selection: true,
+  listen: {
+    selection: {
+      itemsChanged: function(sender){
+        // this -> list
+        // sender -> selection
+      }
+    }
+  }
+});
+```
 
 ### Отладка
 
 В `dev` режиме доступно свойство `emit_debug`. Данное свойство можно задать как для экземпляра, так и для любого класса (наследника `Emitter`). Если этому свойству присвоена функция, то эта функция будет вызываться на любое событие после обработки всех обработчиков. Такая функция получает единственный аргумент - объект, который содержит поля:
 
-* type - название события;
-* serder - инициатор события (чей emit_* метод был вызван);
-* args - аргументы, с которыми было инициировано событие.
+  * type - название события;
+
+  * serder - инициатор события (чей emit_* метод был вызван);
+
+  * args - аргументы, с которыми было инициировано событие.
 
 ```js
 basis.data.Object.prototype.emit_debug = function(event){
