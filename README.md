@@ -12,3 +12,4 @@
   * [Value](ru-RU/basis.data.Value.md)
   * [Object](ru-RU/basis.data.Object.md)
   * [Наборы](ru-RU/basis.data.datasets.md)
+* [basis.data.dataset](ru-RU/basis.data.dataset.md)
