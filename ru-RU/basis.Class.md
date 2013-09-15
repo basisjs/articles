@@ -212,20 +212,178 @@ while (cls)
 // console> Foo
 // console> basis.Class
 ```
+
 ## Преобразование класс <-> экземпляр
 
 ## Расширяемые поля
 
+Существует несколько вспомогательных функций, создающие расширяемые свойства, то есть такие свойства, которые не перезаписываются, а пораждают новое значение на основе текущего и нового значения. Принцип их работы основан на расширении через метод `__extend__`. То есть они создают такие объекты, у которых есть метод `__extend__`, создающий объекты которые имеют такой же метод `__extend__`.
+
 ### extensibleProperty
+
+Обычное дополняющее свойство.
+
+```js
+var Foo = basis.Class(null, {
+  data: basis.Class.extensibleProperty({  // ключи по умолчанию
+    foo: 1,
+    bar: 2
+  })
+});
+var Baz = Foo.subclass({
+  data: {
+    bar: 'baz',
+    baz: 123
+  }
+});
+
+console.log(Baz.prototype.data);
+// console> { foo: 1, bar: 'baz', baz: 123 }
+
+var baz = new Baz({
+  data: {
+    baz: 'baz',
+    basis: true
+  }
+});
+console.log(baz.data);
+// console> { foo: 1, bar: 'baz', baz: 'baz', basis:true }
+
+Foo.prototype.data.foo = 333;
+console.log(Baz.prototype.data);
+// console> { foo: 333, bar: 'baz', baz: 123 }
+console.log(baz.data);
+// console> { foo: 333, bar: 'baz', baz: 'baz', basis:true }
+```
 
 ### customExtendProperty
 
+То же, что и extensibleProperty, но позволяет определить собственную функцию дополения. `extensibleProperty` эквивалентно `customExtendProperty({}, basis.object.extend)`.
+
+```js
+var Foo = basis.Class(null, {
+  data: basis.Class.extensibleProperty({  // ключи по умолчанию
+    foo: 1,
+    bar: 2
+  }, basis.object.complete)  // задав complete вместо extend, свойство data
+                             // будет расширяться только новыми ключами
+});
+var Baz = Foo.subclass({
+  data: {
+    bar: 'baz',              // это свойство будет проигнорировано
+    baz: 3
+  }
+});
+
+console.log(Baz.prototype.data);
+// console> { foo: 1, bar: 2, baz: 123 }
+
+var baz = new Baz({
+  data: {
+    baz: 'baz',
+    basis: true
+  }
+});
+console.log(baz.data);
+// console> { foo: 1, bar: 2, baz: 3, basis:true }
+
+Foo.prototype.data.foo = 333;
+console.log(Baz.prototype.data);
+// console> { foo: 333, bar: 2, baz: 3 }
+console.log(baz.data);
+// console> { foo: 333, bar: 2, baz: 3, basis:true }
+```
+
 ### nestedExtendProperty
 
+Создает такой объект, у которого значения `extensibleProperty`. basis.event.Emitter#listen пример такого свойства.
+
+```js
+var Foo = basis.Class(null, {
+  data: basis.Class.nestedExtendProperty({})
+});
+var Baz = Foo.subclass({
+  data: {
+    prop: {
+      a: 1,
+      b: 2
+    }
+  }
+})
+
+var baz = new Baz({
+  data: {
+    prop: {
+      b: 777,
+      c: 3
+    },
+    more: {
+      x: 1
+    }
+  }
+});
+
+console.log(baz.data);
+// console> { prop: { a: 1, b: 777, c: 3 }, more: { x: 1 } }
+```
+
 ### oneFunctionProperty
+
+Создает объект, в котором для любого ключа значением является одна и та же функция. Обычно это триггеры событий.
+
+```js
+basis.require('basis.event');
+
+var Foo = basis.event.Emitter(null, {
+  events: basis.Class.oneFunctionProperty(function(){
+    this.doStuff();
+  }, {
+    event1: true,
+    event2: true 
+  }),
+  init: function(){
+    this.addHandler(this.events, this);
+  },
+  doStuff: function(){
+    // do cool stuff 
+  }
+});
+
+var foo = new Foo({
+  events: {
+    event1: false,
+    update: true
+  }
+});
+
+console.log(foo.events);
+// console> {
+//            event1: null,
+//            event2: function(){ this.doStuff() },
+//            update: function(){ this.doStuff() },
+//          }
+```
 
 ## Хелперы
 
 ### SELF
+
+Хелпер `basis.Class.SELF` позволяет классу сослаться на себя, в момент своего создания.
+
+```js
+// без хелпера
+var TreeNode = basis.ui.subclass({
+  ...
+});
+TreeNode.extend({
+  childClass: TreeNode
+});
+
+// с хелпером
+var TreeNode = basis.ui.subclass({
+  childClass: basis.Class.SELF,
+  ...
+});
+```
 
 ### isClass
