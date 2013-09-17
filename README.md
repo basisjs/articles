@@ -13,3 +13,4 @@
   * [Object](ru-RU/basis.data.Object.md)
   * [Наборы](ru-RU/basis.data.datasets.md)
 * [basis.data.dataset](ru-RU/basis.data.dataset.md)
+* [basis.dom.wrapper](ru-RU/basis.dom.wrapper.md)
