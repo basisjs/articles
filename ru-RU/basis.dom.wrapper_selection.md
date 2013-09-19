@@ -1,0 +1,3 @@
+# selection
+
+selected/selectable/select/unselect/setSelected/setSelection/hasOwnSelection/selection/emit_select/emit_unselect/contextSelection/nullSelection
