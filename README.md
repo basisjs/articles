@@ -21,5 +21,5 @@
   * [Привязка данных](ru-RU/basis.dom.wrapper_data.md)
   * [Паттерн "владелец"](ru-RU/basis.dom.wrapper_owner.md)
   * [Сателитты](ru-RU/basis.dom.wrapper_satellite.md)
-  * [Паттерн "disabled/enabled"](ru-RU/basis.dom.wrapper_disabled.md)
+  * [Доступность (disabled/enabled)](ru-RU/basis.dom.wrapper_disabled.md)
   * [Выделение (selection)](ru-RU/basis.dom.wrapper_selection.md)
