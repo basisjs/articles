@@ -17,7 +17,7 @@
     * [DOM](ru-RU/basis.dom.wrapper_dom.md)
     * [Управление дочерними узлами](ru-RU/basis.dom.wrapper_childNodes.md)
         * [Сортировка](ru-RU/basis.dom.wrapper_sorting.md)
-        * [Группировка](ru-RU/basis.dom.wrapper_grouing.md)
+        * [Группировка](ru-RU/basis.dom.wrapper_grouping.md)
     * [Привязка данных](ru-RU/basis.dom.wrapper_data.md)
     * [Паттерн "владелец"](ru-RU/basis.dom.wrapper_owner.md)
     * [Сателитты](ru-RU/basis.dom.wrapper_satellite.md)
