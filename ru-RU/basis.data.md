@@ -258,33 +258,103 @@ basis.data.SUBSCRIPTION.add(
 basis.require('basis.data');
 
 var example = new basis.data.AbstractData({
-  isSyncRequired: function(){
-    return this.state == basis.data.STATE.DEPRECATED;
-  },
   syncAction: function(){
-    alert('sync inited')
+    console.log('sync requested');
   }
 });
-
-// по умолчанию example в состоянии UNDEFINED
-// чтобы инициировать синхронизацию, нужно перевести объект в состояние DEPRECATED
-
-example.deprecate();
-
 ```
 
-Обычно в `syncAction` выполняется запрос к серверу для получения данных, а синхронизации инициируется при привязке объекта данных к некоторому активному представлению:
+Но определения `syncAction` недостаточно, для того чтобы объект начал синхронизацию. Необходимо чтобы выполнялось условие определенное в методе `isSyncRequired`. Для `AbstractData` этот метод определен так:
 
 ```js
+basis.data.AbstractData.prototype.isSyncRequired = function(){
+  return this.subscriberCount > 0 && 
+         (this.state == STATE.UNDEFINED || this.state == STATE.DEPRECATED);
+};
+```
 
-var data = new basis.data.DataObject({
+Таки образом для инициации синхронизации необходимо чтобы у объекта был хотя бы один подписчик и он находился в состоянии `UNDEFINED` или `DEPRECATED` и это условие удовлетворяет большинству ситуаций возникающих при создании интерфейса. Для выполнения синхронизации из предыдущего примера не хватает подписчика. Обычно подписчиком является некоторое представление или другой объект, использующий данный в качестве источника данных - то есть, в любом случае, это некоторый стороний объект заинтересованный в том, чтобы данный объект был сихронизирован.
+
+Для того чтобы инициировать синхронизацию сразу при создании экземпляра, можно переопределить метод `isSyncRequired`:
+
+```js
+basis.require('basis.data');
+
+// по умолчанию экземпляр создается в состоянии UNDEFINED
+var example = new basis.data.AbstractData({
+  isSyncRequired: function(){
+    return this.state == basis.data.STATE.UNDEFINED;
+  },
   syncAction: function(){
-    basis.net.request({ ... });
+    console.log('sync requested');
+  }
+});
+// console> sync requested
+```
+
+Обычно в `syncAction` выполняется запрос к серверу для получения данных, а синхронизация инициируется при привязке объекта данных к активному представлению:
+
+```js
+basis.require('basis.data');
+basis.require('basis.ui');
+
+var example = new basis.data.Object({
+  syncAction: function(){
+    var self = this;
+    basis.net.request('/api/whatever',
+      // success
+      function(data){
+        self.update(data);
+        self.setState(basis.data.STATE.READY);
+      },
+      // failure
+      function(error){
+        self.setState(basis.data.STATE.ERROR, error);
+      }
+    );
   }
 });
 
 var view = new basis.ui.Node({
   active: true,
-  delegate: data
+  delegate: example
 });
 ```
+
+Для упрощения работы с запросами и сменой состояний используется модуль `basis.net.action`. Предыдущий пример может быть переписан следущим образом:
+
+```js
+basis.require('basis.data');
+basis.require('basis.ui');
+
+var example = new basis.data.Object({
+  syncAction: basis.net.action.create({
+    url: '/api/whatever',
+    success: function(data){
+      this.update(data);
+    }
+  })
+});
+
+var view = new basis.ui.Node({
+  active: true,
+  delegate: example
+});
+```
+
+Более того сами представления, точнее экземпляры `basis.dom.wrapper.Node`, могут получать данные без использования других объектов. Это подходит для простых случаев, когда данные не переиспользуются (но мы все же рекомендуем в объектах данных, а не в представлении) и предыдущий пример может выглядеть так:
+
+```js
+basis.require('basis.ui');
+
+var view = new basis.ui.Node({
+  syncAction: basis.net.action.create({
+    url: '/api/whatever',
+    success: function(data){
+      this.update(data);
+    }
+  })
+});
+```
+
+Для центролизованной работы с сервисом (некоторым серверным API) используются экземпляры `basis.net.service.Service`, которые так же позволяет создавать `action` (используя тот же модуль `basis.net.action`), но с общими настройками по умолчанию, поддержкой сессии и прочим.
