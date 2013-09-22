@@ -89,43 +89,13 @@ console.log(a.state === b.state);
 
 Чтобы определить связанны ли экземпляры делегированием используется функция `basis.data.isConnected`.
 
-Для получения корневого делегата (корня дерева) используется метод `getRootDelegate`.
-
-Cвойство `cascadeDestroy` опеределяет поведение в случаяе если делегат разрушается. В случае если значение свойства `true`, то экземпляр разрушается вслед за делегатом, в противном случае - удаляется только ссылка на делегат.
-
-```js
-var a = new basis.data.Object();
-var b = new basis.data.Object({ cascadeDestroy: true });
-var c = new basis.data.Object({ delegate: b });
-
-// добавляем объектам обрабочики на событие destroy
-a.addHandler({ destroy: function(){ console.log('object `a` destroyed') } });
-b.addHandler({ destroy: function(){ console.log('object `b` destroyed') } });
-c.addHandler({ destroy: function(){ console.log('object `c` destroyed') } });
-
-console.log(basis.data.isConnected(b, c));
-// > true
-console.log(c.root === b);
-// > true
-
-b.setDelegate(a);
-console.log(c.root === a);
-// > true
-
-a.destroy();
-// > object `b` destroyed
-// > object `a` destroyed
-```
-
-Свойство `canSetDelegate` определяет можно ли менять свойство `delegate`. То есть значение свойства `true` для этого свойства блокирует смену делегата.
-
 ## target
 
 [TODO] isTarget / target / targetChanged
 
 ## Инициализация
 
-При создании можно задать свойства `data`, `delegate`, `cascadeDestroy`. Если задано свойство `delegate`, то свойства `data` и `state` игнорируются.
+При создании можно задать свойства `data` и `delegate`. Если задано свойство `delegate`, то свойства `data` и `state` игнорируются.
 
 При создании объекта не выбрасываются события `update` и `stateChanged`. Но если задается делегат, то эти события могут быть выброшены.
 
