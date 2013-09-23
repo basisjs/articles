@@ -68,10 +68,10 @@ var Foo = basis.ui.Node.subclass({
 
 Так же в качестве описания биндига принимаются некоторые специальные значения:
 
-  * объект механизм `binding bridge` (имеет свойтво `bindingBridge`) – значение отдается в шаблон как есть;
+  * объект поддерживающий механизм [`binding bridge`](bindingbridge.md) – значение отдается в шаблон как есть;
 
     ```js
-      // экземпляры basis.data.Value инмеют интерфейс bindingBridge
+      // экземпляры basis.data.Value имеют интерфейс bindingBridge
       var count = new basis.data.Value({ value: 123 });
 
       var node = basis.ui.Node({
@@ -81,7 +81,7 @@ var Foo = basis.ui.Node.subclass({
                           //   return count;
                           // }
           double: count.as(function(value){  // метод as возвращает basis.Token, который
-            return value * value;            // тоже имеет bindingBridge
+            return value * value;            // тоже поддерживает механизм binding bridge
           })
         }
       });
