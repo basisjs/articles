@@ -57,3 +57,5 @@ token.set(1);
           * `basis.data.index.Max`
 
   * [`basis.template.Template`](basis.template.md) и его потомок [`basis.template.html.Template`](basis.template.md)
+
+Данный интерфейс так же поддерживают [ресурсы](resources.md), специальные функции, созданные функцией `basis.resource`.
