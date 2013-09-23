@@ -34,4 +34,36 @@ var node = new basis.ui.Node({
 
 ## Инициализация
 
-Шаблон создается в методе `postInit`, так как при создании шаблона могут вычисляться биндинги, которые используют еще не определенные свойства. Таким образом в методе `init` не доступно свойство `tmpl` (оно равно `null`), а `element` и `childNodesElement` ссылаются на временный пустой `DocumentFragment`. Если требуется обращаться к `DOM`, создавамом шаблоном, или изменять его при создании экземпляра `basis.ui.Node`, то это нужно описывать в переопределеном методе `templateSync`.
+Шаблон создается в методе `postInit`, так как при создании шаблона могут вычисляться биндинги, использующие еще не определенные свойства. Таким образом, в методе `init` не доступно свойство `tmpl` (оно равно `null`), а `element` и `childNodesElement` ссылаются на временный пустой `DocumentFragment`. Если требуется обращаться к `DOM`, создаваемым шаблоном, или изменять его при создании экземпляра `basis.ui.Node`, то это нужно описывать в переопределеном методе `templateSync`.
+
+```js
+var node = new basis.ui.Node({
+  template: '<div class="foo">{example}</div>',
+  binding: {
+    example: function(){
+      return 'hello world';
+    }
+  },
+  init: function(){
+    basis.ui.Node.prototype.init.call(this);
+
+    console.log(this.tmpl);
+    // console> null
+
+    console.log(this.element === this.childNodesElement);
+    // console> true
+
+    console.log(this.element);
+    // console> #document-fragment
+  },
+  templateSync: function(){
+    basis.ui.Node.prototype.templateSync.call(this);
+
+    console.log(this.tmpl);
+    // console> { element: div.foo, example: #text, templateId_: 0, set: function(name, value){ .. } }
+
+    console.log(this.element);
+    // console> <div class="foo">hello world</div>
+  }
+});
+```
