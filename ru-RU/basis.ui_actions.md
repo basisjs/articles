@@ -58,3 +58,21 @@ var node = new basis.ui.Node({
   }
 });
 ```
+
+## Обработчики по умолчанию
+
+На данный момент для `basis.ui.Node` определен лишь один обработчик по умолчанию - `select`. Он делает выбранным текущий узел, если это возможно. Если у узла есть `contextSelection` и он разрешает множественный выбор узлов, то учитывается состояние клавиш `ctrl` (Windows) и `meta` (Mac OS) для определения режима выделения (множественный выбор или единичный).
+
+```js
+basis.ui.Node.prototype.action.select = function(event){
+  if (this.isDisabled())
+    return;
+
+  if (this.contextSelection && this.contextSelection.multiple)
+    this.select(event.ctrlKey || event.metaKey);
+  else
+    this.select();
+};
+```
+
+Эта реализация покрывает большинство случаев связанных с выделением узлов.
