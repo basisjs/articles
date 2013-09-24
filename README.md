@@ -8,6 +8,7 @@
     * [Классы](ru-RU/basis.Class.md)
     * [basis.Token](ru-RU/basis.Token.md)
     * basis.getter
+    * [Binding bridge](ru-RU/bindingbridge.md)
 * [basis.event](ru-RU/basis.event.md)
 * [basis.data](ru-RU/basis.data.md)
     * [Value](ru-RU/basis.data.Value.md)
@@ -31,8 +32,10 @@
     * [Привязка шаблонов](ru-RU/basis.ui_template.md)
     * [Биндинги (bindings)](ru-RU/basis.ui_bindings.md)
     * [Обратная связь (actions)](ru-RU/basis.ui_actions.md)
-* basis.template
-    * Формат шаблонов
+* [basis.template](ru-RU/basis.template.md)
+    * [Формат шаблонов](ru-RU/basis.template_format.md)
+    * [Динамическое обновление (live update)](ru-RU/basis.template_format.md)
+    * Темы
     * basis.template.html
 * basis.l10n
 * basis.net
