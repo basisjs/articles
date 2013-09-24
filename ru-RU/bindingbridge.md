@@ -36,16 +36,18 @@ token.set(1);
 
 > Может возникнуть вопрос, зачем передавать в метод владельца интерфейса и почему не используется `this` внутри методов интерфейса. Дело в том, что методы интерфейса находятся в объекте `bindingBridge` и не будут иметь нужного контекста при обычном вызове. Для задания контекста требуется вызов `token.bindingBridge.attach.call(token, logChanges)`. Можно заметить, что аргументы остались те же, но добавилось `.call`. Текущая реализация не требует `.call` и вызов таких методов оказывается немного короче.
 
-Данный интерфейс широко используется в [шаблонах](basis.template.md) и [биндингах](basis.ui_bindings.md) `basis.ui`.
+Данный интерфейс широко используется в [шаблонах](basis.template.md).
 
-Список классов предоставляющих интерфейс `binding bridge`:
+Интерфейс `binding bridge` предоставляют:
 
-  * [`basis.Token`](basis.Token.md) и его потомки:
+  * [ресурсы](resources.md) (специальные функции, произведенные функцией `basis.resource`)
+
+  * класс [`basis.Token`](basis.Token.md) и его потомки:
       * [`basis.DeferredToken`](basis.Token.md)
       * `basis.l10n.Token`
       * `basis.template.SourceWrapper`;
 
-  * `basis.data.value.BindValue` и его потомки:
+  * класс `basis.data.value.BindValue` и его потомки:
       * `basis.data.value.Property`
       * `basis.data.value.ObjectSet`
       * `basis.data.value.Expression`
@@ -56,6 +58,4 @@ token.set(1);
           * `basis.data.index.Min`
           * `basis.data.index.Max`
 
-  * [`basis.template.Template`](basis.template.md) и его потомок [`basis.template.html.Template`](basis.template.md)
-
-Данный интерфейс так же поддерживают [ресурсы](resources.md), специальные функции, созданные функцией `basis.resource`.
+  * класс [`basis.template.Template`](basis.template.md) и его потомок [`basis.template.html.Template`](basis.template.md)

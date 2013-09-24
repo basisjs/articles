@@ -36,7 +36,6 @@
     * [Формат шаблонов](ru-RU/basis.template_format.md)
     * [Динамическое обновление (live update)](ru-RU/basis.template_format.md)
     * Темы
-    * basis.template.html
 * basis.l10n
 * basis.net
     * basis.net.action
