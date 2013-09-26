@@ -33,8 +33,8 @@
     * [Биндинги (bindings)](ru-RU/basis.ui_bindings.md)
     * [Обратная связь (actions)](ru-RU/basis.ui_actions.md)
 * [basis.template](ru-RU/basis.template.md)
-    * [Формат шаблонов](ru-RU/basis.template_format.md) \[todo:complete]
-    * [Правила применения значений биндингам](ru-RU/basis.template_bindings.md) \[todo:complete]
+    * [Формат шаблонов](ru-RU/basis.template_format.md)
+    * [Правила применения значений биндингам](ru-RU/basis.template_bindings.md)
     * [Динамическое обновление (live update)](ru-RU/basis.template_format.md) \[todo:complete]
     * Темы
 * basis.l10n
