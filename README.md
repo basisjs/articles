@@ -35,8 +35,8 @@
 * [basis.template](ru-RU/basis.template.md)
     * [Формат шаблонов](ru-RU/basis.template_format.md)
     * [Правила применения значений биндингам](ru-RU/basis.template_bindings.md)
-    * [Динамическое обновление (live update)](ru-RU/basis.template_format.md) \[todo:complete]
-    * Темы
+    * [Динамическое обновление (live update)](ru-RU/basis.template_liveupdate.md) \[todo:complete]
+    * [Темы](ru-RU/basis.template_theme.md)
 * basis.l10n
 * basis.net
     * basis.net.action
