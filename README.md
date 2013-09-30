@@ -37,7 +37,7 @@
     * [Правила применения значений биндингам](ru-RU/basis.template_bindings.md)
     * [Динамическое обновление (live update)](ru-RU/basis.template_liveupdate.md) \[todo:complete]
     * [Темы](ru-RU/basis.template_theme.md)
-* basis.l10n
+* [basis.l10n](ru-RU/basis.net.md)
 * basis.net
     * basis.net.action
     * basis.net.service
