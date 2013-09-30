@@ -29,8 +29,8 @@
 
 ```js
 var transport = new basis.net.Transport({
-  url: ‘/users’,
-  method: ‘GET’,
+  url: '/users',
+  method: 'GET',
   handler: {
     success: function(transport, result, request){
       // обработка успешного выполнения запроса
@@ -43,7 +43,7 @@ var transport = new basis.net.Transport({
 
 transport.request({
   params: {
-    userId: ‘123’
+    userId: 123
   }
 });
 ```
@@ -52,9 +52,9 @@ transport.request({
 
 ```js
 basis.net.request({
-  url: ‘/users’,
+  url: '/users',
   params: {
-    userId: ‘123’
+    userId: 123
   }
 }, function(){
   // обработка успешного выполнения запроса
@@ -65,7 +65,7 @@ Transport одновременно может выполнять несколь�
 
 ```js
 var transport = new basis.net.Transport({
-  url: ‘/users’,
+  url: '/users',
   poolLimit: 5,
   poolHashGetter: function(requestData){
     return requestData.params.userId;
@@ -73,12 +73,12 @@ var transport = new basis.net.Transport({
 });
 transport.request({
   params: {
-    userId: ‘123’
+    userId: 123
   }
 });
 transport.request({
   params: {
-    userId: ‘321’
+    userId: 321
   }
 });
 ```
