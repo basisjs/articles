@@ -39,6 +39,6 @@
     * [Темы](ru-RU/basis.template_theme.md)
 * basis.l10n
 * [basis.net](ru-RU/basis.net.md)
-    * basis.net.action
-    * basis.net.service
+    * [basis.net.action](ru-RU/basis.net.action.md)
+    * [basis.net.service](ru-RU/basis.net.service.md)
 * basis.router

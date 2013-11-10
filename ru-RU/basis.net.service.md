@@ -20,7 +20,7 @@ var service = new basis.net.service.Service({
 ```
 
 В примере создается сервис, который для всех запросов будет подставлять http-заголовок `Accept: 'application/json'` и автоматически преобразовывать полученный ответ в `JSON`.
-У экземпляра `basis.net.service.Service` доступны методы `createTransport` и `createAction`, с помощью которых можно создавать экземпляры `tranportClass` и функции `basis.net.action` на основе `transportClass` соответсвенно
+У экземпляра `basis.net.service.Service` доступны методы `createTransport` и `createAction`, с помощью которых можно создавать экземпляры `tranportClass` и функции `basis.net.action` на основе `transportClass` соответственно.
 
 ```js
 var transport = service.createTransport({
