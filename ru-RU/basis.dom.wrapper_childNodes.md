@@ -150,7 +150,7 @@ node.appendChild({
 
 Cвойство `dataSource` изменяется методом `setDataSource`, при его изменении срабатывает событие `dataSourceChanged`. В качестве значения `dataSource` можно задать экземпляр класса `basis.data.AbstractDataset` или его потомка.
 
-Начиная с версии 0.10 в качестве значения можно задавать экземпляр класса `basis.data.DatasetWrapper`, который сохраняется в свойстве `dataSourceWrapper_` и синхронизирует свое свойство `dataset` со свойством `dataSource` узла (в направлении `node.dataSourceWrapper_.dataset` -> `node.dataSource`).
+Начиная с версии 1.0.0 в качестве значения можно задавать экземпляр класса `basis.data.DatasetWrapper`, который сохраняется в свойстве `dataSourceWrapper_` и синхронизирует свое свойство `dataset` со свойством `dataSource` узла (в направлении `node.dataSourceWrapper_.dataset` -> `node.dataSource`).
 
 При установленном значении `dataSource`, состояние набора (его свойство `state`) синхронизируется со свойстом узла `childNodesState` (в направлении `node.dataSource.state` -> `node.childNodesState`).
 
