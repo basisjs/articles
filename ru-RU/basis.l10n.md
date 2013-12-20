@@ -4,11 +4,11 @@
 
 Этот модуль оперирует в рамках трех типов сущностей:
 
-* Словарь – набор значений;
-* Культура – язык и его настройки;
-* Значение или токен – непосредственно значение, которое используется.
+* [Словарь](#Словарь) – набор значений;
+* [Культура](#Культура) – язык и его настройки;
+* [Токен](#Токен) (значение) – непосредственное значение, которое используется.
 
-`basis.l10n` позволяет изменять выбранную культуру без перезагрузки страницы. А в режиме разработки так же изменять словари и значения.
+Локализация предоставляемая `basis.l10n` является полностью динамической, т.е. позволяет изменять выбранную культуру и содержимое словарей без перезагрузки страницы. В разработке могут использоваться [инструменты](#Инструменты), которые упрощают работу с локализацией.
 
 ## Словарь
 
@@ -16,13 +16,13 @@
 
 Содержимое словарей хранится в отдельных файлах с расширением `.l10n` в формате JSON. Ключи первого уровня являются кодами культуры, а значение – набор значений для словаря.
 
-```
+```json
 {
   "en-US": {
-    "hello": "Hello"
+    "hello": "Hello world!"
   },
   "ru-RU": {
-    "hello": "Привет"
+    "hello": "Привет мир!"
   }
 }
 ```
@@ -37,6 +37,67 @@ var myDict = basis.l10n.dictionary('path/to/dict.l10n');
 
 ```js
 var myDict = basis.l10n.dictionary(__filename);
+```
+
+Задаваемый путь к файлу разрешается относительно корня приложения. Если требуется указать путь относительно модуля, можно использовать локальную переменную `__dirname`.
+
+```js
+var myDict = basis.l10n.dictionary(__dirname + 'relative/path/to/dict.l10n');
+```
+
+Словарь предоставляет доступ к своим ключам посредством метода `token`, которому передается имя токена. Если токена с заданым именем нет, то он создается. Значением токена является значение из файла словаря для текущей культуры, с учетом альтернатив.
+
+```js
+var myDict = basis.l10n.dictionary(__filename);
+console.log(myDict.token('hello').value);
+// console> 'Hello world!'
+
+basis.l10n.setCulture('ru-RU');
+console.log(myDict.token('hello').value);
+// console> 'Привет мир!'
+
+console.log(myDict.token('nonexistent').value);
+// console> undefined
+```
+
+В описании словаря поддерживается вложенность.
+
+```json
+{
+  "en-US": {
+    "hello": "Hello world!",
+    "example": {
+      "foo": "Foo",
+      "bar": "Bar"
+    }
+  }
+}
+```
+
+В таком случае именем токена является конкатенация ключей разделеных точкой (`.`).
+
+```js
+var myDict = basis.l10n.dictionary('path/to/dict.l10n');
+console.log(myDict.token('example').value);
+// console> { foo: "Foo", bar: "Bar" }
+console.log(myDict.token('example.foo').value);
+// console> 'Foo'
+```
+
+Описание словаря может содержать дополнительную информацию о словаре, для этого используется специальная секция `_meta`. Эта секция, в частности, используется для задание специальных типов для определенных ключей.
+
+```json
+{
+  "_meta": {
+    "types": {
+      "example": "plural"
+    }
+  },
+  "en-US": {
+    "hello": "Hello world!",
+    "example": ["example", "examples"]
+  }
+}
 ```
 
 ## Культура
@@ -74,7 +135,12 @@ console.log(basis.l10n.getCulture());
 // console> 'ru-RU'
 ```
 
-С помощью функции `basis.l10n.onCultureChange` можно задать функцию-обработчик на изменение текущей культуры.
+С помощью функции `basis.l10n.onCultureChange(fn, context, fire)` можно задать функцию-обработчик на изменение текущей культуры. Эта функция принимает до трех аргументов:
+
+* fn - функция, которая должна быть вызвана при изменении текущей культуры;
+* context - значение, которое будет выступать в качестве `this` вызываемой функции;
+* fire - добавляемая функция-обработчик, должна быть вызвана сразу после добавления.
+
 
 ```js
 basis.l10n.onCultureChange(function(culture){
@@ -90,9 +156,27 @@ basis.l10n.setCulture('ru-RU');
 
 Культуры являются экземплярами класса `basis.l10n.Culture`, которые содержат языковые настройки культуры. Экземпляр культуры можно получить с помощью функции-хелпера `basis.l10n.culture`. Эта функция возвращает культуру ассоциированную с заданым кодом, а если таковой нет, то создает ее.
 
-Функция `basis.l10n.culture` расширена методами и свойствами [`basis.Token`](basis.Token.md). Поэтому в большинстве случаев может использоваться как экземпляр `basis.Token`, хотя таковым не является. Например, в качестве значения для биндига (так как имеет [binding]).
+```js
+var culture = basis.l10n.culture('ru-RU');
+console.log(culture);
+// console> basis.l10n.Culture { name: "ru-RU", ... }
+
+// эквивалент
+var culture = new basis.l10n.Culture('ru-RU');
+console.log(culture);
+// console> basis.l10n.Culture { name: "ru-RU", ... }
+
+// 
+console.log(basis.l10n.culture('ru-RU') === basis.l10n.culture('ru-RU'));
+// console> true
+```
+
+Функция `basis.l10n.culture` расширена методами и свойствами [`basis.Token`](basis.Token.md). Поэтому в большинстве случаев может использоваться как экземпляр `basis.Token`, хотя таковым не является. Например, в качестве значения для биндига (так как имеет интерфейс [`binding bridge`](bindingbridge.md)).
 
 ```js
+basis.require('basis.l10n');
+basis.require('basis.ui');
+
 var view = new basis.ui.Node({
   template: '<span>Current culture is {currentCulture}</span>',
   binding: {
@@ -101,12 +185,225 @@ var view = new basis.ui.Node({
 });
 ```
 
-Или как альтельнатива `onCultureChange`.
+Или как альтельнатива другим функциям.
 
 ```js
+// эквивалент getCulture
+console.log(basis.l10n.culture.get());
+// console> en-US
+console.log(basis.l10n.culture.value);
+// console> en-US
+
+// эквивалент setCulture (с версии 1.0.1)
+basis.l10n.culture.set('ru-RU');
+
+// эквивалент onCultureChange
 basis.l10n.culture.attach(function(culture){
   console.log('Current culture is ', culture);
 });
 ```
 
-## Значения
+Для удаления обработчика на смену культуры нет специальной функции. Но это можно сделать импользуя метод `basis.l10n.culture.detach`.
+
+```js
+var myCultureChangeHandler = function(culture){
+  console.log('Current culture is ', culture);
+};
+
+// добавляем обработчик
+basis.l10n.onCultureChange(myCultureChangeHandler);
+
+basis.l10n.getCulture();
+// console> en-US
+
+basis.l10n.setCulture('ru-RU');
+// console> Current culture is ru-RU
+// console> undefined
+
+basis.l10n.culture.detach(myCultureChangeHandler);
+
+basis.l10n.setCulture('ru-RU');
+// не будет сообщений в косоли
+```
+
+## Токен
+
+Токены являются экземплярами класса `basis.l10n.Token`, который унаследован от `[basis.Token](basis.Token.md)`. Эти объекты хранят значение, которое соотвествует текущей культуре.
+
+Получить токен можно следующими способами:
+
+* вызвав метод словаря `token(path)`;
+* используя функцию `basis.l10n.token(absolutePath)`; функции передается ключ и путь к файлу словаря в виде одной строки, разделенные символом `@`;
+* используя метод токена `token(name)`; таким образом можно получить вложенные токены.
+
+```json
+{
+  "en-US": {
+    "example": {
+      "foo": "Foo",
+      "bar": "Bar"
+    }
+  }
+}
+```
+
+```js
+var myDict = basis.l10n.dictionary('path/to/dict.l10n');
+
+console.log(myDict.token('example.foo'));
+// console> basis.l10n.Token { name: 'example.foo', value: 'Foo' }
+
+console.log(basis.l10n.token('example.foo@path/to/dict.l10n'));
+// console> basis.l10n.Token { name: 'example.foo', value: 'Foo' }
+
+console.log(myDict.token('example').token('foo'));
+// console> basis.l10n.Token { name: 'example.foo', value: 'Foo' }
+
+console.log(myDict.token('example.foo') === basis.l10n.token('example.foo@path/to/dict.l10n'));
+// console> true
+```
+
+У токенов есть тип, который задается в секции `_meta` описания словаря. Тип токена является одинаковым для всех культур словаря.
+
+На данный момент токены могут трех типов:
+
+* default - обычная строка, тип значения по умолчанию;
+* plural - значение склоняемое в зависимости от числа; количество форм и функция выбора формы зависит от культуры;
+* markup - по сути шаблон, строка, которая которая может содержать разметку и все, что допустимо в шаблонах.
+
+```json
+{
+  "_meta": {
+    "types": {
+      "bar": "plural",
+      "baz": "markup"
+    }
+  },
+  "en-US": {
+    "foo": "Default",
+    "bar": ["plural", "token"],
+    "baz": "<h1>Markup token</h1>"
+  }
+}
+```
+
+```js
+var myDict = basis.l10n.dictionary('path/to/dict.l10n');
+
+console.log(myDict.token('foo').type);
+// console> 'default'
+
+console.log(myDict.token('foo').type);
+// console> 'plural'
+
+console.log(myDict.token('foo').type);
+// console> 'markup'
+```
+
+### Plural
+
+[todo]
+
+### Markup
+
+[todo]
+
+## Использование в шаблонах
+
+Так как класс `basis.l10n.Token` наследуется от `basis.Token`, то токены так же имеют интерфейс [`binding bridge`](bindingbridge.md)) и могут использоваться в биндигах, как сами по себе, так и в качестве результата `getter`.
+
+```js
+basis.require('basis.l10n');
+basis.require('basis.ui');
+
+var myDict = basis.l10n.dictionary(__filename);
+
+var view = new basis.ui.Node({
+  ...
+  binding: {
+    foo: myDict.token('foo'),
+    enum: function(node){  // статичный биндинг
+      return node.data.value == 0
+        ? myDict.token('bar.zero')
+        : myDict.token('bar.non-zero');
+    },
+    stateCaption: {
+      events: 'stateChanged',
+      getter: function(node){
+        return myDict.token('state').token(node.state);
+      }
+    },
+    plural: {
+      events: 'update',
+      getter: function(node){
+        return myDict.token('baz').token(node.data.value);
+      }
+    }
+  }
+});
+```
+
+Токены так же имеют метод `compute(events, getter)`, который упрощает описание `plural` и `enum` биндингов. Метод принимает параметры:
+
+* events - список событий (строка, имена разделеные пробелом, или масив строк) владельца биндинга, когда нужно пересчитывать значение; параметр является опциональным и может быть опущен (в этом случае биндинг будет считаться только раз, при создании шаблона);
+* getter - функция, получающая в качестве аргумента владельца биндинга; результат, возвращаемый функцией, используется как имя для получения вложенного токена.
+
+Используя этот метод, предыдущий пример можно переписать так:
+
+```js
+basis.require('basis.l10n');
+basis.require('basis.ui');
+
+var myDict = basis.l10n.dictionary(__filename);
+
+var view = new basis.ui.Node({
+  ...
+  binding: {
+    foo: myDict.token('foo'),
+    enum: myDict.token('bar').compute(function(node){
+      return node.data.value == 0 ? 'zero' : 'non-zero';
+    }),
+    stateCaption: myDict.token('state').compute('stateChanged', 'state'),
+    plural: myDict.token('baz').compute('update', 'data.value')
+  }
+});
+```
+
+Токены можно использовать в шаблоне и без биндингов. Для этого используются маркеры с префикcом `l10n:`.
+
+Файл словаря указывается с помощью тега `<b:l10n>`, в котором указывается путь к файлу (относительно шаблона). Если имя файла словаря отличается от имени файла шаблона только разрешением (например, `path/to/template.tmpl` и `path/to/template.l10n`), то указывать `<b:l10n>` не обязательно (обычно не указывается). Шаблон начинает использовать словарь, если в описание шаблона есть хотя бы один маркер с префиксом `l10n:`.
+
+Для маркеров с префиксом `l10n:` допускается указание вложенного маркера, вместо последней части пути. Таким образом при изменении биндинга будет выбираться тот или иной токен.
+
+```html
+<b:l10n src="path/to/dict.l10n"/>
+
+<div title="{l10n:attr.example}: {value}">
+  Default: {l10n:foo}<br/>
+  Enum: {l10n:state.{state}}<br/>
+  Plural: {l10n:plural.{value}}<br/>
+  Markup: {l10n:path.to.markup.token}
+</div>
+```
+
+## Синхронизация
+
+[todo]
+
+## Инструменты
+
+Для работы с локализацией можно использовать панель разработчика `basis.devpanel` и [плагин](https://chrome.google.com/webstore/detail/basisjs-tools/paeokpmlopbdaancddhdhmfepfhcbmek) для `Google Chrome`.
+
+![basis.devpanel](img/basis.l10n-devpanel.png)
+
+На панели разработчика локализация представлена двумя кнопками. Одна показывает текущую культуру и позволяет сменить ее. Вторая включает режим выбора токена.
+
+![l10n inspect mode](img/basis.l10n-inspect-mode.png)
+
+В режиме выбора токена, подсвечиваются все текстовые узлы, которые привязаны к токена `basis.l10n`. Другими словами, весь переводимый текст. Без плагина клик по любому подсвеченному блоку ни к чему не приводит. Но если установлен плагин и активирован в `Developer tools`, то в плагине откроется словарь, к которому относится токен, а поле редактирования токена получит фокус.
+
+![l10n inspect mode](img/basis.l10n-plugin.png)
+
+Плагин позволяет менять содержимое словаря. Любые изменения тут же применяются без перезагрузки страницы.
+
+При использовании `basis server`, плагин так же может сохранять изменения в файл.
