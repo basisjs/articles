@@ -220,8 +220,8 @@ var obj = new MyClass({
 
 ```js
 var Foo = basis.Class();
-var Bar = Basus.Class(Foo);
-var Baz = Basus.Class(Bar);
+var Bar = basis.Class(Foo);
+var Baz = basis.Class(Bar);
 
 var baz = new Baz();
 
