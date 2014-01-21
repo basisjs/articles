@@ -88,7 +88,7 @@ console.log(source.value);
   * define(namespace, object) – задает список описаний, используя `namespace` в качестве префикса, ключи из `object` в качестве имен описаний, а значения `object` как источник описания; возвращает объект с ключами из `object`, но значения - созданные `SourceWrapper`
 
     ```js
-    var res = basis.template.theme('foo').define('my.namespace'{
+    var res = basis.template.theme('foo').define('my.namespace', {
       'foo': basis.resource('path/to.tmpl'),
       'baz': 'some content'
     });
@@ -138,7 +138,7 @@ console.log(source.value);
 
   * currentTheme() – возвращает интерфейс текущей темы;
 
-  * setTheme(name) – установлевает тему с именем `name` текущей;
+  * setTheme(name) – устанавливает тему с именем `name` текущей;
 
   * getPathList() – возвращает текущий список имен описаний
 
