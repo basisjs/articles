@@ -433,7 +433,7 @@ foo.tmpl:
     </div>
     ```
 
-  * `<b:replace>` – заменяет содержимым узел с указаной в атрибуте `ref` ссылкой; если атрибут отсутствует или узла с такой ссылкой нет, то тег игнорируется;
+  * `<b:replace>` – заменяет содержимым узел с указаной в атрибуте `ref` ссылкой; если узла с такой ссылкой нет, то тег игнорируется; если атрибут `ref` отсутствует, то заменяется узел с ссылкой `{element}`;
 
     ```html
     <b:include src="foo.tmpl">
@@ -456,6 +456,31 @@ foo.tmpl:
     ```html
     <div class="example">
       [new content]
+    </div>
+    ```
+
+  * `<b:remove>` – заменяет содержимым узел с указаной в атрибуте `ref` ссылкой; если узла с такой ссылкой нет, то тег игнорируется; если атрибут `ref` отсутствует, то удаляется узел с ссылкой `{element}`;
+
+    ```html
+    <b:include src="foo.tmpl">
+      <b:remove ref="label"/>
+    </b:inclide>
+    ```
+
+    foo.tmpl:
+
+    ```html
+    <div class="example">
+      <span{label}>{title}</span>
+      <span>{value}</span>
+    </div>
+    ```
+
+    Результат:
+
+    ```html
+    <div class="example">
+      <span>{value}</span>
     </div>
     ```
 
