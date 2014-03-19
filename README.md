@@ -25,7 +25,7 @@
         * [Группировка](ru-RU/basis.dom.wrapper_grouping.md) \[todo:complete]
     * [Привязка данных](ru-RU/basis.dom.wrapper_data.md)
     * [Паттерн "владелец"](ru-RU/basis.dom.wrapper_owner.md) \[todo:examples]
-    * [Сателитты](ru-RU/basis.dom.wrapper_satellite.md)
+    * [Сателлиты](ru-RU/basis.dom.wrapper_satellite.md)
     * [Доступность (disabled/enabled)](ru-RU/basis.dom.wrapper_disabled.md) \[todo:examples]
     * [Выделение (selection)](ru-RU/basis.dom.wrapper_selection.md) \[todo:examples] \[todo:Selection&context]
 * [basis.ui](ru-RU/basis.ui.md)

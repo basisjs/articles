@@ -19,13 +19,13 @@
 
 `basisjs-tools` – набор консольных инструментов, написаный на `javascript` и работающий под управлением `node.js`. Этот набор включает в себя сборщик, dev-сервер и кодо-генератор. Устанавливается как обычный `npm` модуль.
 
-> npm install -g basisjs-tools
+    > npm install -g basisjs-tools
 
 Если установить инструменты глобально (флаг `-g`), то в консоли станет доступна команда `basis`.
 
 Давайте запустим сервер, для этого выполним в консоли простую команду:
 
-> basis server
+    > basis server
 
 После этого запустится сервер на порту `8000` (это можно изменить, используя флаг `--port` или `-p`). Теперь можно открыть в браузере `http://localhost:8000` и убедиться, что сервер работает. Тем не менее он отдает ошибку, так как папка нашего проекта пуста. Давайте исправим это.
 
@@ -33,17 +33,16 @@
 
 Для начала нужно добавить папку с исходниками `basis.js` в проект. Для этого можно использовать `bower`.
 
-> bower install basis
+    > bower install basis
 
 А теперь создадим основной `html` файл приложения, который пока лишь подключает `basis.js` – `index.html`.
 
 ```html
 <!doctype html>
-
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My app</title>
+  <title>My first app on basis.js</title>
 </head>
 <body>
   <script src="bower_components/basisjs/src/basis.js" basis-config=""></script>
@@ -63,16 +62,16 @@ Cделаем это, создав представление с таким от
 
 ```html
 <!doctype html>
-
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My app</title>
+  <title>My first app on basis.js</title>
 </head>
 <body>
   <script src="bower_components/basisjs/src/basis.js" basis-config=""></script>
   <script>
     basis.require('basis.ui');
+
     var view = new basis.ui.Node({
       container: document.body,
       template: '<h1>Hello world!</h1>'
@@ -104,11 +103,10 @@ Cделаем это, создав представление с таким от
 
 ```html
 <!doctype html>
-
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My app</title>
+  <title>My first app on basis.js</title>
 </head>
 <body>
   <script src="bower_components/basisjs/src/basis.js" basis-config=""></script>
@@ -125,6 +123,7 @@ Cделаем это, создав представление с таким от
 
 ```js
 basis.require('basis.ui');
+
 var view = new basis.ui.Node({
   container: document.body,
   template: basis.resource('./hello.tmpl')
@@ -133,7 +132,7 @@ var view = new basis.ui.Node({
 
 Все осталось как прежде, но строка с описанием шаблона заменена на вызов функции `basis.resource`. Эта функция создает "интерфейс" к файлу. Такой подход дает возможно определять какие файлы нужны, не скачивая их до тех пор, пока нет в этом необходимости.
 
-Интерфейс, создаваемый `basis.resource`, представляет собой функцию с дополнительными методами. Вызов такой функции, или ее метода `fetch`, приводит к загрузке файла. Загружается файл лишь раз, а результат кешируется. Подробнее про модули можно найти в статье [Ресурсы (модульность)](resources.md)
+Интерфейс, создаваемый `basis.resource`, представляет собой функцию с дополнительными методами. Вызов такой функции, или ее метода `fetch`, приводит к загрузке файла. Загружается файл лишь раз, а результат кешируется. Подробнее про модули можно найти в статье [Ресурсы (модульность)](../../resources.md)
 
 Еще один момент: на самом деле, вызов `basis.require('./file.name')` эквивалентен `basis.resource('./file.name').fetch()`.
 
@@ -151,6 +150,7 @@ var view = new basis.ui.Node({
 
 ```js
 require('basis.ui');
+
 var view = new basis.ui.Node({
   container: document.body,
   template: resource('./hello.tmpl')
@@ -193,6 +193,7 @@ h1
 
 ```js
 require('basis.ui');
+
 var view = new basis.ui.Node({
   container: document.body,
   template: resource('./hello.tmpl'),
@@ -242,6 +243,7 @@ var view = new basis.ui.Node({
 
 ```js
 require('basis.ui');
+
 var view = new basis.ui.Node({
   container: document.body,
   template: resource('./hello.tmpl'),
@@ -268,6 +270,7 @@ var view = new basis.ui.Node({
 
 ```js
 require('basis.ui');
+
 var view = new basis.ui.Node({
   container: document.body,
   template: resource('./hello.tmpl'),
@@ -296,6 +299,7 @@ var view = new basis.ui.Node({
 
 ```js
 require('basis.ui');
+
 var view = new basis.ui.Node({
   container: document.body,
   template: resource('./hello.tmpl'),
@@ -315,7 +319,7 @@ var view = new basis.ui.Node({
 });
 ```
 
-Использованный хелпер всего лишь синтаксический сахар. Он развернется в полную форму, которая была в предыдущем примере. Больше подробностей можно найти в статье [Биндинги](basis.ui_bindings.md).
+Использованный хелпер всего лишь синтаксический сахар. Он развернется в полную форму, которая была в предыдущем примере. Больше подробностей можно найти в статье [Биндинги](../../basis.ui_bindings.md).
 
 ## Список
 
@@ -330,12 +334,17 @@ var list = new basis.ui.Node({
 });
 
 var Item = basis.ui.Node.subclass({
-  template: resource('./item.tmpl')
+  template: resource('./item.tmpl'),
+  binding: {
+    name: function(node){
+      return node.name;
+    }
+  }
 });
 
-list.appendChild(new Item());
-list.appendChild(new Item());
-list.appendChild(new Item());
+list.appendChild(new Item({ name: 'foo' }));
+list.appendChild(new Item({ name: 'bar' }));
+list.appendChild(new Item({ name: 'baz' }));
 ```
 
 Код этого модуля похож на `hello.js`, но добавились новые конструкции.
@@ -344,7 +353,7 @@ list.appendChild(new Item());
 
 Как говорилось ранее, представления могут вкладываться друг в друга. В данном случае элементы списка вкладываются в список. При этом вложенные представления являются дочерними (хранятся в свойстве `childNodes`), а для них, представление, в которое они вложены, является родительским (ссылка хранится в свойстве `parentNode`).
 
-Описание самого списка ничем не отличается от того, что мы делали ранее. Далее по коду был создан новый класс, унаследованный от `basis.ui.Node`. В этом классе пока лишь задан файл шаблона. После этого было создано три экземпляра этого класса и добавлены списку.
+Описание самого списка ничем не отличается от того, что мы делали ранее. Далее по коду был создан новый класс, унаследованный от `basis.ui.Node`. В этом классе указан файл шаблона и простой биндинг. После этого было создано три экземпляра этого класса и добавлены списку.
 
 Как было сказано выше, для организации дерева представлений используются принципы `DOM`. Для вставки используются методы `appendChild` и `insertBefore`, для удаления `removeChild`, а для замены `replaceChild`. Так же есть нестандартные методы: `setChildNodes` позволяет задать список дочерних представлений, а `clear` – удаляет все дочерние представления махом.
 
@@ -359,7 +368,12 @@ var list = new basis.ui.Node({
 });
 
 var Item = basis.ui.Node.subclass({
-  template: resource('./item.tmpl')
+  template: resource('./item.tmpl'),
+  binding: {
+    name: function(node){
+      return node.name;
+    }
+  }
 });
 
 list.setChildNodes([
@@ -375,7 +389,12 @@ list.setChildNodes([
 require('basis.ui');
 
 var Item = basis.ui.Node.subclass({
-  template: resource('./item.tmpl')
+  template: resource('./item.tmpl'),
+  binding: {
+    name: function(node){
+      return node.name;
+    }
+  }
 });
 
 var list = new basis.ui.Node({
@@ -405,7 +424,12 @@ basis.ui.Node.prototype.childFactory = function(value){
 require('basis.ui');
 
 var Item = basis.ui.Node.subclass({
-  template: resource('./item.tmpl')
+  template: resource('./item.tmpl'),
+  binding: {
+    name: function(node){
+      return node.name;
+    }
+  }
 });
 
 var list = new basis.ui.Node({
@@ -431,7 +455,12 @@ var list = new basis.ui.Node({
   container: document.body,
   template: resource('./list.tmpl'),
   childClass: {
-    template: resource('./item.tmpl')
+    template: resource('./item.tmpl'),
+    binding: {
+      name: function(node){
+        return node.name;
+      }
+    }
   },
   childNodes: [
     { name: 'foo' },
@@ -460,7 +489,7 @@ var list = new basis.ui.Node({
 
 ```html
 <li>
-  item
+  {name}
 </li>
 ```
 
@@ -472,7 +501,7 @@ var list = new basis.ui.Node({
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My app</title>
+  <title>My first app on basis.js</title>
 </head>
 <body>
   <script src="bower_components/basisjs/src/basis.js" basis-config=""></script>
@@ -485,8 +514,6 @@ var list = new basis.ui.Node({
 ```
 
 Обновив страницу, мы увидим наш замечательный список из трех элементов.
-
-Конечно, видеть одинаковую надпись "item" для каждого элемента не так интересно. Ведь у нас есть некоторые данные у каждого элемента, которые мы хотим выводить. А так же нам нужно как то взаимодествовать с нашим списком. Для первого используются биндинги (bindings), а для второго действия (actions).
 
 ## Композиция
 
@@ -502,7 +529,20 @@ var list = new basis.ui.Node({
 require('basis.ui');
 
 module.exports = new basis.ui.Node({
-  template: resource('./hello.tmpl')
+  template: resource('./hello.tmpl'),
+  data: {
+    name: 'world'
+  },
+  binding: {
+    name: 'data:name'
+  },
+  action: {
+    setName: function(event){
+      this.update({
+        name: event.sender.value
+      });
+    }
+  }
 });
 ```
 
@@ -518,11 +558,6 @@ module.exports = new basis.ui.Node({
     binding: {
       name: function(node){
         return node.name;
-      }
-    },
-    action: {
-      say: function(){
-        alert(this.name);
       }
     }
   },
@@ -559,7 +594,7 @@ new basis.ui.Node({
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My app</title>
+  <title>My first app on basis.js</title>
 </head>
 <body>
   <script src="bower_components/basisjs/src/basis.js" basis-config=""></script>
@@ -578,10 +613,10 @@ new basis.ui.Node({
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My app</title>
+  <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="bower_components/basisjs/src/basis.js" basis-config="autoload:'app'"></script>
+  <script src="bower_components/basisjs/src/basis.js" basis-config="autoload: 'app'"></script>
 </body>
 </html>
 ```
@@ -600,6 +635,7 @@ new basis.ui.Node({
 
 ```js
 require('basis.ui');
+
 new basis.ui.Node({
   container: document.body,
   template: resource('./app.tmpl'),
@@ -618,6 +654,7 @@ new basis.ui.Node({
 
 ```js
 require('basis.ui');
+
 new basis.ui.Node({
   container: document.body,
   template: resource('./app.tmpl'),
@@ -647,11 +684,87 @@ new basis.ui.Node({
 
 ## Реструктуризация файлов проекта
 
-...
+В итоге у нас получилось три модуля и уже 9 файлов.
+
+![Структура файлов](file_structure_1.png)
+
+В настоящих приложениях десятки и сотни модулей, а среднее приложение на `basis.js` это, обычно, 800-1200 файлов. Хранить все в одной папке не удобно и неразумно. Попробуем реструктурировать расположение файлов.
+
+Создадим папку `hello` и перенесем туда файлы относящиеся к этому модулю (т.е. `hello.js`, `hello.tmpl` и `hello.css`). А так же папку `list`, в которую перенесем `list.js`, `list.tmpl` и `item.tmpl`. Все что нам осталось – это поменять пути подключения модулей в `app.js`:
+
+```js
+require('basis.ui');
+
+new basis.ui.Node({
+  container: document.body,
+  template: resource('./app.tmpl'),
+  binding: {
+    hello: require('./hello/hello.js'),  // здесь
+    list: require('./list/list.js')      // и здесь
+  }
+});
+```
+
+Больше ничего менять не нужно. Можно убедиться, что все работает как прежде, но структура файлов теперь такая:
+
+![Структура файлов](file_structure_2.png)
+
+Стало лучше, но файлы и папки самого приложения смешиваются с папками и файлами другого назначения. Поэтому будет лучше, если все исходные файлы приложения будут находится в одной папке. Создадим папку `src` и поместим туда все файлы и папки за исключением `bower_components` и `index.html`. После этого нам нужно подправить один путь в `index.html`:
+
+```html
+<!-- было -->
+<script src="bower_components/basisjs/src/basis.js" basis-config="autoload: 'app'"></script>
+
+<!-- стало -->
+<script src="bower_components/basisjs/src/basis.js" basis-config="autoload: 'src/app'"></script>
+```
+
+Структура файлов должна получится такой.
+
+![Структура файлов](file_structure_3.png)
+
+Если пойти по пути универсализации, то можно организовать файлы, например, так:
+
+![Структура файлов](file_structure_4.png)
+
+Так дочерние модули располагаются в папке `module`. Основной `javascript` файл модуля называется `index.js`. Шаблоны и все что к ним относится (стили, изображения и т.д.) располагаются в папке `template`. Это наиболее частая структура организации проектов на данный момент.
+
+Такая организация позволяет проще переносить модули, как в рамках самого проекта, так и рамках нескольких проектов. Так же проще становится выносить модули в отдельные пакеты (библиотеки) или делать из них переиспользуемые компоненты. Не сложно удалить модуль из проекта или заменить его другой реализацией.
+
+Конечно, вы можете организовывать проект как вам больше нравится. В этом вас никто не ограничивает.
+
+Можно заметить, что мы перемещали сразу множество файлов, но при этом нужно было вносить изменения в один файл в одном месте. Так обычно и бывает. Это основное преимущество относительных путей.
 
 ## Инструменты
 
-...
+С ростом приложения растет количество файлов и его сложность. Для того чтобы было проще разрабатывать нужны иструменты. У `basis.js` есть два вспомогательных инструмета: `devpanel` и плагин для `Google Chrome`.
+
+`devpanel` – это небольшая панель с нопками, которую можно перетаскивать. Выглядит она так:
+
+![Структура файлов](file_structure_4.png)
+
+Для ее подключения нужно добавить такой вызов в основной модуль:
+
+```js
+/** @cut */ require('basis.devpanel');
+```
+
+После чего панель должна появиться на странице. Здесь использован специальный комментарий `/** @cut */`, он позволяет вырезать строки при сборке. Нам ведь не нужно показывать эту панель пользователям, правда?
+
+Панель позволяет переключать текущую тему и язык. А так же выбирать шаблоны и переводимые тексты, для дальнейшего редактирования. Редактировать шаблоны, стили и текты локализации можно в плагине.
+
+Плагин устанавливается из `Google Web Store` вот по этой [ссылке](https://chrome.google.com/webstore/detail/basisjs-tools/paeokpmlopbdaancddhdhmfepfhcbmek). Для его работы необходима `devpanel`, так как она предоставляет API для работы с `basis.js`. 
+
+Плагин предоставляет:
+
+- Просмотр и редактирование словарей локализации
+- Просмотр и редактирование шаблонов и стилей
+- Список проблем в проекте, которые обнаружил сборщик
+- Граф файлов приложения, каким его видит сборщик
+
+Вот так выглядит наше приложение глазами сборщика:
+
+![Структура файлов](file_graph.png)
 
 ## Сборка
 
@@ -665,10 +778,20 @@ new basis.ui.Node({
 
 Давайте сделаем сборку проекта, для этого выполним простую команду:
 
-> basis build
+    > basis build
 
 Вот и все. Результатом сборки будут три файла `index.html`, `script.js` и `style.css`.
 
-По умолчанию сборщик не делает сильных оптимизаций, а лишь находит все файлы проекта, конкатенирует и перелинковывает их.
+По умолчанию сборщик не делает сильных оптимизаций, а лишь находит все файлы проекта, конкатенирует и перелинковывает их. Чтобы применять оптимизации необходимо использовать флаги, список которых можно получить вызвав справку по команде:
 
-...
+    > basis build --help
+
+Например, самые частые оптимизации, такие как удаление отладочного кода и сжатие `javascript` и `css` можно выполнить указав флаг `--pack` (или его которотку версию `-p`):
+
+    > basis build --pack
+
+## Заключение
+
+В первой части мы прошлись по основным этапам разработки приложений. Мы попробовали различные варианты создания представления и организации файлов проекта. Приобретенные знания помогут при изучении остальных частей руководства.
+
+В [следующей части](../part2/index.md) будет расмотрены механизмы работы с данными и их использование совместно с представлениями.
