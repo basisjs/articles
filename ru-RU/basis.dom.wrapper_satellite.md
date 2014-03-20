@@ -48,13 +48,13 @@ console.log(node2.satellite.somename.owner === node2);
 
 ## Автоматические сателлиты
 
-Свойство `satelliteConfig` позволяет автоматизировать создание сателлитов и настроить условия, при которых он должен существовать (создаваться и разрушаться).
+Свойство `satellite` позволяет автоматизировать создание сателлитов и настроить условия, при которых он должен существовать (создаваться и разрушаться).
 
 ```js
 basis.require('basis.dom.wrapper');
 
 var NodeWithSatellite = basis.dom.wrapper.Node.subclass({
-  satelliteConfig: {
+  satellite: {
     example: {
       instanceOf: basis.dom.wrapper.Node.subclass({
         className: 'DemoSatellite',
@@ -75,9 +75,9 @@ console.log(foo.satellite.example === bar.satellite.example);
 // console> false
 ```
 
-При определении сателлита через `satelliteConfig` можно указать следующие настройки:
+При определении сателлита через `satellite` можно указать следующие настройки:
 
-  * hook – объект, ключи которого названия событий, когда должны перевычисляться `existsIf`, `delegate` и `dataSource`; значение по умолчанию `{ update: true }`, то есть функции перевычисляются при выбрасывании события `update` у владельца;
+  * events – список событий (строка или массив), когда должны перевычисляться `existsIf`, `delegate` и `dataSource`; значение по умолчанию `'update'`, то есть функции перевычисляются при выбрасывании события `update` у владельца;
 
   * existsIf – функция, определяющая должен ли существовать сателлит, на вход получает ссылку на владельца; если значение не задано, то сателлит существует всегда, пока существует владелец;
 
@@ -94,7 +94,7 @@ console.log(foo.satellite.example === bar.satellite.example);
 ```js
 // полная запись
 var NodeWithSatellite = basis.dom.wrapper.Node.subclass({
-  satelliteConfig: {
+  satellite: {
     example: {
       instanceOf: basis.dom.wrapper.Node.subclass({ .. })
     }
@@ -103,7 +103,7 @@ var NodeWithSatellite = basis.dom.wrapper.Node.subclass({
 
 // эквивалент, сокращенная запись
 var NodeWithSatellite = basis.dom.wrapper.Node.subclass({
-  satelliteConfig: {
+  satellite: {
     example: basis.dom.wrapper.Node.subclass({ .. })
   }
 });
@@ -115,12 +115,12 @@ var NodeWithSatellite = basis.dom.wrapper.Node.subclass({
 basis.require('basis.ui');
 
 var view = new basis.ui.Node({
-  template: basis.resource('path/to/template.tmpl'),
+  template: basis.resource('./path/to/template.tmpl'),
   binding: {
     name: 'data:',
     groups: 'satellite:'
   },
-  satelliteConfig: {
+  satellite: {
     groups: {
       existsIf: function(owner){
         return owner.data.groups instanceof basis.data.AbstractDataset;
@@ -129,9 +129,9 @@ var view = new basis.ui.Node({
         return owner.data.groups;
       },
       instanceOf: basis.ui.Node.subclass({
-        template: basis.resource('path/to/group-list.tmpl'),
+        template: basis.resource('./path/to/group-list.tmpl'),
         childClass: {
-          template: basis.resource('path/to/group.tmpl'),
+          template: basis.resource('./path/to/group.tmpl'),
           binding: {
             name: 'data:'
           }

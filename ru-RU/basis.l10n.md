@@ -77,7 +77,7 @@ console.log(myDict.token('nonexistent').value);
 В таком случае именем токена является конкатенация ключей разделеных точкой (`.`).
 
 ```js
-var myDict = basis.l10n.dictionary('path/to/dict.l10n');
+var myDict = basis.l10n.dictionary('./path/to/dict.l10n');
 console.log(myDict.token('example').value);
 // console> { foo: "Foo", bar: "Bar" }
 console.log(myDict.token('example.foo').value);
@@ -248,7 +248,7 @@ basis.l10n.setCulture('ru-RU');
 ```
 
 ```js
-var myDict = basis.l10n.dictionary('path/to/dict.l10n');
+var myDict = basis.l10n.dictionary('./path/to/dict.l10n');
 
 console.log(myDict.token('example.foo'));
 // console> basis.l10n.Token { name: 'example.foo', value: 'Foo' }
@@ -398,7 +398,7 @@ var view = new basis.ui.Node({
 Для маркеров с префиксом `l10n:` допускается указание вложенного маркера, вместо последней части пути. Таким образом при изменении биндинга будет выбираться тот или иной токен.
 
 ```html
-<b:l10n src="path/to/dict.l10n"/>
+<b:l10n src="./path/to/dict.l10n"/>
 
 <div title="{l10n:attr.example}: {value}">
   Default: {l10n:foo}<br/>

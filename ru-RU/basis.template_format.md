@@ -146,7 +146,7 @@
 Тег имеет единственный атрибут `src`, в котором указывается путь к файлу стилей. Если описание шаблона находится в отдельном файле, то путь разрешается относительно него, иначе относительно корня приложения.
 
 ```html
-<b:style src="item.css"/>
+<b:style src="./item.css"/>
 
 <div class="item">
   ...
@@ -170,7 +170,7 @@
 Тег имеет единственный атрибут `src`, в котором указывается путь к файлу словаря. Если описание шаблона находится в отдельном файле, то путь разрешается относительно него, иначе относительно корня приложения.
 
 ```html
-<b:l10n src="path/to/dict.l10n"/>
+<b:l10n src="./path/to/dict.l10n"/>
 
 <h1>{l10n:greeting}</h1>
 ```
@@ -288,7 +288,7 @@
       * путь к файлу; если путь относительный (не начинается с `/`), то он разрешается относительно файла шаблона или относительно корня приложения, если описание находится не в отдельном файле;
 
         ```html
-          <b:include src="path/to/file.tmpl"/>
+          <b:include src="./path/to/file.tmpl"/>
         ```
 
       * имя шаблона определенное с помощью `basis.template.define` (подробнее ["Темы"](basis.template_theme.md))
@@ -310,7 +310,7 @@
 Исходный шаблон:
 
 ```html
-<b:include src="foo.tmpl" id="foo" class="extra-class with_{binding}"/>
+<b:include src="./foo.tmpl" id="foo" class="extra-class with_{binding}"/>
 ```
 
 foo.tmpl:
@@ -330,7 +330,7 @@ foo.tmpl:
   * `<b:before>` – содержимое этого тега вставляется перед узлом с указанной ссылкой; атрибут `ref` должен содержать название ссылки на узел; если такого атрибута нет или в подключаемом описании нет узла с такой ссылкой, то данный тег игнорируется;
 
     ```html
-    <b:include src="foo.tmpl">
+    <b:include src="./foo.tmpl">
       <b:before ref="label">
         [inserted content]
       </b:before>
@@ -357,7 +357,7 @@ foo.tmpl:
   * `<b:after>` – работает так же как и `<b:before>`, но вставка происходит после элемента;
 
     ```html
-    <b:include src="foo.tmpl">
+    <b:include src="./foo.tmpl">
       <b:after ref="label">
         [inserted content]
       </b:after>
@@ -384,7 +384,7 @@ foo.tmpl:
   * `<b:prepend>` – вставляет содержимое в начало элемента с указаной в атрибуте `ref` ссылкой; если атрибут отсутствует, то будет использовать ссылка `element`; если узла с такой ссылкой нет или узел не является элементом, то тег игнорируется;
 
     ```html
-    <b:include src="foo.tmpl">
+    <b:include src="./foo.tmpl">
       <b:prepend ref="label">
         [inserted content]
       </b:prepend>
@@ -410,7 +410,7 @@ foo.tmpl:
   * `<b:append>` – работает так же, как и `<b:prepend>`, но вставляет содержимое в конец элемента;
 
     ```html
-    <b:include src="foo.tmpl">
+    <b:include src="./foo.tmpl">
       <b:append ref="label">
         [inserted content]
       </b:append>
@@ -436,7 +436,7 @@ foo.tmpl:
   * `<b:replace>` – заменяет содержимым узел с указаной в атрибуте `ref` ссылкой; если узла с такой ссылкой нет, то тег игнорируется; если атрибут `ref` отсутствует, то заменяется узел с ссылкой `{element}`;
 
     ```html
-    <b:include src="foo.tmpl">
+    <b:include src="./foo.tmpl">
       <b:replace ref="label">
         [new content]
       </b:replace>
@@ -487,7 +487,7 @@ foo.tmpl:
   * `<b:attr>` и `<b:set-attr>` – уставливает атрибут с именем `name` и значением `value` элементу с ссылкой `ref`;
 
     ```html
-    <b:include src="foo.tmpl">
+    <b:include src="./foo.tmpl">
       <b:attr ref="label" name="foo" value="bar"/>
     </b:inclide>
     ```
@@ -511,7 +511,7 @@ foo.tmpl:
   * `<b:append-attr>` – добавляет значение к значению атрибута;
 
     ```html
-    <b:include src="foo.tmpl">
+    <b:include src="./foo.tmpl">
       <b:append-attr ref="label" name="foo" value="def"/>
       <b:append-attr ref="label" name="bar" value="baz"/>
     </b:inclide>
@@ -536,7 +536,7 @@ foo.tmpl:
   * `<b:remove-attr>` – удаляет атрибут;
 
     ```html
-    <b:include src="foo.tmpl">
+    <b:include src="./foo.tmpl">
       <b:remove-attr ref="label" name="foo"/>
     </b:inclide>
     ```
@@ -560,7 +560,7 @@ foo.tmpl:
   * `<b:class>` и `<b:append-class>` – добавляет класс (классы) в атрибут `class`;
 
     ```html
-    <b:include src="foo.tmpl">
+    <b:include src="./foo.tmpl">
       <b:class ref="label" value="foo foo_{selected}"/>
     </b:inclide>
     ```
@@ -584,7 +584,7 @@ foo.tmpl:
   * `<b:set-class>` – замещает значение атрибута `class` на новое значение;
 
     ```html
-    <b:include src="foo.tmpl">
+    <b:include src="./foo.tmpl">
       <b:class ref="label" value="foo foo_{selected}"/>
     </b:inclide>
     ```

@@ -8,7 +8,7 @@ var Foo = basis.ui.Node.subclass({
 });
 
 var node = new basis.ui.Node({
-  template: new basis.template.html.Template(basis.resource('path/to/template.tmpl'))
+  template: new basis.template.html.Template(basis.resource('./path/to/template.tmpl'))
 });
 ```
 
@@ -28,7 +28,7 @@ var Foo = basis.ui.Node.subclass({
 });
 
 var node = new basis.ui.Node({
-  template: basis.resource('path/to/template.tmpl')
+  template: basis.resource('./path/to/template.tmpl')
 });
 ```
 

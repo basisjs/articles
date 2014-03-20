@@ -9,7 +9,7 @@
 Результатом вызова `basis.resource` будет специальная функция, которая возвращает содержимое файла. Такая функция перенимает интерфейс у [`basis.Token`](basis.Token.md) и поддерживает механизм [`binding bridge`](bindingbridge.md). Первый её вызов приводит к загрузке файла и его кешированию, а последующие вызовы лишь возвращают закешированный результат. У такой функции также есть метод `fetch`, который делает то же, что и вызов самой функции, и используется для улучшения читаемости кода.
 
 ```js
-var someText = basis.resource('path/to/file.txt'); // объявление, файл еще не загружен
+var someText = basis.resource('./path/to/file.txt'); // объявление, файл еще не загружен
 
 console.log(someText());        // файл будет загружен, его содержимое будет закешировано и возвращено
 console.log(someText.fetch());  // эквивалент, будет возвращено закешированное значение
@@ -19,7 +19,7 @@ console.log(someText.fetch());  // эквивалент, будет возвра
 
 ```js
 var MyControl = basis.ui.Node.subclass({
-  template: basis.resource('path/to/template.tmpl')
+  template: basis.resource('./path/to/template.tmpl')
 });
 ```
 
@@ -47,7 +47,7 @@ var MyControl = basis.ui.Node.subclass({
 basis.require('basis.ui');
 
 var list = basis.ui.Node({
-  template: resource('template/list.tmpl'),  // путь к файлу /src/module/list/template/list.tmpl
+  template: resource('./template/list.tmpl'),  // путь к файлу /src/module/list/template/list.tmpl
   ...
 });
 
@@ -75,7 +75,7 @@ var module = {
   exports: {}
 };
 var relResource = function(url){
-  return basis.resource('src/module/list/' + url);
+  return basis.resource('./src/module/list/' + url);
 };
 
 (function(exports, module, basis, global, __filename, __dirname, resource){
@@ -124,7 +124,7 @@ if (settings.someName) {
 Компилятор `CoffeeScript` можно подключить через механизм ресурсов:
 
 ```js
-var CoffeeScript = basis.resource('path/to/coffeescript.js').fetch().CoffeeScript;
+var CoffeeScript = basis.resource('./path/to/coffeescript.js').fetch().CoffeeScript;
 
 basis.resource.extensions['.coffee'] = function(content, url){
   return basis.resource.extensions['.js'](CoffeeScript.compile(content), url);
@@ -152,7 +152,7 @@ basis.resource.extensions['.coffee'] = function(content, url){
 Содержимое `compile-coffee-script.js` может иметь такой вид:
 
 ```js
-var CoffeeScript = require('path/to/coffeescript.js');
+var CoffeeScript = require('./path/to/coffeescript.js');
 
 exports.process = function(content, file, baseURI, console){
   console.log('Compile ' + file.relpath + ' to javascript');

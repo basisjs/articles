@@ -42,7 +42,7 @@ var Foo = basis.ui.Node.subclass({
 });
 
 var node = new basis.ui.Node({
-  template: basis.resource('path/to/template.tmpl')
+  template: basis.resource('./path/to/template.tmpl')
 });
 ```
 

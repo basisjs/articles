@@ -6,7 +6,7 @@
 
 ```js
 var Foo = basis.ui.Node.subclass({
-  template: basis.resource('path/to/template.tmpl'),
+  template: basis.resource('./path/to/template.tmpl'),
   binding: {
     value: function(node){   // теперь шаблон может использовать {value}
       return node.value;
@@ -38,7 +38,7 @@ var node = new basis.ui.Node({
 
 ```js
 var Foo = basis.ui.Node.subclass({
-  template: basis.resource('path/to/template.tmpl'),
+  template: basis.resource('./path/to/template.tmpl'),
   binding: {
     value: function(node){       // простая запись, без указания событий;
       return node.value;         // для обновления используем updateBind

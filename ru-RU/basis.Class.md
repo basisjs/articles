@@ -270,9 +270,9 @@ while (cls)
 
 ```js
 var foo = new basis.ui.Node({
-  template: resource('path/to/view.tmpl'),
+  template: resource('./path/to/view.tmpl'),
   childClass: {
-    template: resource('path/to/item.tmpl'),
+    template: resource('./path/to/item.tmpl'),
     binding: {
       title: 'data:'
     }
@@ -284,9 +284,9 @@ var foo = new basis.ui.Node({
 var Foo = new basis.ui.Node.subclass({
   className: 'app.example.View',   // для классов имеет смысл добавлять имя класса,
                                    // что облегчает отладку
-  template: resource('path/to/view.tmpl'),
+  template: resource('./path/to/view.tmpl'),
   childClass: {
-    template: resource('path/to/item.tmpl'),
+    template: resource('./path/to/item.tmpl'),
     binding: {
       title: 'data:'
     }
@@ -297,7 +297,7 @@ var foo = new Foo({
   dataSource: someDataset
 });
 var bar = new Foo({
-  template: resource('some/path/custom/view.tmpl'),
+  template: resource('./some/path/custom/view.tmpl'),
   dataSource: anotherDataset
 });
 ```
@@ -340,11 +340,11 @@ var nodes = [];
 
 for (var i = 0; i < data.length; i++)
   nodes.push(new basis.ui.Node({
-    template: resource('path/to/node.tmpl'),    // !!!
+    template: resource('./path/to/node.tmpl'),    // !!!
     name: data[i],
-    childClass: {                               // !!!
-      template: resource('path/to/item.tmpl'),  // !!!
-      binding: {                                // !!!
+    childClass: {                                 // !!!
+      template: resource('./path/to/item.tmpl'),  // !!!
+      binding: {                                  // !!!
         title: 'data:'
       }
     }
@@ -357,10 +357,10 @@ for (var i = 0; i < data.length; i++)
 var data = [...];
 var nodes = [];
 var MyNode = basis.ui.Node.subclass({
-  template: resource('path/to/node.tmpl'),    // !!!
-  childClass: {                               // !!!
-    template: resource('path/to/item.tmpl'),  // !!!
-    binding: {                                // !!!
+  template: resource('./path/to/node.tmpl'),    // !!!
+  childClass: {                                 // !!!
+    template: resource('./path/to/item.tmpl'),  // !!!
+    binding: {                                  // !!!
       title: 'data:'
     }
   }

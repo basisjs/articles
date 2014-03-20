@@ -12,7 +12,7 @@ console.log(basis.template.theme('myTheme'));
 Тема ассоциирует описания с некоторыми именами. В дальнейшем эти имена используются в коде и описаниях шаблонов, в качестве ссылки на описание. Для ассоциации используется метод темы `define`.
 
 ```js
-basis.template.theme('myTheme').define('foo.bar.baz', resource('path/to.tmpl'))
+basis.template.theme('myTheme').define('foo.bar.baz', resource('./path/to.tmpl'))
 
 var node = new basis.ui.Node({
   template: basis.template.get('foo.bar.baz')
@@ -89,7 +89,7 @@ console.log(source.value);
 
     ```js
     var res = basis.template.theme('foo').define('my.namespace', {
-      'foo': basis.resource('path/to.tmpl'),
+      'foo': basis.resource('./path/to.tmpl'),
       'baz': 'some content'
     });
 
@@ -101,7 +101,7 @@ console.log(source.value);
 
     ```js
     var res = basis.template.theme('foo').define({
-      'foo.bar': basis.resource('path/to.tmpl'),
+      'foo.bar': basis.resource('./path/to.tmpl'),
       'baz': 'some content'
     });
 
@@ -112,14 +112,14 @@ console.log(source.value);
   * define(fn) – используется результат вызова этой функции, предполагается что это будет объект;
 
     ```js
-    basis.template.theme('foo').define(basis.resource('template/mytheme/mytheme.js'));
+    basis.template.theme('foo').define(basis.resource('./template/mytheme/mytheme.js'));
     ```
 
     template/mytheme/mytheme.js:
 
     ```js
     module.exports = {
-      'foo.bar': resource('bar.tmpl'),
+      'foo.bar': resource('./bar.tmpl'),
       'baz': 'some content'
     };
     ```
