@@ -35,7 +35,7 @@
 
 ### Индексный файл и подключение basis.js
 
-Для начала нужно добавить папку с исходниками `basis.js` в проект. Для этого можно либо клонировать проект из [репозитария](https://github.com/basisjs/basisjs), либо использовать `bower`.
+Для начала нужно добавить папку с исходниками `basis.js` в проект. Для этого можно либо клонировать проект из [репозитария](https://github.com/basisjs/basisjs), либо использовать `bower`:
 
     > bower install basis
 
@@ -49,7 +49,7 @@
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="bower_components/basisjs/src/basis.js" basis-config=""></script>
+  <script src="bower_components/basis/src/basis.js" basis-config=""></script>
 </body>
 </html>
 ```
@@ -72,7 +72,7 @@
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="bower_components/basisjs/src/basis.js" basis-config=""></script>
+  <script src="bower_components/basis/src/basis.js" basis-config=""></script>
   <script>
     basis.require('basis.ui');
 
@@ -113,7 +113,7 @@
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="bower_components/basisjs/src/basis.js" basis-config=""></script>
+  <script src="bower_components/basis/src/basis.js" basis-config=""></script>
   <script>
     basis.require('./hello.js');
   </script>
@@ -505,14 +505,13 @@ var list = new basis.ui.Node({
 
 ```html
 <!doctype html>
-
 <html>
 <head>
   <meta charset="utf-8">
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="bower_components/basisjs/src/basis.js" basis-config=""></script>
+  <script src="bower_components/basis/src/basis.js" basis-config=""></script>
   <script>
     basis.require('./hello.js');
     basis.require('./list.js');
@@ -605,7 +604,7 @@ new basis.ui.Node({
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="bower_components/basisjs/src/basis.js" basis-config=""></script>
+  <script src="bower_components/basis/src/basis.js" basis-config=""></script>
   <script>
     basis.require('./app.js');
   </script>
@@ -623,12 +622,12 @@ new basis.ui.Node({
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="bower_components/basisjs/src/basis.js" basis-config="autoload: 'app'"></script>
+  <script src="bower_components/basis/src/basis.js" basis-config="autoload: 'app'"></script>
 </body>
 </html>
 ```
 
-Вот и все. Согласитесь, стало гораздо лучше.
+Согласитесь, стало гораздо лучше.
 
 И все же осталась небольшая проблема. Да, порядок дочерних представлений задается в корневом представлении. Но они добавляются последовательно, один за другим. А достаточно часто нам необходимо размещать дочерние представления в конкретные точки разметки, более сложной чем просто пустой `<div>`. Для этого необходимо использовать – сателлиты.
 
@@ -722,13 +721,13 @@ new basis.ui.Node({
 
 ```html
 <!-- было -->
-<script src="bower_components/basisjs/src/basis.js" basis-config="autoload: 'app'"></script>
+<script src="bower_components/basis/src/basis.js" basis-config="autoload: 'app'"></script>
 
 <!-- стало -->
-<script src="bower_components/basisjs/src/basis.js" basis-config="autoload: 'src/app'"></script>
+<script src="bower_components/basis/src/basis.js" basis-config="autoload: 'src/app'"></script>
 ```
 
-Структура файлов должна получится такой.
+Структура файлов должна получится такой:
 
 ![Структура файлов](file_structure_3.png)
 
@@ -743,6 +742,8 @@ new basis.ui.Node({
 Конечно, вы можете придумать собственную структуру файлов, так как вам больше нравится. В этом вас никто не ограничивает.
 
 Можно заметить, что мы перемещали сразу несколько файлов, но после перемещения нужно было вносить изменения лишь в один файл в одном месте. Так обычно и бывает. Это основное преимущество, которое дают относительные пути.
+
+Итоговый результат можно посмотреть [здесь](code).
 
 ## Инструменты
 
@@ -809,4 +810,4 @@ new basis.ui.Node({
 
 В первой части мы рассмотрели основные этапы разработки приложений на `basis.js`. Попробовали различные варианты создания представлений и организации файлов проекта. Приобретенные знания помогут при изучении остальных частей руководства.
 
-В [следующей части](../part2/index.md) будут расмотрены механизмы работы с данными и их использование совместно с представлениями.
+В [следующей части](../part2/index.md) будут рассмотрены механизмы работы с данными и их использование совместно с представлениями.
