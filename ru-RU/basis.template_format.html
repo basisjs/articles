@@ -1,0 +1,1011 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+    <head prefix="og: http://ogp.me/ns# book: http://ogp.me/ns/book#">
+        
+        <meta charset="UTF-8">
+        <title>Формат шаблонов | Разработка на basis.js</title>
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="robots" content="index, follow">
+        <meta name="author" content="basisjs">
+        <meta name="description" content="Книга о разработке на **basis.js** и описывающие его устройство, доступна в формате [PDF](basisJs.pdf) и [ePub](basisJs.epub).">
+        <meta name="keywords" content="gitbook,github" >
+        <meta name="generator" content="www.gitbook.io">
+
+        
+        <link rel="next" href="./basis.template_bindings.html" />
+        
+        
+        <link rel="prev" href="./basis.template.html" />
+        
+
+        <meta property="og:title" content="Формат шаблонов | Разработка на basis.js">
+        <meta property="og:site_name" content="Разработка на basis.js">
+        <meta property="og:type" content="book">
+        <meta property="og:locale" content="en_US">
+
+        <meta property="book:author" content="https://github.com/basisjs">
+        <meta property="book:tag" content="GitBook">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+        
+    </head>
+    <body>
+        
+        <link rel="stylesheet" href="gitbook/style.css">
+        
+        
+    <div class="book" data-github="basisjs/articles" data-level="7.1" data-basepath="." data-revision="1398012760591">
+    <div class="book-header">
+    <!-- Actions Left -->
+    
+    <a href="https://github.com/basisjs/articles" target="_blank" class="btn pull-left"><i class="fa fa-github-alt"></i></a>
+    
+    <a href="#" class="btn pull-left toggle-summary"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search"><i class="fa fa-search"></i></a>
+
+    <!-- Actions Right -->
+    <a href="#" target="_blank" class="btn pull-right" data-sharing="google-plus"><i class="fa fa-google-plus"></i></a>
+    <a href="#" target="_blank" class="btn pull-right" data-sharing="facebook"><i class="fa fa-facebook"></i></a>
+    <a href="#" target="_blank" class="btn pull-right" data-sharing="twitter"><i class="fa fa-twitter"></i></a>
+
+    
+    <a href="https://github.com/basisjs/articles/stargazers" target="_blank" class="btn pull-right count-star"><i class="fa fa-star-o"></i> Star (<span>-</span>)</a>
+    <a href="https://github.com/basisjs/articles/watchers" target="_blank" class="btn pull-right count-watch"><i class="fa fa-eye"></i> Watch (<span>-</span>)</a>
+    
+
+    <!-- Title -->
+    <h1><a href="./" >Разработка на basis.js</a></h1>
+</div>
+
+    <div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+        <li>
+            <a href="https://github.com/basisjs" target="blank">About the author</a>
+        </li>
+        <li>
+            <a href="https://github.com/basisjs/articles/issues" target="blank">Questions and Issues</a>
+        </li>
+        <li>
+            <a href="https://github.com/basisjs/articles/edit/master/basis.template_format.md" target="blank">Edit and Contribute</a>
+        </li>
+        <li class="divider"></li>
+        
+        <li data-level="0" data-path="index.html">
+            <a href="./"><i class="fa fa-check"></i> Introduction</a>
+        </li>
+        
+            <li  data-level="1" data-path="get-started.html">
+                
+                <a href="./get-started.html">
+                    <i class="fa fa-check"></i> <b>1.</b> Приступая к разработке
+                </a>
+                
+                
+            </li>
+        
+            <li  data-level="2" >
+                
+                <span><b>2.</b> Ядро (basis.js)</span>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="2.1" data-path="resources.html">
+                            
+                            <a href="./resources.html">
+                                <i class="fa fa-check"></i> <b>2.1.</b> Ресурсы (модульность)
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="2.2" data-path="basis.Class.html">
+                            
+                            <a href="./basis.Class.html">
+                                <i class="fa fa-check"></i> <b>2.2.</b> Классы
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="2.3" data-path="basis.Token.html">
+                            
+                            <a href="./basis.Token.html">
+                                <i class="fa fa-check"></i> <b>2.3.</b> basis.Token
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="2.4" >
+                            
+                            <span><b>2.4.</b> basis.getter</span>
+                            
+                        </li>
+                    
+                        <li  data-level="2.5" data-path="bindingbridge.html">
+                            
+                            <a href="./bindingbridge.html">
+                                <i class="fa fa-check"></i> <b>2.5.</b> Binding bridge
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="3" data-path="basis.event.html">
+                
+                <a href="./basis.event.html">
+                    <i class="fa fa-check"></i> <b>3.</b> События
+                </a>
+                
+                
+            </li>
+        
+            <li  data-level="4" data-path="basis.data.html">
+                
+                <a href="./basis.data.html">
+                    <i class="fa fa-check"></i> <b>4.</b> Данные
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="4.1" data-path="basis.data.Value.html">
+                            
+                            <a href="./basis.data.Value.html">
+                                <i class="fa fa-check"></i> <b>4.1.</b> Значение
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.2" data-path="basis.data.Object.html">
+                            
+                            <a href="./basis.data.Object.html">
+                                <i class="fa fa-check"></i> <b>4.2.</b> Объект
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.3" data-path="basis.data.datasets.html">
+                            
+                            <a href="./basis.data.datasets.html">
+                                <i class="fa fa-check"></i> <b>4.3.</b> Наборы
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.4" data-path="basis.data.dataset.html">
+                            
+                            <a href="./basis.data.dataset.html">
+                                <i class="fa fa-check"></i> <b>4.4.</b> basis.data.dataset
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.5" >
+                            
+                            <span><b>4.5.</b> Index</span>
+                            
+                        </li>
+                    
+                        <li  data-level="4.6" >
+                            
+                            <span><b>4.6.</b> Entity</span>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="5" data-path="basis.dom.wrapper.html">
+                
+                <a href="./basis.dom.wrapper.html">
+                    <i class="fa fa-check"></i> <b>5.</b> basis.dom.wrapper
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="5.1" data-path="basis.dom.wrapper_dom.html">
+                            
+                            <a href="./basis.dom.wrapper_dom.html">
+                                <i class="fa fa-check"></i> <b>5.1.</b> DOM
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.2" data-path="basis.dom.wrapper_childNodes.html">
+                            
+                            <a href="./basis.dom.wrapper_childNodes.html">
+                                <i class="fa fa-check"></i> <b>5.2.</b> Дочерние узлы
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.3" data-path="basis.dom.wrapper_sorting.html">
+                            
+                            <a href="./basis.dom.wrapper_sorting.html">
+                                <i class="fa fa-check"></i> <b>5.3.</b> Сортировка
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.4" data-path="basis.dom.wrapper_grouping.html">
+                            
+                            <a href="./basis.dom.wrapper_grouping.html">
+                                <i class="fa fa-check"></i> <b>5.4.</b> Группировка
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.5" data-path="basis.dom.wrapper_data.html">
+                            
+                            <a href="./basis.dom.wrapper_data.html">
+                                <i class="fa fa-check"></i> <b>5.5.</b> Привязка данных
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.6" data-path="basis.dom.wrapper_owner.html">
+                            
+                            <a href="./basis.dom.wrapper_owner.html">
+                                <i class="fa fa-check"></i> <b>5.6.</b> Паттерн &quot;владелец&quot;
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.7" data-path="basis.dom.wrapper_satellite.html">
+                            
+                            <a href="./basis.dom.wrapper_satellite.html">
+                                <i class="fa fa-check"></i> <b>5.7.</b> Сателлиты
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.8" data-path="basis.dom.wrapper_disabled.html">
+                            
+                            <a href="./basis.dom.wrapper_disabled.html">
+                                <i class="fa fa-check"></i> <b>5.8.</b> Доступность (disabled/enabled)
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.9" data-path="basis.dom.wrapper_selection.html">
+                            
+                            <a href="./basis.dom.wrapper_selection.html">
+                                <i class="fa fa-check"></i> <b>5.9.</b> Выделение (selection)
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="6" data-path="basis.ui.html">
+                
+                <a href="./basis.ui.html">
+                    <i class="fa fa-check"></i> <b>6.</b> Интерфейс пользователя
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="6.1" data-path="basis.ui_template.html">
+                            
+                            <a href="./basis.ui_template.html">
+                                <i class="fa fa-check"></i> <b>6.1.</b> Привязка шаблонов
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="6.2" data-path="basis.ui_bindings.html">
+                            
+                            <a href="./basis.ui_bindings.html">
+                                <i class="fa fa-check"></i> <b>6.2.</b> Биндинги (bindings)
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="6.3" data-path="basis.ui_actions.html">
+                            
+                            <a href="./basis.ui_actions.html">
+                                <i class="fa fa-check"></i> <b>6.3.</b> Обратная связь (actions)
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="7" data-path="basis.template.html">
+                
+                <a href="./basis.template.html">
+                    <i class="fa fa-check"></i> <b>7.</b> Шаблоны
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="7.1" data-path="basis.template_format.html">
+                            
+                            <a href="./basis.template_format.html">
+                                <i class="fa fa-check"></i> <b>7.1.</b> Формат шаблонов
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="7.2" data-path="basis.template_bindings.html">
+                            
+                            <a href="./basis.template_bindings.html">
+                                <i class="fa fa-check"></i> <b>7.2.</b> Правила применения значений биндингам
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="7.3" >
+                            
+                            <span><b>7.3.</b> Динамическое обновление (live update)</span>
+                            
+                        </li>
+                    
+                        <li  data-level="7.4" data-path="basis.template_theme.html">
+                            
+                            <a href="./basis.template_theme.html">
+                                <i class="fa fa-check"></i> <b>7.4.</b> Темы
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="8" data-path="basis.l10n.html">
+                
+                <a href="./basis.l10n.html">
+                    <i class="fa fa-check"></i> <b>8.</b> L10n
+                </a>
+                
+                
+            </li>
+        
+            <li  data-level="9" data-path="basis.net.html">
+                
+                <a href="./basis.net.html">
+                    <i class="fa fa-check"></i> <b>9.</b> basis.net
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="9.1" data-path="basis.net.action.html">
+                            
+                            <a href="./basis.net.action.html">
+                                <i class="fa fa-check"></i> <b>9.1.</b> basis.net.action
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="9.2" data-path="basis.net.service.html">
+                            
+                            <a href="./basis.net.service.html">
+                                <i class="fa fa-check"></i> <b>9.2.</b> basis.net.service
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="10" >
+                
+                <span><b>10.</b> Router</span>
+                
+                
+            </li>
+        
+            <li  data-level="11" data-path="tutorial/index.html">
+                
+                <a href="./tutorial/index.html">
+                    <i class="fa fa-check"></i> <b>11.</b> Руководство
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="11.1" data-path="tutorial/part1/index.html">
+                            
+                            <a href="./tutorial/part1/index.html">
+                                <i class="fa fa-check"></i> <b>11.1.</b> Часть 1. Начало работы, представления, модули, инструменты
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="11.2" data-path="tutorial/part2/index.html">
+                            
+                            <a href="./tutorial/part2/index.html">
+                                <i class="fa fa-check"></i> <b>11.2.</b> Часть 2. Работа с данными: модели, наборы и значения
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="page-wrapper" tabindex="-1">
+                <div class="book-progress">
+    <div class="bar">
+        <div class="inner" style="width: 83.33333333333333%;min-width: 80.55555555555556%;"></div>
+    </div>
+    <div class="chapters">
+    
+        <a href="./index.html" title="Introduction" class="chapter done new-chapter" data-progress="0" style="left: 0%;"></a>
+    
+        <a href="./get-started.html" title="Приступая к разработке" class="chapter done new-chapter" data-progress="1" style="left: 2.7777777777777777%;"></a>
+    
+        <a href="./tutorial/index.html" title="Руководство" class="chapter done " data-progress="11" style="left: 5.555555555555555%;"></a>
+    
+        <a href="./tutorial/part1/index.html" title="Часть 1. Начало работы, представления, модули, инструменты" class="chapter done " data-progress="11.1" style="left: 8.333333333333334%;"></a>
+    
+        <a href="./tutorial/part2/index.html" title="Часть 2. Работа с данными: модели, наборы и значения" class="chapter done " data-progress="11.2" style="left: 11.11111111111111%;"></a>
+    
+        <a href="./resources.html" title="Ресурсы (модульность)" class="chapter done " data-progress="2.1" style="left: 13.88888888888889%;"></a>
+    
+        <a href="./basis.Class.html" title="Классы" class="chapter done " data-progress="2.2" style="left: 16.666666666666668%;"></a>
+    
+        <a href="./basis.Token.html" title="basis.Token" class="chapter done " data-progress="2.3" style="left: 19.444444444444443%;"></a>
+    
+        <a href="./bindingbridge.html" title="Binding bridge" class="chapter done " data-progress="2.5" style="left: 22.22222222222222%;"></a>
+    
+        <a href="./basis.event.html" title="События" class="chapter done new-chapter" data-progress="3" style="left: 25%;"></a>
+    
+        <a href="./basis.data.html" title="Данные" class="chapter done new-chapter" data-progress="4" style="left: 27.77777777777778%;"></a>
+    
+        <a href="./basis.data.Value.html" title="Значение" class="chapter done " data-progress="4.1" style="left: 30.555555555555557%;"></a>
+    
+        <a href="./basis.data.Object.html" title="Объект" class="chapter done " data-progress="4.2" style="left: 33.333333333333336%;"></a>
+    
+        <a href="./basis.data.datasets.html" title="Наборы" class="chapter done " data-progress="4.3" style="left: 36.111111111111114%;"></a>
+    
+        <a href="./basis.data.dataset.html" title="basis.data.dataset" class="chapter done " data-progress="4.4" style="left: 38.888888888888886%;"></a>
+    
+        <a href="./basis.dom.wrapper.html" title="basis.dom.wrapper" class="chapter done new-chapter" data-progress="5" style="left: 41.666666666666664%;"></a>
+    
+        <a href="./basis.dom.wrapper_dom.html" title="DOM" class="chapter done " data-progress="5.1" style="left: 44.44444444444444%;"></a>
+    
+        <a href="./basis.dom.wrapper_childNodes.html" title="Дочерние узлы" class="chapter done " data-progress="5.2" style="left: 47.22222222222222%;"></a>
+    
+        <a href="./basis.dom.wrapper_sorting.html" title="Сортировка" class="chapter done " data-progress="5.3" style="left: 50%;"></a>
+    
+        <a href="./basis.dom.wrapper_grouping.html" title="Группировка" class="chapter done " data-progress="5.4" style="left: 52.77777777777778%;"></a>
+    
+        <a href="./basis.dom.wrapper_data.html" title="Привязка данных" class="chapter done " data-progress="5.5" style="left: 55.55555555555556%;"></a>
+    
+        <a href="./basis.dom.wrapper_owner.html" title="Паттерн &quot;владелец&quot;" class="chapter done " data-progress="5.6" style="left: 58.333333333333336%;"></a>
+    
+        <a href="./basis.dom.wrapper_satellite.html" title="Сателлиты" class="chapter done " data-progress="5.7" style="left: 61.111111111111114%;"></a>
+    
+        <a href="./basis.dom.wrapper_disabled.html" title="Доступность (disabled/enabled)" class="chapter done " data-progress="5.8" style="left: 63.888888888888886%;"></a>
+    
+        <a href="./basis.dom.wrapper_selection.html" title="Выделение (selection)" class="chapter done " data-progress="5.9" style="left: 66.66666666666667%;"></a>
+    
+        <a href="./basis.ui.html" title="Интерфейс пользователя" class="chapter done new-chapter" data-progress="6" style="left: 69.44444444444444%;"></a>
+    
+        <a href="./basis.ui_template.html" title="Привязка шаблонов" class="chapter done " data-progress="6.1" style="left: 72.22222222222223%;"></a>
+    
+        <a href="./basis.ui_bindings.html" title="Биндинги (bindings)" class="chapter done " data-progress="6.2" style="left: 75%;"></a>
+    
+        <a href="./basis.ui_actions.html" title="Обратная связь (actions)" class="chapter done " data-progress="6.3" style="left: 77.77777777777777%;"></a>
+    
+        <a href="./basis.template.html" title="Шаблоны" class="chapter done new-chapter" data-progress="7" style="left: 80.55555555555556%;"></a>
+    
+        <a href="./basis.template_format.html" title="Формат шаблонов" class="chapter done " data-progress="7.1" style="left: 83.33333333333333%;"></a>
+    
+        <a href="./basis.template_bindings.html" title="Правила применения значений биндингам" class="chapter  " data-progress="7.2" style="left: 86.11111111111111%;"></a>
+    
+        <a href="./basis.template_theme.html" title="Темы" class="chapter  " data-progress="7.4" style="left: 88.88888888888889%;"></a>
+    
+        <a href="./basis.l10n.html" title="L10n" class="chapter  new-chapter" data-progress="8" style="left: 91.66666666666667%;"></a>
+    
+        <a href="./basis.net.html" title="basis.net" class="chapter  new-chapter" data-progress="9" style="left: 94.44444444444444%;"></a>
+    
+        <a href="./basis.net.action.html" title="basis.net.action" class="chapter  " data-progress="9.1" style="left: 97.22222222222223%;"></a>
+    
+        <a href="./basis.net.service.html" title="basis.net.service" class="chapter  " data-progress="9.2" style="left: 100%;"></a>
+    
+    </div>
+</div>
+
+                <div class="page-inner">
+                
+                    <section class="normal" id="section-gitbook_28">
+                    
+                        <h1 id="-">Формат шаблонов</h1>
+<p>Шаблоны описываются в формате <code>HTML</code>, но имеет несколько правил:</p>
+<ul>
+<li><p>теги должны быть закрыты (либо иметь закрывающий тег, либо <code>&lt;div/&gt;</code>);</p>
+</li>
+<li><p>имена тегов и атрибутов регистрозависимы, лучше всегда писать их в нижнем регистре (это имеет значение на этапе разбора и сравнения);</p>
+</li>
+<li><p>значения должны быть в двойных кавычках;</p>
+</li>
+<li><p>между именем атрибута и равно, как и между равно и значением атрибута не должно быть пробелов.</p>
+</li>
+</ul>
+<p>Несмотря на эти правила, любой текст описания шаблона считается валидным, даже если описание является пустой строкой.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Hello world!<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Если нарушены правила, то шаблон может быть разобран неверно, то есть будет получен не тот результат, который ожидался. В случае ошибок исключения не выбрасываются.</p>
+<p>При разборе шаблона игнорируются переводы строк и пробельные символы до и после перевода строки.</p>
+<h2 id="-">Маркеры</h2>
+<p>Для обозначения специальных частей шаблона используются специальные маркеры – ссылки и биндинги. Маркеры описываются между фигурными скобками. Между фигурными скобками обычно указывается имя маркера, или список имен разделенных вертикальной чертой <code>|</code>. Проблелы не допускаются.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"item item_{selected}"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"item_title"</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div{childNodesElement}</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>В данном примере задано три маркера: <code>{selected}</code>, <code>{title}</code> и <code>{childNodesElement}</code>. От расположения маркера зависит его значение.</p>
+<p>Для имен маркеров действуют те же правила, что и для имен переменных <code>javascript</code>: в имени могут содержаться только латинские буквы (в любом регистре), цифры, знаки <code>_</code> и <code>$</code>; имя не может начинаться с цифры. Если правила не выполняются хотя бы для одного имени – игнорируется весь маркер.</p>
+<p>Маркеры определяют как можно будет сослаться на определеную часть шаблона (ссылки) и куда будут применены данные (биндинги).</p>
+<h3 id="-">Ссылки</h3>
+<p>Ссылки дают возможность ссылаться на определенный узел в экземпляре шаблона. Когда создается экземпляр шаблона, его DOM <code>фрагмент</code>, для него создается карта, где ключи – это названия ссылок, значения – узлы из его <code>DOM</code> фрагмента.</p>
+<p>Ссылка может ссылаться только на один узел, но на один узел может ссылаться несколько ссылок. Можно сослаться на три типа узлов:</p>
+<ul>
+<li><p>элемент (тег) – указывается после его имени;</p>
+</li>
+<li><p>комментарий – указывается после <code>&lt;!--</code>, после маркера может любой текст;</p>
+</li>
+<li><p>текстовый узел – указывается вне описаний элементов и комментариев, такой маркер станет текстовым узлом в DOM фрагменте.</p>
+</li>
+</ul>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div{element}</span>&gt;</span>
+  {text}
+  <span class="hljs-comment">&lt;!--{comment} это пример комментария с маркером --&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Все другие расположения маркеров ссылками не являются (могут являться биндингами или игнорироваться). Если одно и то же имя указано в нескольких маркерах, то ссылкой является последний.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{foo}</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"first"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{foo}</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"second"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>В данном случае ссылка <code>foo</code> будет ссылать на <code>&lt;span&gt;</code> с классом <code>second</code>.</p>
+<p>Есть специальная ссылка <code>element</code>. Если маркер с таким именем не указан в шаблоне, то она добавляется первому узлу в шаблоне. В предыдущем примере <code>element</code> будет ссылаться на элемент <code>&lt;div&gt;</code>. Такое поведение является желательным в абсолютном большинстве случаех, поэтому маркер <code>element</code> практически никогда не указывается явно.</p>
+<p>Ссылки используются для:</p>
+<ul>
+<li><p>модификации описания шаблона, при его <a href="#binclude">вставке в другой шаблон</a>;</p>
+</li>
+<li><p>для того, чтобы владелец шаблона мог ссылаться на определенные узлы DOM фрагмента экземпляра шаблона.</p>
+</li>
+</ul>
+<h3 id="-">Биндинги</h3>
+<p>Биндинги используются для определения мест привязки значений (данных) к шаблону (частям его DOM фрагмента). Такие маркеры могут быть расположены:</p>
+<ul>
+<li><p>после имени элемента (тега) – биндинг на элемент;</p>
+</li>
+<li><p>в комментарии, сразу после <code>&lt;!--</code> – биндинг на комментарий;</p>
+</li>
+<li><p>вне описания элементов и комментариев – биндинг на текстовый узел;</p>
+</li>
+<li><p>внутри значения атрибута:</p>
+<ul>
+<li><p>class – в зависимости от значения либо будет выставляться определенный класс, либо будет убираться;</p>
+<pre><code class="lang-html">  <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"item item_{selected} item_{state}"</span>/&gt;</span>
+</code></pre>
+</li>
+<li><p>style – может использоваться в секции значения свойства вместе с другими биндигами и дополнительным текстом;</p>
+<pre><code class="lang-html">  <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"color: {color}; background-position: {x}px {y}px; width: {progress}%"</span>/&gt;</span>
+</code></pre>
+</li>
+<li><p>остальные атрибуты – страновится частью выражения (сложения частей значения).</p>
+<pre><code class="lang-html">  <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">checked</span>=<span class="hljs-value">"{selected}"</span> <span class="hljs-attribute">placeholder</span>=<span class="hljs-value">"Введите значение {foo} или {bar}"</span>/&gt;</span>
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>Маркеры в атрибутах должны содержать только одно имя, иначе будут проигнорированы. Для одного узла может быть назначен только один биндинг, поэтому, если в маркере указано несколько имен, то биндингом будет является первое имя.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"{not|a|binding}"</span>&gt;</span>
+  {title|value}
+  <span class="hljs-comment">&lt;!--{comment|whatever}--&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+</code></pre>
+<p>В данном примере биндингами будут <code>title</code> и <code>comment</code>.</p>
+<p>В зависимости от положения (типа) биндинга и значения, передаваемого в шаблон, применяются разные <a href="basis.template_bindings.md">правила</a>.</p>
+<h3 id="xml-well-formed">XML well-formed</h3>
+<p>Указание маркеров с использование фигурных скобок является простым и наглядным, но делает описание не валидным с точки зрения <code>XML</code>. Если необходимо, чтобы описание было валидным <code>XML</code>, чтобы использовать его возможности, можно воспользоваться альтенативным способом указания маркеров.</p>
+<p>Основная проблема, это маркеры для элементов. Вместо указания маркера в фигурных скобках после имени, можно использовать специальный атрибут <code>b:ref</code>.</p>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"item item_{example}"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">b:ref</span>=<span class="hljs-value">"title"</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Маркеры в атрибутах, для текстовых узлов и комментариев не вызывают проблем.</p>
+<blockquote>
+<p>Технически, конечно, нужно так же определить пространство имен (namespace) <code>b</code>, которое используется в том числе и для специальных тегов шаблонов. </p>
+</blockquote>
+<h2 id="-">Специальная разметка</h2>
+<p>В описании шаблонов применяются дополнительные (специальные) теги. Такие теги предваряются префиксом <code>b:</code>, фактически определяя неймспейс и не создавая конфликтов с остальной разметкой.</p>
+<h2 id="-b-style-">\<b:style></h2>
+<p>Шаблоны могут подключать файлы стилей, которые они используют. Обычно рядом с файлом шаблона располагается файл с таким же именем, но с расширением <code>.css</code> содержащий стили к шаблону. Шаблон может подключать произвольное количество файлов стилей.</p>
+<p>Тег имеет единственный атрибут <code>src</code>, в котором указывается путь к файлу стилей. Если описание шаблона находится в отдельном файле, то путь разрешается относительно него, иначе относительно корня приложения.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:style</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./item.css"</span>/&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"item"</span>&gt;</span>
+  ...
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<blockquote>
+<p>Ранее вместо <code>&lt;b:style&gt;</code> использовался тег <code>&lt;b:resource&gt;</code>, его еще можно встретить в шаблонах компонент <code>basis.js</code>. На данный момент они работают одинаково. Но в будущем планируется убрать поддержку <code>&lt;b:resource&gt;</code>, поэтому лучше его не использовать.</p>
+</blockquote>
+<p>Стили подключаются на страницу, только когда создается первый экземпляр шаблона. Если несколько шаблонов используют один и тот же файл стилей, то он подключается только один раз. Если описание шаблона (шаблонов) изменяется так, что перестает использовать определенный файл стилей, и этот не используется другими шаблонами, то стиль изымается из страницы.</p>
+<p>Если описание шаблона включает в себя другое описание, используя <a href="#binclude">\<b:include></a>, и включаемое описание содержит подключение стилей (теги \<b:style>), то эти стили так же подключаются, как собственные. Если это является нежелательным поведением, то тегу <code>&lt;b:include&gt;</code> добавляется атрибут <code>no-style</code>.</p>
+<p>Так как шаблоны могут инициироваться (когда создается их первый экземпляр) в любой момент, а так же могут подключать несколько файлов стилей в произвольном порядке, то нельзя полагаться на порядок подключения стилей. Обычно это не доставляет проблем, но это стоит учитывать, если в разных файлах стилей описываются правила с одинаковым весом (<a href="http://www.w3.org/TR/selectors/#specificity" target="_blank">specificity</a>), применимые к элементу.</p>
+<p>В сборке стили объединяются в один файл и динамического подключения/отключения стилей не происходит. Если используются темы, то генерируется несколько файлов стилей, в каждый из которых попадают только те стили, которые относятся к теме; при смене темы происходит смена используемого файла стилей (в один момент используется только один файл, соотвествующий текущей теме).</p>
+<h2 id="-b-l10n-">\<b:l10n></h2>
+<p>Для определения файла словаря, который используется шаблоном, используется тег <code>&lt;b:l10n&gt;</code>. Если описание шаблона находится в отдельном файле, то по умолчанию шаблон будет использовать словарь с таким же именем файла как имя шаблона, но с расширением <code>.l10n</code> (для шаблона <code>path/to/template.tmpl</code> будет использован файл <code>path/to/template.l10n</code>). Таким образом, использование <code>&lt;b:l10n&gt;</code> имеет смысл, только если нужно использовать другой файл или описание шаблона находится не в отдельном файле.</p>
+<p>Тег имеет единственный атрибут <code>src</code>, в котором указывается путь к файлу словаря. Если описание шаблона находится в отдельном файле, то путь разрешается относительно него, иначе относительно корня приложения.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:l10n</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./path/to/dict.l10n"</span>/&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>{l10n:greeting}<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+</code></pre>
+<p><code>&lt;b:l10n&gt;</code> не влияет на подключаемые описания.</p>
+<h2 id="-b-define-">\<b:define></h2>
+<p>Этот тег используется для определения возможных значений биндинга. На данный момент, это влияет только на биндинги используемые в атрибуте <code>class</code>.</p>
+<p>Когда биндинг используется в атрибуте <code>class</code>, необходимо знать какие значения он может принимать, для того чтобы:</p>
+<ul>
+<li><p>образовывать правильные классы;</p>
+</li>
+<li><p>обнаруживать конфликты, когда одинаковые имена классов могут быть образованы разными биндингами, что может привести к ошибкам;</p>
+<blockquote>
+<p>На данных момент такая проверка не делается, но она должна быть добавлена.</p>
+</blockquote>
+</li>
+<li><p>находить соответствия между классами в шаблонах и стилях, чтобы находить ненужные классы в шаблонах (для которых нет в стилях) и ненужные <code>CSS</code> правила (которые не используются шаблонами);</p>
+<blockquote>
+<p>Этим занимается модуль сборщика <code>extractor</code>. Эту информацию получает в виде предупреждающих сообщений плагин.
+С помощью флага <code>--css-cut-unused</code> сборщику можно указать, чтобы он вырезал не используемые в <code>CSS</code> правила. Но рекомендуется это делать самостоятельно на основе получаемых предупреждений.</p>
+</blockquote>
+</li>
+<li><p>минизировать имена классов в сборке.</p>
+<blockquote>
+<p>Если все имена определены, для сборщика можно указать флаг <code>--css-optimize-names</code> и тогда он минимизирует имена классов в шаблонах и <code>CSS</code> до одно-/двух-буквенных, тем самым уменьшая размер сборки.</p>
+</blockquote>
+</li>
+</ul>
+<p>Тег имеет атрибуты:</p>
+<ul>
+<li><p>name – имя биндинга для которого описывается правило;</p>
+</li>
+<li><p>type – тип устанавлеваемый для биндинга, может быть два значения:</p>
+<ul>
+<li><p>bool – значение приводится к <code>boolean</code>, если значение тождественно <code>true</code>, то значением становится имя биндига и класс вставляется, иначе класс не вставляется;</p>
+</li>
+<li><p>enum – значение должно быть равно одному из списка (сравнивается оператором <code>==</code>, регистрозависимо), то это значение становится классом и вставляется, иначе класс не вставляется;</p>
+</li>
+</ul>
+</li>
+<li><p>values – применимо только к типу <code>enum</code>, содержит список допустимых значений, разделеных пробелом;</p>
+</li>
+<li><p>default – значение по умолчанию:</p>
+<ul>
+<li><p>для типа <code>bool</code> – если значение атрибута равно <code>true</code>, то значение по умолчанию <code>true</code>, при других значениях или если атрибут не указан, то значение по умолчанию – <code>false</code>;</p>
+</li>
+<li><p>для типа <code>enum</code> – если указано значение из списка (<code>values</code>), то оно будет по умолчанию, если значения нет в списке или атрибут не указан – по умолчанию будет пустая строка (класс не будет проставлен в эталон).</p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:define</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"selected"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"bool"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">b:define</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"state"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"enum"</span> <span class="hljs-attribute">values</span>=<span class="hljs-value">"processing ready error"</span>/&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"item item_{selected} item_{state}"</span>/&gt;</span>
+</code></pre>
+<p>В данном примере, если значение для <code>selected</code> равноценно <code>true</code>, то будет вставлен класс <code>item_selected</code>, иначе такого класса у элемента не будет. Для <code>state</code> будут приниматься только три значения и образовываться классы <code>item_processing</code>, <code>item_ready</code> и <code>item_error</code>; при других значениях класс добавлен не будет.</p>
+<p>Указание <code>default</code> позволяет вставить оптимизировать создание шаблона. Если известно, что некоторый биндинг при создании чаще всего имеет определенное значение, можно изначально проставить класс с этим значением и избежать операции вставки этого класса при создании экземпляра шаблона. Например, практически все экземпляры <code>basis.ui.Node</code> создаются с <code>selected</code> == <code>false</code> и <code>unselected</code> == <code>true</code>. Если в шаблоне используются оба значения, то выгоднее описать шаблон так:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:define</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"selected"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"bool"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">b:define</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"unselected"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"bool"</span> <span class="hljs-attribute">default</span>=<span class="hljs-value">"true"</span>/&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"item item_{selected} item_{unselected}"</span>/&gt;</span>
+</code></pre>
+<p>Тогда эталонный <code>DOM</code> фрагмент, который клонируется при создании экземпляра шаблона, будет таким:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"item item_unselected"</span>/&gt;</span>
+</code></pre>
+<p>И, в данном примере, при создании экземпляра шаблона никаких изменений в склонированом <code>DOM</code> фрагменте не будет.</p>
+<h2 id="-b-text-">\<b:text></h2>
+<p>Данный тег служит для альтернативного описания текстового узла. Его отличительная черта – все внутри этого тега воспринимается как текст и не разбирается по обычным правилам.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:text</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span> – это не будет разобрано как тег и останется текстом
+  маркеры тоже не разбираются, поэтому {example} не будет заменяться ни при каких условиях
+<span class="hljs-tag">&lt;/<span class="hljs-title">b:text</span>&gt;</span>
+</code></pre>
+<p>Этим тегом удобно обрамлять текст, который не должен разбираться, например, пример исходного кода.</p>
+<p>По умолчанию, если до первого или после последнего перевода строки идут только пробельные символы – они вырезаются.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:text</span>&gt;</span>
+  1
+  2
+<span class="hljs-tag">&lt;/<span class="hljs-title">b:text</span>&gt;</span>
+</code></pre>
+<p>В данном примере, текстом будет строка &quot;  1\n  2&quot;. Чтобы оставить текст без изменений используется атрибут <code>notrim</code>.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:text</span> <span class="hljs-attribute">notrim</span>&gt;</span>
+  1
+  2
+<span class="hljs-tag">&lt;/<span class="hljs-title">b:text</span>&gt;</span>
+</code></pre>
+<p>Здесь текстом будет &quot;\n  1\n  2\n&quot;.</p>
+<p>Можно добавить маркер на такой текстовый узел, используя атрибут <code>ref</code>.</p>
+<h2 id="-b-include-">\<b:include></h2>
+<p><code>&lt;b:include&gt;</code> используется для включения в описание шаблона другого описания (шаблона).</p>
+<p>Для тега можно указать следующие атрибуты:</p>
+<ul>
+<li><p><code>src</code> – ссылка на подключаемое описание, это может быть:</p>
+<ul>
+<li><p>путь к файлу; если путь относительный (не начинается с <code>/</code>), то он разрешается относительно файла шаблона или относительно корня приложения, если описание находится не в отдельном файле;</p>
+<pre><code class="lang-html">  <span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./path/to/file.tmpl"</span>/&gt;</span>
+</code></pre>
+</li>
+<li><p>имя шаблона определенное с помощью <code>basis.template.define</code> (подробнее <a href="basis.template_theme.md">&quot;Темы&quot;</a>)</p>
+<pre><code class="lang-html">  <span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"foo.bar.baz"</span>/&gt;</span>
+</code></pre>
+</li>
+<li><p>ссылка вида <code>#N</code>, где N - идентификатор шаблона (значение свойства <code>templateId</code>); в основном используется внутренними механизмами.</p>
+<pre><code class="lang-html">  <span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"#123"</span>/&gt;</span>
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p><code>id</code> – этот атрибут будет назначен элементу с ссылкой <code>element</code> в вставляемом описании;</p>
+</li>
+<li><p><code>class</code> – значение этого атрибута будет добавлено к значению атрибута <code>class</code> элемента со ссылкой <code>element</code></p>
+</li>
+</ul>
+<p>Исходный шаблон:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"foo"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"extra-class with_{binding}"</span>/&gt;</span>
+</code></pre>
+<p>foo.tmpl:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>/&gt;</span>
+</code></pre>
+<p>Результат:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"foo"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example extra-class with_{binding}"</span>/&gt;</span>
+</code></pre>
+<p>Внутри <code>&lt;b:include&gt;</code> могут быть другие специальные теги, предназначенные для модификации подключаемого описания:</p>
+<ul>
+<li><p><code>&lt;b:before&gt;</code> – содержимое этого тега вставляется перед узлом с указанной ссылкой; атрибут <code>ref</code> должен содержать название ссылки на узел; если такого атрибута нет или в подключаемом описании нет узла с такой ссылкой, то данный тег игнорируется;</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">b:before</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span>&gt;</span>
+    [inserted content]
+  <span class="hljs-tag">&lt;/<span class="hljs-title">b:before</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">b:inclide</span>&gt;</span>
+</code></pre>
+<p>foo.tmpl:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Результат:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  [inserted content]
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+</li>
+<li><p><code>&lt;b:after&gt;</code> – работает так же как и <code>&lt;b:before&gt;</code>, но вставка происходит после элемента;</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">b:after</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span>&gt;</span>
+    [inserted content]
+  <span class="hljs-tag">&lt;/<span class="hljs-title">b:after</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">b:inclide</span>&gt;</span>
+</code></pre>
+<p>foo.tmpl:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Результат:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+  [inserted content]
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+</li>
+<li><p><code>&lt;b:prepend&gt;</code> – вставляет содержимое в начало элемента с указаной в атрибуте <code>ref</code> ссылкой; если атрибут отсутствует, то будет использовать ссылка <code>element</code>; если узла с такой ссылкой нет или узел не является элементом, то тег игнорируется;</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">b:prepend</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span>&gt;</span>
+    [inserted content]
+  <span class="hljs-tag">&lt;/<span class="hljs-title">b:prepend</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">b:inclide</span>&gt;</span>
+</code></pre>
+<p>foo.tmpl:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Результат:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>[inserted content]{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+</li>
+<li><p><code>&lt;b:append&gt;</code> – работает так же, как и <code>&lt;b:prepend&gt;</code>, но вставляет содержимое в конец элемента;</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">b:append</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span>&gt;</span>
+    [inserted content]
+  <span class="hljs-tag">&lt;/<span class="hljs-title">b:append</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">b:inclide</span>&gt;</span>
+</code></pre>
+<p>foo.tmpl:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Результат:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>{title}[inserted content]<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+</li>
+<li><p><code>&lt;b:replace&gt;</code> – заменяет содержимым узел с указаной в атрибуте <code>ref</code> ссылкой; если узла с такой ссылкой нет, то тег игнорируется; если атрибут <code>ref</code> отсутствует, то заменяется узел с ссылкой <code>{element}</code>;</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">b:replace</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span>&gt;</span>
+    [new content]
+  <span class="hljs-tag">&lt;/<span class="hljs-title">b:replace</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">b:inclide</span>&gt;</span>
+</code></pre>
+<p>foo.tmpl:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Результат:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  [new content]
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+</li>
+<li><p><code>&lt;b:remove&gt;</code> – заменяет содержимым узел с указаной в атрибуте <code>ref</code> ссылкой; если узла с такой ссылкой нет, то тег игнорируется; если атрибут <code>ref</code> отсутствует, то удаляется узел с ссылкой <code>{element}</code>;</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"foo.tmpl"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">b:remove</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">b:inclide</span>&gt;</span>
+</code></pre>
+<p>foo.tmpl:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>{value}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Результат:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>{value}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+</li>
+<li><p><code>&lt;b:attr&gt;</code> и <code>&lt;b:set-attr&gt;</code> – уставливает атрибут с именем <code>name</code> и значением <code>value</code> элементу с ссылкой <code>ref</code>;</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">b:attr</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"foo"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"bar"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">b:inclide</span>&gt;</span>
+</code></pre>
+<p>foo.tmpl:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Результат:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span> <span class="hljs-attribute">foo</span>=<span class="hljs-value">"bar"</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+</li>
+<li><p><code>&lt;b:append-attr&gt;</code> – добавляет значение к значению атрибута;</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">b:append-attr</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"foo"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"def"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">b:append-attr</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"bar"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"baz"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">b:inclide</span>&gt;</span>
+</code></pre>
+<p>foo.tmpl:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span> <span class="hljs-attribute">foo</span>=<span class="hljs-value">"abc"</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Результат:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span> <span class="hljs-attribute">foo</span>=<span class="hljs-value">"abcdef"</span> <span class="hljs-attribute">bar</span>=<span class="hljs-value">"baz"</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+</li>
+<li><p><code>&lt;b:remove-attr&gt;</code> – удаляет атрибут;</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">b:remove-attr</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"foo"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">b:inclide</span>&gt;</span>
+</code></pre>
+<p>foo.tmpl:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span> <span class="hljs-attribute">foo</span>=<span class="hljs-value">"abc"</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Результат:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+</li>
+<li><p><code>&lt;b:class&gt;</code> и <code>&lt;b:append-class&gt;</code> – добавляет класс (классы) в атрибут <code>class</code>;</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">b:class</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"foo foo_{selected}"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">b:inclide</span>&gt;</span>
+</code></pre>
+<p>foo.tmpl:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"bar"</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Результат:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"bar foo foo_{selected}"</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+</li>
+<li><p><code>&lt;b:set-class&gt;</code> – замещает значение атрибута <code>class</code> на новое значение;</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">b:class</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"foo foo_{selected}"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">b:inclide</span>&gt;</span>
+</code></pre>
+<p>foo.tmpl:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"bar"</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Результат:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"example"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"bar foo foo_{selected}"</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+</li>
+</ul>
+
+                    
+                    </section>
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="./basis.template.html" class="navigation navigation-prev"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="./basis.template_bindings.html" class="navigation navigation-next"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+        <script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
+for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/mode-javascript.js"></script>
+        <script src="gitbook/jsrepl/jsrepl.js" id="jsrepl-script"></script>
+        <script src="gitbook/app.js"></script>
+        
+    </body>
+</html>

@@ -1,0 +1,814 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+    <head prefix="og: http://ogp.me/ns# book: http://ogp.me/ns/book#">
+        
+        <meta charset="UTF-8">
+        <title>События | Разработка на basis.js</title>
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="robots" content="index, follow">
+        <meta name="author" content="basisjs">
+        <meta name="description" content="Книга о разработке на **basis.js** и описывающие его устройство, доступна в формате [PDF](basisJs.pdf) и [ePub](basisJs.epub).">
+        <meta name="keywords" content="gitbook,github" >
+        <meta name="generator" content="www.gitbook.io">
+
+        
+        <link rel="next" href="./basis.data.html" />
+        
+        
+        <link rel="prev" href="./bindingbridge.html" />
+        
+
+        <meta property="og:title" content="События | Разработка на basis.js">
+        <meta property="og:site_name" content="Разработка на basis.js">
+        <meta property="og:type" content="book">
+        <meta property="og:locale" content="en_US">
+
+        <meta property="book:author" content="https://github.com/basisjs">
+        <meta property="book:tag" content="GitBook">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+        
+    </head>
+    <body>
+        
+        <link rel="stylesheet" href="gitbook/style.css">
+        
+        
+    <div class="book" data-github="basisjs/articles" data-level="3" data-basepath="." data-revision="1398012760591">
+    <div class="book-header">
+    <!-- Actions Left -->
+    
+    <a href="https://github.com/basisjs/articles" target="_blank" class="btn pull-left"><i class="fa fa-github-alt"></i></a>
+    
+    <a href="#" class="btn pull-left toggle-summary"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search"><i class="fa fa-search"></i></a>
+
+    <!-- Actions Right -->
+    <a href="#" target="_blank" class="btn pull-right" data-sharing="google-plus"><i class="fa fa-google-plus"></i></a>
+    <a href="#" target="_blank" class="btn pull-right" data-sharing="facebook"><i class="fa fa-facebook"></i></a>
+    <a href="#" target="_blank" class="btn pull-right" data-sharing="twitter"><i class="fa fa-twitter"></i></a>
+
+    
+    <a href="https://github.com/basisjs/articles/stargazers" target="_blank" class="btn pull-right count-star"><i class="fa fa-star-o"></i> Star (<span>-</span>)</a>
+    <a href="https://github.com/basisjs/articles/watchers" target="_blank" class="btn pull-right count-watch"><i class="fa fa-eye"></i> Watch (<span>-</span>)</a>
+    
+
+    <!-- Title -->
+    <h1><a href="./" >Разработка на basis.js</a></h1>
+</div>
+
+    <div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+        <li>
+            <a href="https://github.com/basisjs" target="blank">About the author</a>
+        </li>
+        <li>
+            <a href="https://github.com/basisjs/articles/issues" target="blank">Questions and Issues</a>
+        </li>
+        <li>
+            <a href="https://github.com/basisjs/articles/edit/master/basis.event.md" target="blank">Edit and Contribute</a>
+        </li>
+        <li class="divider"></li>
+        
+        <li data-level="0" data-path="index.html">
+            <a href="./"><i class="fa fa-check"></i> Introduction</a>
+        </li>
+        
+            <li  data-level="1" data-path="get-started.html">
+                
+                <a href="./get-started.html">
+                    <i class="fa fa-check"></i> <b>1.</b> Приступая к разработке
+                </a>
+                
+                
+            </li>
+        
+            <li  data-level="2" >
+                
+                <span><b>2.</b> Ядро (basis.js)</span>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="2.1" data-path="resources.html">
+                            
+                            <a href="./resources.html">
+                                <i class="fa fa-check"></i> <b>2.1.</b> Ресурсы (модульность)
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="2.2" data-path="basis.Class.html">
+                            
+                            <a href="./basis.Class.html">
+                                <i class="fa fa-check"></i> <b>2.2.</b> Классы
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="2.3" data-path="basis.Token.html">
+                            
+                            <a href="./basis.Token.html">
+                                <i class="fa fa-check"></i> <b>2.3.</b> basis.Token
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="2.4" >
+                            
+                            <span><b>2.4.</b> basis.getter</span>
+                            
+                        </li>
+                    
+                        <li  data-level="2.5" data-path="bindingbridge.html">
+                            
+                            <a href="./bindingbridge.html">
+                                <i class="fa fa-check"></i> <b>2.5.</b> Binding bridge
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="3" data-path="basis.event.html">
+                
+                <a href="./basis.event.html">
+                    <i class="fa fa-check"></i> <b>3.</b> События
+                </a>
+                
+                
+            </li>
+        
+            <li  data-level="4" data-path="basis.data.html">
+                
+                <a href="./basis.data.html">
+                    <i class="fa fa-check"></i> <b>4.</b> Данные
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="4.1" data-path="basis.data.Value.html">
+                            
+                            <a href="./basis.data.Value.html">
+                                <i class="fa fa-check"></i> <b>4.1.</b> Значение
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.2" data-path="basis.data.Object.html">
+                            
+                            <a href="./basis.data.Object.html">
+                                <i class="fa fa-check"></i> <b>4.2.</b> Объект
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.3" data-path="basis.data.datasets.html">
+                            
+                            <a href="./basis.data.datasets.html">
+                                <i class="fa fa-check"></i> <b>4.3.</b> Наборы
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.4" data-path="basis.data.dataset.html">
+                            
+                            <a href="./basis.data.dataset.html">
+                                <i class="fa fa-check"></i> <b>4.4.</b> basis.data.dataset
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.5" >
+                            
+                            <span><b>4.5.</b> Index</span>
+                            
+                        </li>
+                    
+                        <li  data-level="4.6" >
+                            
+                            <span><b>4.6.</b> Entity</span>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="5" data-path="basis.dom.wrapper.html">
+                
+                <a href="./basis.dom.wrapper.html">
+                    <i class="fa fa-check"></i> <b>5.</b> basis.dom.wrapper
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="5.1" data-path="basis.dom.wrapper_dom.html">
+                            
+                            <a href="./basis.dom.wrapper_dom.html">
+                                <i class="fa fa-check"></i> <b>5.1.</b> DOM
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.2" data-path="basis.dom.wrapper_childNodes.html">
+                            
+                            <a href="./basis.dom.wrapper_childNodes.html">
+                                <i class="fa fa-check"></i> <b>5.2.</b> Дочерние узлы
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.3" data-path="basis.dom.wrapper_sorting.html">
+                            
+                            <a href="./basis.dom.wrapper_sorting.html">
+                                <i class="fa fa-check"></i> <b>5.3.</b> Сортировка
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.4" data-path="basis.dom.wrapper_grouping.html">
+                            
+                            <a href="./basis.dom.wrapper_grouping.html">
+                                <i class="fa fa-check"></i> <b>5.4.</b> Группировка
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.5" data-path="basis.dom.wrapper_data.html">
+                            
+                            <a href="./basis.dom.wrapper_data.html">
+                                <i class="fa fa-check"></i> <b>5.5.</b> Привязка данных
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.6" data-path="basis.dom.wrapper_owner.html">
+                            
+                            <a href="./basis.dom.wrapper_owner.html">
+                                <i class="fa fa-check"></i> <b>5.6.</b> Паттерн &quot;владелец&quot;
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.7" data-path="basis.dom.wrapper_satellite.html">
+                            
+                            <a href="./basis.dom.wrapper_satellite.html">
+                                <i class="fa fa-check"></i> <b>5.7.</b> Сателлиты
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.8" data-path="basis.dom.wrapper_disabled.html">
+                            
+                            <a href="./basis.dom.wrapper_disabled.html">
+                                <i class="fa fa-check"></i> <b>5.8.</b> Доступность (disabled/enabled)
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.9" data-path="basis.dom.wrapper_selection.html">
+                            
+                            <a href="./basis.dom.wrapper_selection.html">
+                                <i class="fa fa-check"></i> <b>5.9.</b> Выделение (selection)
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="6" data-path="basis.ui.html">
+                
+                <a href="./basis.ui.html">
+                    <i class="fa fa-check"></i> <b>6.</b> Интерфейс пользователя
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="6.1" data-path="basis.ui_template.html">
+                            
+                            <a href="./basis.ui_template.html">
+                                <i class="fa fa-check"></i> <b>6.1.</b> Привязка шаблонов
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="6.2" data-path="basis.ui_bindings.html">
+                            
+                            <a href="./basis.ui_bindings.html">
+                                <i class="fa fa-check"></i> <b>6.2.</b> Биндинги (bindings)
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="6.3" data-path="basis.ui_actions.html">
+                            
+                            <a href="./basis.ui_actions.html">
+                                <i class="fa fa-check"></i> <b>6.3.</b> Обратная связь (actions)
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="7" data-path="basis.template.html">
+                
+                <a href="./basis.template.html">
+                    <i class="fa fa-check"></i> <b>7.</b> Шаблоны
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="7.1" data-path="basis.template_format.html">
+                            
+                            <a href="./basis.template_format.html">
+                                <i class="fa fa-check"></i> <b>7.1.</b> Формат шаблонов
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="7.2" data-path="basis.template_bindings.html">
+                            
+                            <a href="./basis.template_bindings.html">
+                                <i class="fa fa-check"></i> <b>7.2.</b> Правила применения значений биндингам
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="7.3" >
+                            
+                            <span><b>7.3.</b> Динамическое обновление (live update)</span>
+                            
+                        </li>
+                    
+                        <li  data-level="7.4" data-path="basis.template_theme.html">
+                            
+                            <a href="./basis.template_theme.html">
+                                <i class="fa fa-check"></i> <b>7.4.</b> Темы
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="8" data-path="basis.l10n.html">
+                
+                <a href="./basis.l10n.html">
+                    <i class="fa fa-check"></i> <b>8.</b> L10n
+                </a>
+                
+                
+            </li>
+        
+            <li  data-level="9" data-path="basis.net.html">
+                
+                <a href="./basis.net.html">
+                    <i class="fa fa-check"></i> <b>9.</b> basis.net
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="9.1" data-path="basis.net.action.html">
+                            
+                            <a href="./basis.net.action.html">
+                                <i class="fa fa-check"></i> <b>9.1.</b> basis.net.action
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="9.2" data-path="basis.net.service.html">
+                            
+                            <a href="./basis.net.service.html">
+                                <i class="fa fa-check"></i> <b>9.2.</b> basis.net.service
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="10" >
+                
+                <span><b>10.</b> Router</span>
+                
+                
+            </li>
+        
+            <li  data-level="11" data-path="tutorial/index.html">
+                
+                <a href="./tutorial/index.html">
+                    <i class="fa fa-check"></i> <b>11.</b> Руководство
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="11.1" data-path="tutorial/part1/index.html">
+                            
+                            <a href="./tutorial/part1/index.html">
+                                <i class="fa fa-check"></i> <b>11.1.</b> Часть 1. Начало работы, представления, модули, инструменты
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="11.2" data-path="tutorial/part2/index.html">
+                            
+                            <a href="./tutorial/part2/index.html">
+                                <i class="fa fa-check"></i> <b>11.2.</b> Часть 2. Работа с данными: модели, наборы и значения
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="page-wrapper" tabindex="-1">
+                <div class="book-progress">
+    <div class="bar">
+        <div class="inner" style="width: 25%;min-width: 22.22222222222222%;"></div>
+    </div>
+    <div class="chapters">
+    
+        <a href="./index.html" title="Introduction" class="chapter done new-chapter" data-progress="0" style="left: 0%;"></a>
+    
+        <a href="./get-started.html" title="Приступая к разработке" class="chapter done new-chapter" data-progress="1" style="left: 2.7777777777777777%;"></a>
+    
+        <a href="./tutorial/index.html" title="Руководство" class="chapter done " data-progress="11" style="left: 5.555555555555555%;"></a>
+    
+        <a href="./tutorial/part1/index.html" title="Часть 1. Начало работы, представления, модули, инструменты" class="chapter done " data-progress="11.1" style="left: 8.333333333333334%;"></a>
+    
+        <a href="./tutorial/part2/index.html" title="Часть 2. Работа с данными: модели, наборы и значения" class="chapter done " data-progress="11.2" style="left: 11.11111111111111%;"></a>
+    
+        <a href="./resources.html" title="Ресурсы (модульность)" class="chapter done " data-progress="2.1" style="left: 13.88888888888889%;"></a>
+    
+        <a href="./basis.Class.html" title="Классы" class="chapter done " data-progress="2.2" style="left: 16.666666666666668%;"></a>
+    
+        <a href="./basis.Token.html" title="basis.Token" class="chapter done " data-progress="2.3" style="left: 19.444444444444443%;"></a>
+    
+        <a href="./bindingbridge.html" title="Binding bridge" class="chapter done " data-progress="2.5" style="left: 22.22222222222222%;"></a>
+    
+        <a href="./basis.event.html" title="События" class="chapter done new-chapter" data-progress="3" style="left: 25%;"></a>
+    
+        <a href="./basis.data.html" title="Данные" class="chapter  new-chapter" data-progress="4" style="left: 27.77777777777778%;"></a>
+    
+        <a href="./basis.data.Value.html" title="Значение" class="chapter  " data-progress="4.1" style="left: 30.555555555555557%;"></a>
+    
+        <a href="./basis.data.Object.html" title="Объект" class="chapter  " data-progress="4.2" style="left: 33.333333333333336%;"></a>
+    
+        <a href="./basis.data.datasets.html" title="Наборы" class="chapter  " data-progress="4.3" style="left: 36.111111111111114%;"></a>
+    
+        <a href="./basis.data.dataset.html" title="basis.data.dataset" class="chapter  " data-progress="4.4" style="left: 38.888888888888886%;"></a>
+    
+        <a href="./basis.dom.wrapper.html" title="basis.dom.wrapper" class="chapter  new-chapter" data-progress="5" style="left: 41.666666666666664%;"></a>
+    
+        <a href="./basis.dom.wrapper_dom.html" title="DOM" class="chapter  " data-progress="5.1" style="left: 44.44444444444444%;"></a>
+    
+        <a href="./basis.dom.wrapper_childNodes.html" title="Дочерние узлы" class="chapter  " data-progress="5.2" style="left: 47.22222222222222%;"></a>
+    
+        <a href="./basis.dom.wrapper_sorting.html" title="Сортировка" class="chapter  " data-progress="5.3" style="left: 50%;"></a>
+    
+        <a href="./basis.dom.wrapper_grouping.html" title="Группировка" class="chapter  " data-progress="5.4" style="left: 52.77777777777778%;"></a>
+    
+        <a href="./basis.dom.wrapper_data.html" title="Привязка данных" class="chapter  " data-progress="5.5" style="left: 55.55555555555556%;"></a>
+    
+        <a href="./basis.dom.wrapper_owner.html" title="Паттерн &quot;владелец&quot;" class="chapter  " data-progress="5.6" style="left: 58.333333333333336%;"></a>
+    
+        <a href="./basis.dom.wrapper_satellite.html" title="Сателлиты" class="chapter  " data-progress="5.7" style="left: 61.111111111111114%;"></a>
+    
+        <a href="./basis.dom.wrapper_disabled.html" title="Доступность (disabled/enabled)" class="chapter  " data-progress="5.8" style="left: 63.888888888888886%;"></a>
+    
+        <a href="./basis.dom.wrapper_selection.html" title="Выделение (selection)" class="chapter  " data-progress="5.9" style="left: 66.66666666666667%;"></a>
+    
+        <a href="./basis.ui.html" title="Интерфейс пользователя" class="chapter  new-chapter" data-progress="6" style="left: 69.44444444444444%;"></a>
+    
+        <a href="./basis.ui_template.html" title="Привязка шаблонов" class="chapter  " data-progress="6.1" style="left: 72.22222222222223%;"></a>
+    
+        <a href="./basis.ui_bindings.html" title="Биндинги (bindings)" class="chapter  " data-progress="6.2" style="left: 75%;"></a>
+    
+        <a href="./basis.ui_actions.html" title="Обратная связь (actions)" class="chapter  " data-progress="6.3" style="left: 77.77777777777777%;"></a>
+    
+        <a href="./basis.template.html" title="Шаблоны" class="chapter  new-chapter" data-progress="7" style="left: 80.55555555555556%;"></a>
+    
+        <a href="./basis.template_format.html" title="Формат шаблонов" class="chapter  " data-progress="7.1" style="left: 83.33333333333333%;"></a>
+    
+        <a href="./basis.template_bindings.html" title="Правила применения значений биндингам" class="chapter  " data-progress="7.2" style="left: 86.11111111111111%;"></a>
+    
+        <a href="./basis.template_theme.html" title="Темы" class="chapter  " data-progress="7.4" style="left: 88.88888888888889%;"></a>
+    
+        <a href="./basis.l10n.html" title="L10n" class="chapter  new-chapter" data-progress="8" style="left: 91.66666666666667%;"></a>
+    
+        <a href="./basis.net.html" title="basis.net" class="chapter  new-chapter" data-progress="9" style="left: 94.44444444444444%;"></a>
+    
+        <a href="./basis.net.action.html" title="basis.net.action" class="chapter  " data-progress="9.1" style="left: 97.22222222222223%;"></a>
+    
+        <a href="./basis.net.service.html" title="basis.net.service" class="chapter  " data-progress="9.2" style="left: 100%;"></a>
+    
+    </div>
+</div>
+
+                <div class="page-inner">
+                
+                    <section class="normal" id="section-gitbook_21">
+                    
+                        <h1 id="basis-event">basis.event</h1>
+<p>Модуль <code>basis.event</code> вводит событийную модель. В основе реализации лежит паттерн <a href="http://en.wikipedia.org/wiki/Observer_pattern" target="_blank">observer</a>.</p>
+<p><code>basis.event</code> предоставляет единственный класс Emitter и вспомогательные функции.</p>
+<h2 id="emitter">Emitter</h2>
+<p>Класс <code>basis.event.Emitter</code> (<a href="http://basisjs.com/docs#basis.event.Emitter" target="_blank">docs</a>) является предком для большинства классов <code>basisjs</code>.</p>
+<p>Инициация события осуществляется вызовом специального метода. Такие методы принято называть с префиксом <code>emit_</code>, а функция метода создается с помощью функции <code>basis.event.create</code>. (см. Событийные методы)</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Example = basis.event.Emmiter.subclass({
+  emit_myEvent: basis.event.create(<span class="hljs-string">'myEvent'</span>) <span class="hljs-comment">// создание события myEvent</span>
+});
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> Example();
+foo.emit_myEvent(); <span class="hljs-comment">// инициация события</span>
+</code></pre>
+<h3 id="-">Обработка событий</h3>
+<p>Для того чтобы совершать некоторые действия при возникновении события, объекту добавляются обработчики событий. Обработчик - это <code>plain object</code>, где ключ - название события, а значение - функция, которая должна быть вызвана, когда это событие наступит. Обработчики добавляются методом <code>Emitter#addHandler</code>, при этом также можно указать контекст выполнения для функций обработчика. Если контекст не задан, то контекстом будет объект, чей метод <code>Emitter#addHandler</code> был вызван.</p>
+<p>Повторный вызов <code>Emitter#addHandler</code> с теми же самыми аргументами приведет к выводу предупреждения в консоли, так как это, скорее всего, ошибка. Количество добавляемых экземпляру обработчиков не ограничивается.</p>
+<p>При вызове событийного метода (инициации события) указываются параметры которые должны получить обработчики. Но обработчикам, помимо этих аргументов, первым аргументом всегда передается инициатор события <code>sender</code>. Это единственный способ получить ссылку на инициатора события, так как контекст обработчика может быть переопределен.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Example = basis.event.Emitter.subclass({
+  emit_testEvent: basis.event.create(<span class="hljs-string">'testEvent'</span>),
+  emit_eventWithArgs: basis.event.create(<span class="hljs-string">'eventWithArgs'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>)
+});
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> Example({ name: <span class="hljs-string">'foo'</span> });
+<span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">new</span> Example({ name: <span class="hljs-string">'bar'</span> });
+
+foo.addHandler({
+  testEvent: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>        <span class="hljs-comment">// testEvent - название события</span>
+    <span class="hljs-comment">// sender -&gt; foo</span>
+    <span class="hljs-comment">// this -&gt; foo</span>
+    console.log(<span class="hljs-string">'testEvent: event context is'</span>, <span class="hljs-keyword">this</span>.name);
+  }
+});                             <span class="hljs-comment">// контекст не указан</span>
+
+foo.addHandler({
+  testEvent: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sender)</span>{</span>
+    <span class="hljs-comment">// sender -&gt; foo</span>
+    <span class="hljs-comment">// this -&gt; bar</span>
+    console.log(<span class="hljs-string">'testEvent: event context is'</span>, <span class="hljs-keyword">this</span>.name);
+  },
+  eventWithArgs: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sender, a, b)</span>{</span>
+    <span class="hljs-comment">// sender -&gt; foo</span>
+    <span class="hljs-comment">// this -&gt; bar</span>
+    console.log(<span class="hljs-string">'eventWithArgs:'</span>, a, b);
+  }
+}, bar);                        <span class="hljs-comment">// устанавливаем в качестве контекста bar</span>
+
+foo.emit_testEvent();
+<span class="hljs-comment">// console&gt; testEvent: event context is bar</span>
+<span class="hljs-comment">// console&gt; testEvent: event context is foo</span>
+
+foo.emit_eventWithArgs(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// console&gt; sum event in bar context, result: 3</span>
+</code></pre>
+<p>Удаляются обработчики методом <code>Emitter#removeHandler</code>. При вызове <code>Emitter#removeHandler</code> нужно передать те же значения, что и при вызове метода <code>Emitter#addHandler</code>.</p>
+<pre><code class="lang-js"><span class="hljs-comment">// НЕПРАВИЛЬНО</span>
+<span class="hljs-comment">// метод removeHandler не удалит обработчик, так как первые аргументы</span>
+<span class="hljs-comment">// в вызовах foo.addHandler и foo.removeHandler - это два разных объекта</span>
+foo.addHandler({
+  testEvent: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    console.log(<span class="hljs-string">'testEvent fired'</span>);
+  }
+}, bar);
+...
+foo.removeHandler({
+  testEvent: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    console.log(<span class="hljs-string">'testEvent fired'</span>);
+  }
+}, bar);
+
+<span class="hljs-comment">// ПРАВИЛЬНО</span>
+<span class="hljs-keyword">var</span> FOO_HANDLER = {
+  testEvent: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    console.log(<span class="hljs-string">'testEvent fired'</span>);
+  }
+};
+
+foo.addHandler(FOO_HANDLER, bar);
+...
+foo.removeHandler(FOO_HANDLER, bar);
+</code></pre>
+<p>Порядок выполнения добавленных обработчиков может быть произвольным, программная логика не должна от него зависеть. Прекратить выполнение обработчиков события нельзя. Обработчики не должны влиять друг на друга, т.е. не должны знать друг о друге.</p>
+<h3 id="-">Обработчик по умолчанию</h3>
+<p>Обработчик можно назначить при создании экземпляра <code>Emitter</code> (или его наследников).</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> basis.event.Emitter({
+  handler: {                       <span class="hljs-comment">// обработчик, контекстом будет сам экземпляр</span>
+    event1: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span> .. },
+    event2: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span> .. }
+  }
+});
+</code></pre>
+<p>Если нужно задать контекст для функций обработчика, отличный от создаваемого экземпляра, нужно воспользоваться следующей конструкцией.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> basis.event.Emitter({
+  handler: {
+    context: bar,
+    callbacks: {                   <span class="hljs-comment">// обработчик</span>
+      event1: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span> .. },
+      event2: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span> .. }
+    }
+  }
+});
+</code></pre>
+<p>В текущей реализации не рекомендуется задавать обработчик по умолчанию для классов, производных от <code>Emitter</code> (в их прототипе). Это усложняет наследование от таких классов и может сломать поведение экземпляра, если в обработчике присутствует некоторая логика.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> ClassA = basis.event.Emitter({
+  emit_event: basis.event.create(<span class="hljs-string">'event'</span>),
+  eventCount: <span class="hljs-number">0</span>,
+  handler: {
+    event: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sender)</span>{</span>
+      <span class="hljs-keyword">this</span>.eventCount++;
+    }
+  }
+});
+
+<span class="hljs-keyword">var</span> ClassB = ClassA.subclass({
+  handler: {  <span class="hljs-comment">// свойство переопределено, счетчик eventCount не будет изменяться</span>
+    ...
+  }
+});
+
+<span class="hljs-keyword">var</span> ClassC = ClassA.subclass({
+  handler: {
+    event: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      ClassA.prototype.handler.event.apply(<span class="hljs-keyword">this</span>, agruments);
+      ...
+    },
+    ...
+  }
+});
+</code></pre>
+<p>В данном случае, вместо назначения <code>handler</code> будет лучше определить логику в методе <code>emit_event</code>.</p>
+<h3 id="-">Событийные методы</h3>
+<p>Событийные методы создаются с помощью функции <code>basis.event.create</code>, которой передается название события. Такие функции обходят список обработчиков и вызывают функции для конкретного события. Такие функции сохраняются в прототип класса или экземпляр с префиксом <code>emit_</code>, после чего идет имя события.</p>
+<p>Имя события может быть любым, за исключением <code>*</code>.</p>
+<p>Ключ <code>*</code> в обработчике используется для назначения функции, которая будет выполняться на любое событие. Такая функция получает объект описывающий событие, где:</p>
+<ul>
+<li><p>type - название события;</p>
+</li>
+<li><p>serder - инициатор события (чей emit_* метод был вызван);</p>
+</li>
+<li><p>args - аргументы, с которыми было инициировано событие.</p>
+</li>
+</ul>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> emitter = <span class="hljs-keyword">new</span> basis.event.Emitter({
+  emit_customEvent: basis.event.create(<span class="hljs-string">'customEvent'</span>)
+});
+
+emitter.addHandler({
+  customEvent: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sender, arg)</span>{</span>
+    console.log(<span class="hljs-string">'customEvent'</span>, sender, [arg]);
+  },
+  <span class="hljs-string">'*'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span>{</span>
+    console.log(<span class="hljs-string">'*'</span>, event.type, event.sender, event.args);
+  }
+});
+
+emitter.emit_customEvent(<span class="hljs-string">'test'</span>);
+<span class="hljs-comment">// console&gt; customEvent [object basis.event.Emitter] ['test']</span>
+<span class="hljs-comment">// console&gt; '*' customEvent [object basis.event.Emitter] ['test']</span>
+</code></pre>
+<p>В случае если для экземпляров класса требуется определить некоторую логику, которая должна выполняться при наступлении события, можно переопредить необходимый <code>emit_</code> метод.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Example = basis.data.Object.subclass({
+  emit_update: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(delta)</span>{</span>
+    <span class="hljs-comment">// действия до обработки обработчиков</span>
+
+    basis.data.Object.prototype.emit_update.call(<span class="hljs-keyword">this</span>, delta);
+
+    <span class="hljs-comment">// действия после обработки обработчиков</span>
+  }
+});
+</code></pre>
+<p>Если нужно добавить логику добавляемому событийному методу, то можно воспользоваться слудующей техникой:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Example = basis.event.Emitter.subclass({
+  emit_myEvent: basis.event.create(<span class="hljs-string">'myEvent'</span>, <span class="hljs-string">'arg'</span>) &amp;&amp; <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(arg)</span>{</span>
+    <span class="hljs-comment">// действия до обработки обработчиков</span>
+
+    basis.event.events.myEvent.call(<span class="hljs-keyword">this</span>, arg);
+
+    <span class="hljs-comment">// действия после обработки обработчиков</span>
+  }
+});
+</code></pre>
+<h3 id="destroy">destroy</h3>
+<p><code>Emitter</code> определяет единственное событие <code>destroy</code>, которое выбрасывается при разрушении экземпляра (вызов метода <code>destroy</code>).</p>
+<p>При переопределении <code>destroy</code> метода, рекомендуется вызвать переопределенный метод как можно раньше, чтобы событие <code>destroy</code> было выброшено и объекты, ссылающиеся на разрушаемый объект, смогли успешно обработать ситуацию (убрать ссылки).</p>
+<h3 id="listen">listen</h3>
+<p>Класс <code>Emitter</code> определяет расширяемое свойство (<code>basis.Class.nestedExtendProperty</code>), для хранения обработчиков на вложенные объекты (экземпляры <code>Emitter</code> или его наследников). Сам <code>Emitter</code> не использует это свойство, однако его широко используют классы унаследованные от него.</p>
+<pre><code class="lang-js"><span class="hljs-comment">// класс</span>
+<span class="hljs-keyword">var</span> Foo = basis.event.Emitter.subclass({
+  listen: {
+    bar: {
+      event: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sender)</span>{</span>
+        <span class="hljs-comment">// sender -&gt; foo.bar</span>
+        <span class="hljs-comment">// this -&gt; foo</span>
+      }
+    }
+  },
+
+ <span class="hljs-comment">/**
+  * @type {basis.event.Emitter}
+  */</span>
+  bar: <span class="hljs-literal">null</span>,
+
+  setBar: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(bar)</span>{</span>
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.bar !== bar)
+    {
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.bar &amp;&amp; <span class="hljs-keyword">this</span>.listen.bar)
+        <span class="hljs-keyword">this</span>.bar.removeHandler(<span class="hljs-keyword">this</span>.listen.bar, <span class="hljs-keyword">this</span>);
+
+      <span class="hljs-keyword">this</span>.bar = bar;
+
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.bar &amp;&amp; <span class="hljs-keyword">this</span>.listen.bar)
+        <span class="hljs-keyword">this</span>.bar.addHandler(<span class="hljs-keyword">this</span>.listen.bar, <span class="hljs-keyword">this</span>);
+    }
+  }
+});
+
+<span class="hljs-comment">// экземпляр</span>
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> basis.ui.Node({
+  selection: <span class="hljs-literal">true</span>,
+  listen: {
+    selection: {
+      itemsChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sender)</span>{</span>
+        <span class="hljs-comment">// this -&gt; list</span>
+        <span class="hljs-comment">// sender -&gt; selection</span>
+      }
+    }
+  }
+});
+</code></pre>
+<h3 id="-">Отладка</h3>
+<p>В <code>dev</code> режиме доступно свойство <code>emit_debug</code>. Данное свойство можно задать как для экземпляра, так и для любого класса (наследника <code>Emitter</code>). Если этому свойству присвоена функция, то эта функция будет вызываться на любое событие после обработки всех обработчиков. Такая функция получает единственный аргумент - объект, который содержит поля:</p>
+<ul>
+<li><p>type - название события;</p>
+</li>
+<li><p>serder - инициатор события (чей emit_* метод был вызван);</p>
+</li>
+<li><p>args - аргументы, с которыми было инициировано событие.</p>
+</li>
+</ul>
+<pre><code class="lang-js">basis.data.Object.prototype.emit_debug = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span>{</span>
+  console.log(event.type, event.sender, event.args);
+};
+
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> basis.data.Object();
+foo.update({ value: <span class="hljs-number">123</span> });
+<span class="hljs-comment">// console&gt; 'update' [object basis.data.Object] { value: undefined }</span>
+</code></pre>
+<p>Так как обработчики хранятся в виде линейных списков, то не удобно просматривать полный список добавленных обработчиков. Для просмотра списка обработчиков в виде массива можно воспользоваться методом <code>Emitter#handler_list</code>. Этот метод доступен только в <code>dev</code> режиме.</p>
+
+                    
+                    </section>
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="./bindingbridge.html" class="navigation navigation-prev"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="./basis.data.html" class="navigation navigation-next"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+        <script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
+for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/mode-javascript.js"></script>
+        <script src="gitbook/jsrepl/jsrepl.js" id="jsrepl-script"></script>
+        <script src="gitbook/app.js"></script>
+        
+    </body>
+</html>

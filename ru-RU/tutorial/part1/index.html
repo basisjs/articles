@@ -1,0 +1,1156 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+    <head prefix="og: http://ogp.me/ns# book: http://ogp.me/ns/book#">
+        
+        <meta charset="UTF-8">
+        <title>Часть 1. Начало работы, представления, модули, инструменты | Разработка на basis.js</title>
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="robots" content="index, follow">
+        <meta name="author" content="basisjs">
+        <meta name="description" content="Книга о разработке на **basis.js** и описывающие его устройство, доступна в формате [PDF](basisJs.pdf) и [ePub](basisJs.epub).">
+        <meta name="keywords" content="gitbook,github" >
+        <meta name="generator" content="www.gitbook.io">
+
+        
+        <link rel="next" href="../../tutorial/part2/index.html" />
+        
+        
+        <link rel="prev" href="../../tutorial/index.html" />
+        
+
+        <meta property="og:title" content="Часть 1. Начало работы, представления, модули, инструменты | Разработка на basis.js">
+        <meta property="og:site_name" content="Разработка на basis.js">
+        <meta property="og:type" content="book">
+        <meta property="og:locale" content="en_US">
+
+        <meta property="book:author" content="https://github.com/basisjs">
+        <meta property="book:tag" content="GitBook">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    </head>
+    <body>
+        
+        <link rel="stylesheet" href="../../gitbook/style.css">
+        
+        
+    <div class="book" data-github="basisjs/articles" data-level="11.1" data-basepath="../.." data-revision="1398012760591">
+    <div class="book-header">
+    <!-- Actions Left -->
+    
+    <a href="https://github.com/basisjs/articles" target="_blank" class="btn pull-left"><i class="fa fa-github-alt"></i></a>
+    
+    <a href="#" class="btn pull-left toggle-summary"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search"><i class="fa fa-search"></i></a>
+
+    <!-- Actions Right -->
+    <a href="#" target="_blank" class="btn pull-right" data-sharing="google-plus"><i class="fa fa-google-plus"></i></a>
+    <a href="#" target="_blank" class="btn pull-right" data-sharing="facebook"><i class="fa fa-facebook"></i></a>
+    <a href="#" target="_blank" class="btn pull-right" data-sharing="twitter"><i class="fa fa-twitter"></i></a>
+
+    
+    <a href="https://github.com/basisjs/articles/stargazers" target="_blank" class="btn pull-right count-star"><i class="fa fa-star-o"></i> Star (<span>-</span>)</a>
+    <a href="https://github.com/basisjs/articles/watchers" target="_blank" class="btn pull-right count-watch"><i class="fa fa-eye"></i> Watch (<span>-</span>)</a>
+    
+
+    <!-- Title -->
+    <h1><a href="../../" >Разработка на basis.js</a></h1>
+</div>
+
+    <div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+        <li>
+            <a href="https://github.com/basisjs" target="blank">About the author</a>
+        </li>
+        <li>
+            <a href="https://github.com/basisjs/articles/issues" target="blank">Questions and Issues</a>
+        </li>
+        <li>
+            <a href="https://github.com/basisjs/articles/edit/master/tutorial/part1/index.md" target="blank">Edit and Contribute</a>
+        </li>
+        <li class="divider"></li>
+        
+        <li data-level="0" data-path="index.html">
+            <a href="../../"><i class="fa fa-check"></i> Introduction</a>
+        </li>
+        
+            <li  data-level="1" data-path="get-started.html">
+                
+                <a href="../../get-started.html">
+                    <i class="fa fa-check"></i> <b>1.</b> Приступая к разработке
+                </a>
+                
+                
+            </li>
+        
+            <li  data-level="2" >
+                
+                <span><b>2.</b> Ядро (basis.js)</span>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="2.1" data-path="resources.html">
+                            
+                            <a href="../../resources.html">
+                                <i class="fa fa-check"></i> <b>2.1.</b> Ресурсы (модульность)
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="2.2" data-path="basis.Class.html">
+                            
+                            <a href="../../basis.Class.html">
+                                <i class="fa fa-check"></i> <b>2.2.</b> Классы
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="2.3" data-path="basis.Token.html">
+                            
+                            <a href="../../basis.Token.html">
+                                <i class="fa fa-check"></i> <b>2.3.</b> basis.Token
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="2.4" >
+                            
+                            <span><b>2.4.</b> basis.getter</span>
+                            
+                        </li>
+                    
+                        <li  data-level="2.5" data-path="bindingbridge.html">
+                            
+                            <a href="../../bindingbridge.html">
+                                <i class="fa fa-check"></i> <b>2.5.</b> Binding bridge
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="3" data-path="basis.event.html">
+                
+                <a href="../../basis.event.html">
+                    <i class="fa fa-check"></i> <b>3.</b> События
+                </a>
+                
+                
+            </li>
+        
+            <li  data-level="4" data-path="basis.data.html">
+                
+                <a href="../../basis.data.html">
+                    <i class="fa fa-check"></i> <b>4.</b> Данные
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="4.1" data-path="basis.data.Value.html">
+                            
+                            <a href="../../basis.data.Value.html">
+                                <i class="fa fa-check"></i> <b>4.1.</b> Значение
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.2" data-path="basis.data.Object.html">
+                            
+                            <a href="../../basis.data.Object.html">
+                                <i class="fa fa-check"></i> <b>4.2.</b> Объект
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.3" data-path="basis.data.datasets.html">
+                            
+                            <a href="../../basis.data.datasets.html">
+                                <i class="fa fa-check"></i> <b>4.3.</b> Наборы
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.4" data-path="basis.data.dataset.html">
+                            
+                            <a href="../../basis.data.dataset.html">
+                                <i class="fa fa-check"></i> <b>4.4.</b> basis.data.dataset
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.5" >
+                            
+                            <span><b>4.5.</b> Index</span>
+                            
+                        </li>
+                    
+                        <li  data-level="4.6" >
+                            
+                            <span><b>4.6.</b> Entity</span>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="5" data-path="basis.dom.wrapper.html">
+                
+                <a href="../../basis.dom.wrapper.html">
+                    <i class="fa fa-check"></i> <b>5.</b> basis.dom.wrapper
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="5.1" data-path="basis.dom.wrapper_dom.html">
+                            
+                            <a href="../../basis.dom.wrapper_dom.html">
+                                <i class="fa fa-check"></i> <b>5.1.</b> DOM
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.2" data-path="basis.dom.wrapper_childNodes.html">
+                            
+                            <a href="../../basis.dom.wrapper_childNodes.html">
+                                <i class="fa fa-check"></i> <b>5.2.</b> Дочерние узлы
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.3" data-path="basis.dom.wrapper_sorting.html">
+                            
+                            <a href="../../basis.dom.wrapper_sorting.html">
+                                <i class="fa fa-check"></i> <b>5.3.</b> Сортировка
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.4" data-path="basis.dom.wrapper_grouping.html">
+                            
+                            <a href="../../basis.dom.wrapper_grouping.html">
+                                <i class="fa fa-check"></i> <b>5.4.</b> Группировка
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.5" data-path="basis.dom.wrapper_data.html">
+                            
+                            <a href="../../basis.dom.wrapper_data.html">
+                                <i class="fa fa-check"></i> <b>5.5.</b> Привязка данных
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.6" data-path="basis.dom.wrapper_owner.html">
+                            
+                            <a href="../../basis.dom.wrapper_owner.html">
+                                <i class="fa fa-check"></i> <b>5.6.</b> Паттерн &quot;владелец&quot;
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.7" data-path="basis.dom.wrapper_satellite.html">
+                            
+                            <a href="../../basis.dom.wrapper_satellite.html">
+                                <i class="fa fa-check"></i> <b>5.7.</b> Сателлиты
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.8" data-path="basis.dom.wrapper_disabled.html">
+                            
+                            <a href="../../basis.dom.wrapper_disabled.html">
+                                <i class="fa fa-check"></i> <b>5.8.</b> Доступность (disabled/enabled)
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.9" data-path="basis.dom.wrapper_selection.html">
+                            
+                            <a href="../../basis.dom.wrapper_selection.html">
+                                <i class="fa fa-check"></i> <b>5.9.</b> Выделение (selection)
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="6" data-path="basis.ui.html">
+                
+                <a href="../../basis.ui.html">
+                    <i class="fa fa-check"></i> <b>6.</b> Интерфейс пользователя
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="6.1" data-path="basis.ui_template.html">
+                            
+                            <a href="../../basis.ui_template.html">
+                                <i class="fa fa-check"></i> <b>6.1.</b> Привязка шаблонов
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="6.2" data-path="basis.ui_bindings.html">
+                            
+                            <a href="../../basis.ui_bindings.html">
+                                <i class="fa fa-check"></i> <b>6.2.</b> Биндинги (bindings)
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="6.3" data-path="basis.ui_actions.html">
+                            
+                            <a href="../../basis.ui_actions.html">
+                                <i class="fa fa-check"></i> <b>6.3.</b> Обратная связь (actions)
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="7" data-path="basis.template.html">
+                
+                <a href="../../basis.template.html">
+                    <i class="fa fa-check"></i> <b>7.</b> Шаблоны
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="7.1" data-path="basis.template_format.html">
+                            
+                            <a href="../../basis.template_format.html">
+                                <i class="fa fa-check"></i> <b>7.1.</b> Формат шаблонов
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="7.2" data-path="basis.template_bindings.html">
+                            
+                            <a href="../../basis.template_bindings.html">
+                                <i class="fa fa-check"></i> <b>7.2.</b> Правила применения значений биндингам
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="7.3" >
+                            
+                            <span><b>7.3.</b> Динамическое обновление (live update)</span>
+                            
+                        </li>
+                    
+                        <li  data-level="7.4" data-path="basis.template_theme.html">
+                            
+                            <a href="../../basis.template_theme.html">
+                                <i class="fa fa-check"></i> <b>7.4.</b> Темы
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="8" data-path="basis.l10n.html">
+                
+                <a href="../../basis.l10n.html">
+                    <i class="fa fa-check"></i> <b>8.</b> L10n
+                </a>
+                
+                
+            </li>
+        
+            <li  data-level="9" data-path="basis.net.html">
+                
+                <a href="../../basis.net.html">
+                    <i class="fa fa-check"></i> <b>9.</b> basis.net
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="9.1" data-path="basis.net.action.html">
+                            
+                            <a href="../../basis.net.action.html">
+                                <i class="fa fa-check"></i> <b>9.1.</b> basis.net.action
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="9.2" data-path="basis.net.service.html">
+                            
+                            <a href="../../basis.net.service.html">
+                                <i class="fa fa-check"></i> <b>9.2.</b> basis.net.service
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="10" >
+                
+                <span><b>10.</b> Router</span>
+                
+                
+            </li>
+        
+            <li  data-level="11" data-path="tutorial/index.html">
+                
+                <a href="../../tutorial/index.html">
+                    <i class="fa fa-check"></i> <b>11.</b> Руководство
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="11.1" data-path="tutorial/part1/index.html">
+                            
+                            <a href="../../tutorial/part1/index.html">
+                                <i class="fa fa-check"></i> <b>11.1.</b> Часть 1. Начало работы, представления, модули, инструменты
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="11.2" data-path="tutorial/part2/index.html">
+                            
+                            <a href="../../tutorial/part2/index.html">
+                                <i class="fa fa-check"></i> <b>11.2.</b> Часть 2. Работа с данными: модели, наборы и значения
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="page-wrapper" tabindex="-1">
+                <div class="book-progress">
+    <div class="bar">
+        <div class="inner" style="width: 8.333333333333334%;min-width: 5.555555555555555%;"></div>
+    </div>
+    <div class="chapters">
+    
+        <a href="../../index.html" title="Introduction" class="chapter done new-chapter" data-progress="0" style="left: 0%;"></a>
+    
+        <a href="../../get-started.html" title="Приступая к разработке" class="chapter done new-chapter" data-progress="1" style="left: 2.7777777777777777%;"></a>
+    
+        <a href="../../tutorial/index.html" title="Руководство" class="chapter done " data-progress="11" style="left: 5.555555555555555%;"></a>
+    
+        <a href="../../tutorial/part1/index.html" title="Часть 1. Начало работы, представления, модули, инструменты" class="chapter done " data-progress="11.1" style="left: 8.333333333333334%;"></a>
+    
+        <a href="../../tutorial/part2/index.html" title="Часть 2. Работа с данными: модели, наборы и значения" class="chapter  " data-progress="11.2" style="left: 11.11111111111111%;"></a>
+    
+        <a href="../../resources.html" title="Ресурсы (модульность)" class="chapter  " data-progress="2.1" style="left: 13.88888888888889%;"></a>
+    
+        <a href="../../basis.Class.html" title="Классы" class="chapter  " data-progress="2.2" style="left: 16.666666666666668%;"></a>
+    
+        <a href="../../basis.Token.html" title="basis.Token" class="chapter  " data-progress="2.3" style="left: 19.444444444444443%;"></a>
+    
+        <a href="../../bindingbridge.html" title="Binding bridge" class="chapter  " data-progress="2.5" style="left: 22.22222222222222%;"></a>
+    
+        <a href="../../basis.event.html" title="События" class="chapter  new-chapter" data-progress="3" style="left: 25%;"></a>
+    
+        <a href="../../basis.data.html" title="Данные" class="chapter  new-chapter" data-progress="4" style="left: 27.77777777777778%;"></a>
+    
+        <a href="../../basis.data.Value.html" title="Значение" class="chapter  " data-progress="4.1" style="left: 30.555555555555557%;"></a>
+    
+        <a href="../../basis.data.Object.html" title="Объект" class="chapter  " data-progress="4.2" style="left: 33.333333333333336%;"></a>
+    
+        <a href="../../basis.data.datasets.html" title="Наборы" class="chapter  " data-progress="4.3" style="left: 36.111111111111114%;"></a>
+    
+        <a href="../../basis.data.dataset.html" title="basis.data.dataset" class="chapter  " data-progress="4.4" style="left: 38.888888888888886%;"></a>
+    
+        <a href="../../basis.dom.wrapper.html" title="basis.dom.wrapper" class="chapter  new-chapter" data-progress="5" style="left: 41.666666666666664%;"></a>
+    
+        <a href="../../basis.dom.wrapper_dom.html" title="DOM" class="chapter  " data-progress="5.1" style="left: 44.44444444444444%;"></a>
+    
+        <a href="../../basis.dom.wrapper_childNodes.html" title="Дочерние узлы" class="chapter  " data-progress="5.2" style="left: 47.22222222222222%;"></a>
+    
+        <a href="../../basis.dom.wrapper_sorting.html" title="Сортировка" class="chapter  " data-progress="5.3" style="left: 50%;"></a>
+    
+        <a href="../../basis.dom.wrapper_grouping.html" title="Группировка" class="chapter  " data-progress="5.4" style="left: 52.77777777777778%;"></a>
+    
+        <a href="../../basis.dom.wrapper_data.html" title="Привязка данных" class="chapter  " data-progress="5.5" style="left: 55.55555555555556%;"></a>
+    
+        <a href="../../basis.dom.wrapper_owner.html" title="Паттерн &quot;владелец&quot;" class="chapter  " data-progress="5.6" style="left: 58.333333333333336%;"></a>
+    
+        <a href="../../basis.dom.wrapper_satellite.html" title="Сателлиты" class="chapter  " data-progress="5.7" style="left: 61.111111111111114%;"></a>
+    
+        <a href="../../basis.dom.wrapper_disabled.html" title="Доступность (disabled/enabled)" class="chapter  " data-progress="5.8" style="left: 63.888888888888886%;"></a>
+    
+        <a href="../../basis.dom.wrapper_selection.html" title="Выделение (selection)" class="chapter  " data-progress="5.9" style="left: 66.66666666666667%;"></a>
+    
+        <a href="../../basis.ui.html" title="Интерфейс пользователя" class="chapter  new-chapter" data-progress="6" style="left: 69.44444444444444%;"></a>
+    
+        <a href="../../basis.ui_template.html" title="Привязка шаблонов" class="chapter  " data-progress="6.1" style="left: 72.22222222222223%;"></a>
+    
+        <a href="../../basis.ui_bindings.html" title="Биндинги (bindings)" class="chapter  " data-progress="6.2" style="left: 75%;"></a>
+    
+        <a href="../../basis.ui_actions.html" title="Обратная связь (actions)" class="chapter  " data-progress="6.3" style="left: 77.77777777777777%;"></a>
+    
+        <a href="../../basis.template.html" title="Шаблоны" class="chapter  new-chapter" data-progress="7" style="left: 80.55555555555556%;"></a>
+    
+        <a href="../../basis.template_format.html" title="Формат шаблонов" class="chapter  " data-progress="7.1" style="left: 83.33333333333333%;"></a>
+    
+        <a href="../../basis.template_bindings.html" title="Правила применения значений биндингам" class="chapter  " data-progress="7.2" style="left: 86.11111111111111%;"></a>
+    
+        <a href="../../basis.template_theme.html" title="Темы" class="chapter  " data-progress="7.4" style="left: 88.88888888888889%;"></a>
+    
+        <a href="../../basis.l10n.html" title="L10n" class="chapter  new-chapter" data-progress="8" style="left: 91.66666666666667%;"></a>
+    
+        <a href="../../basis.net.html" title="basis.net" class="chapter  new-chapter" data-progress="9" style="left: 94.44444444444444%;"></a>
+    
+        <a href="../../basis.net.action.html" title="basis.net.action" class="chapter  " data-progress="9.1" style="left: 97.22222222222223%;"></a>
+    
+        <a href="../../basis.net.service.html" title="basis.net.service" class="chapter  " data-progress="9.2" style="left: 100%;"></a>
+    
+    </div>
+</div>
+
+                <div class="page-inner">
+                
+                    <section class="normal" id="section-gitbook_38">
+                    
+                        <h1 id="-1-">Руководство. Часть 1. Начало работы, представления, модули, инструменты</h1>
+<p><a href="../index.md">Оглавление</a></p>
+<h2 id="-">Введение</h2>
+<p>В первой части руководства будет рассмотрено как начать работать с <code>basis.js</code> и какие инструменты можно использовать. В качестве примера будет создано несколько простых представлений, затронут вопрос модульности и организации файлов.</p>
+<h2 id="-">Подготовка</h2>
+<p>Для разработки нам потребуются:</p>
+<ul>
+<li>консоль (командная строка)</li>
+<li>локальный веб-сервер</li>
+<li>браузер (желательно <code>Google Chrome</code>)</li>
+<li>ваш любимый редактор</li>
+</ul>
+<p>Изначально считаем, что мы находимся в папке проекта и эта папка абсолютно пуста.</p>
+<h3 id="dev-">Dev-сервер</h3>
+<p>Проекты на <code>basis.js</code> не требуют сборки в процессе разработки. Но для их работы требуется веб-сервер. Может подойти любой веб-сервер, но лучше использовать dev-сервер, входящий в состав <code>basisjs-tools</code>, так как он дает больше возможностей при разработке.</p>
+<p><code>basisjs-tools</code> – набор консольных инструментов, написанный на <code>javascript</code> и работающий под управлением <code>node.js</code>. Этот набор включает в себя сборщик, dev-сервер и кодогенератор. Устанавливается как обычный <code>npm</code> модуль:</p>
+<pre><code>&gt; npm install -g basisjs-tools
+</code></pre><p>Если установить инструменты глобально (флаг <code>-g</code>), то в консоли станет доступна команда <code>basis</code>.</p>
+<p>Давайте запустим dev-сервер, для этого выполним в консоли простую команду:</p>
+<pre><code>&gt; basis server
+</code></pre><p>После этого запустится сервер на порту <code>8000</code> (это можно изменить, используя флаг <code>--port</code> или <code>-p</code>). Теперь можно открыть в браузере <code>http://localhost:8000</code> и убедиться, что сервер работает. Тем не менее он отдает ошибку, так как папка нашего проекта еще пуста. Давайте же исправим это.</p>
+<h3 id="-basis-js">Индексный файл и подключение basis.js</h3>
+<p>Для начала нужно добавить папку с исходниками <code>basis.js</code> в проект. Для этого можно либо клонировать проект из <a href="https://github.com/basisjs/basisjs" target="_blank">репозитария</a>, либо использовать <code>bower</code>:</p>
+<pre><code>&gt; bower install basis
+</code></pre><p>А теперь создадим основной <code>html</code> файл приложения, который пока лишь будет подключать <code>basis.js</code> – <code>index.html</code>.</p>
+<pre><code class="lang-html"><span class="hljs-doctype">&lt;!doctype html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>My first app on basis.js<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"bower_components/basis/src/basis.js"</span> <span class="hljs-attribute">basis-config</span>=<span class="hljs-value">""</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Пока ничего необычного. Единственное, что может вызвать вопросы – атрибут <code>basis-config</code> у тега <code>&lt;script&gt;</code>.</p>
+<p>Этот атрибут дает возможность ядру <code>basis.js</code> найти тег <code>&lt;script&gt;</code>, которым он был подключен. Это необходимо для того, чтобы определить путь к исходникам <code>basis.js</code> и разрешать пути к его модулям.</p>
+<h2 id="-">Первое представление</h2>
+<p>Сейчас наша страница как белый лист бумаги – абсолютно пуста. Давайте наполним ее смыслом и выведем традиционное &quot;hello world&quot;.</p>
+<p>Сделаем это, создав представление с таким отображением. Вот, что должно получиться:</p>
+<pre><code class="lang-html"><span class="hljs-doctype">&lt;!doctype html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>My first app on basis.js<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"bower_components/basis/src/basis.js"</span> <span class="hljs-attribute">basis-config</span>=<span class="hljs-value">""</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+    basis.require(<span class="hljs-string">'basis.ui'</span>);
+
+    <span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> basis.ui.Node({
+      container: document.body,
+      template: <span class="hljs-string">'&lt;h1&gt;Hello world!&lt;/h1&gt;'</span>
+    });
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Обновив страницу, увидим задуманное – &quot;Hello world!&quot;. Рассмотрим, что здесь происходит.</p>
+<p>Во-первых, мы сказали, что нам нужен модуль <code>basis.ui</code>, используя функцию <code>basis.require</code>. Эта функция работает практически так же, как функция <code>require</code> в <code>node.js</code> и умеет подключать модули по их имени или по имени файла. В данном случае <code>basis.ui</code> это имя модуля. Как мы увидим дальше, эта функция может &quot;подключить&quot; любой файл по его имени.</p>
+<p>Нам потребовался модуль <code>basis.ui</code>, так как он предоставляет все необходимое для построения интерфейса. Этому модулю необходимы другие модули, но об этом не нужно заботиться, оставьте это <code>basis.js</code>. Нужно подключать лишь то, что непосредственно используется в том коде, что пишете вы.</p>
+<p>Во-вторых, мы создали само представление, экземпляр класса <code>basis.ui.Node</code>. Пусть вас не смущает название <code>Node</code>, вместо традиционного <code>View</code>. Дело в том, что в <code>basis.js</code> все компоненты и представления вкладываются в друг друга. Так, некоторый блок может выглядеть как единое целое, но на самом деле может состоять из множества вложенных представлений (узлов).</p>
+<p>В целом, весь интерфейс организуется в виде одного большого дерева. Его листьями являются узлы (node), которые представляют собой представления и имеют перекрестные ссылки. Можно трансформировать это дерево, добавляя, удаляя и перемещая узлы. Основное API для этого имеет много общего с браузерным <code>DOM</code>. Но мы к этому еще вернемся.</p>
+<p>А пока посмотрим как мы создали представление. Для этого мы передали в конструктор объект с &quot;настройками&quot; – конфиг. Задав свойство <code>container</code> мы указали куда нужно поместить <code>DOM</code> фрагмент представления, когда он будет создан. Это должен быть <code>DOM</code> элемент. А в свойстве <code>template</code> указали описание шаблона. Это описание указано в самом конфиге для примера. Такая возможность, указывать описание шаблона строкой в конфиге, удобна для прототипирования и примеров. Но для публикуемых (production) приложений она не используется и позже мы это переделаем.</p>
+<h2 id="-">Модули</h2>
+<p>При разработке мы стараемся обособлять логические части и выносить их в отдельные файлы – модули. Чем меньше кода содержит файл, тем легче работать с его кодом. В идеале код модуля должен умещаться в один экран, максимум в два. Но, конечно, всегда бывают исключения.</p>
+<p>Давайте вынесем код представления в отдельный модуль. Для этого создадим файл <code>hello.js</code> и перенесем в него то, что было указано в <code>&lt;script&gt;</code>.</p>
+<p>Этого оказывается достаточно, и пока больше ничего с кодом делать не нужно. Осталось только подключить модуль в <code>index.html</code>:</p>
+<pre><code class="lang-html"><span class="hljs-doctype">&lt;!doctype html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>My first app on basis.js<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"bower_components/basis/src/basis.js"</span> <span class="hljs-attribute">basis-config</span>=<span class="hljs-value">""</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+    basis.require(<span class="hljs-string">'./hello.js'</span>);
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Здесь снова использована функция <code>basis.require</code>, но на этот раз ей передан путь к файлу. Важно, чтобы путь к файлу начинался с <code>./</code>, <code>../</code> или <code>/</code>. Так <code>basis.require</code> однозначно поймет, что значение является путем к файлу, а не именем модуля. Такое же соглашение действует и в <code>node.js</code>.</p>
+<p>Продолжим разбираться с модульностью. Например, разметка в коде нам ни к чему. А раз так, вынесем описание шаблона в отдельный файл – <code>hello.tmpl</code>. Тогда код представления примет такой вид:</p>
+<pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> basis.ui.Node({
+  container: document.body,
+  template: basis.resource(<span class="hljs-string">'./hello.tmpl'</span>)
+});
+</code></pre>
+<p>Все осталось как прежде, но строка с описанием шаблона заменена на вызов функции <code>basis.resource</code>. Эта функция создает &quot;интерфейс&quot; к файлу. Такой подход дает возможность определять какие файлы нужны, не скачивая их до тех пор, пока нет в этом необходимости.</p>
+<p>Интерфейс, создаваемый <code>basis.resource</code>, представляет собой функцию с дополнительными методами. Вызов такой функции, или ее метода <code>fetch</code>, приводит к загрузке файла. Загружается файл лишь раз, а результат кешируется. Больше деталей можно найти в статье <a href="https://github.com/basisjs/articles/tree/master/ru-RU/resources.md" target="_blank">Ресурсы (модульность)</a>.</p>
+<p>Еще один момент: на самом деле, вызов <code>basis.require(&#39;./file.name&#39;)</code> эквивалентен <code>basis.resource(&#39;./file.name&#39;).fetch()</code>.</p>
+<p>В данном случае, можно было бы использовать и <code>basis.require</code>. Но шаблоны часто описываются в классах, а для этих случаев не нужно загружать файл до тех пор, пока не будет создан первый экземпляр класса. Мы увидим это в других примерах. Поэтому для единообразия: при назначении шаблона, лучше всегда использовать <code>basis.resource</code>.</p>
+<h3 id="-">Преимущества модулей</h3>
+<p>Когда код описывается в отдельном файле и подключается как модуль, то он оборачивается специальным образом, и в коде становятся доступны несколько дополнительных переменных и функций.</p>
+<p>Например, имя файла можно получить из переменной <code>__filename</code>, а папку размещения модуля из переменной <code>__dirname</code>.</p>
+<p>Но важнее, что становятся доступны локальные функции <code>require</code> и <code>resource</code>. Они работают так же как <code>basis.require</code> и <code>basis.resource</code>, за исключением того, как разрешаются относительные пути к файлам. Если для функциям <code>basis.require</code> и <code>basis.resource</code> передается относительный путь, то он разрешает относительно <code>html</code> файла (в нашем случае это <code>index.html</code>). В тоже время, <code>require</code> и <code>resource</code> разрешают такие пути относительно модуля (то есть его <code>__dirname</code>).</p>
+<p>В модулях удобнее использовать именно локальные функции <code>require</code> и <code>resource</code>. Таким образом, код <code>hello.js</code> немного упрощается:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> basis.ui.Node({
+  container: document.body,
+  template: resource(<span class="hljs-string">'./hello.tmpl'</span>)
+});
+</code></pre>
+<p>Но модульность дает дополнительные возможности не только <code>javascript</code> модулям, но и другим типам содержимого. Так, например, если описание шаблона находится в отдельном файле, то при его изменении не нужно обновлять страницу. Как только изменения сохранены, все экземпляры представлений, которые используют измененный шаблон, самостоятельно обновляют свои <code>DOM</code> фрагменты. И все это происходит без перезагрузки страницы, с сохранением текущего состояния приложения.</p>
+<p>То же относится и к <code>css</code>, файлам локализации и другим типам файлов. Единственные изменения, требующие перезагрузки страницы, это изменение <code>html</code> файла и изменение <code>javascript</code> модулей, которые уже инициализированы.</p>
+<p>Механизм обновления файлов обеспечивает dev-сервер из <code>basisjs-tools</code>. Это одна из главных причин почему стоит использовать именно его, а не обычный веб-сервер.</p>
+<p>Давайте попробуем как это работает. Создадим файл <code>hello.css</code>, такого вида:</p>
+<pre><code class="lang-css"><span class="hljs-tag">h1</span>
+<span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> red</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p>После этого немного изменим шаблон (<code>hello.tmpl</code>):</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:style</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./hello.css"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Hello world!<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+</code></pre>
+<p>Как только изменения в шаблоне будут сохранены, текст станет красным. При этом совсем не нужно обновлять страницу.</p>
+<p>В шаблон мы добавили специальный тег <code>&lt;b:style&gt;</code>. Этот тег говорит, что когда используется данный шаблон, то на страницу нужно подключить заданный файл стилей. Относительные пути разрешаются относительно файла шаблона. Один шаблон может подключать произвольное количество файлов стилей. Нам не нужно беспокоиться о добавлении и удалении стилей, об этом заботится фреймворк.</p>
+<p>Итак, мы создали простое статическое представление. Но веб-приложения, это в первую очередь динамика. Так что давайте попробуем использовать в шаблоне значения из представления и как то взаимодействовать с ним. Для первого используются биндинги (bindings), а для второго – действия (actions).</p>
+<h2 id="-">Биндинги и действия</h2>
+<p>Биндиги позволяют переносить значения из представления в его <code>DOM</code> фрагмент. В отличие от большинства шаблонизаторов, шаблоны <code>basis.js</code> не имеют прямого доступа к свойствам представления. И могут использовать только те значения, что само представление предоставляет шаблону.</p>
+<p>Для задания значений доступных шаблону используется свойство <code>binding</code> в описании экземпляра или класса, унаследованного от <code>basis.ui.Node</code>. Значения задаются в виде объекта, где ключ – это имя, которое будет доступно в шаблоне, а значение – функция, вычисляющая значение для шаблона. Таким функциям единственным параметром передается владелец шаблона, то есть само представление. Вот так можно предоставить шаблону значение <code>name</code>:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> basis.ui.Node({
+  container: document.body,
+  name: <span class="hljs-string">'world'</span>,
+  template: resource(<span class="hljs-string">'./hello.tmpl'</span>),
+  binding: {
+    name: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>
+      <span class="hljs-keyword">return</span> node.name;
+    }
+  }
+});
+</code></pre>
+<p>Стоит добавить, что свойство <code>binding</code> является <a href="https://github.com/basisjs/articles/blob/master/ru-RU/basis.Class.md#%D0%A0%D0%B0%D1%81%D1%88%D0%B8%D1%80%D1%8F%D0%B5%D0%BC%D1%8B%D0%B5-%D0%BF%D0%BE%D0%BB%D1%8F" target="_blank">авто-расширяемым свойством</a>. Когда задается новое значение для свойства, при создании экземпляра или класса, то новое значение расширяет предыдущее, добавляя и переопределяя прежние значения. По умолчанию у <code>basis.ui.Node</code> уже есть <a href="https://github.com/basisjs/articles/blob/master/ru-RU/basis.ui_bindings.md#%D0%91%D0%B8%D0%BD%D0%B4%D0%B8%D0%BD%D0%B3%D0%B8-%D0%BF%D0%BE-%D1%83%D0%BC%D0%BE%D0%BB%D1%87%D0%B0%D0%BD%D0%B8%D1%8E" target="_blank">несколько полезных значений</a>, которые можно использовать наряду с определенным нами <code>name</code>.</p>
+<p>Изменим шаблон (<code>hello.tmpl</code>), чтобы использовать <code>name</code>.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:style</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./hello.css"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Hello, {name}!<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+</code></pre>
+<p>В шаблонах используются специальные вставки – маркеры. Они используются для получения ссылок на определенные части шаблона и расстановки значений. Такие вставки указываются в фигурных скобках. В данном случае мы добавили <code>{name}</code>, для вставки значения как обычный текст.</p>
+<p>Описание шаблона выглядит похожим на формат описания в других шаблонизаторах. Но в отличие от них, шаблонизатор <code>basis.js</code> работает с <code>DOM</code> узлами. Для данного описания будет создан элемент <code>&lt;h1&gt;</code>, в котором будет содержаться три текстовых узла <code>Hello,</code>, <code>{name}</code> и <code>!</code>. Первый и последний будут статичными и их текст не будет меняться. А вот среднему будет проставляться значение из представления (будет меняться его свойство <code>nodeValue</code>).</p>
+<p>Но хватит слов, давайте обновим страницу и посмотрим на результат!</p>
+<p>А теперь добавим поле, в которое будем вводить имя и чтобы оно подставлялось в заголовок. Начнем с шаблона:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:style</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./hello.css"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Hello, {name}!<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"{name}"</span> <span class="hljs-attribute">event-keyup</span>=<span class="hljs-value">"setName"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>В шаблоне добавился элемент <code>&lt;input&gt;</code>. Для его атрибута <code>value</code> использован тот же биндинг, что и в заголовке – <code>{name}</code>. Но это работает только для записи в <code>DOM</code>.</p>
+<p>Для того, чтобы представление реагировало на события в его <code>DOM</code> фрагменте, нужному элементу добавляется атрибут, именем которого является название события с префиксом <code>event-</code>. Мы можем добавить выполнение действия любому элементу на любое событие. Да и действий на одно событие может быть несколько, главное разделить имена действий пробелом.</p>
+<p>В нашем примере мы добавили атрибут <code>event-keyup</code>, который обязует представление выполнить действие <code>setName</code>, когда срабатывает событие <code>keyup</code>. Если у представления не будет определено какое-то действие, то в консоли мы увидим предупреждающее сообщение об этом и больше ничего не произойдет.</p>
+<p>А теперь добавим описание действия. Для этого используется свойство <code>action</code>. Работает оно аналогично <code>binding</code>, но только описывает действия. Функции в <code>action</code> получают параметром объект события. Это не оригинальное событие, а его копия с дополнительными методами и свойствами (оригинальное событие хранится в его свойстве <code>event_</code>).</p>
+<p>Вот как теперь будет выглядеть представление (<code>hello.js</code>):</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> basis.ui.Node({
+  container: document.body,
+  name: <span class="hljs-string">'world'</span>,
+  template: resource(<span class="hljs-string">'./hello.tmpl'</span>),
+  binding: {
+    name: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>
+      <span class="hljs-keyword">return</span> node.name;
+    }
+  },
+  action: {
+    setName: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span>{</span>
+      <span class="hljs-keyword">this</span>.name = event.sender.value;
+      <span class="hljs-keyword">this</span>.updateBind(<span class="hljs-string">'name'</span>);
+    }
+  }
+});
+</code></pre>
+<p>Здесь мы читаем значение из <code>event.sender</code>, а это элемент, у которого произошло событие – <code>&lt;input&gt;</code>. Для того чтобы представление заново вычислило значение и передало его шаблону, мы вызвали метод <code>updateBind</code>.</p>
+<p>Вызывать явно пересчет значения для шаблона нужно не всегда. Если при изменении значений, которые используются для вычисления биндинга, возникают события, то можно указать эти события в описании и биндинг будет пересчитываться автоматически, когда они возникнут.</p>
+<p>Представления, как и модели, умеют хранить данные в виде ключ-значение. Данные хранятся в свойстве <code>data</code> и меняются методом <code>update</code>. Когда меняются значения в <code>data</code>, срабатывает событие <code>update</code>. Воспользуемся этим механизмом для хранения имени:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> basis.ui.Node({
+  container: document.body,
+  data: {
+    name: <span class="hljs-string">'world'</span>
+  },
+  template: resource(<span class="hljs-string">'./hello.tmpl'</span>),
+  binding: {
+    name: {
+      events: <span class="hljs-string">'update'</span>,
+      getter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>
+        <span class="hljs-keyword">return</span> node.data.name;
+      }
+    }
+  },
+  action: {
+    setName: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span>{</span>
+      <span class="hljs-keyword">this</span>.update({
+        name: event.sender.value
+      });
+    }
+  }
+});
+</code></pre>
+<p>Теперь <code>updateBind</code> не вызывается явно. Но для описания биндига потребовалось больше кода. К счастью, у биндингов есть хелперы, сокращающие описание частых ситуаций. Синхронизация с полем из <code>data</code> одна из них. Такой биндинг можно записать в более коротком виде, вот так:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> basis.ui.Node({
+  container: document.body,
+  data: {
+    name: <span class="hljs-string">'world'</span>
+  },
+  template: resource(<span class="hljs-string">'./hello.tmpl'</span>),
+  binding: {
+    name: <span class="hljs-string">'data:name'</span>
+  },
+  action: {
+    setName: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span>{</span>
+      <span class="hljs-keyword">this</span>.update({
+        name: event.sender.value
+      });
+    }
+  }
+});
+</code></pre>
+<p>Использованный хелпер всего лишь синтаксический сахар. Он развернется в полную форму, которая была в предыдущем примере. Больше подробностей можно найти в статье <a href="https://github.com/basisjs/articles/tree/master/ru-RU/basis.ui_bindings.md" target="_blank">Биндинги</a>.</p>
+<p>Основное, что нужно запомнить. Представление вычисляет и передает значения шаблону, для этого используется <code>binding</code>. А шаблон перехватывает и передает представлению события, вызывая действия из <code>action</code>. Фактически, <code>binding</code> и <code>action</code> основные точки соприкосновения представления и шаблона. При этом, представление практически ничего не знает об устройстве шаблона, а шаблон – об устройстве представления. Вся логика (<code>javascript</code>) находится на стороне представления, а работа с отображением (<code>DOM</code>) – на стороне шаблона. Так, в подавляющем большинстве случаев, достигается полное разделение логики и представления.</p>
+<p><img src="split_logic_markup.png" alt="Разделение логики и представления"></p>
+<h2 id="-">Список</h2>
+<p>Итак, теперь мы знаем как создать простое представление. Давайте создадим еще одно, немного посложнее – список. Для этого создадим новый файл <code>list.js</code> с таким содержанием:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> basis.ui.Node({
+  container: document.body,
+  template: resource(<span class="hljs-string">'./list.tmpl'</span>)
+});
+
+<span class="hljs-keyword">var</span> Item = basis.ui.Node.subclass({
+  template: resource(<span class="hljs-string">'./item.tmpl'</span>),
+  binding: {
+    name: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>
+      <span class="hljs-keyword">return</span> node.name;
+    }
+  }
+});
+
+list.appendChild(<span class="hljs-keyword">new</span> Item({ name: <span class="hljs-string">'foo'</span> }));
+list.appendChild(<span class="hljs-keyword">new</span> Item({ name: <span class="hljs-string">'bar'</span> }));
+list.appendChild(<span class="hljs-keyword">new</span> Item({ name: <span class="hljs-string">'baz'</span> }));
+</code></pre>
+<p>Код этого модуля похож на <code>hello.js</code>, но добавились новые конструкции.</p>
+<p>Прежде чем их разобрать, отметим, что в <code>basis.js</code> используется компонентный подход. Так, если мы делаем, например, список, то это будет не одно представление, а несколько. Одно представление это сам список. И каждый элемент списка – это тоже представление. Так мы отдельно описываем поведение списка, и поведение элементов списка. Чуть более подробно про этот подход, например, рассказано в докладе &quot;Компонентный подход: скучно, неинтересно, бесперспективно&quot;: <a href="http://www.slideshare.net/basisjs/ss-27142749" target="_blank">слайды</a> и <a href="https://www.youtube.com/watch?v=QpZy0WW0Ig4" target="_blank">видео</a>.</p>
+<p>Как упоминалось ранее, представления могут вкладываться друг в друга. В данном случае элементы списка вкладываются в список. При этом вложенные представления являются дочерними (хранятся в свойстве <code>childNodes</code>), а для них, представление, в которое они вложены, является родительским (ссылка хранится в свойстве <code>parentNode</code>).</p>
+<p>Описание самого списка ничем не отличается от того, что мы делали ранее. Далее по коду был создан новый класс, унаследованный от <code>basis.ui.Node</code>. В этом классе указан файл шаблона и простой биндинг. После этого было создано три экземпляра этого класса и добавлены списку.</p>
+<p>Как было сказано выше, для организации дерева представлений используются принципы <code>DOM</code>. Для вставки используются методы <code>appendChild</code> и <code>insertBefore</code>, для удаления <code>removeChild</code>, а для замены <code>replaceChild</code>. Так же есть нестандартные методы: <code>setChildNodes</code> позволяет задать список дочерних представлений, а <code>clear</code> – удаляет все дочерние представления махом.</p>
+<p>Поэтому уже сейчас можно сделать код немного проще:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> basis.ui.Node({
+  container: document.body,
+  template: resource(<span class="hljs-string">'./list.tmpl'</span>)
+});
+
+<span class="hljs-keyword">var</span> Item = basis.ui.Node.subclass({
+  template: resource(<span class="hljs-string">'./item.tmpl'</span>),
+  binding: {
+    name: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>
+      <span class="hljs-keyword">return</span> node.name;
+    }
+  }
+});
+
+list.setChildNodes([
+  <span class="hljs-keyword">new</span> Item({ name: <span class="hljs-string">'foo'</span> }),
+  <span class="hljs-keyword">new</span> Item({ name: <span class="hljs-string">'bar'</span> }),
+  <span class="hljs-keyword">new</span> Item({ name: <span class="hljs-string">'baz'</span> })
+]);
+</code></pre>
+<p>Список дочерних узлов можно задать и в момент создания представления. Попробуем:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">var</span> Item = basis.ui.Node.subclass({
+  template: resource(<span class="hljs-string">'./item.tmpl'</span>),
+  binding: {
+    name: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>
+      <span class="hljs-keyword">return</span> node.name;
+    }
+  }
+});
+
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> basis.ui.Node({
+  container: document.body,
+  template: resource(<span class="hljs-string">'./list.tmpl'</span>),
+  childNodes: [
+    <span class="hljs-keyword">new</span> Item({ name: <span class="hljs-string">'foo'</span> }),
+    <span class="hljs-keyword">new</span> Item({ name: <span class="hljs-string">'bar'</span> }),
+    <span class="hljs-keyword">new</span> Item({ name: <span class="hljs-string">'baz'</span> })
+  ]
+});
+</code></pre>
+<p>Самостоятельно создавать однотипные дочерние узлы не так интересно. Хотелось бы просто указывать конфиг и чтобы список сам их создавал, если это необходимо. И такая возможность есть. Это регулируется двумя свойствами <code>childClass</code> и <code>childFactory</code>. Первое задает класс экземпляра, который может быть добавлен как дочерний узел. А второе свойство определяет функцию, которой передается, добавляемое как дочерний узел, значение, которое не является экземпляром <code>childClass</code>. Задача такой функции создать подходящий экземпляр. По умолчанию, эта функция создает экземпляр <code>childClass</code>, используя переданное значение как конфиг:</p>
+<pre><code class="lang-js">basis.ui.Node.prototype.childFactory = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span>{</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">this</span>.childClass(value);
+};
+</code></pre>
+<p>Так это свойство определено по умолчанию. Чаще всего этого достаточно и не требуется переопределять. Но бывают случаи, когда дочерние представления могут быть разных классов. В этом случае логика выбора описывается в этом методе.</p>
+<p>Таким образом, все что нам нужно, это определить <code>childClass</code>. Тогда станет возможно добавлять новые элементы в список не только создавая экземпляр <code>Item</code>, но и передавая конфиг.</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">var</span> Item = basis.ui.Node.subclass({
+  template: resource(<span class="hljs-string">'./item.tmpl'</span>),
+  binding: {
+    name: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>
+      <span class="hljs-keyword">return</span> node.name;
+    }
+  }
+});
+
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> basis.ui.Node({
+  container: document.body,
+  template: resource(<span class="hljs-string">'./list.tmpl'</span>),
+  childClass: Item,
+  childNodes: [
+    { name: <span class="hljs-string">'foo'</span> },
+    { name: <span class="hljs-string">'bar'</span> },
+    { name: <span class="hljs-string">'baz'</span> }
+  ]
+});
+</code></pre>
+<p>Продолжим улучшать код. Ведь его можно сделать еще проще.</p>
+<p>Класс <code>Item</code> нигде больше не используется, потому нет смысла сохранять его в переменную. Этот класс можно сразу задать в конфиге. Но это не все что мы можем сделать. Когда создается новый класс или экземпляр и некоторое его свойство является классом, а мы хотим создать новый класс на его основе, то не обязательно создавать класс явно, можно просто задать объект с расширениями нового класса. Звучит сложно, но, на самом деле, это все про то, что нам не обязательно указывать <code>basis.ui.Node.subclass</code>, можно просто передать объект. И мы получаем:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> basis.ui.Node({
+  container: document.body,
+  template: resource(<span class="hljs-string">'./list.tmpl'</span>),
+  childClass: {
+    template: resource(<span class="hljs-string">'./item.tmpl'</span>),
+    binding: {
+      name: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>
+        <span class="hljs-keyword">return</span> node.name;
+      }
+    }
+  },
+  childNodes: [
+    { name: <span class="hljs-string">'foo'</span> },
+    { name: <span class="hljs-string">'bar'</span> },
+    { name: <span class="hljs-string">'baz'</span> }
+  ]
+});
+</code></pre>
+<p>Вот, так гораздо лучше. Осталось лишь описать шаблоны.</p>
+<p>Сначала создаем шаблон списка <code>list.tmpl</code>:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"mylist"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Мой первый список<span class="hljs-tag">&lt;/<span class="hljs-title">h2</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ul{childNodesElement}</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Совершенно обычная разметка, за исключением того, что после имени тега <code>ul</code> идет незнакомая конструкция <code>{childNodesElement}</code>. Знакомтесь, это тоже маркер. Так мы говорим, что мы хотим ссылаться на этот элемент по имени <code>childNodesElement</code>. На самом деле, лично нам эта ссылка пока не нужна. Но она нужна представлению списка, что понять куда вставлять <code>DOM</code> фрагменты дочерних узлов. Если ее не указать, то дочерние узлы будут вставляться в корневой элемент (в нашем случае это <code>&lt;div id=&quot;mylist&quot;&gt;</code>).</p>
+<p>Таким образом, мы не управляем <code>DOM</code> напрямую, этим занимаются представления. Мы лишь подсказываем что и куда размещать. И так как перемещением узлов занимаются представления, то они отлично знают что и где лежит, и стараются выполнять свою работу как можно более оптимально. Более того, именно поэтому возможно обновлять шаблоны без перезагрузки страницы. Когда меняется описание шаблона, представление создает новый <code>DOM</code> фрагмент и переносит из старого фрагмента в новый все необходимое.</p>
+<p>Теперь нужно создать шаблон для элемента списка (<code>item.tmpl</code>):</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span>
+  {name}
+<span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+</code></pre>
+<p>И последнее, нужно подключить модуль в нашу страницу:</p>
+<pre><code class="lang-html"><span class="hljs-doctype">&lt;!doctype html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>My first app on basis.js<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"bower_components/basis/src/basis.js"</span> <span class="hljs-attribute">basis-config</span>=<span class="hljs-value">""</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+    basis.require(<span class="hljs-string">'./hello.js'</span>);
+    basis.require(<span class="hljs-string">'./list.js'</span>);
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Обновив страницу, мы увидим наш замечательный список из трех элементов.</p>
+<h2 id="-">Композиция</h2>
+<p>Мы создали два представления, которые отображаются на странице. Вроде все хорошо, но на самом деле есть проблема. Мы не управляем вставкой представлений в документ и их порядком, все зависит от того в каком порядке мы подключили модули. К тому же, обычно, не все представления, в подключаемых модулях, нужно отображать сразу. Разберемся как мы можем этим управлять.</p>
+<p>Основная идея заключается в том, что мы создаем одно представление, которое вставляем в документ. Такое представление описывается в отдельном модуле. В этом модуле подключаются другие дочерние модули и определяется как их представления будут включаться в его <code>DOM</code> фрагмент. Подключаемые модули, их представления, могут так же включать в себя другие дочерние представления, а они свои дочерние представления и т.д. Таким образом, представления определяют какие представления включаются в них, но не наоборот. Обычно дочерние представления не знают кто и как их включает.</p>
+<p>Для начала изменим сами модули. Во-первых, нужно убрать использование свойства <code>container</code>, так как их расположение будет определять родительское представление. А во-вторых, нужно чтобы модуль возвращал само представление, чтобы его можно было использовать. Для этого используется <code>exports</code> или <code>module.exports</code> (все как в <code>node.js</code>).</p>
+<p>Теперь <code>hello.js</code> примет такой вид:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+module.exports = <span class="hljs-keyword">new</span> basis.ui.Node({
+  data: {
+    name: <span class="hljs-string">'world'</span>
+  },
+  template: resource(<span class="hljs-string">'./hello.tmpl'</span>),
+  binding: {
+    name: <span class="hljs-string">'data:name'</span>
+  },
+  action: {
+    setName: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span>{</span>
+      <span class="hljs-keyword">this</span>.update({
+        name: event.sender.value
+      });
+    }
+  }
+});
+</code></pre>
+<p>А модуль списка (<code>list.js</code>) такой:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+module.exports = <span class="hljs-keyword">new</span> basis.ui.Node({
+  template: resource(<span class="hljs-string">'./list.tmpl'</span>),
+  childClass: {
+    template: resource(<span class="hljs-string">'./item.tmpl'</span>),
+    binding: {
+      name: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>
+        <span class="hljs-keyword">return</span> node.name;
+      }
+    }
+  },
+  childNodes: [
+    { name: <span class="hljs-string">'foo'</span> },
+    { name: <span class="hljs-string">'bar'</span> },
+    { name: <span class="hljs-string">'baz'</span> }
+  ]
+});
+</code></pre>
+<p>Как видно, поменялось не много.</p>
+<p>У любого приложения обычно есть единственная точка входа. Это такой модуль, который создает корневое представление и делает ключевые настройки. Создадим такой файл <code>app.js</code>:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">new</span> basis.ui.Node({
+  container: document.body,
+  childNodes: [
+    <span class="hljs-built_in">require</span>(<span class="hljs-string">'./hello.js'</span>),
+    <span class="hljs-built_in">require</span>(<span class="hljs-string">'./list.js'</span>)
+  ]
+});
+</code></pre>
+<p>Здесь все уже должно быть знакомо. Можно заметить, что для представления мы не задали шаблон. В этом случае, по умолчанию, будет использоваться пустой <code>&lt;div&gt;</code>. Пока нас устроит.</p>
+<p>Осталось поменять сам <code>index.html</code>:</p>
+<pre><code class="lang-html"><span class="hljs-doctype">&lt;!doctype html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>My first app on basis.js<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"bower_components/basis/src/basis.js"</span> <span class="hljs-attribute">basis-config</span>=<span class="hljs-value">""</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
+    basis.require(<span class="hljs-string">'./app.js'</span>);
+  </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Два вызова <code>basis.require</code> заменились на один. Но не писать и его, а использовать опцию <code>autoload</code> в <code>basis-config</code>:</p>
+<pre><code class="lang-html"><span class="hljs-doctype">&lt;!doctype html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>My first app on basis.js<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"bower_components/basis/src/basis.js"</span> <span class="hljs-attribute">basis-config</span>=<span class="hljs-value">"autoload: 'app'"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<p>Согласитесь, стало гораздо лучше.</p>
+<p>И все же осталась небольшая проблема. Да, порядок дочерних представлений задается в корневом представлении. Но они добавляются последовательно, один за другим. А достаточно часто нам необходимо размещать дочерние представления в конкретные точки разметки, более сложной чем просто пустой <code>&lt;div&gt;</code>. Для этого необходимо использовать – сателлиты.</p>
+<h3 id="-">Сателлиты</h3>
+<p>Сателлиты – это именованные дочерние представления. Этот механизм используется для представлений, которые играют определенную роль и не повторяются.</p>
+<p>Для задания сателлитов используется свойство <code>satellite</code>. В биндингах можно использовать хелпер <code>satellite:</code>, чтобы предоставить шаблону возможность располагать их <code>DOM</code> фрагменты внутри своего <code>DOM</code> фрагмента. При этом в шаблон передается корневой элемент сателлита (они ведь оперируют в терминах <code>DOM</code>), а в самом шаблоне определяется точка для вставки.</p>
+<p>Вот так будет выглядеть <code>app.js</code>, с использованием сателлитов:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">new</span> basis.ui.Node({
+  container: document.body,
+  template: resource(<span class="hljs-string">'./app.tmpl'</span>),
+  binding: {
+    hello: <span class="hljs-string">'satellite:hello'</span>,
+    list: <span class="hljs-string">'satellite:list'</span>
+  },
+  satellite: {
+    hello: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./hello.js'</span>),
+    list: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./list.js'</span>)
+  }
+});
+</code></pre>
+<p>Здесь все должно быть понятно, код не очень сложный. Это полная запись, явное объявление сателлитов и использование их в биндингах. Но то же можно описать и короче:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">new</span> basis.ui.Node({
+  container: document.body,
+  template: resource(<span class="hljs-string">'./app.tmpl'</span>),
+  binding: {
+    hello: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./hello.js'</span>),
+    list: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./list.js'</span>)
+  }
+});
+</code></pre>
+<p>В этом случае сателлиты определяются неявно. В качестве значения биндинга, на самом деле, можно задать любой экземпляр <code>basis.ui.Node</code>. В этом случае, он неявно станет сателлитом с именем биндинга.</p>
+<p>Осталось описать шаблон, задающий разметку и расположение сателлитов:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"sidebar"</span>&gt;</span>
+    <span class="hljs-comment">&lt;!--{list}--&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"content"</span>&gt;</span>
+    <span class="hljs-comment">&lt;!--{hello}--&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Здесь использованы комментарии с маркером. Можно использовать и другие типы узлов, элементы или текстовые узлы. Которые так же будут заменены на корневые элементы сателлитов. Но чаще использование комментариев более выгодно: если не будет необходимого сателлита, то просто ничего не выведется.</p>
+<p>Сателлиты, на самом деле, имеют гораздо больше возможностей. Например, они могут автоматически создаваться и разрушаться в зависимости от определенного условия. Мы еще будем возвращаться в других частях руководства. А подробнее о них можно прочитать в статье <a href="https://github.com/basisjs/articles/blob/master/ru-RU/basis.dom.wrapper_satellite.md" target="_blank">Сателлиты</a>.</p>
+<h2 id="-">Реструктуризация файлов проекта</h2>
+<p>Результатом наших экспериментов стали три основных представления, три модуля и 9 файлов:</p>
+<p><img src="file_structure_1.png" alt="Структура файлов"></p>
+<p>В настоящих приложениях десятки и сотни модулей. А среднее приложение на <code>basis.js</code> это, обычно, 800-1200 файлов. Хранить все файлы в одной папке неудобно и неразумно. Попробуем реструктурировать расположение файлов.</p>
+<p>Создадим папку <code>hello</code> и перенесем туда файлы относящиеся к этому модулю (т.е. <code>hello.js</code>, <code>hello.tmpl</code> и <code>hello.css</code>). А так же папку <code>list</code>, в которую перенесем <code>list.js</code>, <code>list.tmpl</code> и <code>item.tmpl</code>. Все что нам осталось – это поменять пути подключения модулей в <code>app.js</code>:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">new</span> basis.ui.Node({
+  container: document.body,
+  template: resource(<span class="hljs-string">'./app.tmpl'</span>),
+  binding: {
+    hello: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./hello/hello.js'</span>),  <span class="hljs-comment">// здесь</span>
+    list: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./list/list.js'</span>)      <span class="hljs-comment">// и здесь</span>
+  }
+});
+</code></pre>
+<p>Больше ничего менять не нужно. Можно убедиться, что все работает как прежде, но структура файлов теперь такая:</p>
+<p><img src="file_structure_2.png" alt="Структура файлов"></p>
+<p>Выглядит не плохо, но файлы и папки самого приложения смешиваются с файлами и папками другого назначения. Поэтому будет лучше, если мы расположим все исходные файлы приложения в одной отдельной папке. Создадим папку <code>src</code> и поместим туда все файлы и папки за исключением <code>bower_components</code> и <code>index.html</code>. После этого нужно подправить один путь в <code>index.html</code>:</p>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- было --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"bower_components/basis/src/basis.js"</span> <span class="hljs-attribute">basis-config</span>=<span class="hljs-value">"autoload: 'app'"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- стало --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"bower_components/basis/src/basis.js"</span> <span class="hljs-attribute">basis-config</span>=<span class="hljs-value">"autoload: 'src/app'"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p>Структура файлов должна получится такой:</p>
+<p><img src="file_structure_3.png" alt="Структура файлов"></p>
+<p>Если пойти по пути универсализации, то можно организовать файлы, например, так:</p>
+<p><img src="file_structure_4.png" alt="Структура файлов"></p>
+<p>Так дочерние модули располагаются в папке <code>module</code>. Основной <code>javascript</code> файл модуля называется <code>index.js</code>. Шаблоны и все что к ним относится (стили, изображения и т.д.) располагаются в папке <code>template</code>. Это наиболее частая структура организации проектов на данный момент.</p>
+<p>Такая организация позволяет проще переносить модули, как в рамках самого проекта, так и рамках нескольких проектов. Становится проще выносить модули в отдельные пакеты (библиотеки) или делать из них переиспользуемые компоненты. Так же не сложно удалить модуль из проекта или заменить его другой реализацией.</p>
+<p>Конечно, вы можете придумать собственную структуру файлов, так как вам больше нравится. В этом вас никто не ограничивает.</p>
+<p>Можно заметить, что мы перемещали сразу несколько файлов, но после перемещения нужно было вносить изменения лишь в один файл в одном месте. Так обычно и бывает. Это основное преимущество, которое дают относительные пути.</p>
+<p>Итоговый результат можно посмотреть <a href="code">здесь</a>.</p>
+<h2 id="-">Инструменты</h2>
+<p>С ростом приложения растет количество файлов и его сложность. Для того чтобы было проще разрабатывать нужны инструменты. У <code>basis.js</code> есть два вспомогательных инструмента: <code>devpanel</code> и плагин для <code>Google Chrome</code>.</p>
+<p><code>devpanel</code> – это небольшая панель с кнопками, которую можно перетаскивать. Выглядит она так:</p>
+<p><img src="devpanel.png" alt="devpanel"></p>
+<p>Для ее подключения нужно добавить такой вызов, лучше всего в основной модуль (<code>app.js</code>):</p>
+<pre><code class="lang-js"><span class="hljs-comment">/** @cut */</span> <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.devpanel'</span>);
+</code></pre>
+<p>После перезагрузки страницы, панель должна появиться. Здесь использован специальный комментарий <code>/** @cut */</code>, он позволяет вырезать строки при сборке. Нам ведь не нужно показывать эту панель пользователям, правда?</p>
+<p>Панель позволяет переключать текущую тему и язык. А так же выбирать шаблоны и переводимые тексты, для дальнейшего редактирования. Редактировать шаблоны, стили и строки локализации можно в плагине.</p>
+<p>Плагин устанавливается из <code>Google Web Store</code> вот по этой <a href="https://chrome.google.com/webstore/detail/basisjs-tools/paeokpmlopbdaancddhdhmfepfhcbmek" target="_blank">ссылке</a>. Для его работы необходима <code>devpanel</code>, так как она предоставляет API для работы с <code>basis.js</code>. </p>
+<p>Плагин предоставляет:</p>
+<ul>
+<li>просмотр и редактирование словарей локализации</li>
+<li>просмотр и редактирование шаблонов и стилей</li>
+<li>список проблем в проекте, которые обнаружил сборщик</li>
+<li>граф файлов приложения, каким его видит сборщик</li>
+</ul>
+<p>Вот так выглядит наше приложение глазами сборщика:</p>
+<p><img src="file_graph.png" alt="Граф приложения"></p>
+<h2 id="-">Сборка</h2>
+<p>В процессе разработки нет необходимости в сборке, все работает и так. Сборка нужна только для публикации проекта, чтобы уменьшить количество файлов и их размер. Для выполнения этой работы используется сборщик из <code>basisjs-tools</code>.</p>
+<p>Как вы помните, мы несколько раз меняли структуру проекта. Когда мы приступаем к разработке, мы часто не знаем как лучше организовать модули и расположить файлы. Да и в ходе работы над проектом часто меняются задачи и требования, а так же находятся более эффективные решения и идеи по организации проекта. Поэтому изменчивость структуры проекта – это нормальное явление.</p>
+<p>Сборщик старается самостоятельно разобрать и понять структуру проекта. Ему практически не нужно что-то специально объяснять. Ведь как вы узнаете, где и что подключается и используется? Вы открываете исходный код, читаете и понимаете. Вот так же работает и сборщик <code>basisjs-tools</code>.</p>
+<p>Сначала он получает на вход <code>html</code> файл (в нашем случае <code>index.html</code>). Он анализирует его, находит теги <code>&lt;script&gt;</code>, <code>&lt;link rel=&quot;stylesheet&quot;&gt;</code>, <code>&lt;style&gt;</code> и другие. Понимает какие файлы подключаются. Потом приступает к анализу этих файлов, находит в них конструкции подключающие другие файлы (например, в <code>javascript</code> вызовы <code>basis.require</code>, <code>basis.resource</code> и другие, а в <code>css</code> – <code>@import</code>, <code>url(..)</code> и т.д.). Так, рекурсивно обрабатывая все файлы, сборщик строит граф приложения. После этого он анализирует связи, перестраивает и оптимизирует файлы. А результат своей работы складывает в отдельную папку, в виде гораздо меньшего количества файлов.</p>
+<p>Давайте соберем проект. Все что для этого нужно - выполнить простую команду:</p>
+<pre><code>&gt; basis build
+</code></pre><p>Вот и все. Результатом сборки будут три файла <code>index.html</code>, <code>script.js</code> и <code>style.css</code>, расположенные в папке <code>build</code>. Эти три файла и есть наше приложение в собранном виде. Все что нужно сделать после сборки – это скопировать содержимое папки <code>build</code> на сервер. Все необходимые файлы для работы приложения будут в ней.</p>
+<p>По умолчанию сборщик не делает сильных оптимизаций, а лишь находит все файлы проекта, конкатенирует и перелинковывает их. Чтобы применять оптимизации необходимо использовать флаги, список которых можно получить вызвав справку по команде <code>build</code>:</p>
+<pre><code>&gt; basis build --help
+</code></pre><p>Например, самые частые оптимизации, такие как удаление отладочного кода и сжатие <code>javascript</code> и <code>css</code> можно выполнить указав флаг <code>--pack</code> (или его короткую версию <code>-p</code>):</p>
+<pre><code>&gt; basis build --pack
+</code></pre><p>Вот что мы увидим в консоли выполнив эту команду:</p>
+<p><img src="build.png" alt="Результат выполнения basis build --pack"></p>
+<p>Как видно, сборщик делает достаточно много работы. А если использовать в команде флаг <code>--verbose</code>, то можно увидеть все его действия в деталях. Но нам не стоит об этом заботиться. Ведь наша основная задача не заниматься сборкой, а создавать приложения и делать крутые штуки.</p>
+<h2 id="-">Заключение</h2>
+<p>Мы рассмотрели основные этапы разработки приложения на <code>basis.js</code>, попробовали различные варианты создания представлений и организации файлов проекта. Приобретенные знания помогут при изучении остальных частей руководства.</p>
+<p>В <a href="../part2/index.md">следующей части</a> будут рассмотрены механизмы работы с данными и их использование совместно с представлениями.</p>
+
+                    
+                    </section>
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../../tutorial/index.html" class="navigation navigation-prev"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../../tutorial/part2/index.html" class="navigation navigation-next"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+        <script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
+for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/mode-javascript.js"></script>
+        <script src="../../gitbook/jsrepl/jsrepl.js" id="jsrepl-script"></script>
+        <script src="../../gitbook/app.js"></script>
+        
+    </body>
+</html>

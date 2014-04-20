@@ -1,0 +1,884 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+    <head prefix="og: http://ogp.me/ns# book: http://ogp.me/ns/book#">
+        
+        <meta charset="UTF-8">
+        <title>Данные | Разработка на basis.js</title>
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="robots" content="index, follow">
+        <meta name="author" content="basisjs">
+        <meta name="description" content="Книга о разработке на **basis.js** и описывающие его устройство, доступна в формате [PDF](basisJs.pdf) и [ePub](basisJs.epub).">
+        <meta name="keywords" content="gitbook,github" >
+        <meta name="generator" content="www.gitbook.io">
+
+        
+        <link rel="next" href="./basis.data.Value.html" />
+        
+        
+        <link rel="prev" href="./basis.event.html" />
+        
+
+        <meta property="og:title" content="Данные | Разработка на basis.js">
+        <meta property="og:site_name" content="Разработка на basis.js">
+        <meta property="og:type" content="book">
+        <meta property="og:locale" content="en_US">
+
+        <meta property="book:author" content="https://github.com/basisjs">
+        <meta property="book:tag" content="GitBook">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+        
+    </head>
+    <body>
+        
+        <link rel="stylesheet" href="gitbook/style.css">
+        
+        
+    <div class="book" data-github="basisjs/articles" data-level="4" data-basepath="." data-revision="1398012760591">
+    <div class="book-header">
+    <!-- Actions Left -->
+    
+    <a href="https://github.com/basisjs/articles" target="_blank" class="btn pull-left"><i class="fa fa-github-alt"></i></a>
+    
+    <a href="#" class="btn pull-left toggle-summary"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search"><i class="fa fa-search"></i></a>
+
+    <!-- Actions Right -->
+    <a href="#" target="_blank" class="btn pull-right" data-sharing="google-plus"><i class="fa fa-google-plus"></i></a>
+    <a href="#" target="_blank" class="btn pull-right" data-sharing="facebook"><i class="fa fa-facebook"></i></a>
+    <a href="#" target="_blank" class="btn pull-right" data-sharing="twitter"><i class="fa fa-twitter"></i></a>
+
+    
+    <a href="https://github.com/basisjs/articles/stargazers" target="_blank" class="btn pull-right count-star"><i class="fa fa-star-o"></i> Star (<span>-</span>)</a>
+    <a href="https://github.com/basisjs/articles/watchers" target="_blank" class="btn pull-right count-watch"><i class="fa fa-eye"></i> Watch (<span>-</span>)</a>
+    
+
+    <!-- Title -->
+    <h1><a href="./" >Разработка на basis.js</a></h1>
+</div>
+
+    <div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+        <li>
+            <a href="https://github.com/basisjs" target="blank">About the author</a>
+        </li>
+        <li>
+            <a href="https://github.com/basisjs/articles/issues" target="blank">Questions and Issues</a>
+        </li>
+        <li>
+            <a href="https://github.com/basisjs/articles/edit/master/basis.data.md" target="blank">Edit and Contribute</a>
+        </li>
+        <li class="divider"></li>
+        
+        <li data-level="0" data-path="index.html">
+            <a href="./"><i class="fa fa-check"></i> Introduction</a>
+        </li>
+        
+            <li  data-level="1" data-path="get-started.html">
+                
+                <a href="./get-started.html">
+                    <i class="fa fa-check"></i> <b>1.</b> Приступая к разработке
+                </a>
+                
+                
+            </li>
+        
+            <li  data-level="2" >
+                
+                <span><b>2.</b> Ядро (basis.js)</span>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="2.1" data-path="resources.html">
+                            
+                            <a href="./resources.html">
+                                <i class="fa fa-check"></i> <b>2.1.</b> Ресурсы (модульность)
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="2.2" data-path="basis.Class.html">
+                            
+                            <a href="./basis.Class.html">
+                                <i class="fa fa-check"></i> <b>2.2.</b> Классы
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="2.3" data-path="basis.Token.html">
+                            
+                            <a href="./basis.Token.html">
+                                <i class="fa fa-check"></i> <b>2.3.</b> basis.Token
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="2.4" >
+                            
+                            <span><b>2.4.</b> basis.getter</span>
+                            
+                        </li>
+                    
+                        <li  data-level="2.5" data-path="bindingbridge.html">
+                            
+                            <a href="./bindingbridge.html">
+                                <i class="fa fa-check"></i> <b>2.5.</b> Binding bridge
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="3" data-path="basis.event.html">
+                
+                <a href="./basis.event.html">
+                    <i class="fa fa-check"></i> <b>3.</b> События
+                </a>
+                
+                
+            </li>
+        
+            <li  data-level="4" data-path="basis.data.html">
+                
+                <a href="./basis.data.html">
+                    <i class="fa fa-check"></i> <b>4.</b> Данные
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="4.1" data-path="basis.data.Value.html">
+                            
+                            <a href="./basis.data.Value.html">
+                                <i class="fa fa-check"></i> <b>4.1.</b> Значение
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.2" data-path="basis.data.Object.html">
+                            
+                            <a href="./basis.data.Object.html">
+                                <i class="fa fa-check"></i> <b>4.2.</b> Объект
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.3" data-path="basis.data.datasets.html">
+                            
+                            <a href="./basis.data.datasets.html">
+                                <i class="fa fa-check"></i> <b>4.3.</b> Наборы
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.4" data-path="basis.data.dataset.html">
+                            
+                            <a href="./basis.data.dataset.html">
+                                <i class="fa fa-check"></i> <b>4.4.</b> basis.data.dataset
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.5" >
+                            
+                            <span><b>4.5.</b> Index</span>
+                            
+                        </li>
+                    
+                        <li  data-level="4.6" >
+                            
+                            <span><b>4.6.</b> Entity</span>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="5" data-path="basis.dom.wrapper.html">
+                
+                <a href="./basis.dom.wrapper.html">
+                    <i class="fa fa-check"></i> <b>5.</b> basis.dom.wrapper
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="5.1" data-path="basis.dom.wrapper_dom.html">
+                            
+                            <a href="./basis.dom.wrapper_dom.html">
+                                <i class="fa fa-check"></i> <b>5.1.</b> DOM
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.2" data-path="basis.dom.wrapper_childNodes.html">
+                            
+                            <a href="./basis.dom.wrapper_childNodes.html">
+                                <i class="fa fa-check"></i> <b>5.2.</b> Дочерние узлы
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.3" data-path="basis.dom.wrapper_sorting.html">
+                            
+                            <a href="./basis.dom.wrapper_sorting.html">
+                                <i class="fa fa-check"></i> <b>5.3.</b> Сортировка
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.4" data-path="basis.dom.wrapper_grouping.html">
+                            
+                            <a href="./basis.dom.wrapper_grouping.html">
+                                <i class="fa fa-check"></i> <b>5.4.</b> Группировка
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.5" data-path="basis.dom.wrapper_data.html">
+                            
+                            <a href="./basis.dom.wrapper_data.html">
+                                <i class="fa fa-check"></i> <b>5.5.</b> Привязка данных
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.6" data-path="basis.dom.wrapper_owner.html">
+                            
+                            <a href="./basis.dom.wrapper_owner.html">
+                                <i class="fa fa-check"></i> <b>5.6.</b> Паттерн &quot;владелец&quot;
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.7" data-path="basis.dom.wrapper_satellite.html">
+                            
+                            <a href="./basis.dom.wrapper_satellite.html">
+                                <i class="fa fa-check"></i> <b>5.7.</b> Сателлиты
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.8" data-path="basis.dom.wrapper_disabled.html">
+                            
+                            <a href="./basis.dom.wrapper_disabled.html">
+                                <i class="fa fa-check"></i> <b>5.8.</b> Доступность (disabled/enabled)
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.9" data-path="basis.dom.wrapper_selection.html">
+                            
+                            <a href="./basis.dom.wrapper_selection.html">
+                                <i class="fa fa-check"></i> <b>5.9.</b> Выделение (selection)
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="6" data-path="basis.ui.html">
+                
+                <a href="./basis.ui.html">
+                    <i class="fa fa-check"></i> <b>6.</b> Интерфейс пользователя
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="6.1" data-path="basis.ui_template.html">
+                            
+                            <a href="./basis.ui_template.html">
+                                <i class="fa fa-check"></i> <b>6.1.</b> Привязка шаблонов
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="6.2" data-path="basis.ui_bindings.html">
+                            
+                            <a href="./basis.ui_bindings.html">
+                                <i class="fa fa-check"></i> <b>6.2.</b> Биндинги (bindings)
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="6.3" data-path="basis.ui_actions.html">
+                            
+                            <a href="./basis.ui_actions.html">
+                                <i class="fa fa-check"></i> <b>6.3.</b> Обратная связь (actions)
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="7" data-path="basis.template.html">
+                
+                <a href="./basis.template.html">
+                    <i class="fa fa-check"></i> <b>7.</b> Шаблоны
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="7.1" data-path="basis.template_format.html">
+                            
+                            <a href="./basis.template_format.html">
+                                <i class="fa fa-check"></i> <b>7.1.</b> Формат шаблонов
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="7.2" data-path="basis.template_bindings.html">
+                            
+                            <a href="./basis.template_bindings.html">
+                                <i class="fa fa-check"></i> <b>7.2.</b> Правила применения значений биндингам
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="7.3" >
+                            
+                            <span><b>7.3.</b> Динамическое обновление (live update)</span>
+                            
+                        </li>
+                    
+                        <li  data-level="7.4" data-path="basis.template_theme.html">
+                            
+                            <a href="./basis.template_theme.html">
+                                <i class="fa fa-check"></i> <b>7.4.</b> Темы
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="8" data-path="basis.l10n.html">
+                
+                <a href="./basis.l10n.html">
+                    <i class="fa fa-check"></i> <b>8.</b> L10n
+                </a>
+                
+                
+            </li>
+        
+            <li  data-level="9" data-path="basis.net.html">
+                
+                <a href="./basis.net.html">
+                    <i class="fa fa-check"></i> <b>9.</b> basis.net
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="9.1" data-path="basis.net.action.html">
+                            
+                            <a href="./basis.net.action.html">
+                                <i class="fa fa-check"></i> <b>9.1.</b> basis.net.action
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="9.2" data-path="basis.net.service.html">
+                            
+                            <a href="./basis.net.service.html">
+                                <i class="fa fa-check"></i> <b>9.2.</b> basis.net.service
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="10" >
+                
+                <span><b>10.</b> Router</span>
+                
+                
+            </li>
+        
+            <li  data-level="11" data-path="tutorial/index.html">
+                
+                <a href="./tutorial/index.html">
+                    <i class="fa fa-check"></i> <b>11.</b> Руководство
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="11.1" data-path="tutorial/part1/index.html">
+                            
+                            <a href="./tutorial/part1/index.html">
+                                <i class="fa fa-check"></i> <b>11.1.</b> Часть 1. Начало работы, представления, модули, инструменты
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="11.2" data-path="tutorial/part2/index.html">
+                            
+                            <a href="./tutorial/part2/index.html">
+                                <i class="fa fa-check"></i> <b>11.2.</b> Часть 2. Работа с данными: модели, наборы и значения
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="page-wrapper" tabindex="-1">
+                <div class="book-progress">
+    <div class="bar">
+        <div class="inner" style="width: 27.77777777777778%;min-width: 25%;"></div>
+    </div>
+    <div class="chapters">
+    
+        <a href="./index.html" title="Introduction" class="chapter done new-chapter" data-progress="0" style="left: 0%;"></a>
+    
+        <a href="./get-started.html" title="Приступая к разработке" class="chapter done new-chapter" data-progress="1" style="left: 2.7777777777777777%;"></a>
+    
+        <a href="./tutorial/index.html" title="Руководство" class="chapter done " data-progress="11" style="left: 5.555555555555555%;"></a>
+    
+        <a href="./tutorial/part1/index.html" title="Часть 1. Начало работы, представления, модули, инструменты" class="chapter done " data-progress="11.1" style="left: 8.333333333333334%;"></a>
+    
+        <a href="./tutorial/part2/index.html" title="Часть 2. Работа с данными: модели, наборы и значения" class="chapter done " data-progress="11.2" style="left: 11.11111111111111%;"></a>
+    
+        <a href="./resources.html" title="Ресурсы (модульность)" class="chapter done " data-progress="2.1" style="left: 13.88888888888889%;"></a>
+    
+        <a href="./basis.Class.html" title="Классы" class="chapter done " data-progress="2.2" style="left: 16.666666666666668%;"></a>
+    
+        <a href="./basis.Token.html" title="basis.Token" class="chapter done " data-progress="2.3" style="left: 19.444444444444443%;"></a>
+    
+        <a href="./bindingbridge.html" title="Binding bridge" class="chapter done " data-progress="2.5" style="left: 22.22222222222222%;"></a>
+    
+        <a href="./basis.event.html" title="События" class="chapter done new-chapter" data-progress="3" style="left: 25%;"></a>
+    
+        <a href="./basis.data.html" title="Данные" class="chapter done new-chapter" data-progress="4" style="left: 27.77777777777778%;"></a>
+    
+        <a href="./basis.data.Value.html" title="Значение" class="chapter  " data-progress="4.1" style="left: 30.555555555555557%;"></a>
+    
+        <a href="./basis.data.Object.html" title="Объект" class="chapter  " data-progress="4.2" style="left: 33.333333333333336%;"></a>
+    
+        <a href="./basis.data.datasets.html" title="Наборы" class="chapter  " data-progress="4.3" style="left: 36.111111111111114%;"></a>
+    
+        <a href="./basis.data.dataset.html" title="basis.data.dataset" class="chapter  " data-progress="4.4" style="left: 38.888888888888886%;"></a>
+    
+        <a href="./basis.dom.wrapper.html" title="basis.dom.wrapper" class="chapter  new-chapter" data-progress="5" style="left: 41.666666666666664%;"></a>
+    
+        <a href="./basis.dom.wrapper_dom.html" title="DOM" class="chapter  " data-progress="5.1" style="left: 44.44444444444444%;"></a>
+    
+        <a href="./basis.dom.wrapper_childNodes.html" title="Дочерние узлы" class="chapter  " data-progress="5.2" style="left: 47.22222222222222%;"></a>
+    
+        <a href="./basis.dom.wrapper_sorting.html" title="Сортировка" class="chapter  " data-progress="5.3" style="left: 50%;"></a>
+    
+        <a href="./basis.dom.wrapper_grouping.html" title="Группировка" class="chapter  " data-progress="5.4" style="left: 52.77777777777778%;"></a>
+    
+        <a href="./basis.dom.wrapper_data.html" title="Привязка данных" class="chapter  " data-progress="5.5" style="left: 55.55555555555556%;"></a>
+    
+        <a href="./basis.dom.wrapper_owner.html" title="Паттерн &quot;владелец&quot;" class="chapter  " data-progress="5.6" style="left: 58.333333333333336%;"></a>
+    
+        <a href="./basis.dom.wrapper_satellite.html" title="Сателлиты" class="chapter  " data-progress="5.7" style="left: 61.111111111111114%;"></a>
+    
+        <a href="./basis.dom.wrapper_disabled.html" title="Доступность (disabled/enabled)" class="chapter  " data-progress="5.8" style="left: 63.888888888888886%;"></a>
+    
+        <a href="./basis.dom.wrapper_selection.html" title="Выделение (selection)" class="chapter  " data-progress="5.9" style="left: 66.66666666666667%;"></a>
+    
+        <a href="./basis.ui.html" title="Интерфейс пользователя" class="chapter  new-chapter" data-progress="6" style="left: 69.44444444444444%;"></a>
+    
+        <a href="./basis.ui_template.html" title="Привязка шаблонов" class="chapter  " data-progress="6.1" style="left: 72.22222222222223%;"></a>
+    
+        <a href="./basis.ui_bindings.html" title="Биндинги (bindings)" class="chapter  " data-progress="6.2" style="left: 75%;"></a>
+    
+        <a href="./basis.ui_actions.html" title="Обратная связь (actions)" class="chapter  " data-progress="6.3" style="left: 77.77777777777777%;"></a>
+    
+        <a href="./basis.template.html" title="Шаблоны" class="chapter  new-chapter" data-progress="7" style="left: 80.55555555555556%;"></a>
+    
+        <a href="./basis.template_format.html" title="Формат шаблонов" class="chapter  " data-progress="7.1" style="left: 83.33333333333333%;"></a>
+    
+        <a href="./basis.template_bindings.html" title="Правила применения значений биндингам" class="chapter  " data-progress="7.2" style="left: 86.11111111111111%;"></a>
+    
+        <a href="./basis.template_theme.html" title="Темы" class="chapter  " data-progress="7.4" style="left: 88.88888888888889%;"></a>
+    
+        <a href="./basis.l10n.html" title="L10n" class="chapter  new-chapter" data-progress="8" style="left: 91.66666666666667%;"></a>
+    
+        <a href="./basis.net.html" title="basis.net" class="chapter  new-chapter" data-progress="9" style="left: 94.44444444444444%;"></a>
+    
+        <a href="./basis.net.action.html" title="basis.net.action" class="chapter  " data-progress="9.1" style="left: 97.22222222222223%;"></a>
+    
+        <a href="./basis.net.service.html" title="basis.net.service" class="chapter  " data-progress="9.2" style="left: 100%;"></a>
+    
+    </div>
+</div>
+
+                <div class="page-inner">
+                
+                    <section class="normal" id="section-gitbook_11">
+                    
+                        <h1 id="basis-data">basis.data</h1>
+<p>Базовым пространством имен для типов данных является <code>basis.data</code>. В нем описываются основные классы данных.</p>
+<p>Выделяются три большие группы классов:</p>
+<ul>
+<li><p>Значение (value) – значение атомарно (не делимо), даже если имеет сложную структуру (например, объект, изменения структуры которого не отслеживаются). Базовым классом для этой группы является <code>basis.data.Value</code>. (<a href="basis.data.Value.md">подробнее</a>)</p>
+</li>
+<li><p>Объект (object) – данные хранятся в виде ключ-значение. Наиболее часто используемый тип данных, является предком для многих классов, в том числе для узлов интерфейса (<code>basis.ui.Node</code>). (<a href="basis.data.Object.md">подронее</a>)</p>
+</li>
+<li><p>Набор (dataset) – неупорядоченное множество объектов данных (на данный момент экземпляров <code>basis.data.Object</code> и его потомков). Данными является информация о вхождении объектов в некоторое множество. (<a href="basis.data.datasets.md">подробнее</a>)</p>
+</li>
+</ul>
+<h2 id="abstractdata">AbstractData</h2>
+<p>Класс <code>basis.data.AbstractData</code> (<a href="http://basisjs.com/docs#basis.data.AbstractData" target="_blank">docs</a>) является основой для классов данных. От него наследуются <code>Value</code>, <code>Object</code> и <code>AbstractDataset</code>.</p>
+<p>Он не реализует механизмы для хранения непосредственно данных (поэтому в его названии есть слово <code>Abstract</code>), но вводит несколько механизмов, общих для остальных классов данных:</p>
+<ul>
+<li><p>состояние;</p>
+</li>
+<li><p>подписка;</p>
+</li>
+<li><p>абстрактная синхронизация.</p>
+</li>
+</ul>
+<h3 id="-">Состояние</h3>
+<p>Все объекты данных имеют состояние. Состояние хранится в свойстве <code>state</code>. Значение состояния – это одно из константных значений, определенных в <code>basis.data.STATE</code>:</p>
+<ul>
+<li><p>UNDEFINED – говорит о том, что невозможно определить степень достоверности данных: данные еще не были инициализированы или синхронизированы. Это состояние по умолчанию.</p>
+</li>
+<li><p>PROCESSING – определяет, что происходит некоторый процесс, связанный с данным объектом, например, сохранение изменений или синхронизация. Пока объект данных находится в таком состоянии, другие процессы не должны инициироваться (пока он не перейдет в другое состояние).</p>
+</li>
+<li><p>ERROR – показывает, что последний процесс, связанный с этим объектом, закончился неудачей. В интерфейсе при этом может быть отображено сообщение об ошибке и предложены варианты ее исправления.</p>
+</li>
+<li><p>READY – нормальное состояние данных, показывает, что данные инициализированы или синхронизированы, в зависимости от логики.</p>
+</li>
+<li><p>DEPRECATED – данные устарели, возможно, нужна синхронизация.</p>
+</li>
+</ul>
+<p>Состояние может хранить произвольные данные в свойстве <code>data</code>. Чаще всего это используется для состояния <code>ERROR</code>, чтобы сохранить детали об ошибке.</p>
+<p>Для изменения состояния используется метод <code>setState</code>, который принимает аргументы:</p>
+<ul>
+<li>state - новое значение состояния;</li>
+<li>data - данные состояния (опционально).</li>
+</ul>
+<p>Если значения является неправильным (такого кода нет в <code>basis.data.STATE</code>), то будет выброшено исключение <code>Wrong state value</code>.</p>
+<pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.data'</span>);
+
+<span class="hljs-keyword">var</span> obj = <span class="hljs-keyword">new</span> basis.data.AbstractData({
+  state: basis.data.STATE.READY    <span class="hljs-comment">// можно задавать состояние при создании</span>
+                                   <span class="hljs-comment">// экземпляра, по умолчанию будет UNDEFINED</span>
+});
+
+obj.setState(basis.data.STATE.ERROR, <span class="hljs-string">'Some error text'</span>);
+console.log(<span class="hljs-built_in">String</span>(obj.state));    <span class="hljs-comment">// 'error'</span>
+console.log(obj.state.data);       <span class="hljs-comment">// 'Some error text'</span>
+</code></pre>
+<p>Можно заметить, что если явно не преобразовывать значение состояния в строковый тип, то оно выводится в &quot;странном&quot; виде. 
+Несмотря на то, что код состояния задается строкой, его значение хранится как объект (поэтому <code>obj.state</code> оборачивается в <code>String</code>, чтобы вывести значение как строку). Строковое значение оборачивается в <code>Object</code> для того, чтобы можно было добавить свойство <code>data</code> (данные состояния). При этом к такому значению хорошо применимы операторы сравнения <code>==</code> и <code>!=</code> в контексте сравнения со строковым значениями (значение <code>state</code> неявно приводится к строке), однако не работает с операторами эквивалентного сравнения <code>===</code> и <code>!==</code>.</p>
+<pre><code class="lang-js">obj.state == basis.data.STATE.ERROR;          <span class="hljs-comment">// true</span>
+obj.state != basis.data.STATE.ERROR;          <span class="hljs-comment">// false</span>
+obj.state === basis.data.STATE.ERROR;         <span class="hljs-comment">// false</span>
+obj.state !== basis.data.STATE.ERROR;         <span class="hljs-comment">// true</span>
+<span class="hljs-built_in">String</span>(obj.state) === basis.data.STATE.ERROR; <span class="hljs-comment">// true</span>
+</code></pre>
+<p>Когда меняется состояние (его значение и/или данные), выбрасывается событие <code>stateChanged</code>. Аргументом события является предыдущее значение состояния.</p>
+<pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.data'</span>);
+
+<span class="hljs-keyword">var</span> obj = <span class="hljs-keyword">new</span> basis.data.AbstractData({
+  handler: {
+    stateChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sender, oldState)</span>{</span>
+      console.log(<span class="hljs-string">'Previous state:'</span>, <span class="hljs-built_in">String</span>(oldState), oldState.data);
+      console.log(<span class="hljs-string">'Current state:'</span>, <span class="hljs-built_in">String</span>(<span class="hljs-keyword">this</span>.state), <span class="hljs-keyword">this</span>.state.data);
+    }
+  }
+});
+
+obj.setState(basis.data.STATE.ERROR, <span class="hljs-string">'Error message'</span>);
+  <span class="hljs-comment">// В консоли будет выведено:</span>
+  <span class="hljs-comment">// Previous state: 'undefined' undefined</span>
+  <span class="hljs-comment">// Current state: 'error' 'Error message'</span>
+</code></pre>
+<p>Для упрощения выставления состояния в <code>DEPRECATED</code> используется метод <code>deprecate</code>, который переводит объект в состояние <code>DEPRECATED</code> только в том случае, если объект не находится в состоянии <code>PROCESSING</code>.</p>
+<h3 id="-">Подписка</h3>
+<p>Механизм подписки позволяет создавать объекты (источник данных) с определенной логикой синхронизации, но процесс синхронизации иницировать не сразу, а только тогда, когда эти данные станут нужны какому-либо другому объекту (подписчику). Другими словами, механизм подписки обеспечивает возможность одному объекту уведомить другой объект, что он заинтересован в его данных.</p>
+<p>Процесс подписки и отписки автоматизирован и управляется свойствами <code>active</code> и <code>subscribeTo</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> source = <span class="hljs-keyword">new</span> basis.data.Object({
+  handler: {
+    subscribersChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sender, delta)</span>{</span>
+      <span class="hljs-keyword">if</span> (delta &gt; <span class="hljs-number">0</span>)
+        console.log(<span class="hljs-string">'source: I\'m helpful, somebody use me'</span>);
+      <span class="hljs-keyword">else</span>
+        console.log(<span class="hljs-string">'source: I\'m useless, nobody use me'</span>);
+    }
+  }
+});
+
+<span class="hljs-keyword">var</span> subscriber = <span class="hljs-keyword">new</span> basis.data.Object({
+  subscribeTo: basis.data.SUBSCRIPTION.DELEGATE,
+  delegate: source
+});
+
+subscriber.setActive(<span class="hljs-literal">true</span>);
+<span class="hljs-comment">// console&gt; source: I\'m helpful, somebody use me</span>
+<span class="hljs-comment">// console&gt; true</span>
+
+subscriber.setActive(<span class="hljs-literal">false</span>);
+<span class="hljs-comment">// console&gt; source: I\'m useless, nobody use me</span>
+<span class="hljs-comment">// console&gt; true</span>
+</code></pre>
+<p>Если объект-потребитель данных активен (свойство <code>active</code> равно <code>true</code>, в примере это <code>subscriber</code>), то для объектов, которые хранятся в свойствах, перечисленных в <code>subscribeTo</code>, счетчик заинтересованных объектов (свойство <code>subscriberCount</code>) увеличивается на единицу. Когда объект перестает быть активным (<code>active</code> -&gt; <code>false</code>), счетчики объектов, на которые он был подписан, уменьшаются на единицу. То же происходит, когда потребитель (<code>subscriber</code>) перестает ссылаться на источник (в примере это <code>source</code>).</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Data = basis.data.Object.subclass({
+  emit_subscribersChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(delta)</span>{</span>
+    basis.data.Object.prototype.emit_subscribersChanged.call(<span class="hljs-keyword">this</span>, delta);
+    console.log(<span class="hljs-keyword">this</span>.name, delta &gt; <span class="hljs-number">0</span> ? <span class="hljs-string">'started to be in use'</span> : <span class="hljs-string">'stopped to be used'</span>);
+  }
+})
+<span class="hljs-keyword">var</span> a = <span class="hljs-keyword">new</span> Data({ name: <span class="hljs-string">'source A'</span> });
+<span class="hljs-keyword">var</span> b = <span class="hljs-keyword">new</span> Data({ name: <span class="hljs-string">'source B'</span> });
+
+<span class="hljs-keyword">var</span> subscriber = <span class="hljs-keyword">new</span> basis.data.Object({
+  <span class="hljs-comment">// по умочанию subscribeTo: basis.data.SUBSCRIPTION.DELEGATE + basis.data.SUBSCRIPTION.TARGET</span>
+  active: <span class="hljs-literal">true</span>,
+  delegate: a  <span class="hljs-comment">// subscriber ссылается на `a` свойством `delegate`</span>
+});
+<span class="hljs-comment">// console&gt; source A started to be in use</span>
+
+subscriber.setDelegate(b);
+<span class="hljs-comment">// console&gt; source A stopped to be used</span>
+<span class="hljs-comment">// console&gt; source B started to be in use</span>
+<span class="hljs-comment">// console&gt; true</span>
+
+subscriber.setDelegate();
+<span class="hljs-comment">// console&gt; source B stopped to be used</span>
+<span class="hljs-comment">// console&gt; true</span>
+</code></pre>
+<p>При появлении у объекта данных (в примере это <code>source</code>) первого подписчика или когда отписывается последний подписчик (свойство <code>subscriberCount</code> становится равным 0), выбрасывается событие <code>subscribersChanged</code>. Обработчики этого события получают в качестве единственного аргумента одно из двух значений:</p>
+<ul>
+<li><p>1 - появился первый подписчик (<code>subscriberCount</code> == 1);</p>
+</li>
+<li><p>-1 - отписался последний подписчик (<code>subscriberCount</code> == 0).</p>
+</li>
+</ul>
+<p>Обычно объекты синхронизируют свои данные с сервером, только когда имеют подписчиков, то есть активных потребителей данных, которые ссылаются на них одним из своих свойств, определенных в <code>subscribeTo</code>.</p>
+<p>Свойство <code>active</code> определяет, является ли объект активным подписчиком (включает механизм). Свойство может быть задано при создании объекта или изменено позже методом <code>setActive</code>. Когда это свойство меняется, выбрасывается событие <code>activeChanged</code>. По умолчанию все объекты пассивны (<code>active</code> равно <code>false</code>).</p>
+<p>То, на какие объекты влияет объект (вернее, в каких свойствах они хранятся), определяет свойство <code>subscribeTo</code>. Свойство может быть задано при создании объекта или изменено позже методом <code>setSubscription</code>. При изменении значения свойства событий не выбрасывается.</p>
+<blockquote>
+<p>Не известны кейсы, когда было бы необходимо получать событие на изменение свойства <code>subscribeTo</code>.
+На практике это свойство не изменяется в течении жизненного цикла объекта, поэтому есть вероятность того, что метод <code>setSubscription</code> будет убран, а задать <code>subscribeTo</code> можно будет только при создании объекта.</p>
+</blockquote>
+<p>Специальный объект <code>basis.data.SUBSCRIPTION</code> регистрирует свойства объектов (название), которые доступны для подписки, и генерирует для них код. Такие поля должны ссылаться на экземпляры класса <code>basis.data.AbstractData</code>. Код свойства – это числовое значение, которое определяется единственным битом на определенной позиции. Таким образом, чтобы определить подписку на несколько свойств, необходимо сложить соответствующие свойству коды (или использовать оператор бинарного &quot;или&quot; <code>|</code>):</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> example = basis.data.AbstractData.subclass({
+  subscribeTo: basis.data.SUBSCRIPTION.FOO + basis.data.SUBSCRIPTION.BAR,
+
+ <span class="hljs-comment">/**
+  * @type {basis.data.AbstractData}
+  */</span> 
+  foo: <span class="hljs-literal">null</span>,
+
+ <span class="hljs-comment">/**
+  * @type {basis.data.Object}
+  */</span>
+  bar: <span class="hljs-literal">null</span>
+});
+</code></pre>
+<p>Пример регистрации нового свойства, доступного для подписки:</p>
+<pre><code class="lang-js"><span class="hljs-comment">// простой случай</span>
+basis.data.SUBSCRIPTION.addProperty(<span class="hljs-string">'foo'</span>);
+<span class="hljs-comment">// после этого будет доступно константное значение</span>
+<span class="hljs-comment">// для этого поля basis.data.SUBSCRIPTION.FOO</span>
+
+basis.data.SUBSCRIPTION.add(
+  <span class="hljs-comment">// название кода</span>
+  <span class="hljs-string">'BAR'</span>,
+
+  <span class="hljs-comment">// хендлер, отслеживающий изменения свойства, ссылающееся</span>
+  <span class="hljs-comment">// на объект подписки (source)</span>
+  {
+    barChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(subscriber, oldBar)</span>{</span>
+      <span class="hljs-keyword">if</span> (oldBar)
+        <span class="hljs-comment">// subscriber отписываемся от oldBar</span>
+        basis.data.SUBSCRIPTION.unlink(<span class="hljs-string">'bar'</span>, subscriber, oldBar);
+
+      <span class="hljs-keyword">if</span> (subscriber.bar)
+        <span class="hljs-comment">// subscriber подписывается на subscriber.bar</span>
+        basis.data.SUBSCRIPTION.link(<span class="hljs-string">'bar'</span>, subscriber, subscriber.bar);
+    }
+  },
+
+  <span class="hljs-comment">// функция вызывается при активации/деактивации механизма подписки</span>
+  <span class="hljs-comment">// action – это либо basis.data.SUBSCRIPTION.link, либо basis.data.SUBSCRIPTION.unlink</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(action, subscriber)</span>{</span>
+    <span class="hljs-keyword">if</span> (subscriber.bar)
+      action(<span class="hljs-string">'bar'</span>, subscriber, subscriber.bar);
+  }
+);
+</code></pre>
+<p>В basisjs определены следующие свойства (в скобках указано событие, по которому проверяется значение).</p>
+<ul>
+<li><p>basis.data:</p>
+<ul>
+<li>DELEGATE - свойство delegate (delegateChanged);</li>
+<li>TARGET - свойство target (targetChanged);</li>
+<li>DATASET - свойство dataset (datasetChanged).</li>
+</ul>
+</li>
+<li><p>basis.data.dataset:</p>
+<ul>
+<li>SOURCE - свойство source (sourceChanged) и элементы свойства sources (sourcesChanged);</li>
+<li>MINUEND - свойство minuend (minuendChanged);</li>
+<li>SUBTRAHEND - свойство subtrahend (subtrahendChanged).</li>
+</ul>
+</li>
+<li><p>basis.dom.wrapper:</p>
+<ul>
+<li>DATASOURCE - свойство dataSource (dataSourceChanged);</li>
+<li>OWNER - свойство owner (ownerChanged).</li>
+</ul>
+</li>
+</ul>
+<h3 id="-">Абстрактная синхронизация</h3>
+<p>В <code>basis.data.AbstractData</code> не описаны конкретные действия по синхронизации (поэтому абстрактная), а лишь реализован механизм для упрощения ее организации.</p>
+<p>Сам механизм представлен свойствами:</p>
+<ul>
+<li><p>isSyncRequired – метод, возвращающий булево значение, необходима ли синхронизация (по сути, правило). По умолчанию синхронизация требуется, если у объекта более одного подписчика и его состояние <code>UNDEFINED</code> или <code>DEPRECATED</code>.</p>
+</li>
+<li><p>syncEvents – список событий, при наступлении которых делается проверка необходимости синхронизации (вызывается метод <code>isSyncRequired</code>).</p>
+</li>
+<li><p>syncAction – метод, описывающий действия синхронизации. По умолчанию не задан (свойство равно <code>null</code>). Если свойство не задано, механизм синхранизации не будет активирован.</p>
+</li>
+</ul>
+<p>Для того чтобы активировать механизм синхронизации, необходимо задать свойство <code>syncAction</code>. Оно может быть задано при создании экземпляра либо после создания методом <code>setSyncAction</code>. Метод <code>setSyncAction</code> принимает единственный параметр – новую функцию синхронизации. Если методу передано значение, которое не является функцией, <code>syncAction</code> приравнивается <code>null</code>, а сам механизм синхронизации деактивируется.</p>
+<pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.data'</span>);
+
+<span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> basis.data.AbstractData({
+  syncAction: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    console.log(<span class="hljs-string">'sync requested'</span>);
+  }
+});
+</code></pre>
+<p>Но определения <code>syncAction</code> недостаточно, для того чтобы объект начал синхронизацию. Необходимо чтобы выполнялось условие определенное в методе <code>isSyncRequired</code>. Для <code>AbstractData</code> этот метод определен так:</p>
+<pre><code class="lang-js">basis.data.AbstractData.prototype.isSyncRequired = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.subscriberCount &gt; <span class="hljs-number">0</span> &amp;&amp; 
+         (<span class="hljs-keyword">this</span>.state == STATE.UNDEFINED || <span class="hljs-keyword">this</span>.state == STATE.DEPRECATED);
+};
+</code></pre>
+<p>Таки образом для инициации синхронизации необходимо чтобы у объекта был хотя бы один подписчик и он находился в состоянии <code>UNDEFINED</code> или <code>DEPRECATED</code> и это условие удовлетворяет большинству ситуаций возникающих при создании интерфейса. Для выполнения синхронизации из предыдущего примера не хватает подписчика. Обычно подписчиком является некоторое представление или другой объект, использующий данный в качестве источника данных - то есть, в любом случае, это некоторый стороний объект заинтересованный в том, чтобы данный объект был сихронизирован.</p>
+<p>Для того чтобы инициировать синхронизацию сразу при создании экземпляра, можно переопределить метод <code>isSyncRequired</code>:</p>
+<pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.data'</span>);
+
+<span class="hljs-comment">// по умолчанию экземпляр создается в состоянии UNDEFINED</span>
+<span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> basis.data.AbstractData({
+  isSyncRequired: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.state == basis.data.STATE.UNDEFINED;
+  },
+  syncAction: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    console.log(<span class="hljs-string">'sync requested'</span>);
+  }
+});
+<span class="hljs-comment">// console&gt; sync requested</span>
+</code></pre>
+<p>Обычно в <code>syncAction</code> выполняется запрос к серверу для получения данных, а синхронизация инициируется при привязке объекта данных к активному представлению:</p>
+<pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.data'</span>);
+basis.require(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> basis.data.Object({
+  syncAction: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+    basis.net.request(<span class="hljs-string">'/api/whatever'</span>,
+      <span class="hljs-comment">// success</span>
+      <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span>{</span>
+        self.update(data);
+        self.setState(basis.data.STATE.READY);
+      },
+      <span class="hljs-comment">// failure</span>
+      <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error)</span>{</span>
+        self.setState(basis.data.STATE.ERROR, error);
+      }
+    );
+  }
+});
+
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> basis.ui.Node({
+  active: <span class="hljs-literal">true</span>,
+  delegate: example
+});
+</code></pre>
+<p>Для упрощения работы с запросами и сменой состояний используется модуль <code>basis.net.action</code>. Предыдущий пример может быть переписан следущим образом:</p>
+<pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.data'</span>);
+basis.require(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> basis.data.Object({
+  syncAction: basis.net.action.create({
+    url: <span class="hljs-string">'/api/whatever'</span>,
+    success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span>{</span>
+      <span class="hljs-keyword">this</span>.update(data);
+    }
+  })
+});
+
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> basis.ui.Node({
+  active: <span class="hljs-literal">true</span>,
+  delegate: example
+});
+</code></pre>
+<p>Более того сами представления, точнее экземпляры <code>basis.dom.wrapper.Node</code>, могут получать данные без использования других объектов. Это подходит для простых случаев, когда данные не переиспользуются (но все же рекомендуется получать данные от сервера в объектах данных, а не в представлении) и предыдущий пример может выглядеть так:</p>
+<pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.ui'</span>);
+
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> basis.ui.Node({
+  syncAction: basis.net.action.create({
+    url: <span class="hljs-string">'/api/whatever'</span>,
+    success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span>{</span>
+      <span class="hljs-keyword">this</span>.update(data);
+    }
+  })
+});
+</code></pre>
+<p>Для центролизованной работы с сервисом (некоторым серверным API) используются экземпляры <code>basis.net.service.Service</code>, которые так же позволяет создавать <code>action</code> (используя тот же модуль <code>basis.net.action</code>), но с общими настройками по умолчанию, поддержкой сессии и прочим.</p>
+
+                    
+                    </section>
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="./basis.event.html" class="navigation navigation-prev"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="./basis.data.Value.html" class="navigation navigation-next"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+        <script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
+for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/mode-javascript.js"></script>
+        <script src="gitbook/jsrepl/jsrepl.js" id="jsrepl-script"></script>
+        <script src="gitbook/app.js"></script>
+        
+    </body>
+</html>

@@ -1,0 +1,1054 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+    <head prefix="og: http://ogp.me/ns# book: http://ogp.me/ns/book#">
+        
+        <meta charset="UTF-8">
+        <title>Классы | Разработка на basis.js</title>
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="robots" content="index, follow">
+        <meta name="author" content="basisjs">
+        <meta name="description" content="Книга о разработке на **basis.js** и описывающие его устройство, доступна в формате [PDF](basisJs.pdf) и [ePub](basisJs.epub).">
+        <meta name="keywords" content="gitbook,github" >
+        <meta name="generator" content="www.gitbook.io">
+
+        
+        <link rel="next" href="./basis.Token.html" />
+        
+        
+        <link rel="prev" href="./resources.html" />
+        
+
+        <meta property="og:title" content="Классы | Разработка на basis.js">
+        <meta property="og:site_name" content="Разработка на basis.js">
+        <meta property="og:type" content="book">
+        <meta property="og:locale" content="en_US">
+
+        <meta property="book:author" content="https://github.com/basisjs">
+        <meta property="book:tag" content="GitBook">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+        
+    </head>
+    <body>
+        
+        <link rel="stylesheet" href="gitbook/style.css">
+        
+        
+    <div class="book" data-github="basisjs/articles" data-level="2.2" data-basepath="." data-revision="1398012760591">
+    <div class="book-header">
+    <!-- Actions Left -->
+    
+    <a href="https://github.com/basisjs/articles" target="_blank" class="btn pull-left"><i class="fa fa-github-alt"></i></a>
+    
+    <a href="#" class="btn pull-left toggle-summary"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search"><i class="fa fa-search"></i></a>
+
+    <!-- Actions Right -->
+    <a href="#" target="_blank" class="btn pull-right" data-sharing="google-plus"><i class="fa fa-google-plus"></i></a>
+    <a href="#" target="_blank" class="btn pull-right" data-sharing="facebook"><i class="fa fa-facebook"></i></a>
+    <a href="#" target="_blank" class="btn pull-right" data-sharing="twitter"><i class="fa fa-twitter"></i></a>
+
+    
+    <a href="https://github.com/basisjs/articles/stargazers" target="_blank" class="btn pull-right count-star"><i class="fa fa-star-o"></i> Star (<span>-</span>)</a>
+    <a href="https://github.com/basisjs/articles/watchers" target="_blank" class="btn pull-right count-watch"><i class="fa fa-eye"></i> Watch (<span>-</span>)</a>
+    
+
+    <!-- Title -->
+    <h1><a href="./" >Разработка на basis.js</a></h1>
+</div>
+
+    <div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+        <li>
+            <a href="https://github.com/basisjs" target="blank">About the author</a>
+        </li>
+        <li>
+            <a href="https://github.com/basisjs/articles/issues" target="blank">Questions and Issues</a>
+        </li>
+        <li>
+            <a href="https://github.com/basisjs/articles/edit/master/basis.Class.md" target="blank">Edit and Contribute</a>
+        </li>
+        <li class="divider"></li>
+        
+        <li data-level="0" data-path="index.html">
+            <a href="./"><i class="fa fa-check"></i> Introduction</a>
+        </li>
+        
+            <li  data-level="1" data-path="get-started.html">
+                
+                <a href="./get-started.html">
+                    <i class="fa fa-check"></i> <b>1.</b> Приступая к разработке
+                </a>
+                
+                
+            </li>
+        
+            <li  data-level="2" >
+                
+                <span><b>2.</b> Ядро (basis.js)</span>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="2.1" data-path="resources.html">
+                            
+                            <a href="./resources.html">
+                                <i class="fa fa-check"></i> <b>2.1.</b> Ресурсы (модульность)
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="2.2" data-path="basis.Class.html">
+                            
+                            <a href="./basis.Class.html">
+                                <i class="fa fa-check"></i> <b>2.2.</b> Классы
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="2.3" data-path="basis.Token.html">
+                            
+                            <a href="./basis.Token.html">
+                                <i class="fa fa-check"></i> <b>2.3.</b> basis.Token
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="2.4" >
+                            
+                            <span><b>2.4.</b> basis.getter</span>
+                            
+                        </li>
+                    
+                        <li  data-level="2.5" data-path="bindingbridge.html">
+                            
+                            <a href="./bindingbridge.html">
+                                <i class="fa fa-check"></i> <b>2.5.</b> Binding bridge
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="3" data-path="basis.event.html">
+                
+                <a href="./basis.event.html">
+                    <i class="fa fa-check"></i> <b>3.</b> События
+                </a>
+                
+                
+            </li>
+        
+            <li  data-level="4" data-path="basis.data.html">
+                
+                <a href="./basis.data.html">
+                    <i class="fa fa-check"></i> <b>4.</b> Данные
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="4.1" data-path="basis.data.Value.html">
+                            
+                            <a href="./basis.data.Value.html">
+                                <i class="fa fa-check"></i> <b>4.1.</b> Значение
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.2" data-path="basis.data.Object.html">
+                            
+                            <a href="./basis.data.Object.html">
+                                <i class="fa fa-check"></i> <b>4.2.</b> Объект
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.3" data-path="basis.data.datasets.html">
+                            
+                            <a href="./basis.data.datasets.html">
+                                <i class="fa fa-check"></i> <b>4.3.</b> Наборы
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.4" data-path="basis.data.dataset.html">
+                            
+                            <a href="./basis.data.dataset.html">
+                                <i class="fa fa-check"></i> <b>4.4.</b> basis.data.dataset
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="4.5" >
+                            
+                            <span><b>4.5.</b> Index</span>
+                            
+                        </li>
+                    
+                        <li  data-level="4.6" >
+                            
+                            <span><b>4.6.</b> Entity</span>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="5" data-path="basis.dom.wrapper.html">
+                
+                <a href="./basis.dom.wrapper.html">
+                    <i class="fa fa-check"></i> <b>5.</b> basis.dom.wrapper
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="5.1" data-path="basis.dom.wrapper_dom.html">
+                            
+                            <a href="./basis.dom.wrapper_dom.html">
+                                <i class="fa fa-check"></i> <b>5.1.</b> DOM
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.2" data-path="basis.dom.wrapper_childNodes.html">
+                            
+                            <a href="./basis.dom.wrapper_childNodes.html">
+                                <i class="fa fa-check"></i> <b>5.2.</b> Дочерние узлы
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.3" data-path="basis.dom.wrapper_sorting.html">
+                            
+                            <a href="./basis.dom.wrapper_sorting.html">
+                                <i class="fa fa-check"></i> <b>5.3.</b> Сортировка
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.4" data-path="basis.dom.wrapper_grouping.html">
+                            
+                            <a href="./basis.dom.wrapper_grouping.html">
+                                <i class="fa fa-check"></i> <b>5.4.</b> Группировка
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.5" data-path="basis.dom.wrapper_data.html">
+                            
+                            <a href="./basis.dom.wrapper_data.html">
+                                <i class="fa fa-check"></i> <b>5.5.</b> Привязка данных
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.6" data-path="basis.dom.wrapper_owner.html">
+                            
+                            <a href="./basis.dom.wrapper_owner.html">
+                                <i class="fa fa-check"></i> <b>5.6.</b> Паттерн &quot;владелец&quot;
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.7" data-path="basis.dom.wrapper_satellite.html">
+                            
+                            <a href="./basis.dom.wrapper_satellite.html">
+                                <i class="fa fa-check"></i> <b>5.7.</b> Сателлиты
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.8" data-path="basis.dom.wrapper_disabled.html">
+                            
+                            <a href="./basis.dom.wrapper_disabled.html">
+                                <i class="fa fa-check"></i> <b>5.8.</b> Доступность (disabled/enabled)
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="5.9" data-path="basis.dom.wrapper_selection.html">
+                            
+                            <a href="./basis.dom.wrapper_selection.html">
+                                <i class="fa fa-check"></i> <b>5.9.</b> Выделение (selection)
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="6" data-path="basis.ui.html">
+                
+                <a href="./basis.ui.html">
+                    <i class="fa fa-check"></i> <b>6.</b> Интерфейс пользователя
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="6.1" data-path="basis.ui_template.html">
+                            
+                            <a href="./basis.ui_template.html">
+                                <i class="fa fa-check"></i> <b>6.1.</b> Привязка шаблонов
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="6.2" data-path="basis.ui_bindings.html">
+                            
+                            <a href="./basis.ui_bindings.html">
+                                <i class="fa fa-check"></i> <b>6.2.</b> Биндинги (bindings)
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="6.3" data-path="basis.ui_actions.html">
+                            
+                            <a href="./basis.ui_actions.html">
+                                <i class="fa fa-check"></i> <b>6.3.</b> Обратная связь (actions)
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="7" data-path="basis.template.html">
+                
+                <a href="./basis.template.html">
+                    <i class="fa fa-check"></i> <b>7.</b> Шаблоны
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="7.1" data-path="basis.template_format.html">
+                            
+                            <a href="./basis.template_format.html">
+                                <i class="fa fa-check"></i> <b>7.1.</b> Формат шаблонов
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="7.2" data-path="basis.template_bindings.html">
+                            
+                            <a href="./basis.template_bindings.html">
+                                <i class="fa fa-check"></i> <b>7.2.</b> Правила применения значений биндингам
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="7.3" >
+                            
+                            <span><b>7.3.</b> Динамическое обновление (live update)</span>
+                            
+                        </li>
+                    
+                        <li  data-level="7.4" data-path="basis.template_theme.html">
+                            
+                            <a href="./basis.template_theme.html">
+                                <i class="fa fa-check"></i> <b>7.4.</b> Темы
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="8" data-path="basis.l10n.html">
+                
+                <a href="./basis.l10n.html">
+                    <i class="fa fa-check"></i> <b>8.</b> L10n
+                </a>
+                
+                
+            </li>
+        
+            <li  data-level="9" data-path="basis.net.html">
+                
+                <a href="./basis.net.html">
+                    <i class="fa fa-check"></i> <b>9.</b> basis.net
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="9.1" data-path="basis.net.action.html">
+                            
+                            <a href="./basis.net.action.html">
+                                <i class="fa fa-check"></i> <b>9.1.</b> basis.net.action
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="9.2" data-path="basis.net.service.html">
+                            
+                            <a href="./basis.net.service.html">
+                                <i class="fa fa-check"></i> <b>9.2.</b> basis.net.service
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+            <li  data-level="10" >
+                
+                <span><b>10.</b> Router</span>
+                
+                
+            </li>
+        
+            <li  data-level="11" data-path="tutorial/index.html">
+                
+                <a href="./tutorial/index.html">
+                    <i class="fa fa-check"></i> <b>11.</b> Руководство
+                </a>
+                
+                
+                <ul class="articles">
+                    
+                        <li  data-level="11.1" data-path="tutorial/part1/index.html">
+                            
+                            <a href="./tutorial/part1/index.html">
+                                <i class="fa fa-check"></i> <b>11.1.</b> Часть 1. Начало работы, представления, модули, инструменты
+                            </a>
+                            
+                        </li>
+                    
+                        <li  data-level="11.2" data-path="tutorial/part2/index.html">
+                            
+                            <a href="./tutorial/part2/index.html">
+                                <i class="fa fa-check"></i> <b>11.2.</b> Часть 2. Работа с данными: модели, наборы и значения
+                            </a>
+                            
+                        </li>
+                    
+                </ul>
+                
+            </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="page-wrapper" tabindex="-1">
+                <div class="book-progress">
+    <div class="bar">
+        <div class="inner" style="width: 16.666666666666668%;min-width: 13.88888888888889%;"></div>
+    </div>
+    <div class="chapters">
+    
+        <a href="./index.html" title="Introduction" class="chapter done new-chapter" data-progress="0" style="left: 0%;"></a>
+    
+        <a href="./get-started.html" title="Приступая к разработке" class="chapter done new-chapter" data-progress="1" style="left: 2.7777777777777777%;"></a>
+    
+        <a href="./tutorial/index.html" title="Руководство" class="chapter done " data-progress="11" style="left: 5.555555555555555%;"></a>
+    
+        <a href="./tutorial/part1/index.html" title="Часть 1. Начало работы, представления, модули, инструменты" class="chapter done " data-progress="11.1" style="left: 8.333333333333334%;"></a>
+    
+        <a href="./tutorial/part2/index.html" title="Часть 2. Работа с данными: модели, наборы и значения" class="chapter done " data-progress="11.2" style="left: 11.11111111111111%;"></a>
+    
+        <a href="./resources.html" title="Ресурсы (модульность)" class="chapter done " data-progress="2.1" style="left: 13.88888888888889%;"></a>
+    
+        <a href="./basis.Class.html" title="Классы" class="chapter done " data-progress="2.2" style="left: 16.666666666666668%;"></a>
+    
+        <a href="./basis.Token.html" title="basis.Token" class="chapter  " data-progress="2.3" style="left: 19.444444444444443%;"></a>
+    
+        <a href="./bindingbridge.html" title="Binding bridge" class="chapter  " data-progress="2.5" style="left: 22.22222222222222%;"></a>
+    
+        <a href="./basis.event.html" title="События" class="chapter  new-chapter" data-progress="3" style="left: 25%;"></a>
+    
+        <a href="./basis.data.html" title="Данные" class="chapter  new-chapter" data-progress="4" style="left: 27.77777777777778%;"></a>
+    
+        <a href="./basis.data.Value.html" title="Значение" class="chapter  " data-progress="4.1" style="left: 30.555555555555557%;"></a>
+    
+        <a href="./basis.data.Object.html" title="Объект" class="chapter  " data-progress="4.2" style="left: 33.333333333333336%;"></a>
+    
+        <a href="./basis.data.datasets.html" title="Наборы" class="chapter  " data-progress="4.3" style="left: 36.111111111111114%;"></a>
+    
+        <a href="./basis.data.dataset.html" title="basis.data.dataset" class="chapter  " data-progress="4.4" style="left: 38.888888888888886%;"></a>
+    
+        <a href="./basis.dom.wrapper.html" title="basis.dom.wrapper" class="chapter  new-chapter" data-progress="5" style="left: 41.666666666666664%;"></a>
+    
+        <a href="./basis.dom.wrapper_dom.html" title="DOM" class="chapter  " data-progress="5.1" style="left: 44.44444444444444%;"></a>
+    
+        <a href="./basis.dom.wrapper_childNodes.html" title="Дочерние узлы" class="chapter  " data-progress="5.2" style="left: 47.22222222222222%;"></a>
+    
+        <a href="./basis.dom.wrapper_sorting.html" title="Сортировка" class="chapter  " data-progress="5.3" style="left: 50%;"></a>
+    
+        <a href="./basis.dom.wrapper_grouping.html" title="Группировка" class="chapter  " data-progress="5.4" style="left: 52.77777777777778%;"></a>
+    
+        <a href="./basis.dom.wrapper_data.html" title="Привязка данных" class="chapter  " data-progress="5.5" style="left: 55.55555555555556%;"></a>
+    
+        <a href="./basis.dom.wrapper_owner.html" title="Паттерн &quot;владелец&quot;" class="chapter  " data-progress="5.6" style="left: 58.333333333333336%;"></a>
+    
+        <a href="./basis.dom.wrapper_satellite.html" title="Сателлиты" class="chapter  " data-progress="5.7" style="left: 61.111111111111114%;"></a>
+    
+        <a href="./basis.dom.wrapper_disabled.html" title="Доступность (disabled/enabled)" class="chapter  " data-progress="5.8" style="left: 63.888888888888886%;"></a>
+    
+        <a href="./basis.dom.wrapper_selection.html" title="Выделение (selection)" class="chapter  " data-progress="5.9" style="left: 66.66666666666667%;"></a>
+    
+        <a href="./basis.ui.html" title="Интерфейс пользователя" class="chapter  new-chapter" data-progress="6" style="left: 69.44444444444444%;"></a>
+    
+        <a href="./basis.ui_template.html" title="Привязка шаблонов" class="chapter  " data-progress="6.1" style="left: 72.22222222222223%;"></a>
+    
+        <a href="./basis.ui_bindings.html" title="Биндинги (bindings)" class="chapter  " data-progress="6.2" style="left: 75%;"></a>
+    
+        <a href="./basis.ui_actions.html" title="Обратная связь (actions)" class="chapter  " data-progress="6.3" style="left: 77.77777777777777%;"></a>
+    
+        <a href="./basis.template.html" title="Шаблоны" class="chapter  new-chapter" data-progress="7" style="left: 80.55555555555556%;"></a>
+    
+        <a href="./basis.template_format.html" title="Формат шаблонов" class="chapter  " data-progress="7.1" style="left: 83.33333333333333%;"></a>
+    
+        <a href="./basis.template_bindings.html" title="Правила применения значений биндингам" class="chapter  " data-progress="7.2" style="left: 86.11111111111111%;"></a>
+    
+        <a href="./basis.template_theme.html" title="Темы" class="chapter  " data-progress="7.4" style="left: 88.88888888888889%;"></a>
+    
+        <a href="./basis.l10n.html" title="L10n" class="chapter  new-chapter" data-progress="8" style="left: 91.66666666666667%;"></a>
+    
+        <a href="./basis.net.html" title="basis.net" class="chapter  new-chapter" data-progress="9" style="left: 94.44444444444444%;"></a>
+    
+        <a href="./basis.net.action.html" title="basis.net.action" class="chapter  " data-progress="9.1" style="left: 97.22222222222223%;"></a>
+    
+        <a href="./basis.net.service.html" title="basis.net.service" class="chapter  " data-progress="9.2" style="left: 100%;"></a>
+    
+    </div>
+</div>
+
+                <div class="page-inner">
+                
+                    <section class="normal" id="section-gitbook_5">
+                    
+                        <h1 id="basis-class-">basis.Class (классы)</h1>
+<p>Функция <code>basis.Class</code> и ее методы упрощают процесс конструирования классов. Наследование базируется на прототипном наследовании javascript.</p>
+<h2 id="-">Создание классов</h2>
+<p>Классы в <code>basis.js</code> создаются с помощью функции <code>basis.Class</code> или ее алиаса <code>basis.Class.create</code>. Функция принимает произвольное количество аргументов: первый — это класс, от которого наследуется новый класс, второй и последующие — расширения создаваемого класса. Если новый класс не наследуется от другого класса, то в качестве первого параметра передается <code>null</code>.</p>
+<pre><code class="lang-js"><span class="hljs-comment">// класс </span>
+<span class="hljs-keyword">var</span> Foo = basis.Class(<span class="hljs-literal">null</span>, {
+  name: <span class="hljs-string">'default'</span>
+});
+
+<span class="hljs-comment">// класс Bar наследуется от Foo</span>
+<span class="hljs-keyword">var</span> Bar = basis.Class(Foo, {
+  property: <span class="hljs-number">1</span>,
+  method: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-comment">// ...</span>
+  }
+});
+</code></pre>
+<p>В качестве расширения могут быть переданы:</p>
+<ul>
+<li><p>объект – все свойства объекта (включая те, что находятся в цепочке прототипов) копируются в прототип нового класса;</p>
+</li>
+<li><p>класс, созданный <code>basis.Class</code>, - копируются свойства из прототипа этого класса;</p>
+</li>
+<li><p>функция – в этом случае используется результат выполнения функции, а сама функция получает в качестве аргумента прототип суперкласса; этот способ удобен при создания примесей, используемых для разных классов (mixin).</p>
+</li>
+</ul>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Foo = basis.Class(<span class="hljs-literal">null</span>, {
+  say: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'foo'</span>;
+  }
+});
+<span class="hljs-keyword">var</span> Bar = basis.Class(<span class="hljs-literal">null</span>, {
+  say: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'bar'</span>;
+  }
+});
+
+<span class="hljs-keyword">var</span> mixin = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(super_)</span>{</span>
+  <span class="hljs-comment">// `super` является зарезервированным именем, поэтому используется `super_`.</span>
+  <span class="hljs-comment">// для Mix1 super_ === Foo.prototype</span>
+  <span class="hljs-comment">// для Mix2 super_ === Bar.prototype</span>
+  <span class="hljs-keyword">return</span> {
+    say: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">return</span> super_.say.call(<span class="hljs-keyword">this</span>) + <span class="hljs-string">' and mixin'</span>;
+    }
+  };
+};
+
+<span class="hljs-keyword">var</span> Mix1 = basis.Class(Foo, mixin);
+<span class="hljs-keyword">var</span> Mix2 = basis.Class(Bar, mixin);
+
+
+<span class="hljs-keyword">var</span> mix1 = <span class="hljs-keyword">new</span> Mix1();
+console.log(mix1.say());
+<span class="hljs-comment">// console&gt; foo and mixin</span>
+
+<span class="hljs-keyword">var</span> mix2 = <span class="hljs-keyword">new</span> Mix2();
+console.log(mix2.say());
+<span class="hljs-comment">// console&gt; bar and mixin</span>
+</code></pre>
+<p>Для удобства отладки в расширении нового класса можно указать свойство <code>className</code>. В этом случае в инструментах разработки будет более &quot;говорящее&quot; имя экземпляра.</p>
+<p><img src="img/className-in-console.png" alt="Использование className"></p>
+<h2 id="-">Свойства класса</h2>
+<ul>
+<li>className – имя класса;</li>
+<li>basisClassId_ – уникальный идентификатор класса, доступен только в <code>dev</code> режиме и используется для отладки;</li>
+<li>superClass_ – ссылка на класс, от которого класс был унаследован;</li>
+<li>extendConstructor_ – конструктор, используется авторасширение экземпляра (см. <a href="#Паттерны-создания-экземпляров">Паттерны создания экземпляров</a>);</li>
+<li>__extend__ – метод авторасширения, создает новый класс-наследник от текущего класса на основании переданного параметра (см &quot;<a href="#Авторасширение">Авторасширение</a>&quot;);</li>
+<li><p>isSubclassOf – метод, определяющий, является ли текущий класс потомком другого класса</p>
+<pre><code class="lang-js">  <span class="hljs-keyword">var</span> Foo = basis.Class();
+  <span class="hljs-keyword">var</span> Bar = Foo.subclass(Foo);
+
+  console.log(Bar.isSubclassOf(Foo));
+  <span class="hljs-comment">// console&gt; true</span>
+</code></pre>
+</li>
+<li><p>extend – метод для расширения прототипа класса;</p>
+</li>
+<li>subclass – метод, создающий новый класс, унаследованный от текущего, может служить альтернативой <code>basis.Class</code>; следующие две записи эквивалентны:<pre><code class="lang-js"><span class="hljs-keyword">var</span> MyClass = basis.Class(SomeClass,  { .. });
+<span class="hljs-keyword">var</span> MyClass = SomeClass.subclass({ .. });
+</code></pre>
+</li>
+</ul>
+<h2 id="-">Наследование</h2>
+<p>Любое свойство может быть переопределено в новом классе. Доступ к свойствам суперкласса производится через свойство <code>prototype</code> суперкласса.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Human = basis.Class(<span class="hljs-literal">null</span>, {
+  name: <span class="hljs-string">'no name'</span>,
+  init: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span>{</span>
+    <span class="hljs-keyword">this</span>.name = name;
+  },
+  say: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'My name is {0}.'</span>.format(<span class="hljs-keyword">this</span>.name);
+  }
+});
+
+<span class="hljs-keyword">var</span> Gamer = basis.Class(Human, {
+  level: <span class="hljs-number">0</span>,
+  init: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, level)</span>{</span>
+    Human.prototype.init.call(<span class="hljs-keyword">this</span>, name);
+    <span class="hljs-keyword">this</span>.level = level;
+  },
+  say: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-keyword">return</span> Human.prototype.say.call(<span class="hljs-keyword">this</span>) +
+      <span class="hljs-string">' I\'m {0} level.'</span>.format(<span class="hljs-keyword">this</span>.level);
+  }
+});
+
+<span class="hljs-keyword">var</span> john = <span class="hljs-keyword">new</span> Human(<span class="hljs-string">'John'</span>);
+<span class="hljs-keyword">var</span> mario = <span class="hljs-keyword">new</span> Gamer(<span class="hljs-string">'Super Mario'</span>, <span class="hljs-number">99</span>);
+
+console.log(<span class="hljs-string">'John says:'</span>, john.say());
+<span class="hljs-comment">// console&gt; My name is John.</span>
+console.log(<span class="hljs-string">'Mario says:'</span>, mario.say());
+<span class="hljs-comment">// console&gt; My name is Super Mario. I'm 99 level.</span>
+console.log(mario <span class="hljs-keyword">instanceof</span> Human);
+<span class="hljs-comment">// console&gt; true</span>
+console.log(mario <span class="hljs-keyword">instanceof</span> Gamer);
+<span class="hljs-comment">// console&gt; true</span>
+</code></pre>
+<h2 id="-">Жизненый цикл экземпляра</h2>
+<p>При создании экземпляра класса вызывается конструктор - метод <code>init</code>. В этом методе свойствам присваиваются начальные значения и выполняются действия, необходимые при создании объекта данного класса.</p>
+<p>В <code>basisjs</code> все объекты разрушаемы. Когда экземпляр становится не нужен, вызывается его деструктор — метод <code>destroy</code>. В этом методе описываются действия, которые необходимы при разрушении объекта: обычно это разрушение вспомогательных объектов и обнуление ссылок на другие объекты.</p>
+<p>Все экземпляры, создаваемые классами <code>basis.js</code>, имеют поле basisObjectId, содержащее уникальное значение. С помощью такого поля становится возможным создавать карты объектов и использовать их для быстрого поиска.</p>
+<h2 id="-">Паттерны создания экземпляров</h2>
+<p>В базовом варианте классы, созданные с помощью <code>basis.Create</code>, практически ничем не отличаются от классов, созданных стандартным путем (с помощью обычной функции), кроме вызова метода <code>init</code> при создании экземпляра.</p>
+<p>Но часто бывает, что у класса может быть много свойств, которые необходимо задавать при создании экземпляра. В этом случае удобно использовать паттерн авторасширения экземпляра при создании. Его суть состоит в том, что при создании экземпляра передается единственный параметр — объект <code>config</code>. Перед тем как будет вызван метод <code>init</code>, все свойства из <code>config</code> копируются в экземпляр.</p>
+<p>Свойство класса <code>extendConstructor_</code> определяет, какой паттерн будет использоваться при создании экземпляров. Оно задается при создании класса. Если свойство не задано, его значение наследуется от родительского класса. Если оно <code>true</code>, то используется паттерн авторасширения экземпляра.</p>
+<pre><code class="lang-js"><span class="hljs-comment">// простой класс, похожий на те, что создаются обычными средствами</span>
+<span class="hljs-keyword">var</span> SimpleClass = basis.Class(<span class="hljs-literal">null</span>, {
+  name: <span class="hljs-string">'no name'</span>,
+  init: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span>{</span>
+    <span class="hljs-keyword">this</span>.name = name;
+  }
+});
+<span class="hljs-keyword">var</span> simple = <span class="hljs-keyword">new</span> SimpleClass(<span class="hljs-string">'Jhon'</span>);
+
+<span class="hljs-comment">// класс с авто-расширением</span>
+<span class="hljs-keyword">var</span> AutoExtendClass = basis.Class(<span class="hljs-literal">null</span>, {
+  extendConstructor_: <span class="hljs-literal">true</span>,
+  name: <span class="hljs-string">'no name'</span>
+});
+<span class="hljs-keyword">var</span> autoExtend = <span class="hljs-keyword">new</span> AutoExtendClass({
+  name: <span class="hljs-string">'Jhon'</span>, <span class="hljs-comment">// переопределяем свойство описание в классе</span>
+  newProperty: <span class="hljs-string">'something'</span> <span class="hljs-comment">// новое свойство</span>
+});
+
+console.log(autoExtend.name);
+<span class="hljs-comment">// console&gt; 'Jhon'</span>
+console.log(autoExtend.newProperty);
+<span class="hljs-comment">// console&gt; 'something'</span>
+</code></pre>
+<p>Почти у всех классов <code>basis.js</code> свойство <code>extendConstructor_</code> равно <code>true</code>.</p>
+<h2 id="-">Авторасширение</h2>
+<p>Когда создается новый класс, он расширяется новыми свойствами. Из второго и последующих аргументов-объектов, переданных в <code>basis.Create</code>, копируются свойства в прототип нового класса. Но перед тем, как сохранить свойство, делается проверка — нет ли уже такого свойства в прототипе. Если значение есть и оно имеет метод <code>__extend__</code>, то этот метод вызывается с новым значением для прототипа, а в прототип сохраняется результат выполнения. В противном случае значение копируется в прототип как есть. Этот алгоритм иллюстрирует следующий код:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> extension)
+{
+  <span class="hljs-keyword">var</span> curValue = newClass.prototype[key];
+
+  <span class="hljs-keyword">if</span> (curValue &amp;&amp; curValue.__extend__)
+    newClass.prototype[key] = curValue.__extend__(extension[key]);
+  <span class="hljs-keyword">else</span>
+    newClass.prototype[key] = extension[key];
+}
+</code></pre>
+<p>Такая же логика используется при создании экземпляра класса с авторасширением (свойство класса <code>extendConstructor_</code> == <code>true</code>). Этот подход позволяет сокращать количество кода при наследовании классов и создании экземпляров, делая код более простым и читаемым.</p>
+<p>Например, все классы созданные <code>basis.Create</code>, имеют метод <code>__extend__</code>. Если ему передать в качестве аргумента объект или функцию (но не &quot;класс&quot;), то будет создан и возвращен новый класс, унаследованный от того, у которого был вызван метод. В противном случае метод вернет то значение, что ему передали.</p>
+<pre><code class="lang-js"><span class="hljs-comment">// создание класса, у которого в качестве</span>
+<span class="hljs-comment">// свойства childClass другой класс</span>
+<span class="hljs-keyword">var</span> MyClass = SomeClass.subclass({
+  childClass: ChildClass
+});
+
+<span class="hljs-comment">// явное создание класса</span>
+<span class="hljs-keyword">var</span> obj = <span class="hljs-keyword">new</span> MyClass({
+  childClass: ChildClass.subclass({ ... })
+});
+
+<span class="hljs-comment">// метод __extend__ у классов позволяет сократить код</span>
+<span class="hljs-keyword">var</span> obj = <span class="hljs-keyword">new</span> MyClass({
+  childClass: { ... }
+});
+</code></pre>
+<h2 id="-">Проверка принадлежности экземпляров классу</h2>
+<p>Созданные с помощью <code>basis.Class</code> классы поддерживают оператор <code>instanceof</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Foo = basis.Class();
+<span class="hljs-keyword">var</span> Bar = basis.Class(Foo);
+<span class="hljs-keyword">var</span> Baz = basis.Class(Bar);
+
+<span class="hljs-keyword">var</span> baz = <span class="hljs-keyword">new</span> Baz();
+
+console.log(baz <span class="hljs-keyword">instanceof</span> Baz);
+<span class="hljs-comment">// console&gt; true</span>
+
+console.log(baz <span class="hljs-keyword">instanceof</span> Bar);
+<span class="hljs-comment">// console&gt; true</span>
+
+console.log(baz <span class="hljs-keyword">instanceof</span> Foo);
+<span class="hljs-comment">// console&gt; true</span>
+
+console.log(baz <span class="hljs-keyword">instanceof</span> basis.Class.BaseClass);
+<span class="hljs-comment">// console&gt; true</span>
+</code></pre>
+<p>Получить доступ к классу экземпляра можно через его свойство <code>constructor</code>, а получить доступ к суперклассу класса можно через свойство <code>superClass_</code>. Свойство <code>superClass_</code> может использоваться только для отладки в <code>dev</code> режиме.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Foo = basis.Class(<span class="hljs-literal">null</span>, { className: <span class="hljs-string">'Foo'</span> });
+<span class="hljs-keyword">var</span> Bar = basis.Class(Foo);
+
+<span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">new</span> Bar();
+
+console.log(bar.constructor === Bar);
+<span class="hljs-comment">// console&gt; true</span>
+
+console.log(bar.constructor.superClass_ === Foo);
+<span class="hljs-comment">// console&gt; true</span>
+
+<span class="hljs-comment">// выводим список наследования классов</span>
+<span class="hljs-keyword">var</span> cls = Bar;
+<span class="hljs-keyword">while</span> (cls)
+{
+  console.log(cls.className);
+  cls = cls.superClass_;
+} 
+<span class="hljs-comment">// console&gt; subclass of Foo</span>
+<span class="hljs-comment">// console&gt; Foo</span>
+<span class="hljs-comment">// console&gt; basis.Class</span>
+</code></pre>
+<h2 id="-">Преобразование класс &lt;-&gt; экземпляр</h2>
+<p>Экземпляры авторасширяющих классов (у которых <code>extendConstructor_</code> == <code>true</code>) создаются похожим образом с созданием нового класса с одним расширяющим объектом. По этой причине преобразование кода создания экземпляра в класс или класса в создание экземпляра является не сложной задачей. Исключением являются свойства <code>className</code> и <code>extendConstructor_</code>, которые для экземпляра являются обычными полями, а в случае создания класса копируются в класс, а не в прототип.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> basis.ui.Node({
+  template: resource(<span class="hljs-string">'./path/to/view.tmpl'</span>),
+  childClass: {
+    template: resource(<span class="hljs-string">'./path/to/item.tmpl'</span>),
+    binding: {
+      title: <span class="hljs-string">'data:'</span>
+    }
+  }
+});
+
+<span class="hljs-comment">// если объект данного типа используется неоднократно,</span>
+<span class="hljs-comment">// можно преобразовать его конфиг в класс</span>
+<span class="hljs-keyword">var</span> Foo = <span class="hljs-keyword">new</span> basis.ui.Node.subclass({
+  className: <span class="hljs-string">'app.example.View'</span>,   <span class="hljs-comment">// для классов имеет смысл добавлять имя класса,</span>
+                                   <span class="hljs-comment">// что облегчает отладку</span>
+  template: resource(<span class="hljs-string">'./path/to/view.tmpl'</span>),
+  childClass: {
+    template: resource(<span class="hljs-string">'./path/to/item.tmpl'</span>),
+    binding: {
+      title: <span class="hljs-string">'data:'</span>
+    }
+  }
+});
+
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> Foo({
+  dataSource: someDataset
+});
+<span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">new</span> Foo({
+  template: resource(<span class="hljs-string">'./some/path/custom/view.tmpl'</span>),
+  dataSource: anotherDataset
+});
+</code></pre>
+<p>В случае преобразования экземпляр-&gt;класс стоит помнить, что все экземпляры класса разделяют данные, находящиеся в прототипе. Это относится и к объектам, которые могут иметь только одного владельца.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> basis.ui.Node({
+  counter: <span class="hljs-number">0</span>,              <span class="hljs-comment">// ОК: собственное значение, которое ни с кем не разделяется</span>
+  incCounter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-keyword">this</span>.counter++;
+  },
+  satellite: {
+    button: <span class="hljs-keyword">new</span> basis.ui.Button(...)   <span class="hljs-comment">// ОК: собственный объект, который ни с кем не разделяется</span>
+  }
+});
+
+<span class="hljs-comment">// в то же время, использование такого же объекта для создания класса имеет проблемы</span>
+<span class="hljs-keyword">var</span> Foo = basis.ui.Node.subclass({
+  counter: <span class="hljs-number">0</span>,
+  incCounter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-keyword">this</span>.counter++;  <span class="hljs-comment">// ОШИБКА: так как все экземпляры будут иметь одно и то же значение</span>
+                     <span class="hljs-comment">// необходимо либо явно в init присвоить начальное значение,</span>
+                     <span class="hljs-comment">// либо использовать `this.counter += 1;`</span>
+  },
+  satellite: {
+    button: <span class="hljs-keyword">new</span> basis.ui.Button(...)   <span class="hljs-comment">// ОШИБКА: каждый новый экземпляр Foo будет становится</span>
+                                       <span class="hljs-comment">// новым владельцем кнопки; необходимо позаботиться,</span>
+                                       <span class="hljs-comment">// чтобы для каждого экземпляра создавался собственный</span>
+                                       <span class="hljs-comment">// экземплря `basis.ui.Button`</span>
+  }
+});
+</code></pre>
+<p>Если создается множество экземпляров с одинаковым или очень похожим конфигом, то часто выгоднее создать новый класс. Также стоит помнить про авторасширяемые поля, которые могут неявно образовывать объекты, которые можно было не создавать.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> data = [...];
+<span class="hljs-keyword">var</span> nodes = [];
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; data.length; i++)
+  nodes.push(<span class="hljs-keyword">new</span> basis.ui.Node({
+    template: resource(<span class="hljs-string">'./path/to/node.tmpl'</span>),    <span class="hljs-comment">// !!!</span>
+    name: data[i],
+    childClass: {                                 <span class="hljs-comment">// !!!</span>
+      template: resource(<span class="hljs-string">'./path/to/item.tmpl'</span>),  <span class="hljs-comment">// !!!</span>
+      binding: {                                  <span class="hljs-comment">// !!!</span>
+        title: <span class="hljs-string">'data:'</span>
+      }
+    }
+  }));
+</code></pre>
+<p>Строки, отмеченные <code>!!!</code>, показывают проблемные места. В данном примере для каждого экземпляра <code>basis.ui.Node</code> будет создан свой экземпляр шаблона (т.е. экземпляр <code>basis.template.html.Template</code>; один и тот же источник шаблона будет разобран отдельно для каждого экземпляра) и свой класс для дочерних узлов, который, в свою очередь, создает отдельный экземпляр шаблона и новый объект <code>binding</code>. Правильно будет сделать следущим образом:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> data = [...];
+<span class="hljs-keyword">var</span> nodes = [];
+<span class="hljs-keyword">var</span> MyNode = basis.ui.Node.subclass({
+  template: resource(<span class="hljs-string">'./path/to/node.tmpl'</span>),    <span class="hljs-comment">// !!!</span>
+  childClass: {                                 <span class="hljs-comment">// !!!</span>
+    template: resource(<span class="hljs-string">'./path/to/item.tmpl'</span>),  <span class="hljs-comment">// !!!</span>
+    binding: {                                  <span class="hljs-comment">// !!!</span>
+      title: <span class="hljs-string">'data:'</span>
+    }
+  }
+})
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; data.length; i++)
+  nodes.push(<span class="hljs-keyword">new</span> MyNode({
+    name: data[i]
+  }));
+</code></pre>
+<p>В этом случае не будет создаваться лишних объектов.</p>
+<h2 id="-">Расширяемые поля</h2>
+<p>Существует несколько вспомогательных функций, создающие расширяемые свойства, то есть такие свойства, которые не перезаписываются, а порождают новое значение на основе текущего и нового значения. Принцип их работы основан на расширении через метод <code>__extend__</code>. То есть они создают такие объекты, у которых есть метод <code>__extend__</code>, создающий объекты, которые имеют такой же метод <code>__extend__</code>.</p>
+<h3 id="extensibleproperty">extensibleProperty</h3>
+<p>Обычное дополняющее свойство.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Foo = basis.Class(<span class="hljs-literal">null</span>, {
+  data: basis.Class.extensibleProperty({  <span class="hljs-comment">// ключи по умолчанию</span>
+    foo: <span class="hljs-number">1</span>,
+    bar: <span class="hljs-number">2</span>
+  })
+});
+<span class="hljs-keyword">var</span> Baz = Foo.subclass({
+  data: {
+    bar: <span class="hljs-string">'baz'</span>,
+    baz: <span class="hljs-number">123</span>
+  }
+});
+
+console.log(Baz.prototype.data);
+<span class="hljs-comment">// console&gt; { foo: 1, bar: 'baz', baz: 123 }</span>
+
+<span class="hljs-keyword">var</span> baz = <span class="hljs-keyword">new</span> Baz({
+  data: {
+    baz: <span class="hljs-string">'baz'</span>,
+    basis: <span class="hljs-literal">true</span>
+  }
+});
+console.log(baz.data);
+<span class="hljs-comment">// console&gt; { foo: 1, bar: 'baz', baz: 'baz', basis:true }</span>
+
+Foo.prototype.data.foo = <span class="hljs-number">333</span>;
+console.log(Baz.prototype.data);
+<span class="hljs-comment">// console&gt; { foo: 333, bar: 'baz', baz: 123 }</span>
+console.log(baz.data);
+<span class="hljs-comment">// console&gt; { foo: 333, bar: 'baz', baz: 'baz', basis:true }</span>
+</code></pre>
+<h3 id="customextendproperty">customExtendProperty</h3>
+<p>То же, что и extensibleProperty, но позволяет определить собственную функцию дополнения. <code>extensibleProperty</code> эквивалентно <code>customExtendProperty({}, basis.object.extend)</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Foo = basis.Class(<span class="hljs-literal">null</span>, {
+  data: basis.Class.extensibleProperty({  <span class="hljs-comment">// ключи по умолчанию</span>
+    foo: <span class="hljs-number">1</span>,
+    bar: <span class="hljs-number">2</span>
+  }, basis.object.complete)  <span class="hljs-comment">// Если использовать complete вместо extend, свойство data</span>
+                             <span class="hljs-comment">// будет расширяться только новыми ключами</span>
+});
+<span class="hljs-keyword">var</span> Baz = Foo.subclass({
+  data: {
+    bar: <span class="hljs-string">'baz'</span>,              <span class="hljs-comment">// это свойство будет проигнорировано</span>
+    baz: <span class="hljs-number">3</span>
+  }
+});
+
+console.log(Baz.prototype.data);
+<span class="hljs-comment">// console&gt; { foo: 1, bar: 2, baz: 123 }</span>
+
+<span class="hljs-keyword">var</span> baz = <span class="hljs-keyword">new</span> Baz({
+  data: {
+    baz: <span class="hljs-string">'baz'</span>,
+    basis: <span class="hljs-literal">true</span>
+  }
+});
+console.log(baz.data);
+<span class="hljs-comment">// console&gt; { foo: 1, bar: 2, baz: 3, basis:true }</span>
+
+Foo.prototype.data.foo = <span class="hljs-number">333</span>;
+console.log(Baz.prototype.data);
+<span class="hljs-comment">// console&gt; { foo: 333, bar: 2, baz: 3 }</span>
+console.log(baz.data);
+<span class="hljs-comment">// console&gt; { foo: 333, bar: 2, baz: 3, basis:true }</span>
+</code></pre>
+<h3 id="nestedextendproperty">nestedExtendProperty</h3>
+<p>Создает такой объект, у которого значения - <code>extensibleProperty</code>. basis.event.Emitter#listen пример такого свойства.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Foo = basis.Class(<span class="hljs-literal">null</span>, {
+  data: basis.Class.nestedExtendProperty({})
+});
+<span class="hljs-keyword">var</span> Baz = Foo.subclass({
+  data: {
+    prop: {
+      a: <span class="hljs-number">1</span>,
+      b: <span class="hljs-number">2</span>
+    }
+  }
+})
+
+<span class="hljs-keyword">var</span> baz = <span class="hljs-keyword">new</span> Baz({
+  data: {
+    prop: {
+      b: <span class="hljs-number">777</span>,
+      c: <span class="hljs-number">3</span>
+    },
+    more: {
+      x: <span class="hljs-number">1</span>
+    }
+  }
+});
+
+console.log(baz.data);
+<span class="hljs-comment">// console&gt; { prop: { a: 1, b: 777, c: 3 }, more: { x: 1 } }</span>
+</code></pre>
+<h3 id="onefunctionproperty">oneFunctionProperty</h3>
+<p>Создает объект, в котором для любого ключа значением является одна и та же функция. Обычно это триггеры событий.</p>
+<pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.event'</span>);
+
+<span class="hljs-keyword">var</span> Foo = basis.event.Emitter(<span class="hljs-literal">null</span>, {
+  events: basis.Class.oneFunctionProperty(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-keyword">this</span>.doStuff();
+  }, {
+    event1: <span class="hljs-literal">true</span>,
+    event2: <span class="hljs-literal">true</span> 
+  }),
+  init: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-keyword">this</span>.addHandler(<span class="hljs-keyword">this</span>.events, <span class="hljs-keyword">this</span>);
+  },
+  doStuff: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-comment">// do cool stuff </span>
+  }
+});
+
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> Foo({
+  events: {
+    event1: <span class="hljs-literal">false</span>,
+    update: <span class="hljs-literal">true</span>
+  }
+});
+
+console.log(foo.events);
+<span class="hljs-comment">// console&gt; {</span>
+<span class="hljs-comment">//            event1: null,</span>
+<span class="hljs-comment">//            event2: function(){ this.doStuff() },</span>
+<span class="hljs-comment">//            update: function(){ this.doStuff() },</span>
+<span class="hljs-comment">//          }</span>
+</code></pre>
+<h2 id="-">Хелперы</h2>
+<h3 id="self">SELF</h3>
+<p>Хелпер <code>basis.Class.SELF</code> позволяет классу сослаться на себя в момент своего создания. Это удобно, например, при создании рекурсивных классов.</p>
+<pre><code class="lang-js"><span class="hljs-comment">// без хелпера</span>
+<span class="hljs-keyword">var</span> TreeNode = basis.ui.subclass({
+  ...
+});
+TreeNode.extend({
+  childClass: TreeNode
+});
+
+<span class="hljs-comment">// с хелпером</span>
+<span class="hljs-keyword">var</span> TreeNode = basis.ui.subclass({
+  childClass: basis.Class.SELF,
+  ...
+});
+</code></pre>
+<h3 id="isclass">isClass</h3>
+<p>Функция <code>isClass</code> позволяет проверить, является ли значение классом, то есть функцией, созданной с помощью <code>basis.Class</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Foo = basis.Class();
+<span class="hljs-keyword">var</span> Bar = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>};
+
+console.log(<span class="hljs-keyword">typeof</span> Foo);
+<span class="hljs-comment">// console&gt; 'function'</span>
+console.log(basis.Class.isClass(Foo));
+<span class="hljs-comment">// console&gt; true</span>
+
+console.log(<span class="hljs-keyword">typeof</span> Bar);
+<span class="hljs-comment">// console&gt; 'function'</span>
+console.log(basis.Class.isClass(Bar));
+<span class="hljs-comment">// console&gt; false</span>
+</code></pre>
+
+                    
+                    </section>
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="./resources.html" class="navigation navigation-prev"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="./basis.Token.html" class="navigation navigation-next"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+        <script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
+for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/mode-javascript.js"></script>
+        <script src="gitbook/jsrepl/jsrepl.js" id="jsrepl-script"></script>
+        <script src="gitbook/app.js"></script>
+        
+    </body>
+</html>
