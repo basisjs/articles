@@ -19,9 +19,7 @@ module.exports = function (grunt) {
             },
             src: ['**']
         },
-        'clean': {
-            files: '_book'
-        },
+        'clean': ['_book', '.grunt'],
         'http-server': {
             'dev': {
                 // the server root directory
@@ -45,9 +43,9 @@ module.exports = function (grunt) {
         'http-server'
     ]);
     grunt.registerTask('publish', [
-        'gitbook'
-        ,'gh-pages'
-        //,'clean'
+        'gitbook',
+        'gh-pages',
+        'clean'
     ]);
     grunt.registerTask('default', 'gitbook');
 };
