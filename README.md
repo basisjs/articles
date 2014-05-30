@@ -1,9 +1,11 @@
 Данный репозитарий содержит статьи относящиеся к разработке на basis.js и описывающие его устройство.
 
+[Сборка статей в виде книги](basisjs.github.io/articles/ru-RU/)
+
 ## Содержание
 
 * [Приступая к разработке](ru-RU/get-started.md)
-* Ядро (basis.js)
+* [Ядро](basis.md) (basis.js)
     * [Ресурсы (модульность)](ru-RU/resources.md)
     * [Классы](ru-RU/basis.Class.md)
     * [basis.Token](ru-RU/basis.Token.md)
@@ -42,3 +44,5 @@
     * [basis.net.action](ru-RU/basis.net.action.md)
     * [basis.net.service](ru-RU/basis.net.service.md)
 * basis.router
+* [Руководство](tutorial/index.md)
+    * [Часть 1. Начало работы, представления, модули, инструменты](tutorial/part1/index.md)
