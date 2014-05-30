@@ -9,8 +9,15 @@ module.exports = function (grunt) {
     grunt.initConfig({
         'gitbook': {
             development: {
-                input: "./",
-                github: "basisjs/articles"
+                input: './',
+                github: 'basisjs/articles',
+                pluginsConfig: {
+                  fontSettings: {
+                    theme: 'white',
+                    family: 'sans',
+                    size: 1
+                  }
+                }
             }
         },
         'gh-pages': {
@@ -26,11 +33,11 @@ module.exports = function (grunt) {
                 root: '_book',
 
                 port: 4000,
-                host: "127.0.0.1",
+                host: '127.0.0.1',
 
                 showDir : true,
                 autoIndex: true,
-                defaultExt: "html",
+                defaultExt: 'html',
 
                 //wait or not for the process to finish
                 runInBackground: false
