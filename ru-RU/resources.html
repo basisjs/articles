@@ -46,7 +46,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="2.1" data-basepath="." data-revision="1401629849858">
+    <div class="book" data-github="basisjs/articles" data-level="2.1" data-basepath="." data-revision="1401631595965">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -554,7 +554,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_34">
+                    <section class="normal" id="section-gitbook_33">
                     
                         <h1 id="-">Ресурсы (модульность)</h1>
 <p>Основой модульности <code>basis.js</code> являются ресурсы.</p>
@@ -573,7 +573,7 @@ console.log(someText.fetch());  <span class="hljs-comment">// эквивален
 </code></pre>
 <p>Здесь создается класс <code>MyControl</code> и определяется файл шаблона. Такое определение не приводит к загрузке файла шаблона, так как он еще не нужен. Но когда будет создан первый экземпляр этого класса, потребуется создать экземпляр шаблона, и только тогда будет загружен файл и использовано его содержимое.</p>
 <p>В зависимости от типа файла (его расширения) может возвращаться не только текстовое значение файла, но и значения других типов. То, что будет возвращаться, определяет post-обработчик, ассоциированный с определенным расширением. В <code>basis</code> определены обработчики для расширений <code>.js</code>, <code>.json</code> и <code>.css</code>. Можно определить и собственные обработчики.</p>
-<h2 id="javacript">Javacript</h2>
+<h2 id="javascript">JavaScript</h2>
 <p>Содержимое <code>.js</code> файлов оборачивается в специальную функцию и немедленно вызывается с определенными параметрами. Таким образом, для кода всегда создается локальная область видимости, в которой доступен ряд значений и функций.</p>
 <p>В область видимости кода добавляются следующие значения:</p>
 <ul>
@@ -598,14 +598,15 @@ module.exports = {      <span class="hljs-comment">// то, что будет в
 };
 </code></pre>
 <p>Использование:</p>
-<pre><code>// объявляем ресурс, файл еще не загружен и код не выполнен
-var list = basis.resource(&#39;src/module/list/index.js&#39;);
-console.log(list());    // файл загружается, выполняется код, возвращается module.exports
+<pre><code class="lang-js"><span class="hljs-comment">// объявляем ресурс, файл еще не загружен и код не выполнен</span>
+<span class="hljs-keyword">var</span> list = basis.resource(<span class="hljs-string">'./src/module/list/index.js'</span>);
+console.log(list());    <span class="hljs-comment">// файл загружается, выполняется код, возвращается module.exports</span>
 
-// либо
-var list = basis.resource(&#39;src/module/list/index.js&#39;).fetch();  // файл загружается,
-console.log(list);      // { MyClass: ..., someFn: ... }
-</code></pre><p>Следующий код схематично показывает, что происходит с содержимым javascript-файла:</p>
+<span class="hljs-comment">// либо</span>
+<span class="hljs-keyword">var</span> list = basis.resource(<span class="hljs-string">'./src/module/list/index.js'</span>).fetch();  <span class="hljs-comment">// файл загружается,</span>
+console.log(list);      <span class="hljs-comment">// { MyClass: ..., someFn: ... }</span>
+</code></pre>
+<p>Следующий код схематично показывает, что происходит с содержимым javascript-файла:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> module = {
   exports: {}
 };
@@ -623,18 +624,29 @@ console.log(list);      // { MyClass: ..., someFn: ... }
 
 <span class="hljs-keyword">return</span> module.exports;
 </code></pre>
-<p>Подобным образом работает функция <code>require</code> в <code>node.js</code>.</p>
+<p>Похожим образом работает функция <code>require</code> в <code>node.js</code>.</p>
 <blockquote>
 <p>Код <code>javascript</code>-ресурсов выполняется в <code>strict mode</code>.</p>
 </blockquote>
 <h2 id="json">JSON</h2>
 <p>Если файл имеет расширение <code>.json</code>, то содержимое файла парсится функцией <code>JSON.parse</code> и возвращается результат.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> settings = basis.resource(<span class="hljs-string">'settings.json'</span>).fetch();
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> settings = basis.resource(<span class="hljs-string">'./settings.json'</span>).fetch();
 <span class="hljs-keyword">if</span> (settings.someName) {
   <span class="hljs-comment">// do something</span>
 }
 </code></pre>
 <p>Если файл содержит некорректный <code>json</code>, то будет возвращен <code>null</code>.</p>
+<h2 id="css">CSS</h2>
+<p>Для файлов с расширением <code>.css</code> создается и возвращается специальная обертка, экземпляр класса <code>CssResource</code>.</p>
+<p>Такая обертка имеет два основных метода <code>startUse</code> и <code>stopUse</code>. При первом вызове <code>startUse</code> в документ добавляется элемент <code>&lt;style&gt;</code> содержащий код <code>.css</code> файла. При этом считается количество вызовов метода <code>startUse</code>, и если столько же раз будет вызван метод <code>stopUse</code>, то элемент <code>&lt;style&gt;</code> будет удален из документа. При изменении содержимого <code>.css</code> файла, содержимое тега <code>&lt;style&gt;</code> так же обновляется.</p>
+<p>Вставка содержимого в тег <code>&lt;style&gt;</code> производится таким образом, чтобы ссылки на ресурсы (<code>@import</code>, <code>url(..)</code> и т.д.) разрешались относительно папки расположения файла. Так же, начиная с версии <code>1.2.4</code>, к содержимому добавляется <code>//@ sourceURL=..</code>, чтобы инструменты разработки, такие как <code>Developer Tools</code> в <code>Google Chrome</code>, могли ассоциировать сождержимое <code>&lt;style&gt;</code> с оригинальным файлом.</p>
+<p>Получить содержимое файла можно обратившись к свойству <code>cssText</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> myStyle = basis.resource(<span class="hljs-string">'./style.css'</span>).fetch();
+console.log(myStyle.cssText); <span class="hljs-comment">// выведет содержимое файла</span>
+myStyle.startUse();  <span class="hljs-comment">// добавит в документ &lt;style&gt;</span>
+...
+myStyle.stopUse();   <span class="hljs-comment">// удалит &lt;style&gt; из документа</span>
+</code></pre>
 <h2 id="-">Добавление собственных обработчиков ресурсов</h2>
 <p>Чтобы определить собственный обработчик для некоторого расширения, нужно зарегистирировать его в объекте <code>basis.resource.extensions</code>, где ключ - это расширение файла, начинающееся с точки, а значение - функция, принимающая содержимое файла и путь к нему. Возвращаемое такой функцией значение будет являться значением ресурса.</p>
 <p>Допустим, требуется добавить поддержку <code>CoffeeScript</code>. Для этого нужно подключить компилятор <code>CoffeeScript</code> и назначить обработчик расширений <code>.coffee</code>, например, так:</p>
