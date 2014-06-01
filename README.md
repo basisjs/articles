@@ -5,7 +5,7 @@
 ## Содержание
 
 * [Приступая к разработке](ru-RU/get-started.md)
-* [Ядро](basis.md) (basis.js)
+* [Ядро](ru-RU/basis.md) (basis.js)
     * [Ресурсы (модульность)](ru-RU/resources.md)
     * [Классы](ru-RU/basis.Class.md)
     * [basis.Token](ru-RU/basis.Token.md)

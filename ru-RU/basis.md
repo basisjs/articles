@@ -9,7 +9,7 @@
   - Обертка над консольными методами (`basis.dev`)
   - Выполнение кода в следующем фрейме (`basis.setImmediate`, `basis.clearImmediate`, `basis.nextTick`)
   - `basis.ready`
-  - Polyfill'ы для `ES5` методов `Function#bind`, `Array.isArray`, `Array#indexOf`, `Array#lastIndexOf`, `Array#forEach`, `Array#map`, `Array#filter`, `Array#some`, `Array#every`, `Array#reduce`, `String#trim`, `Date#now`
+  - Polyfill'ы для `ES5` методов и функций: `Function#bind`, `Array.isArray`, `Array#indexOf`, `Array#lastIndexOf`, `Array#forEach`, `Array#map`, `Array#filter`, `Array#some`, `Array#every`, `Array#reduce`, `String#trim`, `Date.now`
   - Исправления методов для старых браузеров: `Array#splice`, `String#split`, `String#substr`
   - Хелперы для асинхронной работы с `document` (`basis.doc`)
   - `basis.json.parse`
