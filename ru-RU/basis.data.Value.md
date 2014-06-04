@@ -164,7 +164,7 @@ console.log(token.value);
 
 example.set(10);
 console.log(token.value);
-// console> 20
+// console> 100
 ```
 
 Фабрики удобно использовать в биндингах `basis.ui.Node`, когда нужно получать значение, которое зависит от некоторого внешнего значения.
