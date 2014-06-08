@@ -62,7 +62,7 @@ var foo = new basis.data.Dataset({
   items: data.slice(0, 5)  // 1, 2, 3, 4, 5
 });
 var bar = new basis.data.Dataset({
-  items: data.slice(2, 4)  // 3, 4, 5, 6
+  items: data.slice(2, 6)  // 3, 4, 5, 6
 });
 
 var subtract = new basis.data.dataset.Subtract({
@@ -120,19 +120,19 @@ var filter = new basis.data.dataset.Filter({
   }
 });
 
-console.log(subtract.getItems().map(function(item){ return item.data.value; }));
+console.log(filter.getItems().map(function(item){ return item.data.value; }));
 // > [1, 3, 5]
 
 data[0].update({ value: 0 });
-console.log(subtract.getItems().map(function(item){ return item.data.value; }));
+console.log(filter.getItems().map(function(item){ return item.data.value; }));
 // > [3, 5]
 
 data[1].update({ value: 33 });
-console.log(subtract.getItems().map(function(item){ return item.data.value; }));
+console.log(filter.getItems().map(function(item){ return item.data.value; }));
 // > [3, 5, 33]
 
 dataSource.remove([data[0], data[1], data[2]]);
-console.log(subtract.getItems().map(function(item){ return item.data.value; }));
+console.log(filter.getItems().map(function(item){ return item.data.value; }));
 // > [5]
 ```
 
@@ -152,7 +152,7 @@ console.log(subtract.getItems().map(function(item){ return item.data.value; }));
 
 ```js
 var cities = new basis.data.Dataset({
-  items: basis.wrap([
+  items: basis.data.wrap([
     { city: 'Moscow', country: 'Russia' },
     { city: 'St. Peterburg', country: 'Russia' },
     { city: 'Orenburg', country: 'Russia' },
@@ -172,12 +172,12 @@ console.log(splitByCountry.getSubset('Russia', true).itemCount);
 // console> 3
 
 console.log(splitByCountry.getSubset('Russia', true).getItems().map(function(item){
-  return item.data.country;
+  return item.data.city;
 }));
 // console> [{ data: { city: 'Moscow', .. }, .. }, .. ]
 
 console.log(splitByCountry.getSubset('Unknown'));
-// console> null
+// console> undefined
 ```
 
 ### Cloud
