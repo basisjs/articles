@@ -10,7 +10,7 @@
 
   * [Subtract](#subtract) - вычитание одного множества из другого;
 
-  * [Subset](#subset) - подмножество;
+  * [Filter](#filter) - подмножество;
 
   * [Slice](#slice) - срез;
 
@@ -18,58 +18,91 @@
 
   * [Cloud](#cloud) - разбиение на подмножества 1:M;
 
+  * [Extract](#extract) - разворачивание;
+
 ## Merge
 
-Данный класс агрегирует составы наборов-источников. Можно рассматривать `Merge` как объединение наборов.
+Экземпляры данного класса объединяет составы нескольких наборов по определенному правилу.
 
 Набор источников можно задать при создании, с помощью свойства `sources`, либо менять в дальнешем методами:
 
-  * addSource(source) - добавить источник;
+  * `addSource(source)` - добавить источник;
 
-  * removeSource(source) - удалить источник;
+  * `removeSource(source)` - удалить источник;
 
-  * setSources(sources) - задать новый нобор источников;
+  * `setSources(sources)` - задать новый нобор источников;
 
-  * clear() - удалить все источники (очищает набор);
-
+  * `clear()` - удалить все источники (очищает набор);
 
 При изменении состава источников выбрасывается событие `sourcesChanged`. Данное событие аналогично `itemsChanged`, только в дельте хранятся добавленные и удаленные источники, а не элементы набора.
 
 Правило (свойство `rule`) определяет, каким образом объединяются наборы. Правило получает два значения: `count` - количество вхождений объекта (в скольких источниках он присутствует), и `sourceCount` - количество источников. По умолчанию определены следующие правила:
 
-  * basis.data.dataset.Merge.UNION – объединение, есть хотя бы в одном источнике;
+  * `UNION` – объединение, есть хотя бы в одном источнике;
 
-  * basis.data.dataset.Merge.INTERSECTION – пересечение, есть во всех источниках;
+  * `INTERSECTION` – пересечение, есть во всех источниках;
 
-  * basis.data.dataset.Merge.DIFFERENCE – разность, есть только в одном источнике;
+  * `DIFFERENCE` – разность, есть только в одном источнике;
 
-  * basis.data.dataset.Merge.MORE_THAN_ONE_INCLUDE – не уникальное значение, есть в двух и более источниках;
+  * `MORE_THAN_ONE_INCLUDE` – не уникальное значение, есть в двух и более источниках;
 
-  * basis.data.dataset.Merge.AT_LEAST_ONE_EXCLUDE – отсутствует хотя бы в одном источнике;
+  * `AT_LEAST_ONE_EXCLUDE` – отсутствует хотя бы в одном источнике;
 
 ## Subtract
 
-[TODO]
+Набор хранящий результат вычитания одного набора из другого.
+
+Уменьшаемое хранится в свойстве `minuend`, его можно задать методом `setMinuend`. Вычитаемое хранится в свойстве `subtrahend`, которое можно менять методом `setSubtrahend`. Оба операнда можно изменить разом используя метод `setOperands`. Для обоих операндов используется [resolveDataset](basis.data.dataset.md#resolveDataset).
+
+Когда меняется уменьшаемое выбрасывается событие `minuendChanged`, а при изменении вычитаемого – `subtrahendChanged`. Если один из аперандов не задан, то набор будет пустым.
+
+```js
+var data = basis.data.wrap([1, 2, 3, 4, 5, 6, 7], true);
+var foo = new basis.data.Dataset({
+  items: data.slice(0, 5)  // 1, 2, 3, 4, 5
+});
+var bar = new basis.data.Dataset({
+  items: data.slice(2, 4)  // 3, 4, 5, 6
+});
+
+var subtract = new basis.data.dataset.Subtract({
+  minuend: foo,
+  subtrahend: bar
+});
+
+console.log(subtract.getItems().map(function(item){ return item.data.value; }));
+// > [1, 2]
+
+foo.add(data[6]);
+console.log(subtract.getItems().map(function(item){ return item.data.value; }));
+// > [1, 2, 7]
+
+bar.remove(data[2]);
+console.log(subtract.getItems().map(function(item){ return item.data.value; }));
+// > [1, 2, 7, 3]
+```
 
 ## SourceDataset
 
 [TODO]
 
-### Slice
+## Slice
 
 [TODO]
 
-### MapFilter
+## MapFilter
 
 [TODO]
 
-#### Subset
+### Filter
 
-Класс-наследник `SourceDataset`, добавляет в свой состав только те элементы, для которых правило возвращает положительный результат (`true`).
+> До версии 1.3 этот класс назывался `Filter`.
 
-Подразумевается что функция-правило проверяет данные объекта (свойство `data`) для вычисления результата, поэтому данный набор слушает изменения во всех объектах набор-источник и если происходят изменения пересчитывает результат. Таким образом, элементы автоматически добавляются или удаляются из набора, в зависимости от их данных.
+Экземпляры этого класса добавляют в свой состав из источника только те элементы, для которых правило возвращает положительный результат (`true`).
 
-Функция фильтр задается при создании через свойство `rule` или в дальнейшем с помощью метода `setRule`.
+Функция фильтр хранится в свойстве `rule`, его можно изменить методом `setRule`.
+
+Список событий, когда должно перевычисляться правило задается только при создании набора свойством `ruleEvents`. Значением этого свойства может быть строка (список событий разделенных пробелом) или массив строк. По умолчанию у элементов источника слушается событие `update`.
 
 ```js
 var data = basis.data.wrap([1, 2, 3, 4, 5], true);
@@ -80,45 +113,78 @@ var dataSource = new basis.data.Dataset({
 });
 
 // создаем подмножество
-var subset = new basis.data.Subset({
-  source: dataSource,    // задаем источник
-  rule: function(item){  // правило
-    return item.data.value % 2;
+var filter = new basis.data.dataset.Filter({
+  source: dataSource,            // задаем источник
+  rule: function(item){          // правило
+    return item.data.value % 2;  // только нечетные
   }
 });
 
-function showItems(){
-  subset.getItems().map(function(item){
-    return item.data.value;
-  });
-}
-
-console.log(showItems());
+console.log(subtract.getItems().map(function(item){ return item.data.value; }));
 // > [1, 3, 5]
 
 data[0].update({ value: 0 });
-console.log(showItems());
+console.log(subtract.getItems().map(function(item){ return item.data.value; }));
 // > [3, 5]
 
 data[1].update({ value: 33 });
-console.log(showItems());
+console.log(subtract.getItems().map(function(item){ return item.data.value; }));
 // > [3, 5, 33]
 
 dataSource.remove([data[0], data[1], data[2]]);
-console.log(showItems());
+console.log(subtract.getItems().map(function(item){ return item.data.value; }));
 // > [5]
 ```
 
-#### Split
+### Split
 
-Другой класс-наследник `SourceDataset` - `Split`. Данный класс позволяет группировать элементы по результату функции-группировки (`rule`). При этом в составе данного набора оказываются наборы-группы, по которым распределяются элементы наборов-источников. Каждый элемент может находиться только в одной группе.
+`Split` позволяет раделить элементы на подмножества по результату выполнения функции-правила (свойство `rule`). При этом членами набора становятся наборы-группы, по которым распределяются элементы набора-источника (свойство `source`). Каждый элемент может находиться только в одной группе.
 
-Функция группировки задается при создании через `rule` или в дальнейшем методом `setRule`. Эта функция должна возвращать некоторое значение, которое будет являться ключом группы или экземпляр `basis.data.Object`. Во втором случае, экземпляр будет делегатом набора-группы.
+Правило задается при создании через свойство `rule`, меняется методом `setRule`. В качестве значения можно указать функцию или строку – значение пропускается через `basis.getter`. Функция должна возвращать некоторое значение, которое будет являться ключом группы. Для сравнения значение приводится к строке, а если значение экземпляр `basis.data.Object`, то его идентификатор (`basisObjectId`). Для каждого нового значения создается новое подмножество – группа, и добавляется в набор. Если группа становится пустой, то она удаляется из набора.
 
-Когда функция группировки возвращает новое значение, то создается новый набор-группа. Его класс можно задать в `config.groupClass`, по умолчанию это `AbstractDataset`.
+Группа это экземпляр класса `basis.data.DatasetWrapper`. Значение, для которого она была создана, хранится в свойстве `ruleValue`. В качестве `dataset` задан набор, который содержит все элементы группы. Если значением группы является экземпляр `basis.data.Object`, то он будет назначен делегатом.
 
-Набор слушает изменения в элементах источников и перемещает элемент из одной группы в другую, при необходимости.
+Для получения объекта группы используется метод `getSubset`, которому передается ключ группы. Группа возвращается, только если для значения уже существует группа. Если требуется получить группу и при необходимости создать ее, то вторым параметром передается конфиг для группы или `true`.
 
-#### Cloud
+Класс для объекта группы определяется свойством `subsetWrapperClass` (по умолчанию `basis.data.DatasetWrapper`), а класс для набора – `subsetClass` (по умолчанию `basis.data.ReadOnlyDataset`). Управляет группами экземпляр класса `basis.object.KeyObjectMap`. Его можно задать при создании набора, указав в свойстве `keyMap` экземпляр `basis.object.KeyObjectMap` или конфиг для него.
+
+Набор слушает изменения в элементах источника и перемещает элемент из одной группы в другую, при необходимости.
+
+```js
+var cities = new basis.data.Dataset({
+  items: basis.wrap([
+    { city: 'Moscow', country: 'Russia' },
+    { city: 'St. Peterburg', country: 'Russia' },
+    { city: 'Orenburg', country: 'Russia' },
+    { city: 'Washington', country: 'USA' },
+    { city: 'New York', country: 'USA' },
+  ], true)
+});
+var splitByCountry = new basis.data.dataset.Split({
+  source: cities,
+  rule: 'data.country'
+});
+
+console.log(splitByCountry.getItems());
+// console> [{ ruleValue: 'Russia', .. }, { ruleValue: 'USA', .. }]
+
+console.log(splitByCountry.getSubset('Russia', true).itemCount);
+// console> 3
+
+console.log(splitByCountry.getSubset('Russia', true).getItems().map(function(item){
+  return item.data.country;
+}));
+// console> [{ data: { city: 'Moscow', .. }, .. }, .. ]
+
+console.log(splitByCountry.getSubset('Unknown'));
+// console> null
+```
+
+### Cloud
 
 [TODO]
+
+### Extract
+
+[TODO]
+
