@@ -10,7 +10,7 @@
 
 Основные классы наборов описаны в пространстве имен `basis.data`, дополнительные в [`basis.data.dataset`](basis.data.datasets.md) (большая часть автоматических наборов), `basis.data.index` и других.
 
-## basis.data.ReadOnlyDataset
+## ReadOnlyDataset
 
 `ReadOnlyDataset` является освопологающим классом для наборов, наследуется от `basis.data.AbstactData`. Экземпляры класса могут хранить данные, но не имеют интерфейса для модификации состава.
 
