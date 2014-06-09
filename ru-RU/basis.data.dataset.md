@@ -88,7 +88,35 @@ console.log(subtract.getItems().map(function(item){ return item.data.value; }));
 
 ## Slice
 
-[TODO]
+Набор содержит `limit` элементов из источника `source`, отсортированных по правилу `rule`, начиная со смещения `offset`.
+
+Правило должно возвращать значение, по которому будут сортироваться элементы источника. Правило задается свойством `rule`, а направление сортировки – свойством `orderDesc`. Правило и направление сортировки можно изменить методом `setRule(rule, orderDesc)`. Когда меняется правило выбрасывается событие `ruleChanged`.
+
+Максимальное количество элементов задается свойством `limit`, которое можно изменить методом `setLimit(limit)`. Смещение, или количество элементов которое должно быть пропущено, задается свойством `offset` и меняется методом `setOffset(offset)`. Одновременно поменять оба свойства можно методом `setRange(offset, limit)`. Когда меняется смещение или лимит выбрасывается событие `rangeChanged(oldOffset, oldLimit)`.
+
+```js
+var dataset = new basis.data.Dataset({
+  items: basis.data.wrap([1, 2, 3, 4, 5], true)
+});
+var top3max = new basis.data.dataset.Slice({
+  source: dataset,
+  rule: 'data.value',
+  orderDesc: true,
+  limit: 3
+});
+
+console.log(top3max.getItems().map(function(item){ return item.data.value; }));
+// console> [5, 4, 3]
+
+var obj = new basis.data.Object({ data: { value: 123 } });
+dataset.add(obj);
+console.log(top3max.getItems().map(function(item){ return item.data.value; }));
+// console> [123, 5, 4]
+
+obj.update({ value: 4.5 });
+console.log(top3max.getItems().map(function(item){ return item.data.value; }));
+// console> [5, 4.5, 4]]
+```
 
 ## MapFilter
 
@@ -96,7 +124,7 @@ console.log(subtract.getItems().map(function(item){ return item.data.value; }));
 
 ### Filter
 
-> До версии 1.3 этот класс назывался `Filter`.
+> До версии 1.3 этот класс назывался `Subset`.
 
 Экземпляры этого класса добавляют в свой состав из источника только те элементы, для которых правило возвращает положительный результат (`true`).
 
