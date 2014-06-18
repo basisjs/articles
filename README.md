@@ -41,6 +41,10 @@
     * [Темы](ru-RU/basis.template_theme.md)
 * [basis.l10n](ru-RU/basis.l10n.md)
 * [basis.net](ru-RU/basis.net.md)
+    * [basis.net.ajax](ru-RU/basis.net.ajax.md)
+    * basis.net.jsonp
+    * basis.net.soap
+    * basis.net.upload
     * [basis.net.action](ru-RU/basis.net.action.md)
     * [basis.net.service](ru-RU/basis.net.service.md)
 * basis.router
