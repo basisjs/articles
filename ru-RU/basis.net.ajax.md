@@ -1,6 +1,6 @@
 # basis.net.ajax
 
-Модуль обеспечивает базовую работу с `ajax`-запросами, предоставляет два класса `Request` и `Transport`, а так же функцию `request`.
+Модуль обеспечивает базовую работу с `ajax`-запросами, предоставляет два класса `Request` и `Transport`, а так же функцию [request](#basisnetajaxrequest).
 
 ## Transport и Request
 
@@ -49,7 +49,7 @@ transport.request({
 
 Классы обладают дополнительным событием `readyStateChanged`, которое срабатывает при изменениии `readyState` у `XMLHttpRequest`.
 
-В остальном работа классов сводится к общим [принципам работы](basis.net.md) `basis.net` модулей.
+В остальном работа классов сводится к общим [принципам работы](basis.net.md#%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D1%8B%D0%B5-%D0%BF%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF%D1%8B-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B) `basis.net` модулей.
 
 [TODO: timeout/response processing/prepare/repeat]
 
