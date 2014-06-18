@@ -46,7 +46,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="9.1" data-basepath="." data-revision="1403095506748">
+    <div class="book" data-github="basisjs/articles" data-level="9.1" data-basepath="." data-revision="1403095710449">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -567,7 +567,7 @@
                     <section class="normal" id="section-gitbook_21">
                     
                         <h1 id="basis-net-ajax">basis.net.ajax</h1>
-<p>Модуль обеспечивает базовую работу с <code>ajax</code>-запросами, предоставляет два класса <code>Request</code> и <code>Transport</code>, а так же функцию <code>request</code>.</p>
+<p>Модуль обеспечивает базовую работу с <code>ajax</code>-запросами, предоставляет два класса <code>Request</code> и <code>Transport</code>, а так же функцию <a href="#basisnetajaxrequest">request</a>.</p>
 <h2 id="transport-request">Transport и Request</h2>
 <p>Класс <code>Request</code> наследуется от <code>basis.net.Request</code> и является оберткой над <code>XMLHttpRequest</code>. Класс <code>Transport</code> наследуется от <code>basis.net.AbstractRequest</code>, создает экземпляры <code>Request</code> и управляет ими.</p>
 <p>Для экземпляра <code>Transport</code> заются параметры:</p>
@@ -608,7 +608,7 @@ transport.request({
 </code></pre>
 <p>Для выполнения запроса используется метод <code>request</code>. Метод принимает один параметр - это объект, в котором можно указать дополнительные параметры запроса или переопределить параметры экземпляра <code>Transport</code> (те, что описаны выше).</p>
 <p>Классы обладают дополнительным событием <code>readyStateChanged</code>, которое срабатывает при изменениии <code>readyState</code> у <code>XMLHttpRequest</code>.</p>
-<p>В остальном работа классов сводится к общим <a href="basis.net.html">принципам работы</a> <code>basis.net</code> модулей.</p>
+<p>В остальном работа классов сводится к общим <a href="basis.net.md#%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D1%8B%D0%B5-%D0%BF%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF%D1%8B-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B">принципам работы</a> <code>basis.net</code> модулей.</p>
 <p>[TODO: timeout/response processing/prepare/repeat]</p>
 <h2 id="basis-net-ajax-request">basis.net.ajax.request</h2>
 <p>Также можно использовать специальную функцию-хелпер <code>basis.net.ajax.request</code> для создания и немедленного выполнения запроса. Эта функция удобна для простых одноразовых запросов.</p>
