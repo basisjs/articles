@@ -46,7 +46,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="9" data-basepath="." data-revision="1401631595965">
+    <div class="book" data-github="basisjs/articles" data-level="9" data-basepath="." data-revision="1403095410282">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -557,61 +557,32 @@
                     <section class="normal" id="section-gitbook_21">
                     
                         <h1 id="basis-net">basis.net</h1>
-<p>Основой для реализации серверного взаимодействия в <code>basis.js</code> являются классы <code>Request</code> и <code>Transport</code>, описанные в <code>basis.net</code>.</p>
-<p><code>Transport</code> является своего рода менеджером запросов c определенными параметрами к определенной конечной точке на сервере (урлу, сервису и т.п.). Внутри себя он создает экземпляры класса <code>Request</code>, который является оберткой над стандартным объектом XMLHttpRequest и реализует интерфейс для формирования, отправки и обработки результатов запроса. Стоит заметить, что объекты Request используются только внутри Transport и их не нужно использовать напрямую.</p>
-<p>При создании объекта <code>Transport</code> используются следующие основные параметры:</p>
+<p>Основой для севого взаимодействия является модуль <code>basis.net</code>. Он не реализует конкретного способа сетевого сообщения, но предоставляет базовую функциональность, куда входят:</p>
 <ul>
-<li>url - адрес конечной точки на сервере;</li>
-<li>method - http-метод (<code>GET</code> по умолчанию);</li>
-<li>params - объект, преобразующийся в queryString;</li>
-<li>postBody - тело запроса (обычно это <code>JSON</code> или <code>XML</code>);</li>
-<li>headers - заголовки запроса;</li>
-<li>routerParams - используется для динамического создания url;</li>
-<li>asynchronous - асинхронное/синхронное выполнение запроса (true/false).</li>
+<li>класс <code>AbstractRequest</code> - абстрактный запрос</li>
+<li>класс <code>AbstractTransport</code> - абстрактный транспорт, управляет запросами</li>
+<li>объект <code>transportDispatcher</code> - глобальный диспечер всех транспортов</li>
 </ul>
-<p>Для создания запроса используется метод <code>request</code> объекта <code>Transport</code>. Метод принимает один параметр - это объект, в котором можно указать дополнительные параметры запроса или переопределить базовые параметры, указанные в конфиге <code>Transport</code>, то есть все те, что описаны выше.</p>
-<p><code>Transport</code> является потомком класса <code>basis.event.Emitter</code> и обладает следующим набором событий: </p>
+<p>Другие модули реализуют различные способы сетевого взаимодействия:</p>
 <ul>
-<li>start - возникает сразу перед отправкой запрос;</li>
-<li>success(request, responseData) - возникает при успешной выполнении запроса;</li>
-<li>failure(request, error) - возникает при неудачном выполнении запроса;</li>
-<li>abort - возникает при отмене запроса (вручную или по таймауту);</li>
-<li>complete - возникает при завершении запроса независимо от его статуса.</li>
+<li><a href="basis.net.ajax.html"><code>basis.net.ajax</code></a> - основной и наиболее часто используемый модуль</li>
+<li><code>basis.net.jsonp</code> - взаимодействие посредством <code>JSONP</code> </li>
+<li><code>basis.net.soap</code> - взаимодействие посредством <code>SOAP</code> </li>
+<li><code>basis.net.upload</code> - загрузка файлов на сервер</li>
 </ul>
-<p>Пример создания простого объекта <code>Transport</code>:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> transport = <span class="hljs-keyword">new</span> basis.net.Transport({
+<p>Так же есть модули обеспечивающие дополнительную функциональность:</p>
+<ul>
+<li><a href="basis.net.action.html"><code>basis.net.action</code></a> - фабрика методов, обеспечивающих сетевое взаимодействие</li>
+<li><a href="basis.net.service.html"><code>basis.net.service</code></a> - диспечер транспортов, описывает некоторый сервис (серверный <code>end-point</code>)</li>
+</ul>
+<h2 id="-">Основные принципы работы</h2>
+<p>Транспорты (наследники <code>basis.net.AbstractTransport</code>) создают и управляют запросами. Класс запроса определяется свойством <code>requestClass</code>.</p>
+<p>Экземпляры наследников <code>basis.net.AbstractRequest</code> реализует интерфейс для формирования, отправки и обработки результатов запроса. Стоит заметить, что экземпляры <code>basis.net.AbstractRequest</code> и его наследников используются только внутри транспортов и их не нужно использовать напрямую.</p>
+<p>Транспорт одновременно может выполнять несколько запросов. Количество одновременно выполняющихся запросов определяется свойством <code>Transport#poolLimit</code> (по умолчанию равно <code>null</code>, что значит &quot;количество не ограничивается&quot;). По достижению лимита, новые запросы ставятся в очередь и выполняются после того как заканчивают выполнятся предыдущие запросы. Одновременно могут выполняться только запросы с разным маркером или хешем (значением, которое уникально идентифицирует тип запрос). Маркер вычисляется для каждого запроса методом <code>Transport#poolHashGetter</code>. В методе доступны все параметры запроса, по которым можно сформировать уникальный маркер. Запрос с одним и тем же хэшом отменяет предыдущий.</p>
+<p>В следующем примере запросы будут выполняться параллельно:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> transport = <span class="hljs-keyword">new</span> basis.net.ajax.Transport({
   url: <span class="hljs-string">'/users'</span>,
-  method: <span class="hljs-string">'GET'</span>,
-  handler: {
-    success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(transport, result, request)</span>{</span>
-      <span class="hljs-comment">// обработка успешного выполнения запроса</span>
-    },
-    failure: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(transport, error)</span>{</span>
-      <span class="hljs-comment">// обработка неудачного выполнения запроса</span>
-    }
-  }
-});
-
-transport.request({
-  params: {
-    userId: <span class="hljs-number">123</span>
-  }
-});
-</code></pre>
-<p>Также можно использовать специальную функцию-хелпер <code>basis.net.request</code> для создания и мгновенного выполнения запроса. Функция принимает три параметра <code>config</code>, <code>successCallback</code>, <code>failureCallback</code>. В ней создается объект <code>Transport</code>, добавляются обработчики и выполняет запрос с указанным конфигом.</p>
-<pre><code class="lang-js">basis.net.request({
-  url: <span class="hljs-string">'/users'</span>,
-  params: {
-    userId: <span class="hljs-number">123</span>
-  }
-}, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-  <span class="hljs-comment">// обработка успешного выполнения запроса</span>
-});
-</code></pre>
-<p>Transport одновременно может выполнять несколько запросов. Количество одновременно выполняющихся запросов определяется свойством <code>poolLimit</code> объекта <code>Transport</code>. По достижению лимита, запросы ставятся в очередь и выполняются после того как выполнятся предыдущие запросы. Одновременно могут выполняться только запросы с разным хэшом (значением, которое уникально идентифицирует тот или иной запрос). Хэш вычисляется для каждого запроса в специальном методе <code>poolHashGetter</code> объекта <code>Transport</code>. В методе доступны все параметры запроса, по которым можно сформировать уникальный хэш. Запрос с одним и тем же хэшом отменяет предыдущий.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> transport = <span class="hljs-keyword">new</span> basis.net.Transport({
-  url: <span class="hljs-string">'/users'</span>,
-  poolLimit: <span class="hljs-number">5</span>,
+  poolLimit: <span class="hljs-number">5</span>,  <span class="hljs-comment">// можно изменить на 1, чтобы запросы выполнялись последовательно</span>
   poolHashGetter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(requestData)</span>{</span>
     <span class="hljs-keyword">return</span> requestData.params.userId;
   }
@@ -627,7 +598,17 @@ transport.request({
   }
 });
 </code></pre>
-<p>В описанном примере оба запроса будут выполняться одновременно.</p>
+<p>Классы <code>AbstractRequest</code> и <code>RequestTransport</code> (и их наследники) обладает одинаковым набором событий:</p>
+<ul>
+<li><code>start()</code> - возникает сразу перед отправкой запрос;</li>
+<li><code>success(responseData)</code> - возникает при успешной выполнении запроса;</li>
+<li><code>failure(error)</code> - возникает при неудачном выполнении запроса;</li>
+<li><code>complete()</code> - возникает при завершении запроса независимо от его статуса.</li>
+<li><code>abort()</code> - возникает при отмене запроса (вручную или по таймауту);</li>
+<li><code>timeout()</code> - возникает, когда привышет лимит ожидания</li>
+</ul>
+<p>Данные события возникают у экземпляров запросов, далее делегируются их транспорту, а затем общем диспечеру.</p>
+<p>[TODO: request/abort/stop/resume/influence/stateOnAbort]</p>
 
                     
                     </section>

@@ -46,7 +46,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="5.5" data-basepath="." data-revision="1401631595965">
+    <div class="book" data-github="basisjs/articles" data-level="5.5" data-basepath="." data-revision="1403095410282">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -556,20 +556,20 @@
                 
                     <section class="normal" id="section-gitbook_16">
                     
-                        <h1 id="-">Сателлиты</h1>
+                        <p>§# Сателлиты</p>
 <p>Традиционная модель DOM хорошо описывает списки, любой узел может содержать произвольное количество (не ограниченное сверху) узлов опреденного класса или группы классов. Однако не описывает случаи единичного вхождения зависимого объекта, который может существовать максимум в единственном экземпляре. Поэтому в <code>basis.js</code> вводится собственный паттерн для решения этой задачи – сателлиты (спутники).</p>
 <blockquote>
-<p>Если посмотреть на HTML, то можно заметить ряд тегов, которые допускают единственное вхождение определенного тега. Например, тег <code>&lt;base&gt;</code> может присутсвовать в единственном экземпляре, если их несколько, обрабатывается первый в документе, второй и последущие игнорируются. У <code>&lt;table&gt;</code> может быть только один <code>&lt;thead&gt;</code> и <code>&lt;tfoot&gt;</code>, которые вне зависимости от места указания в разметке &quot;прибиваются&quot; в начало и конец таблицы соотвественно, все остальные воспринимаются как обычные <code>&lt;tbody&gt;</code>. В любом сложном интерфейсе гораздо больше уникальных классов, со своей спецификой, которые имеют необходимость в единичных именнованых вхождениях дочерних объектов. Паттерн сателитов – попытка унифицировать этот подход.</p>
+<p>Если посмотреть на HTML, то можно заметить ряд тегов, которые допускают единственное вхождение определенного тега. Например, тег <code>&lt;base&gt;</code> может присутсвовать в единственном экземпляре, если их несколько, обрабатывается первый в документе, второй и последущие игнорируются. У <code>&lt;table&gt;</code> может быть только один <code>&lt;thead&gt;</code> и <code>&lt;tfoot&gt;</code>, которые вне зависимости от места указания в разметке &quot;прибиваются&quot; в начало и конец таблицы соотвественно, все остальные воспринимаются как обычные <code>&lt;tbody&gt;</code>. В любом сложном интерфейсе гораздо больше ситуаций, когда появляется необходимость в единичных именнованых вхождениях дочерних объектов. Паттерн сателитов – попытка унифицировать такой подход.</p>
 </blockquote>
 <h2 id="-">Принцип работы</h2>
-<p>Сателлиты хранятся в свойстве <code>satellite</code>, который представляет собой объект. Ключи – это имена сателлитов, а значения – ссылки на объекты. Задать сателлит можно при создании экземпляра (с помощью свойства <code>satellite</code>) или методом <code>setSatellite</code>, которому передаются два параметра:</p>
+<p>Сателлиты хранятся в свойстве <code>satellite</code>, который представляет собой объект. Ключи – это имена сателлитов, а значения – ссылки на объекты. Задать сателлит можно в конфиге (свойство <code>satellite</code>) или методом <code>setSatellite</code>, которому передаются два параметра:</p>
 <ul>
-<li><p>name – имя сателлита;</p>
+<li><p><code>name</code> – имя сателлита;</p>
 </li>
-<li><p>satellite – новое значение сателлита, это должен быть экземпляр <code>basis.dom.wrapper.AbstractNode</code> – иначе значение приравнивается <code>null</code>.</p>
+<li><p><code>satellite</code> – новое значение сателлита, это должен быть экземпляр <code>basis.dom.wrapper.AbstractNode</code>, объект конфигурации или <code>null</code>.</p>
 </li>
 </ul>
-<p>Сателлиты используют <a href="basis.dom.wrapper_owner.html">паттерн &quot;владелец&quot;</a> и могут передаваться от одного владельца другому. Если сателлитом завладевает другой узел (меняется владелец), то у предыдущего владельца на него удаляется ссылка.</p>
+<p>Сателлиты используют <a href="basis.dom.wrapper_owner.html">паттерн &quot;владелец&quot;</a> и могут передаваться от одного владельца другому. У сателлита может быть лишь один владелец. Если сателлитом завладевает другой узел (меняется владелец), то у предыдущего владельца на него удаляется ссылка.</p>
 <pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.dom.wrapper'</span>);
 
 <span class="hljs-keyword">var</span> node1 = <span class="hljs-keyword">new</span> basis.dom.wrapper.Node({
@@ -586,7 +586,11 @@ console.log(node1.satellite.example);
 console.log(node1.satellite.example.owner === node1);
 <span class="hljs-comment">// console&gt; true</span>
 
+<span class="hljs-comment">// назначаем объект, сателлитом другого узла под другим именем</span>
 node2.setSatellite(<span class="hljs-string">'somename'</span>, node1.satellite.example);
+
+<span class="hljs-comment">// после этого объект меняет владельца, а старый владелец теряет</span>
+<span class="hljs-comment">// связь с ним</span>
 console.log(node1.satellite.example);
 <span class="hljs-comment">// console&gt; null</span>
 console.log(node2.satellite.somename);
@@ -594,8 +598,18 @@ console.log(node2.satellite.somename);
 console.log(node2.satellite.somename.owner === node2);
 <span class="hljs-comment">// console&gt; true</span>
 </code></pre>
-<p>Когда добавляется или удаляется сателлит, у его владельца срабатывает событие <code>satelliteChanged</code> с двумя параметрами: <code>name</code> – имя сателлита, и <code>oldSatellite</code> – значение <code>owner.satellite[key]</code> до изменения. При изменении владельца срабатывает событие <code>ownerChanged</code>, которое передает обработчикам предыдущее значение <code>owner</code>.</p>
-<p>При разрушении владельца, разрушаются и все его сателлиты.</p>
+<p>Когда добавляется или удаляется сателлит, у его владельца срабатывает событие <code>satelliteChanged</code> с двумя параметрами: <code>name</code> – имя сателлита, и <code>oldSatellite</code> – значение <code>owner.satellite[name]</code> до изменения. При изменении владельца срабатывает событие <code>ownerChanged</code>, которое передает обработчикам предыдущее значение <code>owner</code>.</p>
+<p>При разрушении владельца, разрушаются и все его сателлиты. Если требуется, чтобы сателлит не разрушался при разрушении владельца, об этом нужно позаботиться, например, так:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> keepAliveNode = <span class="hljs-keyword">new</span> basis.dom.wrapper.Node({
+  listen: {                 <span class="hljs-comment">// слушаем</span>
+    owner: {                <span class="hljs-comment">// владельца</span>
+      destroy: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>  <span class="hljs-comment">// если он разрушается</span>
+        <span class="hljs-keyword">this</span>.setOwner();    <span class="hljs-comment">// сбрасываем владельца</span>
+      }                     <span class="hljs-comment">// сброс владельца при его разрушении,</span>
+    }                       <span class="hljs-comment">// убережет узел от собственного разрушения</span>
+  }
+});
+</code></pre>
 <p>Сателлитам можно добавлять обработчик событий используя свойство <code>listen</code>, при этом всем сателлитам задается один и тот же обработчик.</p>
 <h2 id="-">Автоматические сателлиты</h2>
 <p>Свойство <code>satellite</code> позволяет автоматизировать создание сателлитов и настроить условия, при которых он должен существовать (создаваться и разрушаться).</p>
@@ -624,17 +638,19 @@ console.log(foo.satellite.example === bar.satellite.example);
 </code></pre>
 <p>При определении сателлита через <code>satellite</code> можно указать следующие настройки:</p>
 <ul>
-<li><p>events – список событий (строка или массив), когда должны перевычисляться <code>existsIf</code>, <code>delegate</code> и <code>dataSource</code>; значение по умолчанию <code>&#39;update&#39;</code>, то есть функции перевычисляются при выбрасывании события <code>update</code> у владельца;</p>
+<li><p><code>instance</code> – сам сателлит, экземпляр <code>basis.dom.wrapper.AbstractNode</code>;</p>
 </li>
-<li><p>existsIf – функция, определяющая должен ли существовать сателлит, на вход получает ссылку на владельца; если значение не задано, то сателлит существует всегда, пока существует владелец;</p>
+<li><p><code>instanceOf</code> – класс экземпляра сателлита, в случае авто-создания; по умолчанию <code>basis.dom.wrapper.AbstractNode</code>; если задано свойство <code>instance</code>, то значение игнорируется;</p>
 </li>
-<li><p>instanceOf – класс экземпляра сателлита; по умолчанию используется <code>basis.dom.wrapper.AbstractNode</code>;</p>
+<li><p><code>events</code> – список событий (строка или массив), когда должны перевычисляться <code>existsIf</code>, <code>delegate</code> и <code>dataSource</code>; значение по умолчанию <code>&#39;update&#39;</code>, то есть функции перевычисляются при выбрасывании события <code>update</code> у владельца;</p>
 </li>
-<li><p>config – объект или фукнция возвращающая объект, конфиг для создания сателлита; функции передается ссылка на владельца;</p>
+<li><p><code>existsIf</code> – функция, определяющая должен ли существовать сателлит, на вход получает ссылку на владельца; если значение не задано, то сателлит существует всегда, пока существует владелец;</p>
 </li>
-<li><p>delegate – функция для определения делегата, который должен быть назначен сателлиту (автоматизация); функции передается ссылка на владельца;</p>
+<li><p><code>config</code> – объект или фукнция возвращающая объект, конфиг для создания сателлита; функции передается ссылка на владельца;</p>
 </li>
-<li><p>dataSource – функция для определения набора, который должен быть назначен сателлиту в качестве <code>dataSource</code>; функции передается ссылка на владельца.</p>
+<li><p><code>delegate</code> – функция для определения делегата, который должен быть назначен сателлиту (автоматизация); функции передается ссылка на владельца;</p>
+</li>
+<li><p><code>dataSource</code> – функция для определения набора, который должен быть назначен сателлиту в качестве <code>dataSource</code>; функции передается ссылка на владельца.</p>
 </li>
 </ul>
 <p>Все параметры являются опциональными. Если задается только <code>instanceOf</code>, можно использовать более короткую запись.</p>
