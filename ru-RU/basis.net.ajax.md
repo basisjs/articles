@@ -84,11 +84,11 @@ basis.net.ajax.request({
     userId: 123
   },
   handler: {
-    sucess: function(transport, data){
-      console.log('response data', data);
+    success: function(transport, request, data){
+      console.log('response data:', data);
     },
-    failure: function(transport, error){
-
+    failure: function(transport, request, error){
+      console.log('response error:', error);
     }
   }
 });
