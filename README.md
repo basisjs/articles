@@ -48,5 +48,5 @@
     * [basis.net.action](ru-RU/basis.net.action.md)
     * [basis.net.service](ru-RU/basis.net.service.md)
 * basis.router
-* [Руководство](tutorial/index.md)
-    * [Часть 1. Начало работы, представления, модули, инструменты](tutorial/part1/index.md)
+* [Руководство](ru-RU/tutorial/index.md)
+    * [Часть 1. Начало работы, представления, модули, инструменты](ru-RU/tutorial/part1/index.md)
