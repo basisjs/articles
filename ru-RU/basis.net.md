@@ -15,8 +15,8 @@
 
 Так же есть модули обеспечивающие дополнительную функциональность:
 
-- [`basis.net.action`](basis.net.action.md) - фабрика методов, обеспечивающих сетевое взаимодействие
-- [`basis.net.service`](basis.net.service.md) - диспечер транспортов, описывает некоторый сервис (серверный `end-point`)
+- [basis.net.action](basis.net.action.md) - фабрика методов, обеспечивающих сетевое взаимодействие
+- [basis.net.service](basis.net.service.md) - диспечер транспортов, описывает некоторый сервис (серверный `end-point`)
 
 ## Основные принципы работы
 
@@ -29,13 +29,16 @@
 В следующем примере запросы будут выполняться параллельно:
 
 ```js
-var transport = new basis.net.ajax.Transport({
+var Transport = basis.require('basis.net.ajax').Transport;
+
+var transport = new Transport({
   url: '/users',
   poolLimit: 5,  // можно изменить на 1, чтобы запросы выполнялись последовательно
   poolHashGetter: function(requestData){
     return requestData.params.userId;
   }
 });
+
 transport.request({
   params: {
     userId: 123
@@ -48,7 +51,7 @@ transport.request({
 });
 ```
 
-Классы `AbstractRequest` и `RequestTransport` (и их наследники) обладает одинаковым набором событий:
+Классы `AbstractRequest` и `RequestTransport` (и их наследники) обладают следующим набором событий:
 
   * `start()` - возникает сразу перед отправкой запрос;
   * `success(responseData)` - возникает при успешной выполнении запроса;
@@ -57,6 +60,6 @@ transport.request({
   * `abort()` - возникает при отмене запроса (вручную или по таймауту);
   * `timeout()` - возникает, когда привышет лимит ожидания
 
-Данные события возникают у экземпляров запросов, далее делегируются их транспорту, а затем общем диспечеру.
+Данные события возникают у экземпляров запросов, далее делегируются их транспорту, а затем общему диспечеру.
 
 [TODO: request/abort/stop/resume/influence/stateOnAbort]

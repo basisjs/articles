@@ -10,13 +10,13 @@
 
   - `asynchronous` - асинхронное выполнение запроса (по умолчанию `true`)
   - `method` - `HTTP`-метод (по умолчанию `GET`)
-  - `contentType` - (по умолчанию `application/x-www-form-urlencoded`)
   - `encoding` - кодировка
   - `requestHeaders` - базовые заголовки для запроса
   - `responseType` - тип ответа (`XMLHttpRequest#responseType`)
   - `url` - адрес для запроса
   - `params` - список параметров, дополняющий в `queryString`
   - `routerParams` - объект, значения которого используются для подстановок в `url`
+  - `contentType` - тип передаваемого содержимого, используется если есть `postBody` (по умолчанию `application/x-www-form-urlencoded`)  
   - `postBody` - тело запроса (строка или `XML`)
 
 Все эти значения используются как базовые, если они не указаны в параметрах запроса. Значения `params` подмешиваются к `params` запроса, `routerParams` к `routerParams`, а `requestHeaders` к `headers`. Все эти значения можно задать (переопределить) при выполнении запроса методом `request`, который принимает объект со значениями.
@@ -28,10 +28,10 @@ var transport = new Transport({
   url: '/users',
   method: 'GET',
   handler: {
-    success: function(transport, result, request){
+    success: function(transport, request, response){
       // обработка успешного выполнения запроса
     },
-    failure: function(transport, error){
+    failure: function(transport, request, error){
       // обработка неудачного выполнения запроса
     }
   }
@@ -67,11 +67,11 @@ transport.request({
 
 ```js
 // синхронный запрос
-var data = basis.net.ajax.request('/data.json');
+var response = basis.net.ajax.request('/data.json');
 
 // асинхронный запрос
-basis.net.ajax.request('/data.json', function(data){
-  // data содержит тело ответа
+basis.net.ajax.request('/data.json', function(response){
+  // response содержит тело ответа
 });
 ```
 
@@ -84,8 +84,8 @@ basis.net.ajax.request({
     userId: 123
   },
   handler: {
-    success: function(transport, request, data){
-      console.log('response data:', data);
+    success: function(transport, request, response){
+      console.log('response data:', response);
     },
     failure: function(transport, request, error){
       console.log('response error:', error);
