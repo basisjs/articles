@@ -46,7 +46,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="9.1" data-basepath="." data-revision="1403095710449">
+    <div class="book" data-github="basisjs/articles" data-level="9.1" data-basepath="." data-revision="1403779549285">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -574,13 +574,13 @@
 <ul>
 <li><code>asynchronous</code> - асинхронное выполнение запроса (по умолчанию <code>true</code>)</li>
 <li><code>method</code> - <code>HTTP</code>-метод (по умолчанию <code>GET</code>)</li>
-<li><code>contentType</code> - (по умолчанию <code>application/x-www-form-urlencoded</code>)</li>
 <li><code>encoding</code> - кодировка</li>
 <li><code>requestHeaders</code> - базовые заголовки для запроса</li>
 <li><code>responseType</code> - тип ответа (<code>XMLHttpRequest#responseType</code>)</li>
 <li><code>url</code> - адрес для запроса</li>
 <li><code>params</code> - список параметров, дополняющий в <code>queryString</code></li>
 <li><code>routerParams</code> - объект, значения которого используются для подстановок в <code>url</code></li>
+<li><code>contentType</code> - тип передаваемого содержимого, используется если есть <code>postBody</code> (по умолчанию <code>application/x-www-form-urlencoded</code>)  </li>
 <li><code>postBody</code> - тело запроса (строка или <code>XML</code>)</li>
 </ul>
 <p>Все эти значения используются как базовые, если они не указаны в параметрах запроса. Значения <code>params</code> подмешиваются к <code>params</code> запроса, <code>routerParams</code> к <code>routerParams</code>, а <code>requestHeaders</code> к <code>headers</code>. Все эти значения можно задать (переопределить) при выполнении запроса методом <code>request</code>, который принимает объект со значениями.</p>
@@ -590,10 +590,10 @@
   url: <span class="hljs-string">'/users'</span>,
   method: <span class="hljs-string">'GET'</span>,
   handler: {
-    success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(transport, result, request)</span>{</span>
+    success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(transport, request, response)</span>{</span>
       <span class="hljs-comment">// обработка успешного выполнения запроса</span>
     },
-    failure: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(transport, error)</span>{</span>
+    failure: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(transport, request, error)</span>{</span>
       <span class="hljs-comment">// обработка неудачного выполнения запроса</span>
     }
   }
@@ -620,11 +620,11 @@ transport.request({
 </ul>
 <p>В качестве конфигурации можно задавать строку, которая будет <code>url</code> транспорта. В этом случае, если не указывается <code>successCallback</code> и <code>failureCallback</code>, то запрос выполняется синхронно, что удобно в простых случаях:</p>
 <pre><code class="lang-js"><span class="hljs-comment">// синхронный запрос</span>
-<span class="hljs-keyword">var</span> data = basis.net.ajax.request(<span class="hljs-string">'/data.json'</span>);
+<span class="hljs-keyword">var</span> response = basis.net.ajax.request(<span class="hljs-string">'/data.json'</span>);
 
 <span class="hljs-comment">// асинхронный запрос</span>
-basis.net.ajax.request(<span class="hljs-string">'/data.json'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span>{</span>
-  <span class="hljs-comment">// data содержит тело ответа</span>
+basis.net.ajax.request(<span class="hljs-string">'/data.json'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(response)</span>{</span>
+  <span class="hljs-comment">// response содержит тело ответа</span>
 });
 </code></pre>
 <p>В случае, когда первым параметром передается объект, запрос выполняется со значениями по умолчанию, асинхронно.</p>
@@ -634,8 +634,8 @@ basis.net.ajax.request(<span class="hljs-string">'/data.json'</span>, <span clas
     userId: <span class="hljs-number">123</span>
   },
   handler: {
-    success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(transport, request, data)</span>{</span>
-      console.log(<span class="hljs-string">'response data:'</span>, data);
+    success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(transport, request, response)</span>{</span>
+      console.log(<span class="hljs-string">'response data:'</span>, response);
     },
     failure: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(transport, request, error)</span>{</span>
       console.log(<span class="hljs-string">'response error:'</span>, error);

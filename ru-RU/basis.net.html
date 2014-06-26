@@ -46,7 +46,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="9" data-basepath="." data-revision="1403095710449">
+    <div class="book" data-github="basisjs/articles" data-level="9" data-basepath="." data-revision="1403779549285">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -582,21 +582,24 @@
 </ul>
 <p>Так же есть модули обеспечивающие дополнительную функциональность:</p>
 <ul>
-<li><a href="basis.net.action.html"><code>basis.net.action</code></a> - фабрика методов, обеспечивающих сетевое взаимодействие</li>
-<li><a href="basis.net.service.html"><code>basis.net.service</code></a> - диспечер транспортов, описывает некоторый сервис (серверный <code>end-point</code>)</li>
+<li><a href="basis.net.action.html">basis.net.action</a> - фабрика методов, обеспечивающих сетевое взаимодействие</li>
+<li><a href="basis.net.service.html">basis.net.service</a> - диспечер транспортов, описывает некоторый сервис (серверный <code>end-point</code>)</li>
 </ul>
 <h2 id="-">Основные принципы работы</h2>
 <p>Транспорты (наследники <code>basis.net.AbstractTransport</code>) создают и управляют запросами. Класс запроса определяется свойством <code>requestClass</code>.</p>
 <p>Экземпляры наследников <code>basis.net.AbstractRequest</code> реализует интерфейс для формирования, отправки и обработки результатов запроса. Стоит заметить, что экземпляры <code>basis.net.AbstractRequest</code> и его наследников используются только внутри транспортов и их не нужно использовать напрямую.</p>
 <p>Транспорт одновременно может выполнять несколько запросов. Количество одновременно выполняющихся запросов определяется свойством <code>Transport#poolLimit</code> (по умолчанию равно <code>null</code>, что значит &quot;количество не ограничивается&quot;). По достижению лимита, новые запросы ставятся в очередь и выполняются после того как заканчивают выполнятся предыдущие запросы. Одновременно могут выполняться только запросы с разным маркером или хешем (значением, которое уникально идентифицирует тип запрос). Маркер вычисляется для каждого запроса методом <code>Transport#poolHashGetter</code>. В методе доступны все параметры запроса, по которым можно сформировать уникальный маркер. Запрос с одним и тем же хэшом отменяет предыдущий.</p>
 <p>В следующем примере запросы будут выполняться параллельно:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> transport = <span class="hljs-keyword">new</span> basis.net.ajax.Transport({
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Transport = basis.require(<span class="hljs-string">'basis.net.ajax'</span>).Transport;
+
+<span class="hljs-keyword">var</span> transport = <span class="hljs-keyword">new</span> Transport({
   url: <span class="hljs-string">'/users'</span>,
   poolLimit: <span class="hljs-number">5</span>,  <span class="hljs-comment">// можно изменить на 1, чтобы запросы выполнялись последовательно</span>
   poolHashGetter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(requestData)</span>{</span>
     <span class="hljs-keyword">return</span> requestData.params.userId;
   }
 });
+
 transport.request({
   params: {
     userId: <span class="hljs-number">123</span>
@@ -608,7 +611,7 @@ transport.request({
   }
 });
 </code></pre>
-<p>Классы <code>AbstractRequest</code> и <code>RequestTransport</code> (и их наследники) обладает одинаковым набором событий:</p>
+<p>Классы <code>AbstractRequest</code> и <code>RequestTransport</code> (и их наследники) обладают следующим набором событий:</p>
 <ul>
 <li><code>start()</code> - возникает сразу перед отправкой запрос;</li>
 <li><code>success(responseData)</code> - возникает при успешной выполнении запроса;</li>
@@ -617,7 +620,7 @@ transport.request({
 <li><code>abort()</code> - возникает при отмене запроса (вручную или по таймауту);</li>
 <li><code>timeout()</code> - возникает, когда привышет лимит ожидания</li>
 </ul>
-<p>Данные события возникают у экземпляров запросов, далее делегируются их транспорту, а затем общем диспечеру.</p>
+<p>Данные события возникают у экземпляров запросов, далее делегируются их транспорту, а затем общему диспечеру.</p>
 <p>[TODO: request/abort/stop/resume/influence/stateOnAbort]</p>
 
                     
