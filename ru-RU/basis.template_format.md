@@ -585,7 +585,7 @@ foo.tmpl:
 
     ```html
     <b:include src="./foo.tmpl">
-      <b:class ref="label" value="foo foo_{selected}"/>
+      <b:set-class ref="label" value="foo foo_{selected}"/>
     </b:inclide>
     ```
 
@@ -601,6 +601,6 @@ foo.tmpl:
 
     ```html
     <div class="example">
-      <span{label} class="bar foo foo_{selected}">{title}</span>
+      <span{label} class="foo foo_{selected}">{title}</span>
     </div>
     ```
