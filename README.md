@@ -6,6 +6,7 @@
 
 * [Приступая к разработке](ru-RU/get-started.md)
 * [Ядро](ru-RU/basis.md) (basis.js)
+    * [Конфигурация](ru-RU/config.md)
     * [Классы](ru-RU/basis.Class.md)
     * [Модульность](ru-RU/resources.md)
     * [basis.Token](ru-RU/basis.Token.md)
