@@ -5,7 +5,7 @@
         
         
         <meta charset="UTF-8">
-        <title>Ресурсы (модульность) | Содержание</title>
+        <title>Модульность | Содержание</title>
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
@@ -15,13 +15,13 @@
         <meta name="generator" content="www.gitbook.io">
 
         
-        <link rel="next" href="./basis.Class.html" />
+        <link rel="next" href="./basis.Token.html" />
         
         
-        <link rel="prev" href="./basis.html" />
+        <link rel="prev" href="./basis.Class.html" />
         
 
-        <meta property="og:title" content="Ресурсы (модульность) | Содержание">
+        <meta property="og:title" content="Модульность | Содержание">
         <meta property="og:site_name" content="Содержание">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="2.1" data-basepath="." data-revision="1403779549285">
+    <div class="book" data-github="basisjs/articles" data-level="2.2" data-basepath="." data-revision="1406460125689">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -158,18 +158,18 @@
                 
                 <ul class="articles">
                     
-                        <li  data-level="2.1" data-path="resources.html">
+                        <li  data-level="2.1" data-path="basis.Class.html">
                             
-                            <a href="./resources.html">
-                                <i class="fa fa-check"></i> <b>2.1.</b> Ресурсы (модульность)
+                            <a href="./basis.Class.html">
+                                <i class="fa fa-check"></i> <b>2.1.</b> Классы
                             </a>
                             
                         </li>
                     
-                        <li  data-level="2.2" data-path="basis.Class.html">
+                        <li  data-level="2.2" data-path="resources.html">
                             
-                            <a href="./basis.Class.html">
-                                <i class="fa fa-check"></i> <b>2.2.</b> Классы
+                            <a href="./resources.html">
+                                <i class="fa fa-check"></i> <b>2.2.</b> Модульность
                             </a>
                             
                         </li>
@@ -481,7 +481,7 @@
             <div class="page-wrapper" tabindex="-1">
                 <div class="book-progress">
     <div class="bar">
-        <div class="inner" style="width: 8.333333333333334%;min-width: 5.555555555555555%;"></div>
+        <div class="inner" style="width: 11.11111111111111%;min-width: 8.333333333333334%;"></div>
     </div>
     <div class="chapters">
     
@@ -491,9 +491,9 @@
     
         <a href="./basis.html" title="Ядро" class="chapter done new-chapter" data-progress="2" style="left: 5.555555555555555%;"></a>
     
-        <a href="./resources.html" title="Ресурсы (модульность)" class="chapter done " data-progress="2.1" style="left: 8.333333333333334%;"></a>
+        <a href="./basis.Class.html" title="Классы" class="chapter done " data-progress="2.1" style="left: 8.333333333333334%;"></a>
     
-        <a href="./basis.Class.html" title="Классы" class="chapter  " data-progress="2.2" style="left: 11.11111111111111%;"></a>
+        <a href="./resources.html" title="Модульность" class="chapter done " data-progress="2.2" style="left: 11.11111111111111%;"></a>
     
         <a href="./basis.Token.html" title="basis.Token" class="chapter  " data-progress="2.3" style="left: 13.88888888888889%;"></a>
     
@@ -566,100 +566,304 @@
                 
                     <section class="normal" id="section-gitbook_34">
                     
-                        <h1 id="-">Ресурсы (модульность)</h1>
-<p>Основой модульности <code>basis.js</code> являются ресурсы.</p>
-<p>Ресурс - это некоторый файл. Ресурсы используются для того, чтобы выносить из javascript контент разного типа в отдельные файлы, а также сегментировать сам javascript код.</p>
-<p>Для определения ресурса используется функция <code>basis.resource()</code>, которой передается путь к файлу. Если путь относительный (не начинается с <code>/</code>), то он разрешается относительно корневого <code>html</code> файла (обычно это <code>index.html</code>).</p>
-<p>Результатом вызова <code>basis.resource</code> будет специальная функция, которая возвращает содержимое файла. Такая функция перенимает интерфейс у <a href="basis.Token.html"><code>basis.Token</code></a> и поддерживает механизм <a href="bindingbridge.html"><code>binding bridge</code></a>. Первый её вызов приводит к загрузке файла и его кешированию, а последующие вызовы лишь возвращают закешированный результат. У такой функции также есть метод <code>fetch</code>, который делает то же, что и вызов самой функции, и используется для улучшения читаемости кода.</p>
+                        <h1 id="-">Модульность</h1>
+<h2 id="basis-resource">basis.resource</h2>
+<p>Основой модульности являются ресурсы. Они используются для того, чтобы выносить из кода контент различного типа в отдельные файлы, а также сегментировать (разбивать на меньшие части) сам <code>JavaScript</code> код. В общем случае, ресурс - это некоторый файл, а точнее интерфейс, обеспечивающий загрузку и доступ к содержимому файла.</p>
+<p>Для определения ресурса используется функция <code>basis.resource()</code>, которой передается путь к файлу. Путь может быть абсолютным, либо относительным. Абсолютные пути начинаются с <code>/</code> и разрешаются от корня адреса. Относительные пути должны начинаться с <code>./</code> или <code>../</code>, и разрешается относительно <code>html</code> файла (обычно это <code>index.html</code>).</p>
+<blockquote>
+<p>В настоящий момент, при указании пути к файлу, который начинается не с <code>/</code>, <code>./</code> или <code>../</code> в консоли выводится предупреждение. При этом путь разрешается относительно <code>html</code> файла. В будущих версиях такие пути перестанут работать. Поэтому необходимо явно указывать один из трех возможных префиксов.</p>
+</blockquote>
+<p>Результатом вызова <code>basis.resource</code> является функция, вызов которой возвращает содержимое файла. У такой есть ряд дополнительных методов и свойств, а так же она перенимает интерфейс у <a href="basis.Token.html"><code>basis.Token</code></a>, и как следствие, поддерживает механизм <a href="bindingbridge.html"><code>binding bridge</code></a>.</p>
+<p>Первый вызов функции приводит к загрузке содержимого файла и его кешированию, а последующие вызовы возвращают закешированный результат. У функции есть метод <code>fetch</code>, который делает то же самое, и используется для улучшения читаемости кода. Когда содержимое ресурса загружено и обработано, ресурс считается разрешенным.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> someText = basis.resource(<span class="hljs-string">'./path/to/file.txt'</span>); <span class="hljs-comment">// объявление, файл еще не загружен</span>
 
 console.log(someText());        <span class="hljs-comment">// файл будет загружен, его содержимое будет закешировано и возвращено</span>
 console.log(someText.fetch());  <span class="hljs-comment">// эквивалент, будет возвращено закешированное значение</span>
 </code></pre>
 <p>Ресурсы обеспечивают возможность раннего связывания и поздней инициализации. Пример:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> MyControl = basis.ui.Node.subclass({
-  template: basis.resource(<span class="hljs-string">'./path/to/template.tmpl'</span>)
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> example = basis.resource(<span class="hljs-string">'./path/to/template.tmpl'</span>);
+<span class="hljs-keyword">var</span> MyControl = basis.ui.Node.subclass({
+  template: example
 });
+
+<span class="hljs-comment">// метод ресурса `isResolved` позволяет определить, был ли разрешен ресурс</span>
+console.log(example.isResolved());
+<span class="hljs-comment">// &gt; false</span>
+
+<span class="hljs-keyword">var</span> control = <span class="hljs-keyword">new</span> MyControl();
+console.log(example.isResolved());
+<span class="hljs-comment">// &gt; true</span>
 </code></pre>
-<p>Здесь создается класс <code>MyControl</code> и определяется файл шаблона. Такое определение не приводит к загрузке файла шаблона, так как он еще не нужен. Но когда будет создан первый экземпляр этого класса, потребуется создать экземпляр шаблона, и только тогда будет загружен файл и использовано его содержимое.</p>
-<p>В зависимости от типа файла (его расширения) может возвращаться не только текстовое значение файла, но и значения других типов. То, что будет возвращаться, определяет post-обработчик, ассоциированный с определенным расширением. В <code>basis</code> определены обработчики для расширений <code>.js</code>, <code>.json</code> и <code>.css</code>. Можно определить и собственные обработчики.</p>
-<h2 id="javascript">JavaScript</h2>
-<p>Содержимое <code>.js</code> файлов оборачивается в специальную функцию и немедленно вызывается с определенными параметрами. Таким образом, для кода всегда создается локальная область видимости, в которой доступен ряд значений и функций.</p>
-<p>В область видимости кода добавляются следующие значения:</p>
+<p>Здесь создается класс <code>MyControl</code>, в котором в качестве значения для шаблона задан ресурс. Такое определение не приводит к загрузке файла, так как его содержимое еще не требуется. Но когда будет создан первый экземпляр этого класса, потребуется создать экземпляр шаблона, и тогда будет загружено и использовано содержимое файла.</p>
+<p>Содержимое ресурсов считается частью программы (приложения), как если бы его содержимое был указано непосредственно в коде. По этой причине, ресурсы загружаются <em>синхронно</em>, не могут быть внешними (по отношению к приложению) или быть динамическими (результатом выполнения серверного скрипта). После выполнения сборки содержимое ресурсов встраивается основной код приложения и не загружаются отдельно. Особый случай – это <a href="#%D0%92%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5-%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%D1%8B">виртуальные ресурсы</a>, которые не привязанны к конкретному файлу.</p>
+<h3 id="-">Свойства</h3>
+<h4 id="url">url</h4>
+<ul>
+<li>тип: <code>String</code></li>
+</ul>
+<p>Содержит абсолютный разрешенный путь к файлу.</p>
+<h4 id="type">type</h4>
+<ul>
+<li>тип: <code>String</code></li>
+</ul>
+<p>Хранит тип ресурса, представляющий собой расширение файла включая точку. Например: <code>.js</code> или <code>.css</code>.</p>
+<h4 id="virtual">virtual</h4>
+<ul>
+<li>тип: <code>Boolean</code></li>
+</ul>
+<p>Флаг показывающий является ли ресурс <a href="#%D0%92%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5-%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%D1%8B">виртуальным</a>.</p>
+<h3 id="-">Методы</h3>
+<h4 id="fetch-">fetch()</h4>
+<p>Возвращает значение ресурса. Обычно это содержимое файла, но для некоторых <a href="#%D0%A2%D0%B8%D0%BF%D1%8B-%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%D0%BE%D0%B2">типов</a> вместо содержимого могут возвращаться некоторые интерфейсы.</p>
+<h4 id="get-source-">get([source])</h4>
+<p>Если параметр <code>source</code> опущен или не приводится к <code>true</code>, то возвращается значение ресурса (то же что и вызов <code>fetch</code>). Иначе возвращается содержимое файла. Для многих <a href="#%D0%A2%D0%B8%D0%BF%D1%8B-%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%D0%BE%D0%B2">типов ресурсов</a> эти значения одинаковы, но для некоторых они разные, например, для <code>.js</code> или <code>.css</code>.</p>
+<h4 id="update-value-">update(value)</h4>
+<p>Метод задает новое содержимое ресурса. В основном, этот метод используется для механизмов синхронизации и для обновления <a href="#%D0%92%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5-%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%D1%8B">виртуальных ресурсов</a>.</p>
+<h4 id="reload-">reload()</h4>
+<p>Вызов метода сбрасывает кеш ресурса и загружает содержимое значения заново.</p>
+<h4 id="isresolved-">isResolved()</h4>
+<p>Метод возвращает <code>true</code>, если ресурс разрешен, то есть был вызван его метод <code>fetch</code>.</p>
+<h4 id="haschanges-">hasChanges()</h4>
+<p>Метод возвращает <code>true</code>, если содержимое ресурса было изменено после того как он был разрешен, но это содержимое не может быть применено без перезагрузки страницы. На данный момент, такими свойством обладают только <code>.js</code> ресурсы. В основном используется инструментами разработки для определения того, что требуется перезагрузка страницы.</p>
+<h4 id="ready-fn-context-">ready(fn[, context])</h4>
+<p>Метод позволяет добавить функцию <code>fn</code> с контекстом <code>context</code>, которая будет вызывана при разрешении ресурса (после получения и обработки содержимого ресурса). Если ресурс уже разрешен, то функция выполняется сразу. Если ресурс обновляемый, то функция выполняется при каждом обновлении контента, если ресурс был разрешен.</p>
+<p>Такая функция получает, в качестве единственного аргумента, текущее значение ресурса. То есть то же, что можно получить вызвав метод <code>fetch</code> у ресурса.</p>
+<blockquote>
+<p>Стоит учитывать, что функции добавленные таким методом вызываются только если меняется значение ресурса. Некоторые типы ресурсов, например, <code>.css</code>, при изменении содержимого файла обновляют поля интерфейса, при этом значение ресурса не меняется (то есть экземпляр интерфейса остается тот же). В этом случае, функции вызываться не будут.</p>
+</blockquote>
+<h3 id="-basis-token">Наследие basis.Token</h3>
+<p>Ресурсы перенимают интерфейс у <a href="basis.Token.html"><code>basis.Token</code></a>. Однако он функционален не в полной мере в рамках экземпляра ресурса. В частности, экземпляры <code>basis.Token</code> хранят свое значение в свойстве <code>value</code>. Но ресурсы хранят свое значение в замыкании и оно может быть получено только методом <code>fetch</code> или методом <code>get</code>. Так же оказывается безполезным методы <code>deferred</code> так как он базируется на изменении <code>value</code>.</p>
+<blockquote>
+<p>В версии <code>1.4</code> метод <code>deferred</code> полагается на метод <code>get</code> и работает как ожидается. Однако, нужно помнить, что обработчики будут срабатывать только при изменении значения ресурса. А значение значение ресурса меняется не при каждом изменении содержимого файла и зависит от типа ресурса (например, <code>.css</code> ресурсы не обновляют значение ресурса при изменении содержимого файла).</p>
+</blockquote>
+<h2 id="basis-require">basis.require</h2>
+<p>Не смотря на то, что эта функция появилась в <code>basis.js</code> раньше <code>basis.resource</code>, ее значимость со временем стала меньше. На данный момент, эта функция аналогична объявлению и немедленному разрешению ресурса:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> content = basis.require(<span class="hljs-string">'./path/to/file.ext'</span>);
+<span class="hljs-comment">// эквивалент</span>
+<span class="hljs-keyword">var</span> content = basis.resource(<span class="hljs-string">'./path/to/file.ext'</span>).fetch();
+</code></pre>
+<p>Тем не менее, у <code>basis.require</code> есть особенность. Эта функция умеет разрешать путь к файлу по имени пространства имен (далее просто неймспейс). В настоящий момент, неймспейсы в <code>basis.require</code> используются для короткого именования <code>.js</code> ресурсов, разрешаемые согласно конфигурации приложения.</p>
+<p>Неймспейсом является строка, состоящая из нескольких частей, объединенных точкой, где каждая часть состоит из латинских букв и цифр, и не может начинаться с цифры (близко к определению имени переменной). Например, <code>basis.data.dataset</code> или <code>foo.bar.baz</code>.</p>
+<p>Для неймспейсов не задаются пути (за исключением корневых неймспейсов) и они проецируются на файловую систему по следующему алгоритму. Сначала определяется корневой неймспейс (<code>root</code>). Корневым неймспейсом является все что идет до первой точки (либо целиком строка, если она не содержит точек). Для корневых неймспейсов задаются базовые пути (<code>baseURI</code>) в конфигурации приложения (<code>basis-config</code>). Если путь для корневого неймспейса не задан в конфигурации, то его базовым путем будет путь к <code>html</code> файлу. Таким образом, к корневому неймспейсу подставляется его <code>baseURI</code>. В остальной части неймспейса точки заменяются на слеши, а в конце добавляется <code>.js</code>.</p>
+<p>Базовый путь для <code>basis.js</code> устанавливается неявно при его подключении (используется атрибут <code>src</code> у тега <code>&lt;script&gt;</code> с атрибутом <code>basis-config</code> или <code>data-basis-config</code>). Для остальных корневых неймспейсов необходимо явно указать базовые пути в <code>basis-config</code> в секции <code>modules</code>, если их базовые пути отличаются от базового пути <code>html</code> файла.</p>
+<blockquote>
+<p>До версии <code>1.3</code> для задания путей использовалась секция <code>path</code>, которая была несколько ограничена в возможностях конфигурации. Начиная с версии <code>1.3</code> для модулей (корневых неймспейсов) используется секция <code>modules</code>, которая имеет больше гибкости по конфигурации.</p>
+</blockquote>
+<p>Допустим, имеем страницу <code>/myapp/index.html</code>, которая подключает <code>basis.js</code> с такой конфигурацией:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"libs/basisjs/src/basis.js"</span> <span class="hljs-attribute">basis-config</span>=<span class="hljs-value">"modules: { foo: 'src' }"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</code></pre>
+<p>Не смотря на то, что базовый путь для <code>basis</code> не указан явно, он может быть вычислен автоматически. В этом примере базовым путем для <code>basis</code> будет <code>/myapp/libs/basisjs/src</code>. Здесь так же определен путь для корневого неймспейса <code>foo</code>, после нормализации он примет вид <code>/myapp/src</code>.</p>
+<p>В данном примере неймспейсы будут разрешаться следущим образом:</p>
+<pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.data.dataset'</span>);
+<span class="hljs-comment">// basis -&gt; /myapp/libs/basisjs/src/libs/</span>
+<span class="hljs-comment">// basis.data.dataset -&gt; basis/data/dataset.js</span>
+<span class="hljs-comment">// = /myapp/libs/basisjs/src/libs/basis/data/dataset.js</span>
+
+basis.require(<span class="hljs-string">'foo'</span>);
+<span class="hljs-comment">// foo -&gt; /myapp/src</span>
+<span class="hljs-comment">// foo -&gt; foo.js</span>
+<span class="hljs-comment">// = /myapp/src/foo.js</span>
+
+basis.require(<span class="hljs-string">'foo.bar'</span>);
+<span class="hljs-comment">// foo -&gt; /myapp/src</span>
+<span class="hljs-comment">// foo.bar -&gt; foo/bar.js</span>
+<span class="hljs-comment">// = /myapp/src/foo/bar.js</span>
+
+basis.require(<span class="hljs-string">'baz.baz'</span>);
+<span class="hljs-comment">// baz -&gt; /myapp  (по базовому пути страницы)</span>
+<span class="hljs-comment">// baz.baz -&gt; baz/baz.js</span>
+<span class="hljs-comment">// = /myapp/baz/baz.js</span>
+</code></pre>
+<p>Путь к файлу по имени неймспейса можно получить используя функцию <code>basis.resolveNSFilename(namespace)</code>.</p>
+<pre><code class="lang-js">console.log(basis.resolveNSFilename(<span class="hljs-string">'basis.data.dataset'</span>));
+<span class="hljs-comment">// &gt; /myapp/libs/basisjs/src/libs/basis/data/dataset.js</span>
+</code></pre>
+<p>Функция <code>basis.require</code> не позволяет получить доступ к ресурсу, так как возвращает значение ресурса. Но используя <code>basis.resolveNSFilename</code> можно получить необходимый ресурс по неймспейсу.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> module = basis.resource(basis.resolveNSFilename(<span class="hljs-string">'basis.data.dataset'</span>));
+console.log(module.fetch() === basis.require(<span class="hljs-string">'basis.data.dataset'</span>));
+<span class="hljs-comment">// &gt; true</span>
+</code></pre>
+<h2 id="-">Виртуальные ресурсы</h2>
+<p>Виртуальные ресурсы позволяют создавать ресурсы без привязки к файлу. Эта возможность используется для внутренних механизмов или когда нужно преобразовать некоторый контент полученный не из файла, например, динамически сгенерированный. </p>
+<p>Для создания виртуальных ресурсов используется функция <code>basis.resource.virtual</code>. Создаваемый таким образом ресурс не имеет привязки к файлу, а его свойство <code>virtual</code> равно <code>true</code>. В остальном его поведение ничем не отличается от обычных ресурсов.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> module = basis.resource.virtual(<span class="hljs-string">'js'</span>, <span class="hljs-string">'module.exports = "hello world";'</span>);
+console.log(module.fetch());
+<span class="hljs-comment">// &gt; "hello world"</span>
+</code></pre>
+<blockquote>
+<p>Стоит помнить, что содержимое виртуальных ресурсов не может быть проанализированно сборщиком без дополнительных указаний. То есть необходимо обеспечить дополнительные действия для сборщика, чтобы он мог производить анализ. Это стоит учитывать и использовать виртуальные ресурсы с осторожностью.</p>
+</blockquote>
+<h2 id="-">Загрузка и кеш</h2>
+<p>Ресурсы являются частью приложения, как если бы их содержимое находилось непосредсвенно в коде. В сборке так и происходит, сборщик обрабатывает и внедряет содержимое файлов в основной код. Но в режиме разработки содержимое ресурсов загружается посредством <code>XMLHttpRequest</code>.</p>
+<p>Загрузка ресурсов осуществляется синхронно. При этом в запросе передается заголовок <code>X-Basis-Resource</code>. Этот заголовок позволяет <code>dev-серверу</code> из <code>basisjs-tools</code> определить, что это не обычный запрос, а запрос ресурса. Файлы, запрашиваемые таким образом, добавляются в специальную карту, по которой строится файл кеша ресурсов – <code>/basisjs-tools/resourceCache.js</code>. Этот файл внедряется <code>dev-сервером</code>, когда он отдает любую <code>html</code> страницу. Когда иницируется <code>basis.js</code>, содержимое этого файла используется для первичного наполнения кеша ресурсов. Таким образом, запросив однажды некоторый файл через <code>XMLHttpRequest</code>, <code>basis.js</code> в дальнейшем получает его содержимое через первичный кеш внедряемый в страницу. Это позволяет минимизировать число запросов к серверу и ускорить загрузку (так как нет блокирующих синхронных запросов и сетевых издержек).</p>
+<p>Но <code>dev-сервер</code> не только запоминает запрошенные ресурсы и обеспечивает кеш. Он так же начинает отслеживать изменения в запрошенных файлах, и если их содержимое меняется, то уведомляет страницу об этих изменениях. Для того чтобы изменения были применены на стороне клиента, <code>dev-сервер</code> еще один файл в отдаваемые <code>html</code> страницы – <code>/basisjs-tools/fileSync.js</code>. Этот скрипт устанавливает соединение через <code>WebSocket</code> (используется <code>socket.io</code>), обеспечивает коммуникацию с сервером, а так же уведомляет <code>basis.js</code> об изменениях. По сути, он обновляет содержимое ресурсов, либо кеш, если ресурс еще разрешен.</p>
+<blockquote>
+<p>До версии <code>1.4</code> изменения в файлах применял скрипт <code>/basisjs-tools/fileSync.js</code>. Начиная с версии <code>1.4</code> он ничего не знает о <code>basis.js</code>, а изменения применяет сам <code>basis.js</code>. Такое изменение связано с тем, что <code>basis.js</code> может быть недоступен в <code>global scope</code>, а так же может быть несколько экземпляров <code>basis.js</code> в рамках одной страницы. Так же это помогает сделать <code>dev-сервер</code> более универсальным: не зависеть используемой версии <code>basis.js</code> и использовать его не только с <code>basis.js</code>.</p>
+</blockquote>
+<h2 id="-">Жизненный цикл</h2>
+<p>Любой ресурс проходит несколько этапов обработки.</p>
+<p>При объявлении ресурса (использовании функции <code>basis.resource</code>), создается лишь интерфейс. При этом переданный путь к файлу приводится к абсолютному пути (в каноническую форму) и кешируются. Повторный вызов <code>basis.resource</code> со значением, которое приводится к тому же виду, что было получено для одного из предыдущих вызовов, возвращает уже существующий ресурс (создание нового не происходит). Другими словами, для одного и того же разрешенного пути к файлу возвращается один и тот же интерфейс.</p>
+<pre><code class="lang-js">console.log(
+  basis.resource(<span class="hljs-string">'./path/to/file.txt'</span>) === basis.resource(<span class="hljs-string">'./path/foo/../to/file.txt'</span>)
+);
+<span class="hljs-comment">// &gt; true</span>
+</code></pre>
+<p>Когда ресурс разрешается (вызывается его метод <code>fetch</code>), делается запрос в кеш и, если файла нет в кеше, то делается синхронный запрос с серверу. Полученное содержимое при необходимости обрабатывается, результат кешируется и возвращается.</p>
+<p>В простом случае, содаржимое ресурса никак не обрабатывается и возвращается как есть. Но для некоторых ресурсов могут быть определенны трансформации и применены патчи.</p>
+<p>Для определенного типа ресурсы (тип определяется расширением, включающее точку) может быть задана функция трансформации. Если для типа задана такая функция, то значением ресурса будет считаться результат ее выполнения (подробнее в <a href="#%D0%A2%D0%B8%D0%BF%D1%8B-%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%D0%BE%D0%B2">&quot;Типы ресурсов&quot;</a>).</p>
+<p>К значению ресурса так же могут быть применены патчи. Патчи для ресурса задаются функцией <code>basis.path</code>.</p>
+<p>После того как проиведена трансформация и применены патчи, производится выполнение функций добавленных методом ресурса <code>ready</code>. После чего возвращается значение ресурса.</p>
+<p>Так как ресурсы являются частью программы, то процедура разрушения (удаление ссылок и содержимого) для них не предусмотрена.</p>
+<blockquote>
+<p>В рамках концепции ресурсов это является неправильным. Однако в ходе разработки, при реструктуризации или исправлении ошибок, бывают ситуации, когда ресурс перестает существовать. В этом случае, изменения вступят в силу лишь после перезагрузки страницы (устаревший ресурс не будет объявлен или создан). Возможно, в будущем получится сделать так, чтобы для &quot;устаревших&quot; обновляемых ресурсов не требовалась перезагрузка страницы.</p>
+</blockquote>
+<p>В общем виде, жизненный цикл выглядит так:</p>
+<ul>
+<li>Объявление ресурса</li>
+<li>Разрешение ресурса<ul>
+<li>Получение содержимого (из кеша или запросом к серверу)</li>
+<li>Применение трансформации (если определено)</li>
+<li>Кеширование значения</li>
+<li>Применение патчей (если определены)</li>
+<li>Вызов обработчиков <code>ready</code> (если определены)</li>
+</ul>
+</li>
+<li>Возвращение значения ресурса</li>
+</ul>
+<p>Когда меняется содержимое файла, вызывается метод <code>update</code> и выполняются следующие шаги:</p>
+<ul>
+<li>Обновляется кеш содержимого</li>
+<li>Применение трансформации (если определено)</li>
+<li>Кеширование значения</li>
+<li>Применение патчей (если определены)</li>
+<li>Вызов обработчиков <code>ready</code> (если определены)</li>
+</ul>
+<p>Но эти действия выполняются только в том случае, если ресурс разрешен и является обновляемым. Если ресурс еще не разрешен, то только обновляется кеш содержимого.</p>
+<h2 id="basis-patch">basis.patch</h2>
+<p>Для определенного файла можно задать функцию, которая может модифицировать значение ресурса. Результат выполнения этой функции никуда не сохраняется. Поэтому данная операция актуальна в основном для типов ресурсов, которые возвращают не значение файла, а некоторый интерфейс к нему. Тогда появляется возможно модифицировать сам интерфейс (некоторый объект). </p>
+<p>Функции задается два параметра: имя файла или неймспейс и функция, которая должна быть вызвана, когда разрешается ресурс. Поведение в отношении первого параметра совпадает с поведением <code>basis.require</code>. Задаваемая таким образом функция получает на вход значение ресурса и путь к его файлу. Если в момент вызова <code>basis.patch</code> ресурс уже разрешен, то функция вызывается немедленно. Перед выполнением функции всегда пишется уведомляющее сообщение, что к ресурсу применен патч (отдельное сообщение для каждого патча). Функция вызывается при каждом изменении содержимого файла, если ресурс разрешен, даже если не меняется значение самого ресурса (например, для <code>.css</code>). Если ресурс не обновляемый, то функция вызовется только при первом разрешении.</p>
+<pre><code class="lang-js">basis.patch(<span class="hljs-string">'basis.data'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(exports, url)</span>{</span>
+  exports.Object.prototype.myExtension = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    console.log(<span class="hljs-string">'I\'m extension added via patch'</span>);
+  };
+});
+
+<span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+<span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> DataObject();
+example.myExtension();
+<span class="hljs-comment">// &gt; "I'm extension added via patch"</span>
+</code></pre>
+<p>Патчи применимы для контролируемого переопределения или дополнения существующих модулей. Например, если есть необходимость дополнить функциональность стандартного модуля. Или есть баг в модуле, можно воспользоваться <code>basis.patch</code> для горячего исправления, пока он не появится в официальной версии.</p>
+<p>Несмотря на то, что патч может быть применен сразу, к уже разрешенному ресурсу, стоит стараться добавлять патчи до разрешения ресурса, к которому он применяется. Это позволит избежать проблем с кодом, который может полагаться на патч.</p>
+<p>Важной особенностью <code>basis.patch</code> является тот факт, что подобное объявление не влияет на информацию о ресурсах. Другими словами не приводит к разрешению ресурса или регистрации имени файла. Так же функции добавленные <code>basis.patch</code> гарантировано выполняются перед функциями добавлеными методом <code>ready</code>, и, таким образом, последние получают уже пропатченное значение.</p>
+<p>Несмотря на возможности предоставляемые <code>basis.patch</code>, стоит прибегать к этой функциональности только в случае крайней необходимости.</p>
+<h2 id="-">Вспомогательные функции</h2>
+<p>Для управления ресурсами и получения дополнительной информации о них используется набор функций, которые прикреплены к <code>basis.resource</code>.</p>
+<h3 id="basis-resource-isresource-value-">basis.resource.isResource(value)</h3>
+<p>Возвращает <code>true</code>, если переданное значение является ресурсом.</p>
+<h3 id="basis-resource-exists-filename-">basis.resource.exists(filename)</h3>
+<p>Возвращает <code>true</code>, если для имени файла ресурс объявлен (для была вызвана функция <code>basis.resource</code>). Перед проверкой имя файла приводится к каноническому виду. Нового ресурса не создается.</p>
+<h3 id="basis-resource-isresolved-filename-">basis.resource.isResolved(filename)</h3>
+<p>Возвращает <code>true</code>, если для переданного имени файла объявлен ресурс и он разрешен (его метод <code>isResolved</code> возвращает <code>true</code>). Перед проверкой имя файла приводится к каноническому виду. Функция не создает нового ресурса, если он не объявлен.</p>
+<h3 id="basis-resource-get-filename-">basis.resource.get(filename)</h3>
+<p>Возвращает ресурс для имя файла, если он объявлен. Перед проверкой имя файла приводится к каноническому виду.</p>
+<h3 id="basis-resource-getfiles-cache-">basis.resource.getFiles([cache])</h3>
+<p>Возвращает массив имен файлов объявленных ресурсов. Если параметр <code>cache</code> приводится к <code>true</code>, то возвращается список имен файлов, которые есть в кеше (часть из которых может быть получена от <code>dev-сервер</code>).</p>
+<blockquote>
+<p>До версии <code>1.4</code> возвращались имена файлов, относительно <code>html</code> файла, при этом не игнорировались имена виртуальных ресурсов. Начиная с версии <code>1.4</code> возвращаются абсолютные имена (как они хранятся в словарях), а имена виртуальных ресурсов игнорируются.</p>
+</blockquote>
+<h3 id="basis-resource-virtual-type-content-ownerfilename-">basis.resource.virtual(type, content[, ownerFilename])</h3>
+<p>Позволяет создать виртуальный ресурс. При этом указывается тип ресурса (расширение <em>без</em> точки) и первоначальное содержимое ресурса. Так же, опционально, можно указать <code>ownerFilename</code>, тогда это значение будет использовано для формирования виртуального <code>url</code>, что может помочь понять от какого файла был образован виртуальный ресурс при разработке и отладке.</p>
+<h3 id="basis-resource-extensions">basis.resource.extensions</h3>
+<p>Словарь определяющий функции трансформации содержимого ресурсов. Ключом является тип ресурса (расширение, включая точку), а значением – функция, принимающая на вход содержимое файла, его <code>url</code> и предыдущее значение ресурса.</p>
+<p>Если у функции есть свойство <code>permanent</code>, которое приводится к <code>true</code>, то ресурс считается не обновляемым и может быть разрешен только раз. На данный момент, такими ресурсами являются только <code>.js</code> ресурсы.</p>
+<h2 id="-">Типы ресурсов</h2>
+<p>В зависимости от типа файла (его расширения) может возвращаться не только текстовое значение файла, но и значения других типов. То, что будет возвращаться, определяет post-обработчик, ассоциированный с определенным расширением. В <code>basis</code> определены обработчики для расширений <code>.js</code>, <code>.json</code> и <code>.css</code>. Можно <a href="#%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D1%81%D0%BE%D0%B1%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D1%85-%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2-%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%D0%BE%D0%B2">определять собственные обработчики</a>.</p>
+<h3 id="javascript">JavaScript</h3>
+<p>Содержимое <code>.js</code> файлов оборачивается в специальную функцию и немедленно вызывается с определенными параметрами. Таким образом, для кода всегда создается локальная область видимости, в которой доступен несколько дополнительных значений и функций:</p>
 <ul>
 <li><code>exports</code> – объект экспорта;</li>
-<li><code>module</code> – объект, представляющий модуль;</li>
-<li><code>basis</code> – ссылка на корневое пространство имен basis.js;</li>
-<li><code>global</code> – ссылка на глобальную область видимости (в браузере это <code>window</code>);</li>
-<li><code>__filename</code> – полный путь и имя файла;</li>
+<li><code>module</code> – объект, представляющий модуль (<code>module.exports</code> === <code>exports</code>);</li>
+<li><code>basis</code> – ссылка на корневое пространство имен <code>basis.js</code>;</li>
+<li><code>global</code> – ссылка на глобальную область видимости (в браузере <code>window</code>);</li>
+<li><code>__filename</code> – полный путь к файлу;</li>
 <li><code>__dirname</code> – полный путь до директории, содержащей файл;</li>
-<li><code>resource</code> – функция, которая делает то же, что и <code>basis.resource</code>, но разрешает пути к файлам относительно текущего файла, а не корневого <code>html</code> файла.</li>
+<li><code>resource</code> – функция, аналог <code>basis.resource</code>, но разрешает относительные пути относительно файла модуля;</li>
+<li><code>require</code> – функция, аналог <code>basis.require</code>, но разрешает относительные пути относительно файла модуля.</li>
 </ul>
 <p>Пример модуля, допустим, его путь <code>/src/module/list/index.js</code>:</p>
-<pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.ui'</span>);
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
 
-<span class="hljs-keyword">var</span> list = basis.ui.Node({
+<span class="hljs-keyword">var</span> list = Node({
   template: resource(<span class="hljs-string">'./template/list.tmpl'</span>),  <span class="hljs-comment">// путь к файлу /src/module/list/template/list.tmpl</span>
   ...
 });
 
-module.exports = {      <span class="hljs-comment">// то, что будет возвращаться при использовании ресурса</span>
-  MyClass: MyClass
-};
+<span class="hljs-comment">// то, что будет возвращаться при использовании ресурса</span>
+module.exports = list;
 </code></pre>
+<blockquote>
+<p>Функции <code>resource</code> и <code>require</code> доступны только в рамках модулей подключаемых через <code>basis.resource</code>, либо <code>basis.require</code>.</p>
+</blockquote>
+<p><code>JavaScript</code>-модули работают схожим образом с <code>node.js</code>. Значением ресурса будет являться значение <code>module.exports</code>.</p>
 <p>Использование:</p>
-<pre><code class="lang-js"><span class="hljs-comment">// объявляем ресурс, файл еще не загружен и код не выполнен</span>
-<span class="hljs-keyword">var</span> list = basis.resource(<span class="hljs-string">'./src/module/list/index.js'</span>);
-console.log(list());    <span class="hljs-comment">// файл загружается, выполняется код, возвращается module.exports</span>
+<pre><code class="lang-js"><span class="hljs-comment">// либо сразу получаем содержимое</span>
+<span class="hljs-keyword">var</span> list = basis.require(<span class="hljs-string">'./src/module/list/index.js'</span>);
+console.log(list);
 
-<span class="hljs-comment">// либо</span>
-<span class="hljs-keyword">var</span> list = basis.resource(<span class="hljs-string">'./src/module/list/index.js'</span>).fetch();  <span class="hljs-comment">// файл загружается,</span>
-console.log(list);      <span class="hljs-comment">// { MyClass: ..., someFn: ... }</span>
+<span class="hljs-comment">// либо объявляем ресурс</span>
+<span class="hljs-keyword">var</span> list = basis.resource(<span class="hljs-string">'./src/module/list/index.js'</span>);
+console.log(list.fetch());    <span class="hljs-comment">// а разрешаем потом</span>
 </code></pre>
-<p>Следующий код схематично показывает, что происходит с содержимым javascript-файла:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> module = {
+<p>Следующий код схематично показывает, как оборачивается содержимое <code>JavaScript</code>-ресурса:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> __filename = <span class="hljs-string">'/src/module/list/index.js'</span>;
+<span class="hljs-keyword">var</span> __dirname = <span class="hljs-string">'/src/module/list'</span>
+<span class="hljs-keyword">var</span> module = {
   exports: {}
 };
 <span class="hljs-keyword">var</span> relResource = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url)</span>{</span>
-  <span class="hljs-keyword">return</span> basis.resource(<span class="hljs-string">'./src/module/list/'</span> + url);
+  <span class="hljs-keyword">return</span> basis.resource(basis.path.resolve(__dirname, url));
+};
+<span class="hljs-keyword">var</span> relRequire = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(urlOrNamespace)</span>{</span>
+  <span class="hljs-keyword">return</span> basis.require(urlOrNamespace, __dirname)
 };
 
-(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(exports, module, basis, global, __filename, __dirname, resource)</span>{</span>
+(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(exports, module, basis, global, __filename, __dirname, resource, require)</span>{</span>
 <span class="hljs-pi">  'use strict'</span>;
 
-  <span class="hljs-comment">// содержимое файла</span>
+  <span class="hljs-comment">// содержимое файла /src/module/list/index.js</span>
 
 }).call(module.exports, module.exports, module, basis, <span class="hljs-keyword">this</span>,
-  <span class="hljs-string">'src/module/list/index.js'</span>, <span class="hljs-string">'src/module/list/'</span>, relResource);
+  __filename, __dirname, relResource, relRequire);
 
 <span class="hljs-keyword">return</span> module.exports;
 </code></pre>
-<p>Похожим образом работает функция <code>require</code> в <code>node.js</code>.</p>
 <blockquote>
-<p>Код <code>javascript</code>-ресурсов выполняется в <code>strict mode</code>.</p>
+<p>Код <code>JavaScript</code>-ресурсов выполняется в <code>strict mode</code>.</p>
 </blockquote>
-<h2 id="json">JSON</h2>
-<p>Если файл имеет расширение <code>.json</code>, то содержимое файла парсится функцией <code>JSON.parse</code> и возвращается результат.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> settings = basis.resource(<span class="hljs-string">'./settings.json'</span>).fetch();
+<p><code>JavaScript</code>-ресурсы необновляемы (<code>permanent: true</code>): если такой ресурс разрешен, то его значение не меняется, когда меняется содержимое файла.</p>
+<h3 id="json">JSON</h3>
+<p>Если файл имеет расширение <code>.json</code>, то содержимое файла преобразуется функцией <code>JSON.parse</code> и возвращается результат.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> settings = basis.require(<span class="hljs-string">'./settings.json'</span>);
 <span class="hljs-keyword">if</span> (settings.someName) {
   <span class="hljs-comment">// do something</span>
 }
 </code></pre>
-<p>Если файл содержит некорректный <code>json</code>, то будет возвращен <code>null</code>.</p>
-<h2 id="css">CSS</h2>
-<p>Для файлов с расширением <code>.css</code> создается и возвращается специальная обертка, экземпляр класса <code>CssResource</code>.</p>
-<p>Такая обертка имеет два основных метода <code>startUse</code> и <code>stopUse</code>. При первом вызове <code>startUse</code> в документ добавляется элемент <code>&lt;style&gt;</code> содержащий код <code>.css</code> файла. При этом считается количество вызовов метода <code>startUse</code>, и если столько же раз будет вызван метод <code>stopUse</code>, то элемент <code>&lt;style&gt;</code> будет удален из документа. При изменении содержимого <code>.css</code> файла, содержимое тега <code>&lt;style&gt;</code> так же обновляется.</p>
+<p>Если файл содержит некорректный <code>json</code>, то будет выведено сообщение об ошибке в консоли и возвращен <code>null</code>.</p>
+<h3 id="css">CSS</h3>
+<p>Для файлов с расширением <code>.css</code> создается и возвращается специальный интерфейс, экземпляр класса <code>CssResource</code>.</p>
+<p>Такой интерфейс имеет два основных метода <code>startUse</code> и <code>stopUse</code>. При первом вызове <code>startUse</code> в документ добавляется элемент <code>&lt;style&gt;</code> содержащий код <code>.css</code> файла. При этом считается количество вызовов метода <code>startUse</code>, и если столько же раз будет вызван метод <code>stopUse</code>, то элемент <code>&lt;style&gt;</code> будет удален из документа. При изменении содержимого <code>.css</code> файла, содержимое тега <code>&lt;style&gt;</code> так же обновляется.</p>
 <p>Вставка содержимого в тег <code>&lt;style&gt;</code> производится таким образом, чтобы ссылки на ресурсы (<code>@import</code>, <code>url(..)</code> и т.д.) разрешались относительно папки расположения файла. Так же, начиная с версии <code>1.2.4</code>, к содержимому добавляется <code>//@ sourceURL=..</code>, чтобы инструменты разработки, такие как <code>Developer Tools</code> в <code>Google Chrome</code>, могли ассоциировать сождержимое <code>&lt;style&gt;</code> с оригинальным файлом.</p>
-<p>Получить содержимое файла можно обратившись к свойству <code>cssText</code>.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> myStyle = basis.resource(<span class="hljs-string">'./style.css'</span>).fetch();
+<p>Получить текущий <code>css</code> код можно обратившись к свойству <code>cssText</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> myStyle = basis.require(<span class="hljs-string">'./style.css'</span>);
 console.log(myStyle.cssText); <span class="hljs-comment">// выведет содержимое файла</span>
 myStyle.startUse();  <span class="hljs-comment">// добавит в документ &lt;style&gt;</span>
 ...
 myStyle.stopUse();   <span class="hljs-comment">// удалит &lt;style&gt; из документа</span>
 </code></pre>
-<h2 id="-">Добавление собственных обработчиков ресурсов</h2>
-<p>Чтобы определить собственный обработчик для некоторого расширения, нужно зарегистирировать его в объекте <code>basis.resource.extensions</code>, где ключ - это расширение файла, начинающееся с точки, а значение - функция, принимающая содержимое файла и путь к нему. Возвращаемое такой функцией значение будет являться значением ресурса.</p>
-<p>Допустим, требуется добавить поддержку <code>CoffeeScript</code>. Для этого нужно подключить компилятор <code>CoffeeScript</code> и назначить обработчик расширений <code>.coffee</code>, например, так:</p>
+<h3 id="-">Добавление собственных обработчиков ресурсов</h3>
+<p>Чтобы определить собственный обработчик для некоторого расширения, нужно зарегистирировать его в объекте <code>basis.resource.extensions</code>, где ключ - это расширение файла, включая точку, а значение - функция, принимающая содержимое файла и путь к нему. Возвращаемое такой функцией значение будет являться значением ресурса.</p>
+<p>Допустим, требуется добавить поддержку <code>CoffeeScript</code>. Для этого нужно подключить компилятор <code>CoffeeScript</code> и назначить обработчик расширений <code>.coffee</code>:</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"path/to/coffeescript.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
   basis.resource.extensions[<span class="hljs-string">'.coffee'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(content, url)</span>{</span>
@@ -667,17 +871,17 @@ myStyle.stopUse();   <span class="hljs-comment">// удалит &lt;style&gt; и
   }
 </span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
 </code></pre>
-<p>Компилятор <code>CoffeeScript</code> можно подключить через механизм ресурсов:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> CoffeeScript = basis.resource(<span class="hljs-string">'./path/to/coffeescript.js'</span>).fetch().CoffeeScript;
+<p>Компилятор <code>CoffeeScript</code> можно подключить и через механизм ресурсов:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> CoffeeScript = basis.require(<span class="hljs-string">'./path/to/coffeescript.js'</span>).CoffeeScript;
 
 basis.resource.extensions[<span class="hljs-string">'.coffee'</span>] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(content, url)</span>{</span>
   <span class="hljs-keyword">return</span> basis.resource.extensions[<span class="hljs-string">'.js'</span>](CoffeeScript.compile(content), url);
 }
 </code></pre>
 <blockquote>
-<p>Не все стороние библиотеки могут быть подключены как ресурс, так как не все они работают в strict mode.</p>
+<p>Не все стороние библиотеки могут быть подключены как ресурс, так как не все они работают в <code>strict mode</code> и поддерживают <code>CommonJS</code>.</p>
 </blockquote>
-<p>Данное решение будет работать для <code>dev</code> режима, но сборщиком <code>CoffeeScript</code> будет восприниматься как строка, следовательно, код такого модуля не будет проанализирован, а его зависимости не будут найдены. Для решения проблемы сборщику нужно скомпилировать <code>CoffeeScript</code> в <code>javascript</code>, для этого в его настройках определяется препроцессор для файлов с расширением <code>.coffee</code>:</p>
+<p>Данное решение будет работать в режиме разработки, но сборщиком код <code>CoffeeScript</code> будет восприниматься как строка. Как результат, код такого модуля не будет проанализирован, а его зависимости не будут найдены. Для решения проблемы сборщику нужно скомпилировать <code>CoffeeScript</code> в <code>JavaScript</code>, для этого в его настройках определяется препроцессор для файлов с расширением <code>.coffee</code>:</p>
 <pre><code class="lang-json">{
   &quot;build&quot;: {
     ...
@@ -694,12 +898,12 @@ basis.resource.extensions[<span class="hljs-string">'.coffee'</span>] = <span cl
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> CoffeeScript = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./path/to/coffeescript.js'</span>);
 
 exports.process = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(content, file, baseURI, console)</span>{</span>
-  console.log(<span class="hljs-string">'Compile '</span> + file.relpath + <span class="hljs-string">' to javascript'</span>);
+  console.log(<span class="hljs-string">'Compile '</span> + file.relpath + <span class="hljs-string">' to JavaScript'</span>);
   file.filename = file.filename.replace(<span class="hljs-regexp">/.coffee$/i</span>, <span class="hljs-string">'.js'</span>);
   <span class="hljs-keyword">return</span> CoffeeScript.compile(content);
 }
 </code></pre>
-<p>С таким препроцессором в сборке <code>CoffeeScript</code> код будет скомпилирован в <code>javascript</code>, а расширение файлов изменено с <code>.coffee</code> на <code>.js</code>.</p>
+<p>С таким препроцессором при сборке <code>CoffeeScript</code> код будет скомпилирован в <code>JavaScript</code>, а расширение файлов изменено с <code>.coffee</code> на <code>.js</code>.</p>
 
                     
                     </section>
@@ -709,10 +913,10 @@ exports.process = <span class="hljs-function"><span class="hljs-keyword">functio
         </div>
 
         
-        <a href="./basis.html" class="navigation navigation-prev " aria-label="Previous page: Ядро"><i class="fa fa-angle-left"></i></a>
+        <a href="./basis.Class.html" class="navigation navigation-prev " aria-label="Previous page: Классы"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="./basis.Class.html" class="navigation navigation-next " aria-label="Next page: Классы"><i class="fa fa-angle-right"></i></a>
+        <a href="./basis.Token.html" class="navigation navigation-next " aria-label="Next page: basis.Token"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
