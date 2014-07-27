@@ -333,6 +333,8 @@ var list = Node({
 module.exports = list;
 ```
 
+> Функции `resource` и `require` доступны только в рамках модулей подключаемых через `basis.resource`, либо `basis.require`.
+
 `JavaScript`-модули работают схожим образом с `node.js`. Значением ресурса будет являться значение `module.exports`.
 
 Использование:

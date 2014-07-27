@@ -6,8 +6,8 @@
 
 * [Приступая к разработке](ru-RU/get-started.md)
 * [Ядро](ru-RU/basis.md) (basis.js)
-    * [Модульность](ru-RU/resources.md)
     * [Классы](ru-RU/basis.Class.md)
+    * [Модульность](ru-RU/resources.md)
     * [basis.Token](ru-RU/basis.Token.md)
     * basis.getter
     * [Binding bridge](ru-RU/bindingbridge.md)
@@ -37,7 +37,6 @@
 * [basis.template](ru-RU/basis.template.md)
     * [Формат шаблонов](ru-RU/basis.template_format.md)
     * [Правила применения значений биндингам](ru-RU/basis.template_bindings.md)
-    * [Динамическое обновление (live update)](ru-RU/basis.template_liveupdate.md) \[todo:complete]
     * [Темы](ru-RU/basis.template_theme.md)
 * [basis.l10n](ru-RU/basis.l10n.md)
 * [basis.net](ru-RU/basis.net.md)

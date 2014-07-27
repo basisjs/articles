@@ -1,7 +1,7 @@
 * [Приступая к разработке](get-started.md)
 * [Ядро](basis.md) (basis.js)
-    * [Ресурсы (модульность)](resources.md)
     * [Классы](basis.Class.md)
+    * [Модульность](resources.md)
     * [basis.Token](basis.Token.md)
     * [Binding bridge](bindingbridge.md)
 * [События](basis.event.md)
