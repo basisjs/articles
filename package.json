@@ -10,8 +10,8 @@
     "license": "MIT",
     "dependencies": {},
     "devDependencies": {
+        "gitbook": "0.6.1",
         "grunt": "~0.4.1",
-        "grunt-gitbook": "0.4.6",
         "grunt-gh-pages": "0.9.1",
         "grunt-contrib-clean": "~0.5.0",
         "grunt-http-server": "0.0.4"

@@ -1,4 +1,5 @@
-var path = require("path");
+var path = require('path');
+var gitbook = require('gitbook');
 
 module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-gitbook');
@@ -43,6 +44,18 @@ module.exports = function (grunt) {
                 runInBackground: false
             }
         }
+    });
+
+    grunt.registerMultiTask('gitbook', 'gitbook builder', function() {
+        var config = this.data;
+        var done = this.async();
+        
+        gitbook
+            .generate
+            .folder(config)
+            .then(function(){
+                done();
+            }, done);
     });
 
     grunt.registerTask('test', [
