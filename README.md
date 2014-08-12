@@ -14,9 +14,10 @@
     * [Binding bridge](ru-RU/bindingbridge.md)
 * [basis.event](ru-RU/basis.event.md)
 * [basis.data](ru-RU/basis.data.md)
-    * [Value](ru-RU/basis.data.Value.md)
-    * [Object](ru-RU/basis.data.Object.md)
-    * [Наборы](ru-RU/basis.data.datasets.md)
+    * [Скаляр](ru-RU/basis.data.Value.md)
+    * [Объект](ru-RU/basis.data.Object.md)
+    * [Набор](ru-RU/basis.data.datasets.md)
+    * [Карта](ru-RU/basis.data.map.md)
 * [basis.data.dataset](ru-RU/basis.data.dataset.md) \[todo:complete]
 * basis.data.value
 * basis.data.index

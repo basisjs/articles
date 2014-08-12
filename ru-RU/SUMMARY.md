@@ -7,10 +7,11 @@
   * [Binding bridge](bindingbridge.md)
 * [События](basis.event.md)
 * [Данные](basis.data.md)
-  * [Значение](basis.data.Value.md)
+  * [Скаляр](basis.data.Value.md)
   * [Объект](basis.data.Object.md)
-  * [Наборы](basis.data.datasets.md)
-  * [basis.data.dataset](basis.data.dataset.md) \[todo:complete]
+  * [Набор](basis.data.datasets.md)
+  * [Карта](basis.data.map.md)
+* [basis.data.dataset](basis.data.dataset.md) \[todo:complete]
 * [basis.dom.wrapper](basis.dom.wrapper.md)
   * [DOM](basis.dom.wrapper_dom.md)
   * [Дочерние узлы](basis.dom.wrapper_childNodes.md)
