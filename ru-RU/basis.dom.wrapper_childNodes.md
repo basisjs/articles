@@ -146,20 +146,105 @@ node.appendChild({
 
 При добавлении в набор новых элементов для них создаются новые дочерние узлы, при удалении – соотвествующие узлы разрушаются.
 
-[TODO] destroyDataSourceMember & childFactory + KeyObjectMap
+Cвойство `dataSource` изменяется методом `setDataSource`, при его изменении срабатывает событие `dataSourceChanged`. В качестве значения `dataSource` можно задать экземпляр класса `basis.data.ReadOnlyDataset` (или его потомка).
 
-Cвойство `dataSource` изменяется методом `setDataSource`, при его изменении срабатывает событие `dataSourceChanged`. В качестве значения `dataSource` можно задать экземпляр класса `basis.data.AbstractDataset` или его потомка.
+Начиная с версии `1.1` в качестве значения `dataSource` можно задавать значения, которые могут быть разрешены в набор, используя функцию [basis.data.resolveDataset](basis.data.datasets.md#resolvedataset).Если значение не является набором, то для него создается адаптер, который сохраняется в свойстве `dataSourceAdapter_` и отслеживает изменения в значении. Когда значение успешно разрешается в набор, то этот набор присваивает в `dataSource` и срабатывает событие `dataSourceChanged`.
 
-Начиная с версии 1.0.0 в качестве значения можно задавать экземпляр класса `basis.data.DatasetWrapper`, который сохраняется в свойстве `dataSourceWrapper_` и синхронизирует свое свойство `dataset` со свойством `dataSource` узла (в направлении `node.dataSourceWrapper_.dataset` -> `node.dataSource`).
+```js
+var Dataset = basis.require('basis.data').Dataset;
+var Node = basis.require('basis.ui').Node;
 
-При установленном значении `dataSource`, состояние набора (его свойство `state`) синхронизируется со свойстом узла `childNodesState` (в направлении `node.dataSource.state` -> `node.childNodesState`).
+var foo = new Dataset();
+var bar = new Dataset();
+var current = new basis.Token();
+var view = new Node({
+  dataSource: current,
+  handler: {
+    dataSourceChanged: function(){
+      console.log('dataSourceChanged');
+    }
+  }
+});
 
-Существует возможность получить дочерние узлы в виде набора. Для этого используется метод `getChildNodesDataset`, который возвращает экземпляр `basis.dom.wrapper.ChildNodesDataset`. Экземпляр создается при первом вызове метода, а дальнейшие вызовы метода возвращают тот же экземпляр. Такой набор синхронизирует состав дочерних узлов с составом своих элементов и существует до тех пор, пока существует узел, который его породил.
+console.log(view.dataSource);
+// > null
+console.log(view.dataSourceAdapter_);
+// > basis.data.DatasetAdapter { .. }
+
+current.set(foo);
+console.log(view.dataSource === foo);
+// > 'dataSourceChanged'
+// > true
+
+current.set(bar);
+console.log(view.dataSource === bar);
+// > 'dataSourceChanged'
+// > true
+
+view.setDataSource(bar);
+console.log(view.dataSource === bar);
+// > true
+console.log(view.dataSourceAdapter_ === null);
+// > true
+```
+
+Существует возможность получить дочерние узлы в виде набора. Для этого используется метод `getChildNodesDataset`. Метод возвращает экземпляр `basis.dom.wrapper.ChildNodesDataset`. Экземпляр создается при первом вызове метода, а последующие вызовы возвращают тот же экземпляр. Такой набор синхронизирует состав дочерних узлов с составом своих элементов и существует до тех пор, пока существует узел, который его породил.
+
+> В связи с тем, что наборы являются неупорядоченным множеством, то узлы в наборе возвращаемом методом `getChildNodesDataset` не повторяют порядок в `childNodes`.
+
+По умолчанию, при удалении элемента из набора (или при смене набора), ассоцированный с ним дочерний узел разрушается. Этим поведением управляет свойство `destroyDataSourceMember`, которое по умолчанию равно `true` (разрушать ассоциированный узел). Если нужно сохранять узлы, необходимо выставить этот флаг в `false`. Обычно это нужно при переиспользовании узлов, когда есть разные выборки и выгоднее оставлять узлы в кеше, нежели пересоздавать их заново. В такой ситуации, необходимо организовывать пул узлов (кеш), для чего хорошо подходят карты (`basis.data.KeyObjectMap`), и изменить `childFactory` так, чтобы метод использовал такой пул.
+
+```js
+var Node = basis.require('basis.ui').Node;
+var DataObject = basis.require('basis.data').Object;
+var Dataset = basis.require('basis.data').Dataset;
+
+var items = basis.array.create(5, function(idx){
+  return new DataObject({ data: { name: idx } });
+});
+var foo = new Dataset({ items: items.slice(0, 3) });
+var bar = new Dataset({ items: items.slice(2, 5) });
+var model2node = new basis.data.KeyObjectMap({
+  itemClass: Node.subclass({
+    init: function(){
+      Node.prototype.init.call(this);
+      console.log('create', this.data.name);
+    },
+    destroy: function(){
+      console.log('destroy', this.data.name);
+      Node.prototype.destroy.call(this);
+    }
+  })
+});
+var view = new Node({
+  destroyDataSourceMember: false,  // иначе удаляемые узлы будут разрушаться
+  dataSource: foo,
+  childFactory: function(config){
+    return model2node.resolve(config.delegate);
+  }
+});
+// > create 0
+// > create 1
+// > create 2
+
+foo.set();
+view.setDataSource(bar);
+// > create 3
+// > create 4
+
+view.destroyDataSourceMember = true;  // устанавливаем разрушение по умолчанию
+view.setDataSource(foo);
+// > destroy 4
+// > destroy 3
+// > destroy 2
+```
+
+> Порядок создания и разрушения узлов может быть произвольным, так как наборы являются неупорядоченными.
 
 ## Состояние
 
-`AbstractNode` наследует от `basis.data.AbstractData` [механизм состояния](basis.data.md#Состояние). Но этот механизм отвечает за состояние собственных данных узла.
+`AbstractNode` наследует от `basis.data.AbstractData` [механизм состояния](basis.data.md#Состояние). Но этот механизм отвечает за состояние данных узла (которые хранятся в свойстве `data`).
 
-Обслуживание дочерних узлов часто сопровождается некоторыми процессами, для отражения состояния этих процессов используется свойство `childNodesState`. Значения и логика та же, что и у `state`. Меняется состояние методом `setChildNodesState`. При изменении значения выбрасывается событие `childNodesStateChanged`.
+Обслуживание дочерних узлов нередко сопровождается процессами, для отражения состояния которых используется свойство `childNodesState`. Значения и логика та же, что и у `state`. Меняется состояние методом `setChildNodesState`, а при изменении значения выбрасывается событие `childNodesStateChanged`.
 
 Если узлу задан некоторый набор (свойство `dataSource`), то `childNodesState` синхронизируется с его свойством `state` (в направлении `node.dataSource.state` -> `node.childNodesState`).

@@ -141,7 +141,7 @@ var view = new basis.ui.Node({
   satellite: {
     groups: {
       existsIf: function(owner){
-        return owner.data.groups instanceof basis.data.AbstractDataset;
+        return owner.data.groups instanceof basis.data.ReadOnlyDataset;
       },
       dataSource: function(owner){
         return owner.data.groups;
