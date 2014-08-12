@@ -4,7 +4,7 @@
     <head>
         
         <meta charset="UTF-8">
-        <title>basis.Token | Содержание</title>
+        <title>Карта | Содержание</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 0.6.1">
@@ -19,10 +19,10 @@
     <meta name="author" content="basisjs">
     
     
-    <link rel="next" href="./bindingbridge.html" />
+    <link rel="next" href="./basis.data.dataset.html" />
     
     
-    <link rel="prev" href="./resources.html" />
+    <link rel="prev" href="./basis.data.datasets.html" />
     
 
         
@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="2.4" data-basepath="." data-revision="1407807541058">
+    <div class="book" data-github="basisjs/articles" data-level="4.4" data-basepath="." data-revision="1407807541058">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -118,7 +118,7 @@
         
         
         <li>
-            <a href="https://github.com/basisjs/articles/edit/master/basis.Token.md" target="blank" class="contribute-link">Edit and Contribute</a>
+            <a href="https://github.com/basisjs/articles/edit/master/basis.data.map.md" target="blank" class="contribute-link">Edit and Contribute</a>
         </li>
         
 
@@ -226,7 +226,7 @@
         </li>
     
         
-        <li class="chapter active" data-level="2.4" data-path="basis.Token.html">
+        <li class="chapter " data-level="2.4" data-path="basis.Token.html">
             
                 
                     <a href="./basis.Token.html">
@@ -344,7 +344,7 @@
         </li>
     
         
-        <li class="chapter " data-level="4.4" data-path="basis.data.map.html">
+        <li class="chapter active" data-level="4.4" data-path="basis.data.map.html">
             
                 
                     <a href="./basis.data.map.html">
@@ -864,7 +864,7 @@
             <div class="page-wrapper" tabindex="-1">
                 <div class="book-progress">
     <div class="bar">
-        <div class="inner" style="width: 14.634146341463415%;min-width: 12.195121951219512%;"></div>
+        <div class="inner" style="width: 31.70731707317073%;min-width: 29.26829268292683%;"></div>
     </div>
     <div class="chapters">
     
@@ -882,19 +882,19 @@
     
         <a href="./basis.Token.html" title="basis.Token" class="chapter done " data-progress="2.4" style="left: 14.634146341463415%;"></a>
     
-        <a href="./bindingbridge.html" title="Binding bridge" class="chapter  " data-progress="2.5" style="left: 17.073170731707318%;"></a>
+        <a href="./bindingbridge.html" title="Binding bridge" class="chapter done " data-progress="2.5" style="left: 17.073170731707318%;"></a>
     
-        <a href="./basis.event.html" title="События" class="chapter  new-chapter" data-progress="3" style="left: 19.51219512195122%;"></a>
+        <a href="./basis.event.html" title="События" class="chapter done new-chapter" data-progress="3" style="left: 19.51219512195122%;"></a>
     
-        <a href="./basis.data.html" title="Данные" class="chapter  new-chapter" data-progress="4" style="left: 21.951219512195124%;"></a>
+        <a href="./basis.data.html" title="Данные" class="chapter done new-chapter" data-progress="4" style="left: 21.951219512195124%;"></a>
     
-        <a href="./basis.data.Value.html" title="Скаляр" class="chapter  " data-progress="4.1" style="left: 24.390243902439025%;"></a>
+        <a href="./basis.data.Value.html" title="Скаляр" class="chapter done " data-progress="4.1" style="left: 24.390243902439025%;"></a>
     
-        <a href="./basis.data.Object.html" title="Объект" class="chapter  " data-progress="4.2" style="left: 26.829268292682926%;"></a>
+        <a href="./basis.data.Object.html" title="Объект" class="chapter done " data-progress="4.2" style="left: 26.829268292682926%;"></a>
     
-        <a href="./basis.data.datasets.html" title="Набор" class="chapter  " data-progress="4.3" style="left: 29.26829268292683%;"></a>
+        <a href="./basis.data.datasets.html" title="Набор" class="chapter done " data-progress="4.3" style="left: 29.26829268292683%;"></a>
     
-        <a href="./basis.data.map.html" title="Карта" class="chapter  " data-progress="4.4" style="left: 31.70731707317073%;"></a>
+        <a href="./basis.data.map.html" title="Карта" class="chapter done " data-progress="4.4" style="left: 31.70731707317073%;"></a>
     
         <a href="./basis.data.dataset.html" title="basis.data.dataset" class="chapter  new-chapter" data-progress="5" style="left: 34.146341463414636%;"></a>
     
@@ -957,87 +957,136 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_4">
+                    <section class="normal" id="section-gitbook_9">
                     
-                        <h1 id="basistoken">basis.Token</h1>
-<p><code>basis.Token</code> (<a href="http://basisjs.com/docs#basis.Token" target="_blank">docs</a>) - элементарный класс для хранения значения с возможностью отслеживать его изменение. Его дизайн разработан таким образом, чтобы работать максимально быстро и просто.</p>
-<p>От этого класса наследуются классы в других модулях, например, токены локализации <code>basis.l10n.Token</code>.</p>
-<p>Класс поддерживает механизм <a href="bindingbridge.html"><code>binding bridge</code></a>.</p>
-<h2 id="--">Работа со значением</h2>
-<p>Конструктор класса принимает единственный аргумент - начальное значение токена.</p>
-<p>Значение токена хранится в свойстве <code>value</code>. Для получения значения используется метод <code>get</code>, а для установки нового значения - метод <code>set</code>.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> token = <span class="hljs-keyword">new</span> basis.Token(<span class="hljs-number">123</span>);
-
-console.log(token.get());
-<span class="hljs-comment">// console&gt; 123</span>
-
-console.log(token.set(<span class="hljs-number">777</span>));
-console.log(token.get());
-<span class="hljs-comment">// console&gt; 777</span>
-</code></pre>
-<h2 id="-">Обработка изменений</h2>
-<p>Для того чтобы слушать изменения значения, нужно добавить функцию обработчик (<code>callback</code>). Это осуществляется методом <code>attach</code>, который принимает два аргумента:</p>
+                        <h1 id="basisdatakeyobjectmap">basis.data.KeyObjectMap</h1>
+<p>Класс <code>basis.data.KeyObjectMap</code> представляет собой класс, чьи экземпляры хранят информацию об отношении некоторого значения к другому значению.</p>
+<p>В общем смысле, это карта соотвествия. Значением (ключом) может выступать произвольное значение, в то время как значением должен являться экземпляр <a href="basis.event.html#emitter"><code>basis.event.Emitter</code></a> (на данный момент). Соотношение ключа и значения вычисляется один раз (при первом &quot;запросе&quot;) и кешируется. При этом, в случае разрушения экземпляра значения связь удаляется из карты.</p>
+<blockquote>
+<p>Класс достаточно давний, и тем не менее долгое время оставался &quot;в тени&quot;. Изменения в последних версиях <code>basis.js</code> привели к тому, что класс оказался весьма полезным и востребованным. Предполагается его дальнейшее развитие (улучшение интерфейса и исправление различных &quot;нестыковок&quot;, так как он устарел по отношению к другим решениям) и появление его потоков, решающих новые задачи.</p>
+</blockquote>
+<h2 id="">Интерфейс</h2>
+<p>Класс предоставляет методы:</p>
 <ul>
-<li><p>fn - функция, которая будет вызвана при изменении значения; этой функции будет передаваться текущее значение токена;</p>
-</li>
-<li><p>context - контекст для функции, необязательный параметр.</p>
-</li>
+<li><code>get(key, autocreate)</code> – метод возвращает ассоцированное значение для <code>key</code>; если такого значение нет, то возвращается <code>undefined</code>; если передан параметр <code>autocreate</code>, то, в случае отсутсвия значения, вызывается метод <code>create</code> с переданными значениями, а результат его выполенения сохраняется как ассоциированное значение.</li>
+<li><code>create(key, config)</code> – метод вызывается, когда для заданного значения (параметра <code>key</code>) не найдено значения; значение <code>config</code> может использовать как дополнительный объект конфигурации (передается в <code>get</code> как <code>autocreate</code>), но по умолчанию не используется.</li>
+<li><code>resolve(value)</code> – метод пытается вернуть ассоцированное значение для <code>value</code>, а если его нет, то создать новое значение; в отличае от <code>get</code> этот метод всегда возвращает значение, вне зависимости от того, существовало ли он до этого.</li>
 </ul>
-<p>В случае повторного вызова метода <code>attach</code> с теми же параметрами обработчик будет добавлен еще раз. При этом в <code>dev</code> режиме будет выведено предупреждение, так как это, скорее всего, ошибка.</p>
-<p>Метод <code>detach</code> используется для удаления обработчика. Этому методу нужно передавать те же значения, что и методу <code>attach</code>. Если метод <code>detach</code> вызван и соответствующий обработчик не найден, то в <code>dev</code> режиме будет выведено предупреждение, так как это, скорее всего, ошибка.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> token = <span class="hljs-keyword">new</span> basis.Token(<span class="hljs-number">1</span>);
-<span class="hljs-keyword">var</span> log = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span>{</span>
-  console.log(<span class="hljs-string">'token value is'</span>, value);
-};
-token.attach(log);
-
-token.set(<span class="hljs-number">2</span>);
-<span class="hljs-comment">// сonsole&gt; token value is 2</span>
-
-token.detach(log);
-
-token.set(<span class="hljs-number">3</span>);
-<span class="hljs-comment">// функция log вызвана не будет</span>
+<p>Особое внимание стоит уделить методу <code>resolve</code>. Так как это основной, который используется для получения значения, в виду того, что гарантирует получение значения. Его реализация по умолчанию выглядит так:</p>
+<pre><code class="lang-js">basis.data.KeyObjectMap.prototype.resolve = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span>{</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.get(<span class="hljs-keyword">this</span>.keyGetter(value), value);
+}
 </code></pre>
-<p>Для инициации вызова обработчика используется метод <code>apply</code>. Однако использовать этот метод стоит только во внутренней реализации классов, наследованных от <code>basis.Token</code>.</p>
-<h2 id="--">Отложенная обработка изменений</h2>
-<p>Если значение меняется очень часто, выгодно вызывать обработчики не сразу, а лишь когда все изменения будут завершены. Для решения этой задачи можно воспользоваться классом <code>basis.DeferredToken</code> (<a href="http://basisjs.com/docs#basis.DeferredToken" target="_blank">docs</a>). Этот класс наследуется от <code>basis.Token</code> и его экземпляры ведут себя ровно так же, за тем исключением, что в случае изменения значения обработчики вызываются не сразу, а в следующем фрейме (<code>nextTick</code>).</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> token = <span class="hljs-keyword">new</span> basis.Token(<span class="hljs-number">0</span>);
-<span class="hljs-keyword">var</span> deferred = <span class="hljs-keyword">new</span> basis.DeferredToken(<span class="hljs-number">0</span>);
+<p>Можно заметить, что в качестве &quot;ключа&quot; используется результат выполнения <code>keyGetter</code>. По умолчанию, это свойство хранит функцию, которая возвращает значение без изменений (<code>basis.fn.$self</code>). Таким образом переданное значение и является ключом (по умолчанию), а так же является кофигурацией.</p>
+<p>Если метод <code>create</code> не переопределен, то, в качестве значения, создается экземпляр <code>basis.data.Object</code>. Класс значения по умолчанию можно задать через свойство <code>itemClass</code> (по умолчанию <code>basis.data.Object</code>). Конфигурация для создания зависит от типа (см &quot;Разрешение ключевого значения&quot;).</p>
+<p>По умолчанию, при разрушении карты, разрушаются и все его значения. Это исторически сложившееся поведение. С версии <code>1.3</code> этим поведением можно управлять через свойство <code>autoDestroyMembers</code> (по умолчанию <code>true</code>). Если выставить его в <code>false</code>, то значения не будут разрушены при разрушении карты.</p>
+<p>Так же нужно помнить, что при разрушении объектов являющимися значениями, они удаляются из карты. Это делает карты удобными для хнанения значений:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> map = <span class="hljs-keyword">new</span> basis.data.KeyObjectMap({
+  create: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span>{</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> basis.data.Object({ data: { value: key } })
+  }
+});
 
-<span class="hljs-keyword">var</span> log = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span>{</span>
-  console.log(<span class="hljs-string">'token value is'</span>, value);
-};
-token.attach(log);
-deferred.attach(log);
+console.log(map.get(<span class="hljs-number">1</span>));
+<span class="hljs-comment">// &gt; undefined</span>
 
-<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">5</span>; i++)
-  token.set(i);
-<span class="hljs-comment">// console&gt; value is 1</span>
-<span class="hljs-comment">// console&gt; value is 2</span>
-<span class="hljs-comment">// console&gt; value is 3</span>
-<span class="hljs-comment">// console&gt; value is 4</span>
-<span class="hljs-comment">// console&gt; value is 5</span>
+console.log(map.resolve(<span class="hljs-number">1</span>));
+<span class="hljs-comment">// &gt; basis.data.Object { data: { value: 1 } }</span>
 
-<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">5</span>; i++)
-  deferred.set(i);
-console.log(<span class="hljs-string">'demo ends'</span>);
-<span class="hljs-comment">// console&gt; demo ends</span>
-<span class="hljs-comment">// console&gt; value is 5</span>
+console.log(map.get(<span class="hljs-number">1</span>) === map.resolve(<span class="hljs-number">1</span>));
+<span class="hljs-comment">// &gt; true</span>
+
+map.resolve(<span class="hljs-number">1</span>).destroy();
+console.log(map.get(<span class="hljs-number">1</span>));
+<span class="hljs-comment">// &gt; undefined</span>
 </code></pre>
-<p>Если нужно получить <code>basis.DeferredToken</code> от <code>basis.Token</code>, можно воспользоваться методом <code>deferred</code>. Этот метод возвращает один и тот же <code>basis.DeferredToken</code>, созданный при первом вызове. У экземпляров <code>basis.DeferredToken</code> метод <code>deferred</code> возвращает сам себя.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> token = <span class="hljs-keyword">new</span> basis.Token();
-<span class="hljs-keyword">var</span> deferred = token.deferred();
+<blockquote>
+<p>В настоящий момент, разрушения значения, которое является ключом не ведет к удалению из карты. Это будет исправлено в будущих версиях <code>basis.js</code>.</p>
+</blockquote>
+<h2 id="--">Разрешение ключевого значения</h2>
+<p>Ключом может являться произвольное значение. Но в зависимости от типа значения, меняется способ его разрешения:</p>
+<p>– если значение является экземпляром <code>basis.data.Object</code>, то в качестве значения ключа используется свойство <code>basisObjectId</code>;
+– в ином случае используется строковое представление значения.</p>
+<p>Если значение является экземпляром <code>basis.data.Object</code>, то оно преобразуется в конфигурацию <code>{ delegate: value }</code> или в <code>{ data: { id: value, title: value } }</code>. Обычно это подходящие конфигурации для создания нового экземпляра класса <code>basis.data.Object</code>, который является классом значения по умолчанию.</p>
+<blockquote>
+<p>Такое поведение схоже с разрешением признака группы в <code>basis.dom.wrapper.GroupingNode</code> и подмножества в <code>basis.data.dataset.Split</code> и <code>basis.data.dataset.Cloud</code>.</p>
+</blockquote>
+<h2 id="">Использование</h2>
+<p>Карты используются в качестве кеша (переиспользования значений) или для получения одних и тех же значений в разных частях кода в условиях конкуренции.</p>
+<p>Нередко нужно сохранять значения, так как они могут нести информацию о состоянии. Обычно в качестве таких значений выступают экземпляры <code>basis.ui.Node</code> и выгодно сохранять их экземпляры, вместо пересоздания. В этом случае, так же необходимо запретить разрушение дочерних узлов через свойство <code>destroyDataSourceMember</code>, если используется <code>dataSource</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> items = [
+  <span class="hljs-keyword">new</span> basis.data.Object(),
+  <span class="hljs-keyword">new</span> basis.data.Object(),
+];
+<span class="hljs-keyword">var</span> dataset = <span class="hljs-keyword">new</span> basis.data.Dataset();
+<span class="hljs-keyword">var</span> map = <span class="hljs-keyword">new</span> basis.data.KeyObjectMap({
+  itemClass: basis.ui.Node.subclass({
+    init: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      console.log(<span class="hljs-string">'create'</span>);
+      basis.ui.Node.prototype.init.call(<span class="hljs-keyword">this</span>);
+    },
+    destroy: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      console.log(<span class="hljs-string">'destroy'</span>);
+      basis.ui.Node.prototype.init.call(<span class="hljs-keyword">this</span>);
+    }
+  })
+});
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> basis.ui.Node({
+  destroyDataSourceMember: <span class="hljs-literal">false</span>,
+  dataSource: dataset,
+  childFactory: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(config)</span>{</span>
+    <span class="hljs-keyword">return</span> map.resolve(config.delegate);
+  }
+});
 
-console.log(deferred === token.deferred());
-<span class="hljs-comment">// console&gt; true</span>
+dataset.set(items);
+<span class="hljs-comment">// &gt; create</span>
+<span class="hljs-comment">// &gt; create</span>
 
-<span class="hljs-keyword">var</span> token = <span class="hljs-keyword">new</span> basis.DeferredToken();
-console.log(token === token.deferred());
-<span class="hljs-comment">// console&gt; true</span>
+dataset.clear();
+
+dataset.set(items);
+
+dataset.add(<span class="hljs-keyword">new</span> basis.data.Object());
+<span class="hljs-comment">// &gt; create</span>
 </code></pre>
-<h2 id="-">Разрушение токена</h2>
-<p>Несмотря на то, что у токена есть деструктор (метод <code>destroy</code>), вызывать его не обязательно. Достаточно убрать все ссылки на экземпляр <code>basis.Token</code>/<code>basis.DeferredToken</code>, чтобы <code>garbage collector</code> смог освободить занимаемую им память.</p>
+<p>Иногда требуется, например, синхронизировать некоторый набор с <code>selection</code> узла, который выводит некоторый полный набор. В этом случае не известно что будет раньше, создадутся дочерние узлы через <code>dataSource</code> и <code>childFactory</code> или же синхронизируется <code>selection</code>. В любом случае, должны получиться одни и те же узлы (<code>basis.ui.Node</code>):</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> items = basis.array.create(<span class="hljs-number">3</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> basis.data.Object();
+});
+<span class="hljs-keyword">var</span> dataset = <span class="hljs-keyword">new</span> basis.data.Dataset({
+  items: items
+});
+
+<span class="hljs-keyword">var</span> model2node = <span class="hljs-keyword">new</span> basis.data.KeyObjectMap({
+  itemClass: basis.ui.Node.subclass({
+    init: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      console.log(<span class="hljs-string">'create'</span>);
+      basis.ui.Node.prototype.init.call(<span class="hljs-keyword">this</span>);
+    },
+    destroy: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      console.log(<span class="hljs-string">'destroy'</span>);
+      basis.ui.Node.prototype.init.call(<span class="hljs-keyword">this</span>);
+    }
+  })
+});
+
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> basis.ui.Node({
+  destroyDataSourceMember: <span class="hljs-literal">false</span>,
+  dataSource: dataset,
+  selection: { multiple: <span class="hljs-literal">true</span> },
+  childFactory: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(config)</span>{</span>
+    <span class="hljs-keyword">return</span> model2node.resolve(config.delegate);
+  }
+});
+<span class="hljs-comment">// &gt; create</span>
+<span class="hljs-comment">// &gt; create</span>
+<span class="hljs-comment">// &gt; create</span>
+
+view.selection.set(items.slice(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>).map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
+  <span class="hljs-keyword">return</span> model2node.resolve(item);
+}));
+</code></pre>
 
                     
                     </section>
@@ -1047,10 +1096,10 @@ console.log(token === token.deferred());
         </div>
 
         
-        <a href="./resources.html" class="navigation navigation-prev " aria-label="Previous page: Модульность"><i class="fa fa-angle-left"></i></a>
+        <a href="./basis.data.datasets.html" class="navigation navigation-prev " aria-label="Previous page: Набор"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="./bindingbridge.html" class="navigation navigation-next " aria-label="Next page: Binding bridge"><i class="fa fa-angle-right"></i></a>
+        <a href="./basis.data.dataset.html" class="navigation navigation-next " aria-label="Next page: basis.data.dataset"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
