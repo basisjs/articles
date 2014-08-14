@@ -10,9 +10,11 @@ var service = new basis.net.service.Service({
     requestHeaders: {
       Accept: 'application/json'
     },
-    requestClass: {
+    requestClass: {  // неявное расширение basis.net.ajax.Request
+      // переопределять этот метод обычно нет необходимости,
+      // приведено в качестве примера
       getResponseData: function(){
-        return this.data.responseText.toObject();
+        return basis.json.parse(this.xhr.responseText);
       }
     }
   }
