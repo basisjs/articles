@@ -1,26 +1,5 @@
 # basis.net.service
 
-    transportClass: AjaxTransport,
-
-    prepare
-    createTransport
-    createAction
-
-    isSessionExpiredError
-    isSecure
-    sign
-    signature
-
-    sessionOpen
-    sessionClose
-    sessionFreeze
-    sessionUnfreeze
-
-    openSession
-    closeSession
-    freeze
-    unfreeze
-
 Модуль `basis.net.service` предоставляет единственный класс `Service`. Экземпляры этого класса служат для центализованного производства транспортов, обладающих общим базовым поведением, а так же для общего управляния транспортами относящимися к сервису. Он так реализует механизм сессии, который используется для авторизации, а так же позволяет подписывать запросы.
 
 ## Service
