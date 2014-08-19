@@ -137,10 +137,10 @@ var service = new Service({
 
 Класс `Service` является наследником `basis.event.Emitter` и его экземпляров возможны события. На данный момент все события связанны с сессией:
 
-– `sessionOpen` – сессия открыта;
-– `sessionClose` – сессия закрыта;
-– `sessionFreeze` – сессия разморожена;
-– `sessionUnfreeze` – сессия заморожена.
+- `sessionOpen` – сессия открыта;
+- `sessionClose` – сессия закрыта;
+- `sessionFreeze` – сессия разморожена;
+- `sessionUnfreeze` – сессия заморожена.
 
 ## Подпись запросов
 
