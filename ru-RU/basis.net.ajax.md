@@ -6,7 +6,7 @@
 
 Класс `Request` наследуется от `basis.net.Request` и является оберткой над `XMLHttpRequest`. Класс `Transport` наследуется от `basis.net.AbstractRequest`, создает экземпляры `Request` и управляет ими.
 
-Для экземпляра `Transport` заются параметры:
+Для экземпляра `Transport` задаются параметры:
 
   - `asynchronous` - асинхронное выполнение запроса (по умолчанию `true`)
   - `method` - `HTTP`-метод (по умолчанию `GET`)
