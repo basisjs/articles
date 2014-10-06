@@ -14,4 +14,4 @@
 
 `basis.ui.Node` к этому стеку добавляет возможность [привязки шаблона](basis.ui_template.md) и взаимодействия с ним посредством [биндингов](basis.ui_bindings.md) и [действий](basis.ui_actions.md).
 
-Так же в `basis.ui` допределяет классы `basis.dom.wrapper.GroupingNode` и `basis.dom.wrapper.PartitionNode` для работы с шаблонами, образуя `basis.ui.GroupingNode` и `basis.ui.PartitionNode`.
+Так же в `basis.ui` отнаследованы классы `basis.dom.wrapper.GroupingNode` и `basis.dom.wrapper.PartitionNode` для работы с шаблонами - `basis.ui.GroupingNode` и `basis.ui.PartitionNode` соответственно.
