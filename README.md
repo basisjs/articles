@@ -49,5 +49,10 @@
     * [basis.net.action](ru-RU/basis.net.action.md)
     * [basis.net.service](ru-RU/basis.net.service.md)
 * [basis.router](ru-RU/basis.router.md)
+* [basisjs-tools](ru-RU/basisjs-tools/index.md) (консольный инструмент)
+    * create
+    * server
+    * build
+    * extract
 * [Руководство](ru-RU/tutorial/index.md)
     * [Часть 1. Начало работы, представления, модули, инструменты](ru-RU/tutorial/part1/index.md)
