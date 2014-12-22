@@ -389,10 +389,10 @@ console.log(dynamicPluralToken.get());
 На данный момент, сборщик `basisjs-tools` не поддерживает `markup` токены (текущий подход в построении декларации не дает возможности полноценно поддерживать такой тип токенов в сборке). Поэтому по умолчанию `markup` токены "выключены", а для включения необходимо присвоить `true` флагу `enableMarkup`.
 
 ```js
-basis.require('basis.l10n').enableMarkup = true;
+basis.l10n.enableMarkup = true;
 
 // Важно, так работать не будет:
-basis.l10n.enableMarkup = true;
+basis.require('basis.l10n').enableMarkup = true;
 ```
 
 ## Использование в шаблонах
