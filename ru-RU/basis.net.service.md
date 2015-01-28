@@ -79,6 +79,7 @@ if (sessionKey)
 По умолчанию, транспорт сервиса не учитывает открыта сессия или нет. Для того, чтобы это учитывалось, сервису необходимо задать свойству `isSecure` значение `true`. В этом случае, транспорты не будут совершать запросы (они будут игнорироваться), если сессия закрыта. Этим поведением управляет свойство `needSignature`, по умолчанию оно установлено в `true`. Значение `false`, для этого свойства, необходимо выставлять только для транспортов, которые должны выполняться независимо от того, открыта сессия или нет. Обычно это запросы на получение ключа сессии (login), его проверки, отмены ключа сессии (logout), напоминание пароля и т.п.
 
 ```js
+var DataObject = basis.require('basis.data').Object;
 var Service = basis.require('basis.net.service').Service;
 var cookies = basis.require('basis.ua').cookies;
 
@@ -86,32 +87,34 @@ var service = new Service({
   isSecure: true
 });
 
-var login = service.createAction({
-  needSignature: false,            // иначе запрос не будет выполнятся
-  method: 'POST',
-  url: '/login',
-  request: function(login, pwd){
-    return {                       // POST /login
-      params: {                    //
-        login: login,              // login=[login]&password=[pwd]
-        password: pwd              //
+var profile = new DataObject({
+  login: service.createAction({
+    needSignature: false,            // иначе запрос не будет выполнятся
+    method: 'POST',
+    url: '/login',
+    request: function(login, pwd){
+      return {                       // POST /login
+        params: {                    //
+          login: login,              // login=[login]&password=[pwd]
+          password: pwd              //
+        }
       }
-    }
-  },
-  success: function(data){
-    // предположим, сервер отдал JSON
-    // { "status": "ok", "session": "..." }
-    service.openSession(data.session);
+    },
+    success: function(data){
+      // предположим, сервер отдал JSON
+      // { "status": "ok", "session": "..." }
+      service.openSession(data.session);
 
-    // сохраняем ключ сессии в cookie
-    cookies.set('sessionKey', data.session);
-  }
+      // сохраняем ключ сессии в cookie
+      cookies.set('sessionKey', data.session);
+    }
+  })
 });
 
 if (cookies.get('sessionKey'))
   service.openSession(cookies.get('sessionKey')); 
 else
-  login('test', '123');
+  profile.login('test', '123');
 ```
 
 Так как сессия в общем смысле является пользовательским сеансом, то предполагается, что возможна смена ключа сессии или временная заморозка сессии. В этом случае, пользовательский сеанс включает в себя несколько сеансов (сессий) с удаленным сервисом.
