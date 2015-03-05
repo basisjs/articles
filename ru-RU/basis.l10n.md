@@ -295,10 +295,10 @@ var myDict = basis.l10n.dictionary('path/to/dict.l10n');
 console.log(myDict.token('foo').type);
 // console> 'default'
 
-console.log(myDict.token('foo').type);
+console.log(myDict.token('bar').type);
 // console> 'plural'
 
-console.log(myDict.token('foo').type);
+console.log(myDict.token('baz').type);
 // console> 'markup'
 ```
 
