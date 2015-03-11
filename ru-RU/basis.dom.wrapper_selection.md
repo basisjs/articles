@@ -464,11 +464,11 @@ console.log(menu.childNodes.map(function(child){
 
 ## Примеры использования
 
-Несколько примеров использования можно найти в [демонстрациях](//basisjs.com/basisjs/demo/):
+Несколько примеров использования можно найти в [демонстрациях](http://basisjs.com/basisjs/demo/):
 
-- [одно и то же "выделение" для нескольких компонент](//basisjs.com/basisjs/demo/common/selection_share.html);
-- [несколько контекстов выделения в рамках одного дерева](//basisjs.com/basisjs/demo/common/selection_multiple.html);
-- [использование набора выбранных узлов как источник данных](//basisjs.com/basisjs/demo/common/selection_datasource.html) для других компонент.
+- [одно и то же "выделение" для нескольких компонент](http://basisjs.com/basisjs/demo/common/selection_share.html);
+- [несколько контекстов выделения в рамках одного дерева](http://basisjs.com/basisjs/demo/common/selection_multiple.html);
+- [использование набора выбранных узлов как источник данных](http://basisjs.com/basisjs/demo/common/selection_datasource.html) для других компонент.
 
 ### Подсчет числа выбранных узлов
 
