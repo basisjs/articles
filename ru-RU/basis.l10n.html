@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="9" data-basepath="." data-revision="1407807541058">
+    <div class="book" data-github="basisjs/articles" data-level="9" data-basepath="." data-revision="1426117979781">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -1022,7 +1022,7 @@ console.log(myDict.token(<span class="hljs-string">'example.foo'</span>).value);
 <p>Описание словаря может содержать дополнительную информацию о словаре, для этого используется специальная секция <code>_meta</code>. Эта секция, в частности, используется для задание специальных типов для определенных ключей.</p>
 <pre><code class="lang-json">{
   "<span class="hljs-attribute">_meta</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">types</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">example</span>": <span class="hljs-value"><span class="hljs-string">"plural"</span>
     </span>}
   </span>}</span>,
@@ -1162,16 +1162,17 @@ console.log(myDict.token(<span class="hljs-string">'example'</span>).token(<span
 console.log(myDict.token(<span class="hljs-string">'example.foo'</span>) === basis.l10n.token(<span class="hljs-string">'example.foo@path/to/dict.l10n'</span>));
 <span class="hljs-comment">// console&gt; true</span>
 </code></pre>
-<p>У токенов есть тип, который задается в секции <code>_meta</code> описания словаря. Тип токена является одинаковым для всех культур словаря.</p>
-<p>На данный момент токены могут трех типов:</p>
+<h3 id="-">Типы токенов</h3>
+<p>Токен может быть одного трех типов:</p>
 <ul>
-<li><code>default</code> - обычная строка, тип значения по умолчанию;</li>
+<li><code>default</code> - обычная строка, назначается по умолчанию;</li>
 <li><code>plural</code> - <a href="http://ru.wikipedia.org/wiki/%D0%93%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5_%D1%87%D0%B8%D1%81%D0%BB%D0%BE" target="_blank">грамматическое число</a> (единственное и множественное числа), значение склоняемое в зависимости от числа;</li>
-<li><code>markup</code> - строка, которая которая может содержать разметку.</li>
+<li><code>markup</code> - строка, содержащая <code>HTML</code> разметку.</li>
 </ul>
+<p>Тип задается в секции <code>_meta</code> описания словаря, в секции <code>type</code>. Тип накладывается на полный путь токена и является одинаковым для всех культур словаря. Если для пути токена не определен тип или значение типа является неверным – используется тип <code>default</code>.</p>
 <pre><code class="lang-json">{
   "<span class="hljs-attribute">_meta</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">types</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">bar</span>": <span class="hljs-value"><span class="hljs-string">"plural"</span></span>,
       "<span class="hljs-attribute">baz</span>": <span class="hljs-value"><span class="hljs-string">"markup"</span>
     </span>}
@@ -1188,19 +1189,66 @@ console.log(myDict.token(<span class="hljs-string">'example.foo'</span>) === bas
 console.log(myDict.token(<span class="hljs-string">'foo'</span>).type);
 <span class="hljs-comment">// console&gt; 'default'</span>
 
-console.log(myDict.token(<span class="hljs-string">'foo'</span>).type);
+console.log(myDict.token(<span class="hljs-string">'bar'</span>).type);
 <span class="hljs-comment">// console&gt; 'plural'</span>
 
-console.log(myDict.token(<span class="hljs-string">'foo'</span>).type);
+console.log(myDict.token(<span class="hljs-string">'baz'</span>).type);
 <span class="hljs-comment">// console&gt; 'markup'</span>
 </code></pre>
-<h3 id="plural">Plural</h3>
-<p>Значение для таких токенов задается в виде массива, где каждый элемент является формой слова в зависимости от числа. Количество форм и функция выбора формы зависит от культуры, например, в русском языке 3 формы, в английском – 2. В <code>basis.l10n</code> определены функции выбора формы для большинства языков.</p>
-<h3 id="markup">Markup</h3>
-<p>Значения этого типа могут содержать разметку (в остальных типах разметка экранируется), но этим все не ограничивается. По сути такие значения являются описанием шаблона и поддерживают полный синтаксис шаблонов, в том числе использовать биндинги, подключать другие шаблоны, стили, а так же использовать другие словари.</p>
+<h4 id="plural">Plural</h4>
+<p>Для указания, что токен является <code>plural</code>, нужно явно указать тип токена в секции <code>_meta</code> словаря. Значение для таких токенов задается в виде массива, где каждый элемент является формой фразы в зависимости от некоторого числа. Количество форм и функция выбора формы зависит от культуры, например, в русском языке 3 формы, а в английском – 2.</p>
 <pre><code class="lang-json">{
   "<span class="hljs-attribute">_meta</span>": <span class="hljs-value">{
-    "<span class="hljs-attribute">types</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">example</span>": <span class="hljs-value"><span class="hljs-string">"plural"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">en-US</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">example</span>": <span class="hljs-value">[<span class="hljs-string">"example"</span>, <span class="hljs-string">"examples"</span>]
+  </span>}</span>,
+  "<span class="hljs-attribute">ru-RU</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">example</span>": <span class="hljs-value">[<span class="hljs-string">"пример"</span>, <span class="hljs-string">"примера"</span>, <span class="hljs-string">"примеров"</span>]
+  </span>}
+</span>}
+</code></pre>
+<p>В <code>basis.l10n</code> уже определены функции выбора формы для большинства культур (языков). При определеннии формы заданное значение приводится к числу, от числа отбрасывается дробная часть, знак и лишь тогда вычисляется подходящая форма. Доступные функции выбора формы можно получить в виде массива, обратившись к свойству <code>basis.l10n.pluralForms</code>. Всего определена 21 форма.</p>
+<p>Чтобы получить значение для некоторого числа, необходимо использовать методы <code>basis.l10n.Token#token()</code> или <code>basis.l10n.Token#computeToken()</code>.</p>
+<p>Метод <code>basis.l10n.Token#token()</code> может подойти в простых случаях, когда нужно получить значение без сохранения динамических свойств.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> l10n = basis.require(<span class="hljs-string">'basis.l10n'</span>);
+<span class="hljs-keyword">var</span> myDict = l10n.dictionary(__filename);
+<span class="hljs-keyword">var</span> staticPluralToken = myDict.token(<span class="hljs-string">'example'</span>).token(<span class="hljs-number">5</span>);
+
+console.log(staticPluralToken.get());
+<span class="hljs-comment">// examples</span>
+
+l10n.setCulture(<span class="hljs-string">'ru-RU'</span>);
+console.log(staticPluralToken.get());
+<span class="hljs-comment">// примера</span>
+</code></pre>
+<p>Как видно из примера, метод <code>basis.l10n.Token#token()</code> получает необходимую форму (в примере от значения <code>5</code>) и возврашает ее текущее значение. Но само значение, для которого была вычислена форма, не сохраняется и такой токен всегда будет возвращать значение для одной и той же формы. В примере, при переключении культуры, по прежнему была взята вторая форма (или первая, если считать с нуля), а не правильная форма для числа <code>5</code>.</p>
+<p>Для сохранения динамических свойств необходимо сохранять значение, для которого вычисляется форма. В этом случае, используются токены произведенные методом <code>basis.l10n.Token#computeToken()</code>. Полученный этим методом токен, хранит значение и его можно изменить используя метод <code>set(value)</code>. Токен перевычисляет форму при изменении значения, словаря или культуры.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> myDict = basis.require(<span class="hljs-string">'basis.l10n'</span>).dictionary(__filename);
+<span class="hljs-keyword">var</span> dynamicPluralToken = myDict.token(<span class="hljs-string">'example'</span>).computeToken(<span class="hljs-number">1</span>);
+console.log(dynamicPluralToken.get());
+<span class="hljs-comment">// example</span>
+
+dynamicPluralToken.set(<span class="hljs-number">5</span>);
+console.log(dynamicPluralToken.get());
+<span class="hljs-comment">// examples</span>
+
+l10n.setCulture(<span class="hljs-string">'ru-RU'</span>);
+console.log(dynamicPluralToken.get());
+<span class="hljs-comment">// примеров</span>
+
+dynamicPluralToken.set(<span class="hljs-number">2</span>);
+console.log(dynamicPluralToken.get());
+<span class="hljs-comment">// примера</span>
+</code></pre>
+<h4 id="markup">Markup</h4>
+<p>Значения этого типа могут содержать разметку (в остальных типах разметка экранируется). Но ключевое - такие значения являются описанием шаблона и поддерживают полный синтаксис шаблонов, в том числе в их описании можно использовать биндинги, подключать другие шаблоны, стили, а так же использовать другие <code>l10n</code> из того же словаря или других словарей.</p>
+<pre><code class="lang-json">{
+  "<span class="hljs-attribute">_meta</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"markup"</span></span>,
       "<span class="hljs-attribute">content</span>": <span class="hljs-value"><span class="hljs-string">"markup"</span>
     </span>}
@@ -1214,7 +1262,12 @@ console.log(myDict.token(<span class="hljs-string">'foo'</span>).type);
 </code></pre>
 <p>В данном примере два <code>markup</code> токена. Первый (<code>description</code>) использует биндинг <code>{value}</code>, а так же подключает содержимое из файла <code>en.tmpl</code> (путь к файлу разрешается относительно файла словаря). Второй (<code>content</code>) используется два <code>l10n</code> биндинга, и в этом случае значения будут браться из самого словаря (так как содержимое &quot;шаблона&quot; описано в словаре).</p>
 <p>При вставке в шаблон, содержимое <code>markup</code> токена оборачивается в <code>&lt;span class=&quot;basisjs-markup&quot;&gt;&lt;/span&gt;</code>.</p>
-<p>На данный момент, сборщик <code>basisjs-tools</code> не поддерживает <code>markup</code> токены (текущий подход в построении декларации не дает возможности полноценно поддерживать такой тип токенов в сборке). Поэтому по умолчанию <code>markup</code> токены &quot;выключены&quot;, а для включения необходимо присвоить <code>true</code> флагу <code>basis.l10n.enableMarkup</code>.</p>
+<p>На данный момент, сборщик <code>basisjs-tools</code> не поддерживает <code>markup</code> токены (текущий подход в построении декларации не дает возможности полноценно поддерживать такой тип токенов в сборке). Поэтому по умолчанию <code>markup</code> токены &quot;выключены&quot;, а для включения необходимо присвоить <code>true</code> флагу <code>enableMarkup</code>.</p>
+<pre><code class="lang-js">basis.l10n.enableMarkup = <span class="hljs-literal">true</span>;
+
+<span class="hljs-comment">// Важно, так работать не будет:</span>
+basis.require(<span class="hljs-string">'basis.l10n'</span>).enableMarkup = <span class="hljs-literal">true</span>;
+</code></pre>
 <h2 id="--">Использование в шаблонах</h2>
 <p>Так как класс <code>basis.l10n.Token</code> наследуется от <code>basis.Token</code>, то токены так же имеют интерфейс <a href="bindingbridge.html"><code>binding bridge</code></a>) и могут использоваться в биндигах, как сами по себе, так и в качестве результата <code>getter</code>.</p>
 <pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.l10n'</span>);
@@ -1269,18 +1322,24 @@ basis.require(<span class="hljs-string">'basis.ui'</span>);
   }
 });
 </code></pre>
-<p>Токены можно использовать в шаблоне и без биндингов. Для этого используются маркеры с префикcом <code>l10n:</code>.</p>
-<p>Файл словаря указывается с помощью тега <code>&lt;b:l10n&gt;</code>, в котором указывается путь к файлу (относительно шаблона). Если имя файла словаря отличается от имени файла шаблона только разрешением (например, <code>path/to/template.tmpl</code> и <code>path/to/template.l10n</code>), то указывать <code>&lt;b:l10n&gt;</code> не обязательно (обычно не указывается). Шаблон начинает использовать словарь, если в описание шаблона есть хотя бы один маркер с префиксом <code>l10n:</code>.</p>
-<p>Для маркеров с префиксом <code>l10n:</code> допускается указание вложенного маркера, вместо последней части пути. Таким образом при изменении биндинга будет выбираться тот или иной токен.</p>
+<p>Токены можно использовать в шаблоне напрямую, без получения через биндинги. Для этого используются маркеры с префикcом <code>l10n:</code>. Маркеры с префиксом <code>l10n:</code> можно использовать для текстовых узлов и в атрибутах.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"{l10n:attr.example}: {value}"</span>&gt;</span>
+  {l10n:example}
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+</code></pre>
+<p>Для маркеров с префиксом <code>l10n:</code> допускается использование биндинга в качестве последней части пути. Это применяется для перечислений (<code>enum</code> токены) и грамматического числа (<code>plural</code> токены). Таким образом при изменении значения биндинга будет значение будет перевычисляться (выбираться тот или иной токен).</p>
+<pre><code>&lt;div class=&quot;example&quot;&gt;
+  Enum: {l10n:state.{state}}&lt;br/&gt;
+  Plural: {l10n:plural.{number}}
+&lt;/div&gt;
+</code></pre><p>Файл словаря указывается с помощью тега <code>&lt;b:l10n&gt;</code>, в котором в атрибуте <code>src</code> указывается путь к файлу (относительно шаблона). Если имя файла словаря отличается от имени файла шаблона только разрешением (например, путь к файлу шаблона <code>path/to/template.tmpl</code>, а путь к словарю <code>path/to/template.l10n</code>), то указывать тег <code>&lt;b:l10n&gt;</code> не обязательно (обычно не указывается).</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:l10n</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./path/to/dict.l10n"</span>/&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"{l10n:attr.example}: {value}"</span>&gt;</span>
-  Default: {l10n:foo}<span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span>
-  Enum: {l10n:state.{state}}<span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span>
-  Plural: {l10n:plural.{value}}<span class="hljs-tag">&lt;<span class="hljs-title">br</span>/&gt;</span>
-  Markup: {l10n:path.to.markup.token}
+  {l10n:example}
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
+<p>Шаблон использует словарь, только если в описании шаблона есть хотя бы один маркер с префиксом <code>l10n:</code>. Заданный (явно или неявно) словарь применяется только для маркеров в самом описании шаблона, и на включаемые описания (подключаемые через <code>&lt;b:include&gt;</code>) не распространяется.</p>
 <h2 id="">Инструменты</h2>
 <p>Для работы с локализацией можно использовать панель разработчика <code>basis.devpanel</code> и <a href="https://chrome.google.com/webstore/detail/basisjs-tools/paeokpmlopbdaancddhdhmfepfhcbmek" target="_blank">плагин</a> для <code>Google Chrome</code>.</p>
 <p><img src="img/basis.l10n-devpanel.png" alt="basis.devpanel"></p>

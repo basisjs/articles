@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="4.3" data-basepath="." data-revision="1407807541058">
+    <div class="book" data-github="basisjs/articles" data-level="4.3" data-basepath="." data-revision="1426117979781">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -960,78 +960,140 @@
                     <section class="normal" id="section-gitbook_8">
                     
                         <h1 id="">Наборы</h1>
-<p>Набор (dataset) – <em>неупорядоченное множество</em> объектов данных (на данный момент экземпляров <code>basis.data.Object</code> и его потомков). Они отвечают на вопрос: входит ли некоторый объект в их состав или нет. Так как набор это множество, то каждый объект в наборе присутствует в единственном экземпляре.</p>
-<p>Основополагающим классом этой группы является <code>basis.data.ReadOnlyDataset</code>.</p>
+<p>Набор (dataset) – <em>неупорядоченное множество</em> объектов данных (экземпляров <code>basis.data.Object</code> и его потомков). Так как набор это множество, то каждый объект в наборе присутствует в единственном экземпляре. Набор отвечает на вопрос входит ли некоторый объект в его состав или нет. </p>
+<p>Базовым классом этой группы классов является <code>basis.data.ReadOnlyDataset</code>.</p>
 <blockquote>
 <p>До версии 1.3 этот класс назывался <code>AbstractDataset</code>.</p>
 </blockquote>
 <p>Наборы бывают двух типов: пользовательские, имеющие интерфейс для изменения состава, и автоматические, состав которых определяется некоторым правилом.</p>
-<p>Основные классы наборов описаны в пространстве имен <code>basis.data</code>, дополнительные в <a href="basis.data.datasets.html"><code>basis.data.dataset</code></a> (большая часть автоматических наборов), <code>basis.data.index</code> и других.</p>
+<p>Основные классы наборов описаны в пространстве имен <code>basis.data</code>, дополнительные в <a href="basis.data.dataset.html"><code>basis.data.dataset</code></a> (большая часть <a href="basis.data.dataset.html">автоматических наборов</a>), <code>basis.data.index</code> и других.</p>
 <h2 id="readonlydataset">ReadOnlyDataset</h2>
-<p><code>ReadOnlyDataset</code> является освопологающим классом для наборов, наследуется от <code>basis.data.AbstactData</code>. Экземпляры класса могут хранить данные, но не имеют интерфейса для модификации состава.</p>
-<p>Наборы хранят элементы в виде хеш-таблиц (карт) или более сложных структур, поэтому чтобы получить список всех элементов набора, используется метод <code>getItems</code>. Количество элементов можно узнать с помощью свойства <code>itemCount</code>. Чтобы узнать входит ли элемент в состав набора используется метод <code>has</code>.</p>
+<p><code>ReadOnlyDataset</code> наследуется от <code>basis.data.AbstactData</code> и является базовым классом для наборов. Экземпляры класса хранят информацию о входении в них объектов, но не имеют интерфейса для модификации этой информации.</p>
+<p>Различные классы наборов хранят элементы в виде хеш-таблиц (карт) или более сложных структур, поэтому для получения списка всех элементов набора в виде массива используется универсальный метод <code>getItems()</code>. Узнать количество элементов можно помощью свойства <code>itemCount</code>. </p>
 <pre><code class="lang-js">console.log(dataset.getItems());
 <span class="hljs-comment">// console&gt; [object, object, object]</span>
 
 console.log(dataset.itemCount);
 <span class="hljs-comment">// console&gt; 3</span>
-
-console.log(dataset.has(dataset.pick()));
-<span class="hljs-comment">// console&gt; true</span>
 </code></pre>
-<p>Чтобы получить любой произвольный элемент набора используется метод <code>pick</code>, чтобы получить N (максимум) произвольных элементов – метод <code>top</code>.</p>
+<blockquote>
+<p>Для улучшения производительности, метод <code>getItems()</code> кеширует результат выполнения, до тех пор, пока набор не будет изменен или разрушен. Таким образом, при повторном вызове возвращается тот же массив. По этой причине, массив, возвращаемый этим метод, нельзя менять. В целом, стоит избегать использования <code>getItems()</code> и обычно в его использовании нет необходимости.</p>
+</blockquote>
+<p>Метод <code>getValues()</code> позволяет получить список значений, полученных от каждого элемента набора. Методу в качестве параментра передается функция-геттер или строка, из которой генерируется такая функция (используется <code>basis.getter()</code>).</p>
+<pre><code class="lang-js">dataset.getValues(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
+  <span class="hljs-keyword">return</span> item.data.value;
+});
+
+<span class="hljs-comment">// или</span>
+
+dataset.getValues(<span class="hljs-string">'data.value'</span>);
+
+<span class="hljs-comment">// обе записи эквивалентны</span>
+
+dataset.getItems().map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
+  <span class="hljs-keyword">return</span> item.data.value;
+});
+</code></pre>
+<blockquote>
+<p>Результат выполнения <code>getValues()</code> не кешируется и может использовать как угодно.</p>
+</blockquote>
+<p>Чтобы получить произвольный элемент набора используется метод <code>pick()</code>, а для получения <code>N</code> (максимум) произвольных элементов – метод <code>top()</code>.</p>
 <pre><code class="lang-js">console.log(dataset.pick());
 <span class="hljs-comment">// console&gt; object</span>
 
 console.log(dataset.top(<span class="hljs-number">2</span>));
 <span class="hljs-comment">// console&gt; [object, object]</span>
 </code></pre>
-<p>Метод <code>forEach</code> позволяет выполнить некоторую функцию для всех элементов набора.</p>
+<p>Чтобы узнать входит ли объект в состав набора используется метод <code>has()</code>.</p>
+<pre><code class="lang-js">console.log(dataset.has(dataset.pick()));
+<span class="hljs-comment">// console&gt; true</span>
+</code></pre>
+<p>Метод <code>forEach</code> позволяет выполнить некоторую функцию для каждого элемента набора.</p>
 <pre><code class="lang-js">dataset.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
   console.log(item);
 });
+
+<span class="hljs-comment">// эквивалентно</span>
+
+dataset.getItems().forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
+  console.log(item);
+});
 </code></pre>
-<p>Когда меняется состав набора, выбрасывается событие <code>itemsChanged</code>. Обработчики получают параметр <code>delta</code> - изменения в наборе. Если добавлены новые элементы, то дельта содержит свойство <code>inserted</code>, массив с новыми членами, а если некоторые элементы удалены, то дельта содержит свойство <code>deleted</code>, массив с удаленными членами.</p>
-<pre><code class="lang-js">someDataset.addHandler({
+<p>Когда меняется состав набора, выбрасывается событие <code>itemsChanged</code>. Обработчики получают параметр <code>delta</code> - изменения в наборе. Если добавлены новые элементы, то дельта содержит свойство <code>inserted</code>, массив с новыми объектами, а если некоторые элементы удалены – свойство <code>deleted</code>, массив с удаленными объектами.</p>
+<pre><code class="lang-js">dataset.addHandler({
   itemsChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(dataset, delta)</span>{</span>
     <span class="hljs-keyword">if</span> (delta.inserted)
       <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, item; item = delta.inserted[i]; i++)
-        console.log(<span class="hljs-string">'item added'</span>, delta.inserted[i]);
+        console.log(<span class="hljs-string">'item added'</span>, item);
 
     <span class="hljs-keyword">if</span> (delta.deleted)
       <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, item; item = delta.deleted[i]; i++)
-        console.log(<span class="hljs-string">'item removed'</span>, delta.deleted[i]);
+        console.log(<span class="hljs-string">'item removed'</span>, item);
   }
 });
 </code></pre>
 <h2 id="dataset">Dataset</h2>
-<p>Класс <code>Dataset</code> предназначен для создания пользовательских наборов. Этот класс имеет методы для управления составом набора.</p>
-<p>Основые операции с набором (методы):</p>
+<p>Класс <code>Dataset</code> наследуется от <code>ReadOnlyDataset</code> и предназначен для создания наборов, составом которых можно управлять.</p>
+<p>Этот класс предоставляет следующие методы:</p>
 <ul>
 <li><p><code>add(items)</code> - добавление элементов; </p>
 </li>
 <li><p><code>remove(items)</code> - удаление элементов;</p>
 </li>
-<li><p><code>set(items)</code> - задать набор;</p>
+<li><p><code>set(items)</code> - задать состав;</p>
 </li>
 <li><p><code>sync(items)</code> - синхронизация (см. подробнее ниже);</p>
 </li>
-<li><p><code>clear()</code> - очистить набор;</p>
+<li><p><code>clear()</code> - очистить (удалить все элементы);</p>
 </li>
 </ul>
-<p>Методам <code>add</code>, <code>remove</code>, <code>set</code>, <code>clear</code> передается массив элементов. Для методов <code>add</code> и <code>remove</code> можно передать и одиночный объект. При выполнении методов дубликаты и значения не являющиеся экземплярами <code>basis.data.Object</code> – игнорируются.</p>
+<p>Методам <code>add()</code>, <code>remove()</code>, <code>set()</code> и <code>sync()</code> передается массив элементов. Методам <code>add()</code> и <code>remove()</code> можно передавать одиночный объект. При выполнении методов дубликаты и значения не являющиеся экземплярами <code>basis.data.Object</code> – игнорируются.</p>
 <p>В ходе выполнения методов составляется дельта изменений: какие элементы удалены и какие добавлены. Если дельта не пустая (хотя бы один элемент добавился или удалился), то выбрасывается событие <code>itemsChanged</code>.</p>
-<p>Процесс синхронизации (метод <code>sync</code>) подразумевает сравнение текущего набора с переданным. В случае удаления элемента из набора, он разрушается (вызывается его метод <code>destroy</code>).</p>
-<blockquote>
-<p>Синхронизация работает слующим образом. Пусть текущий набор A, а переданный набор B. Если элемент присутствует в обоих наборах, то никаких действий не предпринимается. Если элемент есть только в A, но отсутствует в B, то элемент разрушается (вызывается его метод <code>destroy</code>). Если элемента нет в A, но есть в B, то он добавляется в A.</p>
-</blockquote>
-<p>Можно задать состав набора при его создании, для этого используется свойство <code>items</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> dataset = <span class="hljs-keyword">new</span> basis.data.Dataset();
+
+dataset.add([object1, object2]);
+<span class="hljs-comment">// console&gt; { inserted: [object1, object2] }</span>
+<span class="hljs-comment">// если необходимо добавить один элемент, не обязательно передавать массив</span>
+dataset.add(object3);
+<span class="hljs-comment">// console&gt; { inserted: [object3] }</span>
+
+dataset.remove([object3, object1]);
+<span class="hljs-comment">// console&gt; { deleted: [object3, object1] }</span>
+<span class="hljs-comment">// если необходимо удали один элемент, не обязательно передавать массив</span>
+dataset.remove(object2);
+<span class="hljs-comment">// console&gt; { deleted: [object2] }</span>
+
+dataset.set([object1, object3]);
+<span class="hljs-comment">// console&gt; { inserted: [object1, object3] }</span>
+dataset.set([object3, object2]);
+<span class="hljs-comment">// console&gt; { inserted: [object2], deleted: [object1] }</span>
+</code></pre>
+<p>Процесс синхронизации (метод <code>sync()</code>) подразумевает сравнение текущего набора с переданным списком элементом. В случае удаления элемента из набора, он разрушается (вызывается его метод <code>destroy</code>).</p>
+<p>Синхронизация работает слующим образом. Пусть текущий список элементов это <code>A</code>, а переданный список – <code>B</code>. Если элемент присутствует в обоих списках, то никаких действий не производится. Если элемент есть только в <code>A</code>, но отсутствует в <code>B</code>, то элемент разрушается (вызывается его метод <code>destroy</code>). Если элемента нет в списке <code>A</code>, но он есть в <code>B</code>, то он добавляется в набор.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> DemoObject = basis.data.Object.subclass({
+  destroy: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    console.log(<span class="hljs-keyword">this</span>.name + <span class="hljs-string">' destroy'</span>);
+  }
+});
+<span class="hljs-keyword">var</span> object1 = <span class="hljs-keyword">new</span> DemoObject({ name: <span class="hljs-string">'object1'</span> });
+<span class="hljs-keyword">var</span> object2 = <span class="hljs-keyword">new</span> DemoObject({ name: <span class="hljs-string">'object2'</span> });
+<span class="hljs-keyword">var</span> object3 = <span class="hljs-keyword">new</span> DemoObject({ name: <span class="hljs-string">'object3'</span> });
+<span class="hljs-keyword">var</span> dataset = <span class="hljs-keyword">new</span> basis.data.Dataset();
+
+dataset.set([object1, object2]);
+
+dataset.sync([object2, object3]);
+<span class="hljs-comment">// console&gt; object1 destroy</span>
+<span class="hljs-comment">// console&gt; { inserted: [object3], deleted: [object1] }</span>
+</code></pre>
+<p>Можно задать состав набора при его создании, используя свойство <code>items</code>. В дальнейшем это свойство никак не используется и равно <code>null</code>.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> dataset = <span class="hljs-keyword">new</span> basis.data.Dataset({
   items: [
     ...
   ]
 });
 </code></pre>
+<p>Если элемент набора разрушается (вызывается его метод <code>destroy()</code>), он автоматически удаляется из набора.</p>
 <h2 id="resolvedataset">resolveDataset</h2>
 <p>Многие классы позволяют подключать наборы. Нередко ссылка на набор хранится свойством некоторого объекта. Функция <code>resolveDataset</code> умеет получать ссылку на набор из некоторых типов объектов, и отслеживать изменения в исходном объекте, обновляя ссылку на набор. При этом создается специальный объект – адаптер, который хранит информацию о связи.</p>
 <p>Функция принимает 4 параметра:</p>

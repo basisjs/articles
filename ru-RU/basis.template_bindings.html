@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="8.2" data-basepath="." data-revision="1407807541058">
+    <div class="book" data-github="basisjs/articles" data-level="8.2" data-basepath="." data-revision="1426117979781">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -957,7 +957,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_29">
+                    <section class="normal" id="section-gitbook_30">
                     
                         <h1 id="---">Правила применения значений биндингам</h1>
 <p>Различается 6 типов биндингов (см <a href="basis.template_format.html#Биндинги">&quot;Биндинги&quot;</a>):</p>
@@ -1189,7 +1189,7 @@ console.log(tmpl.element.outerHTML);
 </code></pre>
 </li>
 </ul>
-<p>Определение <code>&lt;b:define&gt;</code> для всех биндингов используемых в атрибуте класс является кране желательным, и используется для определения проблем в шаблонах и стилях, а так же получения лучших результатов при сборке приложения (подробнее в описании <a href="basis.template_format.html#bdefine"><code>&lt;b:define&gt;</code></a>).</p>
+<p>Определение <code>&lt;b:define&gt;</code> для всех биндингов используемых в атрибуте class является крайне желательным, и используется для определения проблем в шаблонах и стилях, а так же получения лучших результатов при сборке приложения (подробнее в описании <a href="basis.template_format.html#bdefine"><code>&lt;b:define&gt;</code></a>).</p>
 <p>Перед любым биндингом в атрибуте <code>class</code> может быть некоторая строка - префикс. Это позволяет избегать конфликта имен классов, так как разные биндинги могут иметь одинаковые значения.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> basis.template.html.Template(
   <span class="hljs-string">'&lt;div class="item item_{foo} prefix{bar}"&gt;'</span>

@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="10" data-basepath="." data-revision="1407807541058">
+    <div class="book" data-github="basisjs/articles" data-level="10" data-basepath="." data-revision="1426117979781">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -957,14 +957,14 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_25">
+                    <section class="normal" id="section-gitbook_26">
                     
                         <h1 id="basisnet">basis.net</h1>
 <p>Основой для севого взаимодействия является модуль <code>basis.net</code>. Он не реализует конкретного способа сетевого сообщения, но предоставляет базовую функциональность, куда входят:</p>
 <ul>
 <li>класс <code>AbstractRequest</code> - абстрактный запрос</li>
 <li>класс <code>AbstractTransport</code> - абстрактный транспорт, управляет запросами</li>
-<li>объект <code>transportDispatcher</code> - глобальный диспечер всех транспортов</li>
+<li>объект <code>transportDispatcher</code> - глобальный диспетчер всех транспортов</li>
 </ul>
 <p>Другие модули реализуют различные способы сетевого взаимодействия:</p>
 <ul>
@@ -1011,9 +1011,9 @@ transport.request({
 <li><code>failure(error)</code> - возникает при неудачном выполнении запроса;</li>
 <li><code>complete()</code> - возникает при завершении запроса независимо от его статуса.</li>
 <li><code>abort()</code> - возникает при отмене запроса (вручную или по таймауту);</li>
-<li><code>timeout()</code> - возникает, когда привышет лимит ожидания</li>
+<li><code>timeout()</code> - возникает, когда привышен лимит ожидания</li>
 </ul>
-<p>Данные события возникают у экземпляров запросов, далее делегируются их транспорту, а затем общему диспечеру.</p>
+<p>Данные события возникают у экземпляров запросов, далее делегируются их транспорту, а затем общему диспетчеру.</p>
 <p>[TODO: request/abort/stop/resume/influence/stateOnAbort]</p>
 
                     

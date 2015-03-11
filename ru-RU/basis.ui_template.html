@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="7.1" data-basepath="." data-revision="1407807541058">
+    <div class="book" data-github="basisjs/articles" data-level="7.1" data-basepath="." data-revision="1426117979781">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -957,7 +957,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_35">
+                    <section class="normal" id="section-gitbook_36">
                     
                         <h1 id="basisui--">basis.ui и шаблоны</h1>
 <p>Шаблон назначается свойтвом <code>template</code>. При создании класса производного от <code>basis.ui.Node</code> или их экземпляров, этому свойству задается экземпляр <code>basis.template.html.Template</code>. Используя его объект создаст экземпляр шаблона (DOM фрагмент + интерфейс) и будет заниматься его обслуживанием.</p>
@@ -969,10 +969,10 @@
   template: <span class="hljs-keyword">new</span> basis.template.html.Template(basis.resource(<span class="hljs-string">'./path/to/template.tmpl'</span>))
 });
 </code></pre>
-<p>Текущий экземпляр шаблона хранится в свойстве <code>tmpl</code>. При назначении шаблона так же разрешаются и сохраняются ссылки на ключевые узлы DOM фрагмента <code>element</code> и <code>childNodesElement</code>. В дальнейшем эти ссылки используются для организации баузерных DOM узлов, без обращения к <code>tmpl</code>.</p>
+<p>Текущий экземпляр шаблона хранится в свойстве <code>tmpl</code>. При назначении шаблона так же разрешаются и сохраняются ссылки на ключевые узлы DOM фрагмента <code>element</code> и <code>childNodesElement</code>. В дальнейшем эти ссылки используются для организации браузерных DOM узлов, без обращения к <code>tmpl</code>.</p>
 <p>Для передачи значений доступных шаблону используется свойство <a href="basis.ui_bindings.html">bindings</a>, а для обратной связи метод <code>templateAction</code> и свойство <a href="basis.ui_actions.html">action</a>.</p>
 <p>В течении жизни экземпляра, шаблон можно изменить методом <code>setTemplate</code>, которому передается другой экземпляр <code>basis.template.html.Template</code>. Метод обеспечивает привязку к шаблону.</p>
-<p>При смене шаблона или изменении самого шаблона (его описания) вызывается метод <code>templateSync</code>. Этот метод производит создания экземпляра шаблона и осуществляет синхронизацию с ним, при этом выбрасывается событие <code>templateChanged</code> без параметров. Если требуется изменять что-то в DOM фрагменте, создаваемом шаблоном, стоит это делать только этом методе, переопределяя его.</p>
+<p>При смене шаблона или изменении самого шаблона (его описания) вызывается метод <code>templateSync</code>. Этот метод производит создания экземпляра шаблона и осуществляет синхронизацию с ним, при этом выбрасывается событие <code>templateChanged</code> без параметров. Если требуется изменять что-то в DOM фрагменте, создаваемом шаблоном, стоит это делать только в этом методе, переопределяя его.</p>
 <p>По умолчанию для <code>basis.ui.Node</code> и <code>basis.ui.PartitionNode</code> задан шаблон с путым <code>&lt;div&gt;</code> элементом. Так как экземпляры <code>basis.template.html.Template</code> поддерживают <a href="basis.Class.html#Авторасширение">авторасширение</a>, то не обязательно создавать экземпляр <code>basis.template.html.Template</code>, достаточно передать значение, которое будет являться источником для нового шаблона.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> Foo = basis.ui.Node.subclass({
   template: <span class="hljs-string">'&lt;h1&gt;hello world&lt;/h1&gt;'</span>  <span class="hljs-comment">// это эквивалентно new basis.template.html.Template('&lt;h1&gt;hello world&lt;/h1&gt;')</span>

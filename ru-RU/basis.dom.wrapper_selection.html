@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="6.7" data-basepath="." data-revision="1407807541058">
+    <div class="book" data-github="basisjs/articles" data-level="6.7" data-basepath="." data-revision="1426117979781">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -957,21 +957,526 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_19">
+                    <section class="normal" id="section-gitbook_20">
                     
                         <h1 id="-selection">Выделение (selection)</h1>
-<p>Паттерн &quot;выбранный&quot; делает попытку универсального обозначения &quot;особенных&quot; элементов среди других и часто используется в интерфейсах.</p>
-<p>Стоит воспринимать этот паттерн более широко, нежели просто выбранный элемент (выбранные элементы) списка. Состояния активный (active), текущий (current) и другие, так же могут быть выражены через этот паттерн.</p>
+<p>Механизм &quot;выделения&quot; предназначен для универсального обозначения &quot;выбранных&quot; элементов, часто используется в интерфейсах.</p>
+<p>Определение &quot;выбранный&quot; стоит воспринимать более широко. Такие состояния как активный (active), текущий (current) и другие, так же могут быть выражены через этот паттерн.</p>
 <h2 id="-">Принцип работы</h2>
-<p>Узел считается выбранным, если его свойство <code>selected</code> имеет значение <code>true</code>. Это значение может быть задано при создании узла, либо изменено методами <code>select</code> (устанавливает значение <code>true</code>), <code>unselect</code> (устанавливает значение <code>false</code>) или <code>setSelected</code> (устанавливает значение в зависимости от переданного значения).</p>
-<p>Свойство <code>selectable</code> определяет, может ли узел быть выбранным, то есть может ли свойство <code>selected</code> иметь значение <code>true</code>.</p>
+<p>Узел считается выбранным, если его свойство <code>selected</code> имеет значение <code>true</code>. Это значение можно изменить методами:</p>
+<ul>
+<li><code>select(multiple)</code> – устанавливает значение <code>true</code>;</li>
+<li><code>unselect()</code> – устанавливает значение <code>false</code>;</li>
+<li><code>setSelected(selected, multiple)</code> - устанавливает значение в зависимости от переданного параметра <code>selected</code>.</li>
+</ul>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node();
+
+console.log(view.selected);
+<span class="hljs-comment">// &gt; false</span>
+
+view.select();
+console.log(view.selected);
+<span class="hljs-comment">// &gt; true</span>
+
+view.unselect();
+console.log(view.selected);
+<span class="hljs-comment">// &gt; false</span>
+</code></pre>
 <blockquote>
-<p>Это свойство не является востребованным и может приводить к несогласованности свойств. Поэтому может быть исключено в будущих версиях <code>basis.js</code>.</p>
+<p>Стоит помнить, что значение <code>selected</code> должно меняться исключительно указанными выше методами. Для чего используется параметр <code>multiple</code> будет описано в разделе <a href="#%D0%95%D0%B4%D0%B8%D0%BD%D0%B8%D1%87%D0%BD%D1%8B%D0%B9-%D0%B8-%D0%BC%D0%BD%D0%BE%D0%B6%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9-%D0%B2%D1%8B%D0%B1%D0%BE%D1%80">Единичный и множественный выбор</a>.</p>
 </blockquote>
-<h2 id="selection--context">Selection &amp; context</h2>
-<p>[TODO] selection/setSelection/hasOwnSelection/nullSelection/contextSelection</p>
-<h2 id="">События</h2>
-<p>При установке свойства <code>selected</code> в значение <code>true</code>, выбрасывается событие <code>select</code>, при установке в значение <code>false</code> –  <code>unselect</code>. При создании узла данные события не срабатывают.</p>
+<p>Когда свойство <code>selected</code> становится равно <code>true</code>, выбрасывается событие <code>select</code>, при установке в <code>false</code> – <code>unselect</code>. Начальное значение можно задать при создании узла, но событие <code>select</code> при этом выбрасываться не будет.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node({
+  selected: <span class="hljs-literal">true</span>,
+  handler: {
+    select: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      console.log(<span class="hljs-string">'node selected'</span>);
+    },
+    unselect: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      console.log(<span class="hljs-string">'node unselected'</span>);
+    }
+  }
+});
+
+<span class="hljs-comment">// событие select выброшено не будет</span>
+console.log(view.selected);
+<span class="hljs-comment">// &gt; true</span>
+
+view.select();
+<span class="hljs-comment">// событие select выброшено не будет, так как </span>
+<span class="hljs-comment">// значение selected не было изменено</span>
+
+view.unselect();
+<span class="hljs-comment">// &gt; node unselected</span>
+
+view.select();
+<span class="hljs-comment">// &gt; node selected</span>
+</code></pre>
+<h2 id="--selection">Контекст выделения (Selection)</h2>
+<p>Изменение значения <code>selected</code> без дополнительных настроек не влияет на состояние других узлов. Но нередко необходимо чтобы значение <code>selected</code> учитывалось в рамках нескольких узлов. Например, в списках нужно учитывать все элементы списка. Для этой цели узлам назначается контекст выделения.</p>
+<p>Контекст выделения задается через свойство <code>contextSelection</code>. По умолчанию оно не задано (равно <code>null</code>) и узел ведет себя независимо (поведение похоже на <code>checkbox</code>).</p>
+<p>Сам контекст выделения представляет собой набор, экземпляр специального класса <code>basis.dom.wrapper.Selection</code>. Этот класс унаследован от <code>basis.data.Dataset</code> и имеет тот же интерфейс. Его главной особенностью является синхронизация своего состава со значением свойства <code>selected</code> его членов. Так, если добавить в такой набор узел, то свойство <code>selected</code> узла будет выставлено в <code>true</code>, а если удалить из набора, то у удаленного узла <code>selected</code> станет равно <code>false</code>. Справедливо и обратное, если узлу выставить значение <code>selected</code> в <code>true</code>, то он будет автоматически добавлен в набор, указанный в <code>contextSelection</code>, а если в <code>false</code>, то удален из него.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> Selection = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.dom.wrapper'</span>).Selection;
+
+<span class="hljs-keyword">var</span> selection = <span class="hljs-keyword">new</span> Selection();
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node({
+  contextSelection: selection
+});
+
+console.log(view.selected, selection.itemCount);
+<span class="hljs-comment">// &gt; false 0</span>
+
+view.select();
+console.log(view.selected, selection.itemCount);
+<span class="hljs-comment">// &gt; true 1</span>
+
+selection.remove(view);
+console.log(view.selected, selection.itemCount);
+<span class="hljs-comment">// &gt; false 0</span>
+</code></pre>
+<p>Во избежание конфликтов узлы нельзя добавлять в произвольный экземпляр <code>Selection</code>. В экземпляр <code>Selection</code> можно добавлять только те узлы, у которых свойство <code>contextSelection</code> ссылается на этот набор. Так же узел должен быть экземпляром <code>basis.dom.wrapper.Node</code> и его свойство <code>selected</code> не должно быть <a href="#%D0%A0%D0%B5%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%8B%D0%B5-%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D1%8F">реактивным</a>.</p>
+<p>Не смотря на то, что <code>contextSelection</code> можно выставить при создании узла, его не предполагается задавать явно. Обычно контекст выделения узлы заимствуют у родителя, при его назначении.</p>
+<p>Если у узла не задано значение <code>contextSelection</code> (по умолчанию не задано) и ему назначается новый родитель, то в качестве значения <code>contextSelection</code> выставляется значение свойства <code>selection</code> родителя, а если оно не задано (равно <code>null</code>), то значение <code>contextSelection</code> родителя.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> Selection = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.dom.wrapper'</span>).Selection;
+
+<span class="hljs-keyword">var</span> nodeWithSelection = <span class="hljs-keyword">new</span> Node({
+  selection: <span class="hljs-keyword">new</span> Selection()
+});
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> Node();
+<span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">new</span> Node();
+
+nodeWithSelection.appendChild(foo);
+console.log(foo.contextSelection === nodeWithSelection.selection);
+<span class="hljs-comment">// &gt; true</span>
+
+foo.appendChild(bar);
+console.log(bar.contextSelection === foo.contextSelection);
+<span class="hljs-comment">// &gt; true</span>
+console.log(bar.selection);
+<span class="hljs-comment">// &gt; null</span>
+</code></pre>
+<p>Когда узел отвязывается от своего родителя, то значение <code>contextSelection</code> выставляется в <code>null</code>, при условии, что <code>contextSelection</code> равен <code>selection</code> родителя или, если значение <code>selection</code> не задано (равно <code>null</code>), совпадает с <code>contextSelection</code> родителя. То есть ситуация обратная привязыванию родителю.</p>
+<pre><code class="lang-js">console.log(bar.contextSelection === foo.contextSelection);
+<span class="hljs-comment">// &gt; true</span>
+
+foo.removeChild(bar);
+console.log(bar.contextSelection);
+<span class="hljs-comment">// &gt; null</span>
+
+console.log(foo.contextSelection === nodeWithSelection.selection);
+<span class="hljs-comment">// &gt; true</span>
+
+nodeWithSelection.removeChild(foo);
+console.log(foo.contextSelection);
+<span class="hljs-comment">// &gt; null</span>
+</code></pre>
+<p>Когда у узла (инициатор) меняется значение <code>contextSelection</code>, то это же значение выставляется и всем узлам его поддерева, при условии что их значения совпадают. Если у узла в поддереве значение <code>contextSelection</code> отличается от значения инициатора до изменения, то его значение не меняется и его поддерево игнорируется. Таким образом контекст выделения работает для деревьев &quot;из коробки&quot;.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> Selection = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.dom.wrapper'</span>).Selection;
+
+<span class="hljs-keyword">var</span> node = <span class="hljs-keyword">new</span> Node({
+  selection: <span class="hljs-keyword">new</span> Selection()
+});
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> Node();
+<span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">new</span> Node();
+
+foo.appendChild(bar);
+
+console.log(foo.contextSelection);
+<span class="hljs-comment">// &gt; null</span>
+console.log(bar.contextSelection);
+<span class="hljs-comment">// &gt; null</span>
+
+node.appendChild(foo);
+console.log(foo.contextSelection === node.selection);
+<span class="hljs-comment">// &gt; true</span>
+console.log(bar.contextSelection === node.selection);
+<span class="hljs-comment">// &gt; true</span>
+
+node.removeChild(foo)
+console.log(foo.contextSelection);
+<span class="hljs-comment">// &gt; null</span>
+console.log(bar.contextSelection);
+<span class="hljs-comment">// &gt; null</span>
+</code></pre>
+<blockquote>
+<p>Не смотря на сложность описания функционирования <code>contextSelection</code>, обычно это не приводит к сложностям использования. Более того, в основном работа осуществляется только с <code>selection</code>, а <code>contextSelection</code> остается &quot;за кадром&quot;. Главное уяснить, что выставление контекста выделения для узла влияет не только на его детей, но и на все его поддерево.</p>
+</blockquote>
+<h2 id="--selection">Работа с Selection</h2>
+<p>Как было показано в предыдущих примерах, <code>selection</code> можно задать при создании узла. Это значение в дальнейшем можно изменить используя метод <code>setSelection(selection)</code>. При изменении <code>selection</code> срабатывает событие <code>selectionChanged</code>, а так же обновляется контекст выделения поддерева узла.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> Selection = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.dom.wrapper'</span>).Selection;
+
+<span class="hljs-keyword">var</span> node = <span class="hljs-keyword">new</span> Node({
+  selection: <span class="hljs-keyword">new</span> Selection(),
+  handler: {
+    selectionChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sender, oldSelection)</span>{</span>
+      console.log(<span class="hljs-string">'selection changed:'</span>, oldSelection, <span class="hljs-string">'-&gt;'</span>, <span class="hljs-keyword">this</span>.selection);
+    }
+  },
+  childNodes: [
+    <span class="hljs-keyword">new</span> Node()
+  ]
+});
+
+console.log(node.firstChild.contextSelection === node.selection);
+<span class="hljs-comment">// &gt; true</span>
+console.log(node.firstChild.contextSelection)
+<span class="hljs-comment">// &gt; basis.dom.wrapper.Selection { .. }</span>
+
+node.setSelection();
+<span class="hljs-comment">// &gt; selection changed: basis.dom.wrapper.Selection { .. } -&gt; null</span>
+console.log(node.selection);
+<span class="hljs-comment">// &gt; null</span>
+console.log(node.firstChild.contextSelection);
+<span class="hljs-comment">// &gt; null</span>
+</code></pre>
+<p>В качестве <code>selection</code> можно задать только экземпляр <code>basis.dom.wrapper.Selection</code>. Если задается иное значение, которое приводится к <code>true</code>, то это значение считается конфигом и экземпляр <code>Selection</code> создается неявно. По этой причине отпадает необходимость импортировать класс <code>Selection</code> из модуля <code>basis.dom.wrapper</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> node = <span class="hljs-keyword">new</span> Node({
+  selection: { <span class="hljs-comment">/* настройки */</span> } <span class="hljs-comment">// неявное создание new Selection({ .. })</span>
+});
+
+<span class="hljs-comment">// если настроек нет, можно просто передать true</span>
+<span class="hljs-keyword">var</span> node = <span class="hljs-keyword">new</span> Node({
+  selection: <span class="hljs-literal">true</span>
+});
+</code></pre>
+<p>Для <code>selection</code> так же поддерживается <code>listen</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> node = <span class="hljs-keyword">new</span> Node({
+  selection: <span class="hljs-literal">true</span>,
+  listen: {
+    selection: {
+      itemsChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(selection, delta)</span>{</span>
+        <span class="hljs-comment">// this ссылается на node</span>
+        console.log(<span class="hljs-string">'selected node count:'</span>, selection.itemCount);
+      }
+    }
+  },
+  childNodes: [
+    <span class="hljs-keyword">new</span> Node()
+  ]
+});
+
+node.firstChild.select();
+<span class="hljs-comment">// &gt; selected node count: 1</span>
+
+node.selection.clear();
+<span class="hljs-comment">// &gt; selected node count: 0</span>
+</code></pre>
+<h2 id="---">Единичный и множественный выбор</h2>
+<p>Экземпляры <code>Selection</code> могут работать в двух режимах:</p>
+<ul>
+<li>единичный выбор - в один момент времени может быть выбран максимум один узел, поведение по умолчанию;</li>
+<li>множественный выбор – может быть выбрано произвольное количество узлов.</li>
+</ul>
+<p>При единичном выборе, выбранным всегда становится последний &quot;выбранный&quot; узел, при этом предыдущий удаляется из набора, а его свойство <code>selected</code> выставляется в <code>false</code>. Если добавляется несколько узлов одновременно (например, используя метод <code>add()</code> или <code>set()</code>), то выделение сначала очищается, а в качестве единственного члена используется первый элемент переданного массива.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> Node({
+  selection: <span class="hljs-literal">true</span>,
+  childNodes: [
+    { name: <span class="hljs-string">'foo'</span>, selected: <span class="hljs-literal">true</span> },
+    { name: <span class="hljs-string">'bar'</span> },
+    { name: <span class="hljs-string">'baz'</span> }
+  ]
+});
+
+console.log(list.firstChild.selected);
+<span class="hljs-comment">// &gt; true</span>
+console.log(list.selection.pick() === list.firstChild);
+<span class="hljs-comment">// &gt; true</span>
+
+list.lastChild.select();
+console.log(list.selection.itemCount);
+<span class="hljs-comment">// &gt; 1</span>
+console.log(list.selection.pick() === list.lastChild);
+<span class="hljs-comment">// &gt; true</span>
+console.log(list.firstChild.selected);
+<span class="hljs-comment">// &gt; false</span>
+
+list.selection.set(list.childNodes);
+console.log(list.selection.itemCount);
+<span class="hljs-comment">// &gt; 1</span>
+console.log(list.selection.pick() === list.firstChild);
+<span class="hljs-comment">// &gt; true</span>
+</code></pre>
+<p>В случае множественного выбора, количество выбранных узлов не лимитируется. Чтобы включить множественный выбор нужно задать свойство <code>multiple</code> равным <code>true</code> при создании <code>Selection</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> Node({
+  selection: { multiple: <span class="hljs-literal">true</span> }, <span class="hljs-comment">// то же что new Selection({ multiple: true })</span>
+  childNodes: [
+    { name: <span class="hljs-string">'foo'</span> },
+    { name: <span class="hljs-string">'bar'</span> },
+    { name: <span class="hljs-string">'baz'</span>, selected: <span class="hljs-literal">true</span> }
+  ]
+});
+
+console.log(list.selection.itemCount);
+<span class="hljs-comment">// &gt; 2</span>
+
+console.log(list.selection.getValues(<span class="hljs-string">'name'</span>));
+<span class="hljs-comment">// &gt; ['baz']</span>
+
+list.selection.set(list.childNodes);
+console.log(list.selection.getValues(<span class="hljs-string">'name'</span>));
+<span class="hljs-comment">// &gt; ['foo', 'bar', 'baz']</span>
+</code></pre>
+<p>Как видно из примера, выделить несколько узлов не сложно, имея доступ к узлу (в данном случае <code>list</code>) и его <code>selection</code>. Но обычно удобнее управлять выделенностью узла в рамках логики самого узла, то есть пользоваться его методами <code>select()</code> и <code>setSelected()</code>. Однако, если вызывать эти методы последовательно для нескольких узлов, выбранным окажется только последний. Это происходит по причине того, что эти методы по умолчанию используют режим одиночного выделения.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> Node({
+  selection: { multiple: <span class="hljs-literal">true</span> },
+  childNodes: [
+    { name: <span class="hljs-string">'foo'</span> },
+    { name: <span class="hljs-string">'bar'</span> },
+    { name: <span class="hljs-string">'baz'</span> }
+  ]
+});
+
+console.log(list.selection.getValues(<span class="hljs-string">'name'</span>));
+<span class="hljs-comment">// &gt; []</span>
+
+list.childNodes.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(child)</span>{</span>
+  <span class="hljs-comment">// такой вызов метода select использует режим одиночного выбора</span>
+  <span class="hljs-comment">// внутри используется child.contextSelection.set(child)</span>
+  child.select();
+});
+
+console.log(list.selection.getValues(<span class="hljs-string">'name'</span>));
+<span class="hljs-comment">// &gt; ['baz']</span>
+</code></pre>
+<p>Чтобы использовать режим множественного выбора для методов <code>select</code> и <code>setSelected</code>, необходимо передавать дополнительный параметр <code>multiple</code> равный <code>true</code>. Однако такой режим не подразумевает, что узел будет только добавляться к выбранным. В этом режиме значение <code>selected</code> меняется как переключатель (<code>toggle</code>): если узел еще не выбран, то он становится выбранным, иначе выделение снимается. При этом значение <code>selected</code> других узлов в контексте остается неизменным. Поэтому без дополнительных проверок получается инверсия выделения.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> Node({
+  selection: { multiple: <span class="hljs-literal">true</span> },
+  childNodes: [
+    { name: <span class="hljs-string">'foo'</span> },
+    { name: <span class="hljs-string">'bar'</span>, selected: <span class="hljs-literal">true</span> },
+    { name: <span class="hljs-string">'baz'</span> }
+  ]
+});
+
+console.log(list.selection.getValues(<span class="hljs-string">'name'</span>));
+<span class="hljs-comment">// &gt; ['bar']</span>
+
+list.childNodes.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(child)</span>{</span>
+  <span class="hljs-comment">// если методу select передается true, то используется режим</span>
+  <span class="hljs-comment">// множественного выбора</span>
+  child.select(<span class="hljs-literal">true</span>);
+});
+
+console.log(list.selection.getValues(<span class="hljs-string">'name'</span>));
+<span class="hljs-comment">// &gt; ['foo', 'baz']</span>
+</code></pre>
+<p>Чтобы гарантированно выделить все необходимые узлы, нужно использовать дополнительную проверку.</p>
+<pre><code class="lang-js">list.childNodes.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(child)</span>{</span>
+  <span class="hljs-comment">// вызываем метод select только если узел еще не выбран</span>
+  <span class="hljs-keyword">if</span> (!child.selected)
+    child.select(<span class="hljs-literal">true</span>);
+});
+</code></pre>
+<p>Конечно, в простых случаях, если есть доступ к <code>selection</code>, то проще использовать <code>selection.add([node, node, ..])</code>.</p>
+<p>Может показаться странной логика режима множественного выделения. Но все встает на свои места, если учесть, что механизм ориентирован на взаимодействие с пользователем. Режим множественного выделения используется если зажата клавиша <code>ctrl</code> (Windows) или <code>meta</code> (Mac). В результате получается простое и элегантное решение:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> Node({
+  selection: { multiple: <span class="hljs-literal">true</span> },
+  childNodes: [
+    { name: <span class="hljs-string">'foo'</span> },
+    { name: <span class="hljs-string">'bar'</span> },
+    { name: <span class="hljs-string">'baz'</span> }
+  ],
+  childClass: {
+    template: <span class="hljs-string">'&lt;li event-click="select"&gt;item&lt;/li&gt;'</span>,
+    action: {
+      <span class="hljs-comment">// данная функция будет вызываться при клике по элементу</span>
+      select: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span>{</span>
+        <span class="hljs-comment">// используем режим выбора, в зависимости от зажатых клавиш</span>
+        <span class="hljs-keyword">this</span>.select(event.ctrlKey || event.metaKey);
+      }
+    }
+  }
+});
+</code></pre>
+<h2 id="-">Реактивные значения</h2>
+<p>Начиная с версии <code>1.4</code> в качестве значения <code>selected</code> можно задать объект с интерфейсом <a href="bindingbridge.html"><code>binding bridge</code></a> (<code>bb-value</code>). В этом случае <code>selected</code> будет автоматически синхрозироваться с таким объектом (его значение приводится к <code>boolean</code>). При этом <code>selected</code> по прежнему хранит <code>true</code> или <code>false</code>, а при изменениях срабатывают события <code>select</code> и <code>unselect</code>. Связь с <code>bb-value</code> &quot;прячется&quot; в приватном свойстве <code>selectedRA_</code>, в котором хранится специальный адаптер-наблюдатель.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> someValue = <span class="hljs-keyword">new</span> basis.Token(<span class="hljs-literal">false</span>);
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node({
+  selected: someValue
+});
+
+console.log(view.selected);
+<span class="hljs-comment">// &gt; false</span>
+
+someValue.set(<span class="hljs-literal">true</span>);
+console.log(view.selected);
+<span class="hljs-comment">// &gt; true</span>
+</code></pre>
+<p>Можно использовать эту возможность для более сложных сценариев. Например, меню, выбранный элемент которого зависит от внешнего значения.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> Value = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.data'</span>).Value;
+
+<span class="hljs-keyword">var</span> currentName = <span class="hljs-keyword">new</span> Value();
+<span class="hljs-keyword">var</span> menu = <span class="hljs-keyword">new</span> Node({
+  childClass: {
+    selected: currentName.compute(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(child, name)</span>{</span>
+      <span class="hljs-keyword">return</span> child.name == name;
+    })
+  },
+  childNodes: [
+    { name: <span class="hljs-string">'foo'</span> },
+    { name: <span class="hljs-string">'bar'</span> }
+  ]
+});
+
+console.log(menu.childNodes.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(child)</span>{</span>
+  <span class="hljs-keyword">return</span> child.selected;
+}));
+<span class="hljs-comment">// &gt; [false, false]</span>
+
+currentName.set(<span class="hljs-string">'foo'</span>);
+console.log(menu.childNodes.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(child)</span>{</span>
+  <span class="hljs-keyword">return</span> child.selected;
+}));
+<span class="hljs-comment">// &gt; [true, false]</span>
+
+currentName.set(<span class="hljs-string">'bar'</span>);
+console.log(menu.childNodes.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(child)</span>{</span>
+  <span class="hljs-keyword">return</span> child.selected;
+}));
+<span class="hljs-comment">// &gt; [false, true]</span>
+</code></pre>
+<p>Стоит принимать во внимание следующие особенности использования <code>bb-value</code> в качестве <code>selected</code>:</p>
+<ul>
+<li>узлы с привязанным <code>bb-value</code> не учавствуют в контексте выделения и из нельзя добавить в экземпляр <code>Selection</code>;</li>
+<li>вызов методов <code>select()</code>, <code>setSelected()</code> и <code>unselect()</code> сбрасывают связь с <code>bb-value</code>;</li>
+<li>для привязки <code>bb-value</code> необходимо использовать метод <code>setSelected(newValue)</code>.</li>
+</ul>
+<h2 id="-">Примеры использования</h2>
+<p>Несколько примеров использования можно найти в <a href="//basisjs.com/basisjs/demo/">демонстрациях</a>:</p>
+<ul>
+<li><a href="//basisjs.com/basisjs/demo/common/selection_share.html">одно и то же &quot;выделение&quot; для нескольких компонент</a>;</li>
+<li><a href="//basisjs.com/basisjs/demo/common/selection_multiple.html">несколько контекстов выделения в рамках одного дерева</a>;</li>
+<li><a href="//basisjs.com/basisjs/demo/common/selection_datasource.html">использование набора выбранных узлов как источник данных</a> для других компонент.</li>
+</ul>
+<h3 id="---">Подсчет числа выбранных узлов</h3>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> Node({
+  selection: { multiple: <span class="hljs-literal">true</span> }
+});
+
+list.selection.itemCount;  <span class="hljs-comment">// текущее кол-во выбранных узлов</span>
+list.selection.addHandler({
+  <span class="hljs-comment">// случаем изменения</span>
+  itemsChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(selection)</span>{</span>
+    selection.itemCount;   <span class="hljs-comment">// новое кол-во выбранных узлов</span>
+  }
+});
+
+<span class="hljs-comment">// используем Value.from</span>
+<span class="hljs-keyword">var</span> Value = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.data'</span>).Value;
+<span class="hljs-keyword">var</span> selectedCount = Value.from(list.selection, <span class="hljs-string">'itemsChanged'</span>, <span class="hljs-string">'itemCount'</span>);
+
+<span class="hljs-comment">// используем basis.data.index</span>
+<span class="hljs-keyword">var</span> selectedCount = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.data.index'</span>).count(list.selection);
+</code></pre>
+<h3 id="-----">Поддержание наличия выбранного элемента в списке</h3>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> Node({
+  selection: <span class="hljs-literal">true</span>,
+  listen: {
+    selection: {
+      <span class="hljs-comment">// слушаем когда меняется состав выделения</span>
+      itemsChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(selection)</span>{</span>
+        <span class="hljs-comment">// this -&gt; list</span>
+        <span class="hljs-comment">// если выделение не содержит узлов, делаем выбранным</span>
+        <span class="hljs-comment">// первого ребенка</span>
+        <span class="hljs-keyword">if</span> (!selection.itemCount &amp;&amp; <span class="hljs-keyword">this</span>.firstChild)
+          <span class="hljs-keyword">this</span>.firstChild.select();
+      }
+    }
+  },
+  handler: {
+    <span class="hljs-comment">// слушаем изменение состава детей</span>
+    childNodesModified: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.selection.itemCount &amp;&amp; <span class="hljs-keyword">this</span>.firstChild)
+        <span class="hljs-keyword">this</span>.firstChild.select();
+    }
+  }
+});
+</code></pre>
+<h3 id="------">Привязка выбранного элемента списка к другому представлению</h3>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> Value = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Value;
+
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> Node({
+  selection: <span class="hljs-literal">true</span>
+});
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node();
+list.selection.addHandler({
+  itemsChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    view.setDelegate(<span class="hljs-keyword">this</span>.pick());
+  }
+});
+
+<span class="hljs-comment">// альтернативное решение</span>
+<span class="hljs-comment">// basis.js 1.3 и выше</span>
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> Node({
+  selection: <span class="hljs-literal">true</span>
+});
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node({
+  delegate: Value.from(list.selection, <span class="hljs-string">'itemsChanged'</span>, <span class="hljs-string">'pick()'</span>)
+});
+</code></pre>
+<h3 id="--">Привязка к роутеру</h3>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> Value = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Value;
+<span class="hljs-keyword">var</span> router = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.router'</span>);
+
+<span class="hljs-keyword">var</span> menu = <span class="hljs-keyword">new</span> Node({
+  selection: <span class="hljs-literal">true</span>,
+  childNodes: [
+    { name: <span class="hljs-string">'foo'</span> },
+    { name: <span class="hljs-string">'bar'</span> },
+    { name: <span class="hljs-string">'baz'</span> }
+  ]
+});
+router.add(<span class="hljs-string">'/:name'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span>{</span>
+  <span class="hljs-keyword">var</span> child = basis.array.search(menu.childNodes, name, <span class="hljs-string">'name'</span>);
+  menu.selection.set(child);
+});
+
+<span class="hljs-comment">// альтернативное решение</span>
+<span class="hljs-comment">// basis.js 1.4 и выше</span>
+<span class="hljs-keyword">var</span> menu = <span class="hljs-keyword">new</span> Node({
+  childClass: {
+    selected: Value
+      .from(router.route(<span class="hljs-string">'/:name'</span>).param(<span class="hljs-string">'name'</span>))
+      .compute(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(child, name)</span>{</span>
+        <span class="hljs-keyword">return</span> child.name == name;
+      })
+  },
+  childNodes: [
+    { name: <span class="hljs-string">'foo'</span> }, <span class="hljs-comment">// будет выбран если путь '/foo'</span>
+    { name: <span class="hljs-string">'bar'</span> }, <span class="hljs-comment">// будет выбран если путь '/bar'</span>
+    { name: <span class="hljs-string">'baz'</span> }  <span class="hljs-comment">// и т.д.</span>
+  ]
+});
+</code></pre>
+<hr>
+<p>[TODO] hasOwnSelection/nullSelection</p>
 
                     
                     </section>

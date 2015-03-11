@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="6.4" data-basepath="." data-revision="1407807541058">
+    <div class="book" data-github="basisjs/articles" data-level="6.4" data-basepath="." data-revision="1426117979781">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -970,7 +970,7 @@
 <h2 id="parentnode-vs-owner">parentNode vs. owner</h2>
 <p>У узла может быть установлен либо родительский узел (свойство <code>parentNode</code>), либо владелец (свойство <code>owner</code>). При вызове методов, которые меняют <code>parentNode</code> (методы <code>appendChild</code>, <code>insertBefore</code>, <code>replaceChild</code>, <code>setChildNodes</code>) при установленном <code>owner</code> (не равным <code>null</code>) выбрасывается исключение. То же самое происходит при вызове методов меняющие свойство <code>owner</code> (методы <code>setOwner</code>, <code>setSatellite</code>) при установленном <code>parentNode</code>.</p>
 <blockquote>
-<p>Наличие значений для обоих свойств <code>parentNode</code> и <code>owner</code> создает конфликтные ситуации, когда родитель и владелец одновременно влияют на узел или узел заимствует некоторые данные из родителя или владельца. Так же это делает возможным из деревовидной иерархии объектов получить граф содержащий циклы, что может привести к рекурсии и неоднозначности.</p>
+<p>Наличие значений для обоих свойств <code>parentNode</code> и <code>owner</code> создает конфликтные ситуации, когда родитель и владелец одновременно влияют на узел или узел заимствует некоторые данные из родителя или владельца. Так же это делает возможным из древовидной иерархии объектов получить граф содержащий циклы, что может привести к рекурсии и неоднозначности.</p>
 </blockquote>
 <p>Чтобы дойти от узла к корню иерархии, нужно переходить по ссылке <code>parentNode</code> либо <code>owner</code>.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> cursor = node;

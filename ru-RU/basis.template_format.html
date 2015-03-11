@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="8.1" data-basepath="." data-revision="1407807541058">
+    <div class="book" data-github="basisjs/articles" data-level="8.1" data-basepath="." data-revision="1426117979781">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -957,7 +957,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_30">
+                    <section class="normal" id="section-gitbook_31">
                     
                         <h1 id="-">Формат шаблонов</h1>
 <p>Шаблоны описываются в формате <code>HTML</code>, но имеет несколько правил:</p>
@@ -1078,7 +1078,7 @@
 <blockquote>
 <p>Ранее вместо <code>&lt;b:style&gt;</code> использовался тег <code>&lt;b:resource&gt;</code>, его еще можно встретить в шаблонах компонент <code>basis.js</code>. На данный момент они работают одинаково. Но в будущем планируется убрать поддержку <code>&lt;b:resource&gt;</code>, поэтому лучше его не использовать.</p>
 </blockquote>
-<p>Стили подключаются на страницу, только когда создается первый экземпляр шаблона. Если несколько шаблонов используют один и тот же файл стилей, то он подключается только один раз. Если описание шаблона (шаблонов) изменяется так, что перестает использовать определенный файл стилей, и этот не используется другими шаблонами, то стиль изымается из страницы.</p>
+<p>Стили подключаются на страницу, только когда создается первый экземпляр шаблона. Если несколько шаблонов используют один и тот же файл стилей, то он подключается только один раз. Если описание шаблона (шаблонов) изменяется так, что перестает использовать определенный файл стилей, и этот файл не используется другими шаблонами, то стиль изымается из страницы.</p>
 <p>Если описание шаблона включает в себя другое описание, используя <a href="#binclude">\<b:include></a>, и включаемое описание содержит подключение стилей (теги \<b:style>), то эти стили так же подключаются, как собственные. Если это является нежелательным поведением, то тегу <code>&lt;b:include&gt;</code> добавляется атрибут <code>no-style</code>.</p>
 <p>Так как шаблоны могут инициироваться (когда создается их первый экземпляр) в любой момент, а так же могут подключать несколько файлов стилей в произвольном порядке, то нельзя полагаться на порядок подключения стилей. Обычно это не доставляет проблем, но это стоит учитывать, если в разных файлах стилей описываются правила с одинаковым весом (<a href="http://www.w3.org/TR/selectors/#specificity" target="_blank">specificity</a>), применимые к элементу.</p>
 <p>В сборке стили объединяются в один файл и динамического подключения/отключения стилей не происходит. Если используются темы, то генерируется несколько файлов стилей, в каждый из которых попадают только те стили, которые относятся к теме; при смене темы происходит смена используемого файла стилей (в один момент используется только один файл, соотвествующий текущей теме).</p>
@@ -1142,7 +1142,7 @@
 <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"item item_{selected} item_{state}"</span>/&gt;</span>
 </code></pre>
 <p>В данном примере, если значение для <code>selected</code> равноценно <code>true</code>, то будет вставлен класс <code>item_selected</code>, иначе такого класса у элемента не будет. Для <code>state</code> будут приниматься только три значения и образовываться классы <code>item_processing</code>, <code>item_ready</code> и <code>item_error</code>; при других значениях класс добавлен не будет.</p>
-<p>Указание <code>default</code> позволяет вставить оптимизировать создание шаблона. Если известно, что некоторый биндинг при создании чаще всего имеет определенное значение, можно изначально проставить класс с этим значением и избежать операции вставки этого класса при создании экземпляра шаблона. Например, практически все экземпляры <code>basis.ui.Node</code> создаются с <code>selected</code> == <code>false</code> и <code>unselected</code> == <code>true</code>. Если в шаблоне используются оба значения, то выгоднее описать шаблон так:</p>
+<p>Указание <code>default</code> позволяет оптимизировать создание шаблона. Если известно, что некоторый биндинг при создании чаще всего имеет определенное значение, можно изначально проставить класс с этим значением и избежать операции вставки этого класса при создании экземпляра шаблона. Например, практически все экземпляры <code>basis.ui.Node</code> создаются с <code>selected</code> == <code>false</code> и <code>unselected</code> == <code>true</code>. Если в шаблоне используются оба значения, то выгоднее описать шаблон так:</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:define</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"selected"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"bool"</span>/&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">b:define</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"unselected"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"bool"</span> <span class="hljs-attribute">default</span>=<span class="hljs-value">"true"</span>/&gt;</span>
 

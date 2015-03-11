@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="7.2" data-basepath="." data-revision="1407807541058">
+    <div class="book" data-github="basisjs/articles" data-level="7.2" data-basepath="." data-revision="1426117979781">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -957,7 +957,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_34">
+                    <section class="normal" id="section-gitbook_35">
                     
                         <h1 id="-bindings">Биндинги (bindings)</h1>
 <p>Биндинги – это набор значений, которые доступны для использования в шаблоне. Они сохраняются в свойстве <code>binding</code>. Это <a href="basis.Class.html#extensibleProperty">автораширяемое</a> поле, поэтому при создании класса производного от <code>basis.ui.Node</code> или экземпляра этих классов, новое значение не перезаписывает старое, а дополняет.</p>
@@ -1078,7 +1078,7 @@
                          <span class="hljs-comment">//   events: 'update',</span>
                          <span class="hljs-comment">//   getter: basis.getter('data.age')</span>
                          <span class="hljs-comment">// }</span>
-      age: <span class="hljs-string">'data:'</span>,      <span class="hljs-comment">// если имя биндинга совпадает с именем</span>
+      age: <span class="hljs-string">'data:'</span>       <span class="hljs-comment">// если имя биндинга совпадает с именем</span>
                          <span class="hljs-comment">// поля в data, то название поля можно опустить</span>
     }
   });
@@ -1096,14 +1096,14 @@
                                <span class="hljs-comment">//       : null;</span>
                                <span class="hljs-comment">//   }</span>
                                <span class="hljs-comment">// }</span>
-      bar: <span class="hljs-string">'satellite:'</span>,       <span class="hljs-comment">// если имя биндинга совпадает с именем сателлита,</span>
+      bar: <span class="hljs-string">'satellite:'</span>        <span class="hljs-comment">// если имя биндинга совпадает с именем сателлита,</span>
                                <span class="hljs-comment">// то его название в описании биндинга можно опустить</span>
     }
   });
 </code></pre>
 </li>
 </ul>
-<p>Управляет сокращениями объект <code>basis.ui.BINDING_PRESET</code>, который позволяет добавлять новые сокращения методом <code>add</code> при необходимости. Навые сокращения должны быть добавлены до первого объявления биндинга такого типа.</p>
+<p>Управляет сокращениями объект <code>basis.ui.BINDING_PRESET</code>, который позволяет добавлять новые сокращения методом <code>add</code> при необходимости. Новые сокращения должны быть добавлены до первого объявления биндинга такого типа.</p>
 <h2 id="--">Биндинги по умолчанию</h2>
 <p>Для <code>basis.ui.Node</code> и <code>basis.ui.PartitionNode</code> определен ряд биндигов, которые доступны по умолчанию (в скобках указаны события):</p>
 <ul>

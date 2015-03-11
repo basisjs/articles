@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="4.4" data-basepath="." data-revision="1407807541058">
+    <div class="book" data-github="basisjs/articles" data-level="4.4" data-basepath="." data-revision="1426117979781">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -970,7 +970,7 @@
 <ul>
 <li><code>get(key, autocreate)</code> – метод возвращает ассоцированное значение для <code>key</code>; если такого значение нет, то возвращается <code>undefined</code>; если передан параметр <code>autocreate</code>, то, в случае отсутсвия значения, вызывается метод <code>create</code> с переданными значениями, а результат его выполенения сохраняется как ассоциированное значение.</li>
 <li><code>create(key, config)</code> – метод вызывается, когда для заданного значения (параметра <code>key</code>) не найдено значения; значение <code>config</code> может использовать как дополнительный объект конфигурации (передается в <code>get</code> как <code>autocreate</code>), но по умолчанию не используется.</li>
-<li><code>resolve(value)</code> – метод пытается вернуть ассоцированное значение для <code>value</code>, а если его нет, то создать новое значение; в отличае от <code>get</code> этот метод всегда возвращает значение, вне зависимости от того, существовало ли он до этого.</li>
+<li><code>resolve(value)</code> – метод пытается вернуть ассоцированное значение для <code>value</code>, а если его нет, то создать новое значение; в отличае от <code>get</code> этот метод всегда возвращает значение, вне зависимости от того, существовало ли оно до этого.</li>
 </ul>
 <p>Особое внимание стоит уделить методу <code>resolve</code>. Так как это основной, который используется для получения значения, в виду того, что гарантирует получение значения. Его реализация по умолчанию выглядит так:</p>
 <pre><code class="lang-js">basis.data.KeyObjectMap.prototype.resolve = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span>{</span>

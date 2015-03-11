@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="10.3" data-basepath="." data-revision="1407807541058">
+    <div class="book" data-github="basisjs/articles" data-level="10.3" data-basepath="." data-revision="1426117979781">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -957,81 +957,144 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_26">
+                    <section class="normal" id="section-gitbook_27">
                     
                         <h1 id="basisnetservice">basis.net.service</h1>
-<p><code>basis.net.service.Service</code> является фабрикой объектов <code>basis.net.AbstractTransport</code>, имеющих общий механизм формирования запроса и обработки его результатов. Обычно используется для реализации серверного взаимодействия с сервисами, имеющих определенные правила и требования для каждого запроса, например, наличие определенных заголовков, определенный формат ответов или необходимость авторизации с последующей подписью каждого запроса, полученным ключом. В одном приложение может использоваться несколько экземпляров <code>basis.net.service.Service</code>.</p>
-<p>При создании <code>basis.net.service.Service</code> используется свойство <code>transportClass</code>, которое определяет какой класс транспорта будет использоваться. По умолчанию иcпользуется класс <code>basis.net.ajax.Transport</code>.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> service = <span class="hljs-keyword">new</span> basis.net.service.Service({
-  transportClass: {  <span class="hljs-comment">// неявное расширение basis.net.ajax.Transport</span>
-    requestHeaders: {
+<p>Модуль <code>basis.net.service</code> предоставляет единственный класс <code>Service</code>. Экземпляры этого класса служат для центализованного производства транспортов, обладающих общим базовым поведением, а так же для общего управляния транспортами относящимися к сервису. Он так реализует механизм сессии, который используется для авторизации, а так же позволяет подписывать запросы.</p>
+<h2 id="service">Service</h2>
+<p><code>Service</code> является фабрикой экземпляров <code>basis.net.AbstractTransport</code>, имеющих общий механизм формирования запроса и обработки ответов. Обычно используется для реализации взаимодействия с сервисами на стороне сервера (некоторым серверным API). Позволяет описывать общие правила и требования для каждого запроса, например, наличие определенных заголовков, определенный формат ответов или необходимость авторизации с последующей подписью запросов. В одном приложение может использоваться несколько экземпляров <code>Service</code>, но чаще всего один.</p>
+<p>Свойство <code>transportClass</code> определяет какой класс транспорта будет использоваться. По умолчанию иcпользуется класс <code>basis.net.ajax.Transport</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Service = basis.require(<span class="hljs-string">'basis.net.service'</span>);
+
+<span class="hljs-comment">// создание сервиса</span>
+<span class="hljs-keyword">var</span> service = <span class="hljs-keyword">new</span> Service({
+  transportClass: {     <span class="hljs-comment">// новый класс, наследник basis.net.ajax.Transport</span>
+    requestHeaders: {   <span class="hljs-comment">// добавляем заголовок по умолчанию</span>
       Accept: <span class="hljs-string">'application/json'</span>
-    },
-    requestClass: {
-      getResponseData: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.data.responseText.toObject();
-      }
     }
   }
 });
 </code></pre>
-<p>В примере создается сервис, который для всех запросов будет подставлять http-заголовок <code>Accept: &#39;application/json&#39;</code> и автоматически преобразовывать полученный ответ в <code>JSON</code>.
-У экземпляра <code>basis.net.service.Service</code> доступны методы <code>createTransport</code> и <code>createAction</code>, с помощью которых можно создавать экземпляры <code>tranportClass</code> и функции <code>basis.net.action</code> на основе <code>transportClass</code> соответственно.</p>
+<p>Фактически, все настройки транспорта настраиваются через создание нового класса. Это значит, что можно задать любую настройку и добавить любое расширение. В том числе, задать базовое поведение (настройки) для всех запросов, так же через создание класса (свойство <code>requestClass</code> в <code>transportClass</code>).</p>
+<p>На самом деле сервис, создает от заданного класса еще один внутренний класс, которой реализует дополнительную логику сервиса и используется для создания траспортов.</p>
+<p>Метод <code>createTransport(config)</code> позволяет создать транспорт сервиса. При этом создается экземпляр <code>transportClass</code> с конфигурацией, которая передается единственным аргументом метода.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> transport = service.createTransport({
   url: <span class="hljs-string">'/users'</span>,
   handler: {
-    success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span> ... }
+    success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-comment">// ...</span>
+    }
   }
 });
-
-<span class="hljs-comment">// или</span>
-
-User.extend({
+</code></pre>
+<p>Метод <code>createAction(config)</code> делает то же, что и функция <code>basis.net.action.create</code> (она и используется внутри). Только он обеспечивает, что создаваемые действия (action) используют метод <code>createTransport(config)</code> сервиса, для производства транспорта. Это наиболее частоиспользуемый метод.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> object = <span class="hljs-keyword">new</span> basis.data.Object({
   save: service.createAction({
     url: <span class="hljs-string">'/users'</span>,
-    request: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span> ... }
-    success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span>{</span> ... }
+    request: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-comment">// ...</span>
+    },
+    success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span>{</span>
+      <span class="hljs-comment">// ...</span>
+    }
   })
 });
 </code></pre>
-<p>Также в <code>basis.net.service.Service</code> предусмотрен механизм для работы с сессиями приложения и подписи запросов. Подписью может быть определенный http-заголовок или параметр, передаваемый с каждым запросом к серверу.</p>
-<p>Методы <code>basis.net.service.Service</code> для работы с сессией:</p>
-<ul>
-<li><code>openSession(sessionKey, sessionData)</code> - открывает сессию, после чего можно делать серверные вызовы с подписью;</li>
-<li><code>closeSession()</code> - закрывает сессию, после чего серверные вызовы, требующие подписи, станут невозможными.</li>
-</ul>
-<p>При создании <code>basis.net.service.Service</code> доступны методы:</p>
-<ul>
-<li>signature(transport, sessionData) - функция, которая вызывается при формировании запроса и служит для подписи запроса.</li>
-<li>isSessionExpiredError(request) - функция, которая по ответу сервера вычисляет, что запрос вернул ошибочный статус из-за истекшей сессии. Если функция возвращает <code>true</code> все активные запросы приостанавливаются и сессия закрывается. После восстановления сессии все приостановленные запросы будут перезапущены.</li>
-</ul>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> service = <span class="hljs-keyword">new</span> basis.net.service.Service({
-  signature: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(transport, sessionData)</span>{</span>
-    transport.setParam(<span class="hljs-string">'sessionKey'</span>, sessionData.key);
-  },
-  isSessionExpiredError: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request)</span>{</span>
-    <span class="hljs-keyword">return</span> request.data.error.code == <span class="hljs-string">'SESSION_EXPIRED'</span>;
-  }
-});
+<h3 id="">Сессия</h3>
+<p>Если серверная сторона требует авторизации, необходимо понимать авторизован ли экземпляр <code>Service</code> делать запросы, или нет. Для этого используется механизм &quot;сессии&quot;. В общем смысле, сессия – это пользовательский сеанс работы с удаленным сервисом. Если сервис авторизован, то сессия будет открыта (open), в противном случае – закрыта (close).</p>
+<p>Сам сервис не имеет воможности проверить, авторизован он или нет. Это связанно с тем, что реализации авторизации на стороне сервера сильно разнится, и нельзя получить универсального решения. Поэтому, подобная логика описывается отдельно от сервиса разработчиками приложений. Такой код открывает и закрывает сессию в зависимости от определенных условий.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Service = basis.require(<span class="hljs-string">'basis.net.service'</span>).Service;
+<span class="hljs-keyword">var</span> service = <span class="hljs-keyword">new</span> Service();
 
-<span class="hljs-comment">// ...</span>
-
+<span class="hljs-comment">// предположим, что для персистентности, текущий ключ сессии хранится в cookie</span>
 <span class="hljs-comment">// получение ключа сессии из cookies</span>
-<span class="hljs-keyword">var</span> sessionKey = basis.ua.cookies.get(<span class="hljs-string">'sessionKey'</span>); 
+<span class="hljs-keyword">var</span> sessionKey = basis.require(<span class="hljs-string">'basis.ua'</span>).cookies.get(<span class="hljs-string">'sessionKey'</span>);
 
-<span class="hljs-comment">// открытие сессии сервиса</span>
-service.openSession(sessionKey, { key: sessionKey }); 
+<span class="hljs-comment">// при инициализации приложения, проверяем есть ключ сессии,</span>
+<span class="hljs-comment">// и если есть – открываем сессию</span>
+<span class="hljs-keyword">if</span> (sessionKey)
+  service.openSession(sessionKey);
+</code></pre>
+<p>Для открытия сессии используется метод <code>openSession(key, data)</code>. Ему передаются два параметра: ключ сессии (обязательный), и данные сессии (необязательный). Данные сессии могут использоваться для <a href="">подписи</a> запросов. Закрывается сессия методом <code>closeSession()</code>.</p>
+<p>По умолчанию, транспорт сервиса не учитывает открыта сессия или нет. Для того, чтобы это учитывалось, сервису необходимо задать свойству <code>isSecure</code> значение <code>true</code>. В этом случае, транспорты не будут совершать запросы (они будут игнорироваться), если сессия закрыта. Этим поведением управляет свойство <code>needSignature</code>, по умолчанию оно установлено в <code>true</code>. Значение <code>false</code>, для этого свойства, необходимо выставлять только для транспортов, которые должны выполняться независимо от того, открыта сессия или нет. Обычно это запросы на получение ключа сессии (login), его проверки, отмены ключа сессии (logout), напоминание пароля и т.п.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+<span class="hljs-keyword">var</span> Service = basis.require(<span class="hljs-string">'basis.net.service'</span>).Service;
+<span class="hljs-keyword">var</span> cookies = basis.require(<span class="hljs-string">'basis.ua'</span>).cookies;
 
-<span class="hljs-comment">// вызов серверных методов</span>
-<span class="hljs-keyword">var</span> transport = service.createTransport({
-  url: <span class="hljs-string">'/users'</span>,
-  handler: {
-    success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span> ... }
+<span class="hljs-keyword">var</span> service = <span class="hljs-keyword">new</span> Service({
+  isSecure: <span class="hljs-literal">true</span>
+});
+
+<span class="hljs-keyword">var</span> profile = <span class="hljs-keyword">new</span> DataObject({
+  login: service.createAction({
+    needSignature: <span class="hljs-literal">false</span>,            <span class="hljs-comment">// иначе запрос не будет выполнятся</span>
+    method: <span class="hljs-string">'POST'</span>,
+    url: <span class="hljs-string">'/login'</span>,
+    request: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(login, pwd)</span>{</span>
+      <span class="hljs-keyword">return</span> {                       <span class="hljs-comment">// POST /login</span>
+        params: {                    <span class="hljs-comment">//</span>
+          login: login,              <span class="hljs-comment">// login=[login]&amp;password=[pwd]</span>
+          password: pwd              <span class="hljs-comment">//</span>
+        }
+      }
+    },
+    success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span>{</span>
+      <span class="hljs-comment">// предположим, сервер отдал JSON</span>
+      <span class="hljs-comment">// { "status": "ok", "session": "..." }</span>
+      service.openSession(data.session);
+
+      <span class="hljs-comment">// сохраняем ключ сессии в cookie</span>
+      cookies.set(<span class="hljs-string">'sessionKey'</span>, data.session);
+    }
+  })
+});
+
+<span class="hljs-keyword">if</span> (cookies.get(<span class="hljs-string">'sessionKey'</span>))
+  service.openSession(cookies.get(<span class="hljs-string">'sessionKey'</span>)); 
+<span class="hljs-keyword">else</span>
+  profile.login(<span class="hljs-string">'test'</span>, <span class="hljs-string">'123'</span>);
+</code></pre>
+<p>Так как сессия в общем смысле является пользовательским сеансом, то предполагается, что возможна смена ключа сессии или временная заморозка сессии. В этом случае, пользовательский сеанс включает в себя несколько сеансов (сессий) с удаленным сервисом.</p>
+<p>Ситуация потери сессии с удаленым сервисом возможна из-за действия пользователя (пользователь нажал заблокировать или &quot;выйти&quot;) или в виду определенных условий клиентской или серверной стороны (пользователь долго не работал с интерфейсом, долго не отправлялись запросы, превышено время жизни сессии). В этом случае не обязательно закрывать сессию, достаточно ее заморозить. Заморозка означает, что возможно продолжение работы с сервисом, при этом смены пользователя (в рамках удаленного сервиса) не предполагается. Поэтому приложение должно максимально сохранить свое состояние, заблокировав интерфейс и предложив, например, форму для ввода только пароля.</p>
+<p>Замораживается сессия методом <code>freeze</code>, а размораживается методом <code>unfreeze</code>. При заморозке все выполняемые запросы обрываются и добавляются в очередь, а при разморозке эти запросы выполняются повторно.</p>
+<blockquote>
+<p>На данный момент (1.3) сохраняются все запросы. Но это выглядит не безопасным, в будущем этим поведением можно будет управлять.</p>
+</blockquote>
+<p>В случае ошибки запроса, выполняется метод сервиса <code>isSessionExpiredError</code>, которому передается запрос (request). Если метод возвращает <code>true</code>, то считается, что сессия с удаленным сервисом истекла, и сессия замораживается.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Service = basis.require(<span class="hljs-string">'basis.net.service'</span>).Service;
+
+<span class="hljs-keyword">var</span> service = <span class="hljs-keyword">new</span> Service({
+  isSecure: <span class="hljs-literal">true</span>,
+  isSessionExpiredError: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(request)</span>{</span>  <span class="hljs-comment">// считаем ответы от сервера с кодом 401,</span>
+    <span class="hljs-keyword">return</span> request.xhr.status == <span class="hljs-number">401</span>;        <span class="hljs-comment">// как сигнал, что сессия устарела</span>
   }
 });
-transport.request();
+</code></pre>
+<p>Класс <code>Service</code> является наследником <code>basis.event.Emitter</code> и его экземпляров возможны события. На данный момент все события связанны с сессией:</p>
+<ul>
+<li><code>sessionOpen</code> – сессия открыта;</li>
+<li><code>sessionClose</code> – сессия закрыта;</li>
+<li><code>sessionFreeze</code> – сессия разморожена;</li>
+<li><code>sessionUnfreeze</code> – сессия заморожена.</li>
+</ul>
+<h2 id="-">Подпись запросов</h2>
+<p>Если сервис использует механизм сессии, появляется вохможность подписи запросов. Когда сессия открыта, то каждый раз, перед тем как транспорт собирается выполнить запрос, он передается в вызов метода <code>signature</code>. Так же в этот метод передается значение <code>data</code>, которое задается при открытии сессии.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Service = basis.require(<span class="hljs-string">'basis.net.service'</span>).Service;
+<span class="hljs-keyword">var</span> service = <span class="hljs-keyword">new</span> Service({
+  isSecure: <span class="hljs-literal">true</span>,
+  signature: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(transport, sessionData)</span>{</span>
+    console.log(<span class="hljs-string">'sign request'</span>, sessionData);
+    transport.setParam(<span class="hljs-string">'session'</span>, session.publicKey);
+  }
+});
 
-service.closeSession();
+service.openSession(<span class="hljs-string">'key'</span>, {
+  publicKey: <span class="hljs-string">'value'</span>
+});
+
+<span class="hljs-keyword">var</span> transport = service.createTransport();
+transport.request();
+<span class="hljs-comment">// sign request { publicKey: 'value' }</span>
 </code></pre>
 
                     

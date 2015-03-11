@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="6.2.1" data-basepath="." data-revision="1407807541058">
+    <div class="book" data-github="basisjs/articles" data-level="6.2.1" data-basepath="." data-revision="1426117979781">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -957,13 +957,12 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_20">
+                    <section class="normal" id="section-gitbook_19">
                     
                         <h1 id="">Сортировка</h1>
-<p>Сортировка используется для автоматического упорядочивания дочерних узлов. Для сортировки задается функция, которая вычисляет значение переданному ей узлу. Эти значения используются для определения порядка в массиве <code>childNodes</code>. Так же можно задать направление сортировки - по возрастанию или по убыванию.</p>
-<h2 id="-">Принцип работы</h2>
-<p>Для задания сортировки используются свойства <code>sorting</code> и <code>sortingDesc</code>. Первое определяет функцию для вычисления значения, а второе – направление сортировки. В дальнейшем настройки сортировки можно изменить методом <code>setSorting(sorting, sortingDesc)</code>. По умолчанию сортирка осуществляется по возврастанию (<code>sortingDesc</code> равно <code>false</code>), это же направление будет, не задавать параметр <code>sortingDesc</code> при установки сортировки методом <code>setSorting</code>.</p>
-<p>При изменении сортировки и/или его направления выбрасывается событие <code>sortingChanged</code>, аргументами которого являются значения <code>sorting</code> и <code>sortingDesc</code> до изменения.</p>
+<p>Сортировка используется для автоматического упорядочивания дочерних узлов. Для сортировки задается функция, которая вычисляет значение для переданного ей узла. Такие значения используются для определения порядка в массиве <code>childNodes</code>. Так же можно задать направление сортировки - по возрастанию или по убыванию.</p>
+<p>Настройки сортировки хранится в свойствах <code>sorting</code> и <code>sortingDesc</code>. Первое определяет функцию для вычисления значения, а второе – направление сортировки. В дальнейшем настройки сортировки можно изменить методом <code>setSorting(sorting, sortingDesc)</code>. По умолчанию сортирка осуществляется по возврастанию (<code>sortingDesc</code> равно <code>false</code>), это же направление будет, если не задавать параметр <code>sortingDesc</code> при вызове метода <code>setSorting</code>.</p>
+<p>При изменении сортировки или его направления выбрасывается событие <code>sortingChanged</code>, аргументами которого являются значения <code>sorting</code> и <code>sortingDesc</code> до изменения.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> basis.dom.wrapper.Node({
   sortingDesc: <span class="hljs-literal">true</span>,         <span class="hljs-comment">// установить сортировку по убыванию</span>
   sorting: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(child)</span>{</span>
@@ -1004,7 +1003,7 @@ list.setSorting(<span class="hljs-function"><span class="hljs-keyword">function<
   <span class="hljs-keyword">return</span> child.somethingElse;
 });
 </code></pre>
-<p>Если для <code>sorting</code> задается значение <code>null</code> или <code>undefined</code>, то значением свойства будет <code>basis.fn.nullGetter</code>, и сортировка не применяется. При отключении сортировки, дочерние узлы остаются в том же порядке, в каком они были до отключения сортировки.</p>
+<p>Если для <code>sorting</code> задается значение <code>null</code> или <code>undefined</code>, то значением свойства будет <code>basis.fn.nullGetter</code>, и сортировка не применяется. При отключении сортировки, порядок дочерних узлов сохраняется.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> basis.dom.wrapper.Node({
   sorting: <span class="hljs-string">'data.value'</span>
 });
@@ -1019,8 +1018,8 @@ console.log(list.sorting === basis.fn.nullGetter);
 console.log(<span class="hljs-keyword">typeof</span> list.sorting);
 <span class="hljs-comment">// console&gt; function</span>
 </code></pre>
-<p>Когда применяется сортировка, методы <code>appendChild</code> и <code>insertBefore</code> не могут влиять на положение дочернего узла, оно выбирается согласно сортировке. Другими словами, эти методы могут лишь добавить новый узел. Вызов этих методов для узлов, которые уже находятся в <code>childNodes</code> приводит к перепроверке позиции и, возможно, к перемещению на правильную позицию.</p>
-<p>На данный момент, положение дочернего узла определяется при его вставке новому родителю с сортировкой и перепроверяется при возникновении у него события <code>update</code>. В случае, если другие условия влияют на порядок дочерних узлов и это не сопровождается событием <code>update</code>, можно использовать методы <code>appendChild</code> или <code>insertBefore</code> для актуализации позиции.</p>
+<p>Когда применяется сортировка, методы <code>appendChild()</code>, <code>insertBefore()</code> и <code>setChildNodes()</code> не могут влиять на положение дочернего узла, они могут лишь добавить новый дочерний узел, но порядок определяется автоматически. Вызов этих методов для узлов, которые уже находятся в <code>childNodes</code> приводит к перепроверке позиции и при необходимости к перемещению на правильную позицию.</p>
+<p>Положение дочернего узла определяется при его вставке новому родителю с сортировкой и перепроверяется при возникновении у него события <code>update</code>. Если на порядок дочерних узлов влияют другие условия и это не сопровождается событием <code>update</code>, можно использовать метод <code>appendChild()</code> или <code>insertBefore()</code> для актуализации позиции.</p>
 <pre><code class="lang-js"><span class="hljs-comment">// ... некоторые изменения в child, которые могут влиять на сортировку</span>
 
 <span class="hljs-keyword">if</span> (child.parentNode)
