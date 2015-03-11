@@ -31,7 +31,7 @@
     * [Паттерн "владелец"](ru-RU/basis.dom.wrapper_owner.md) \[todo:examples]
     * [Сателлиты](ru-RU/basis.dom.wrapper_satellite.md)
     * [Доступность (disabled/enabled)](ru-RU/basis.dom.wrapper_disabled.md) \[todo:examples]
-    * [Выделение (selection)](ru-RU/basis.dom.wrapper_selection.md) \[todo:examples] \[todo:Selection&context]
+    * [Выделение (selection)](ru-RU/basis.dom.wrapper_selection.md)
 * [basis.ui](ru-RU/basis.ui.md)
     * [Привязка шаблонов](ru-RU/basis.ui_template.md)
     * [Биндинги (bindings)](ru-RU/basis.ui_bindings.md)
