@@ -456,7 +456,7 @@ console.log(menu.childNodes.map(function(child){
 // > [false, true]
 ```
 
-Стоит принимать во внимание следующие особенности использования `bb-value` в качестве `selected`:
+Стоит принимать во внимание следующие особенности использования `bb-value` в качестве значения `selected`:
 
 - узлы с привязанным `bb-value` не учавствуют в контексте выделения и из нельзя добавить в экземпляр `Selection`;
 - вызов методов `select()`, `setSelected()` и `unselect()` сбрасывают связь с `bb-value`;
@@ -585,6 +585,31 @@ var menu = new Node({
     { name: 'bar' }, // будет выбран если путь '/bar'
     { name: 'baz' }  // и т.д.
   ]
+});
+```
+
+### Биндинги
+
+В модуле `basis.ui` уже определены биндинги `selected` и `unselected`, в их описании нет необходимости. Здесь приведено их описание в качестве примера, как можно использовать состояние выделения в биндингах.
+
+```js
+var Node = require('basis.ui').Node;
+
+var view = new Node({
+  binding: {
+    selected: {
+      events: 'select unselect',
+      getter: function(node){
+        return node.selected;
+      }
+    },
+    unselected: {
+      events: 'select unselect',
+      getter: function(node){
+        return !node.selected;
+      }
+    }
+  }
 });
 ```
 
