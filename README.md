@@ -30,7 +30,7 @@
     * [Привязка данных](ru-RU/basis.dom.wrapper_data.md)
     * [Паттерн "владелец"](ru-RU/basis.dom.wrapper_owner.md) \[todo:examples]
     * [Сателлиты](ru-RU/basis.dom.wrapper_satellite.md)
-    * [Доступность (disabled/enabled)](ru-RU/basis.dom.wrapper_disabled.md) \[todo:examples]
+    * [Доступность (disabled/enabled)](ru-RU/basis.dom.wrapper_disabled.md)
     * [Выделение (selection)](ru-RU/basis.dom.wrapper_selection.md)
 * [basis.ui](ru-RU/basis.ui.md)
     * [Привязка шаблонов](ru-RU/basis.ui_template.md)
