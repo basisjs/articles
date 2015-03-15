@@ -278,8 +278,8 @@ console.log(list.satellite.deleteButton.disabled);
 
 Стоит принимать во внимание следующие особенности использования `bb-value` в качестве значения `disabled`:
 
-- вызов методов `disable()`, `setDisabled()` и `enable()` сбрасывают связь с `bb-value`;
-- для привязки `bb-value` необходимо использовать метод `setDisabled(newValue)`.
+- вызов методов `disable()` и `enable()` не меняет состояние `disabled` (в режиме разработки выводится предупреждение), когда для него установлено `bb-value`;
+- для привязки и сбрасывания `bb-value` необходимо использовать метод `setDisabled(newValue)`.
 
 ## Примеры
 
