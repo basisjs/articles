@@ -528,7 +528,7 @@ var list = new Node({
 
 ```js
 var Node = require('basis.ui').Node;
-var Value = require('basis.ui').Value;
+var Value = require('basis.data').Value;
 
 var list = new Node({
   selection: true
@@ -554,7 +554,7 @@ var view = new Node({
 
 ```js
 var Node = require('basis.ui').Node;
-var Value = require('basis.ui').Value;
+var Value = require('basis.data').Value;
 var router = require('basis.router');
 
 var menu = new Node({
