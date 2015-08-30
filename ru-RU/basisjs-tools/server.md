@@ -97,15 +97,21 @@ basis server --no-read-cache --no-res-cache
 
 Примеры:
 
+- проксировать все запросы начинающиеся с `/api/` к `https://example.com/api/`, например: `/api/foo?bar=1` → `https://example.com/api/foo?bar=1`
 ```json
 {
   "server": {
     "rewrite": {
-      // проксировать все запросы начинающиеся с /api/ к https://example.com/api/
-      // например: /api/foo?bar=1 -> https://example.com/api/foo?bar=1
-      "^/api/(.*)$": "https://example.com/api/$1 [P, QSA]",
-
-      // редирект запросов на basisjs.com с кодом 301, если домен example.com
+      "^/api/(.*)$": "https://example.com/api/$1 [P, QSA]"
+    }
+  }
+}
+```
+- редирект запросов на `basisjs.com` с кодом `301`, если домен `example.com`
+```json
+{
+  "server": {
+    "rewrite": {
       "host:example.com": "http://basisjs.com [R301]"
     }
   }
