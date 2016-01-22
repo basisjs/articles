@@ -115,13 +115,13 @@ basis.ready(function(){
 * все делаем вручную, качаем исходники по одному из тегов с `github` – https://github.com/basisjs/basisjs/tags
 
 * клонируем фреймворк из репозитария, выполнив в папке приложения:
-  
+
     ```$ git clone http://github.com/basisjs/basisjs```
 
 * используем [bower](https://github.com/bower/bower):
-  
+
     ```$ bower install basisjs```
-  
+
   хороший вариант, если вы не используете submodule и нужно управление версиями
 
 * используем `basisjs-tools`

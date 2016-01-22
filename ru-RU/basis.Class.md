@@ -7,7 +7,7 @@
 Классы в `basis.js` создаются с помощью функции `basis.Class` или ее алиаса `basis.Class.create`. Функция принимает произвольное количество аргументов: первый — это класс, от которого наследуется новый класс, второй и последующие — расширения создаваемого класса. Если новый класс не наследуется от другого класса, то в качестве первого параметра передается `null`.
 
 ```js
-// класс 
+// класс
 var Foo = basis.Class(null, {
   name: 'default'
 });
@@ -258,7 +258,7 @@ while (cls)
 {
   console.log(cls.className);
   cls = cls.superClass_;
-} 
+}
 // console> subclass of Foo
 // console> Foo
 // console> basis.Class
@@ -498,13 +498,13 @@ var Foo = basis.event.Emitter(null, {
     this.doStuff();
   }, {
     event1: true,
-    event2: true 
+    event2: true
   }),
   init: function(){
     this.addHandler(this.events, this);
   },
   doStuff: function(){
-    // do cool stuff 
+    // do cool stuff
   }
 });
 

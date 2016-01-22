@@ -763,7 +763,7 @@ new basis.ui.Node({
 
 Панель позволяет переключать текущую тему и язык. А также выбирать шаблоны и переводимые тексты для дальнейшего редактирования. Редактировать шаблоны, стили и строки локализации можно в плагине.
 
-Плагин устанавливается из `Google Web Store` вот по этой [ссылке](https://chrome.google.com/webstore/detail/basisjs-tools/paeokpmlopbdaancddhdhmfepfhcbmek). Для его работы необходима `devpanel`, так как она предоставляет API для работы с `basis.js`. 
+Плагин устанавливается из `Google Web Store` вот по этой [ссылке](https://chrome.google.com/webstore/detail/basisjs-tools/paeokpmlopbdaancddhdhmfepfhcbmek). Для его работы необходима `devpanel`, так как она предоставляет API для работы с `basis.js`.
 
 Плагин предоставляет:
 

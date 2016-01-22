@@ -51,7 +51,7 @@ console.log(view.selected);
 // > true
 
 view.select();
-// событие select выброшено не будет, так как 
+// событие select выброшено не будет, так как
 // значение selected не было изменено
 
 view.unselect();

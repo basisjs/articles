@@ -166,7 +166,7 @@ var culture = new basis.l10n.Culture('ru-RU');
 console.log(culture);
 // console> basis.l10n.Culture { name: "ru-RU", ... }
 
-// 
+//
 console.log(basis.l10n.culture('ru-RU') === basis.l10n.culture('ru-RU'));
 // console> true
 ```
