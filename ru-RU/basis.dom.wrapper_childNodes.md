@@ -80,7 +80,7 @@ var Folder = Node.subclass({
 
 var node = new Folder({
   childNodes: [
-    { 
+    {
       name: 'node'
     },
     {

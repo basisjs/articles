@@ -86,7 +86,7 @@ var Foo = basis.ui.Node.subclass({
         }
       });
     ```
-  
+
   * строка – используется, если возможно, преобразование [сокращения](#Сокращения), иначе значение оборачивается в basis.getter;
 
     ```js
@@ -172,11 +172,11 @@ var Foo = basis.ui.Node.subclass({
   * state (stateChanged) – возвращает строковое значение свойства `state`;
 
   * childNodesState (childNodesStateChanged) – возвращает строковое значение свойства `childNodesState`;
-  
+
   * childCount (childNodesModified) – возвращает число дочерних узлов;
-  
+
   * hasChildren (childNodesModified) – возвращает `true` если есть дочерние узлы и `false` в ином случае;
-  
+
   * empty (childNodesModified) – возвращает `true` если нет дочерних узлов и `false` в ином случае;
 
 Для `basis.ui.Node` так же определены дополнительные биндинги:

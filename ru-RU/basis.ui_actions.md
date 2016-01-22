@@ -10,7 +10,7 @@ var node = new basis.ui.Node({
   template:
     '<div>' +
       '<button event-click="up">Up</button>' +
-      '<button event-click="down">Down</button>' +      
+      '<button event-click="down">Down</button>' +
     '</div>',
 
   templateAction: function(name, event){
@@ -34,7 +34,7 @@ basis.ui.Node.prototype.templateAction = function(actionName, event){
     action.call(this, event);
 
   if (!action)
-    basis.dev.warn('template call `' + actionName + '` action, but it isn\'t defined in action list');    
+    basis.dev.warn('template call `' + actionName + '` action, but it isn\'t defined in action list');
 };
 ```
 
@@ -45,7 +45,7 @@ var node = new basis.ui.Node({
   template:
     '<div>' +
       '<button event-click="up">Up</button>' +
-      '<button event-click="down">Down</button>' +      
+      '<button event-click="down">Down</button>' +
     '</div>',
 
   action: {

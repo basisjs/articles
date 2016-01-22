@@ -49,7 +49,7 @@ module.exports = function (grunt) {
     grunt.registerMultiTask('gitbook', 'gitbook builder', function() {
         var config = this.data;
         var done = this.async();
-        
+
         gitbook
             .generate
             .folder(config)

@@ -146,7 +146,7 @@ console.log(location.hash);
 // > '#foo'
 
 router.navigate('one');       // добавит #one в историю
-router.navigate('two', true); // перезапишет #one на #two 
+router.navigate('two', true); // перезапишет #one на #two
 console.log(location.hash);
 // > '#two'
 
@@ -169,11 +169,11 @@ var router = basis.require('basis.router');
 router.debug = true;
 router.start();
 // > basis.router started
-// > basis.router: hash changed to "foo" 
+// > basis.router: hash changed to "foo"
 //   <no matches>
 
 router.add('foo', function(){});
-// > basis.router: add handler for route `asd3` 
+// > basis.router: add handler for route `asd3`
 //   Object {type: "match", path: "foo", cb: Object, route: Object, args: Array[0]}
 ```
 

@@ -71,7 +71,7 @@ var sessionKey = basis.require('basis.ua').cookies.get('sessionKey');
 // при инициализации приложения, проверяем есть ключ сессии,
 // и если есть – открываем сессию
 if (sessionKey)
-  service.openSession(sessionKey); 
+  service.openSession(sessionKey);
 ```
 
 Для открытия сессии используется метод `openSession(key, data)`. Ему передаются два параметра: ключ сессии (обязательный), и данные сессии (необязательный). Данные сессии могут использоваться для [подписи]() запросов. Закрывается сессия методом `closeSession()`.
@@ -112,7 +112,7 @@ var profile = new DataObject({
 });
 
 if (cookies.get('sessionKey'))
-  service.openSession(cookies.get('sessionKey')); 
+  service.openSession(cookies.get('sessionKey'));
 else
   profile.login('test', '123');
 ```
