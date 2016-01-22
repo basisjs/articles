@@ -32,10 +32,10 @@
 var DataObject = require('basis.data').Object;
 
 var obj = new DataObject({
-data: {
-foo: 1,
-bar: 2
-}
+  data: {
+    foo: 1,
+    bar: 2
+  }
 });
 
 console.log(obj.data);
@@ -46,15 +46,15 @@ console.log(obj.data);
 
 ```js
 var delta = obj.update({
-foo: 1,
-bar: 3,
-baz: 'Hello, world!'
+  foo: 1,
+  bar: 3,
+  baz: 'Hello, world!'
 });
 console.log(delta);
 // > Object { bar: 2, baz: undefined }
 
 delta = obj.update({
-bar: 3
+  bar: 3
 });
 console.log(delta);
 // > false
@@ -66,17 +66,17 @@ console.log(delta);
 var DataObject = require('basis.data').Object;
 
 var obj = new DataObject({
-data: {
-foo: 1,
-bar: 2
-},
-handler: {
-update: function(sender, delta){
-console.log('data changed:', delta);
-if ('foo' in delta)
-console.log('`foo` changed:', delta.foo, '->', this.data.foo);
-}
-}
+  data: {
+    foo: 1,
+    bar: 2
+  },
+  handler: {
+    update: function(sender, delta){
+      console.log('data changed:', delta);
+      if ('foo' in delta)
+        console.log('`foo` changed:', delta.foo, '->', this.data.foo);
+    }
+  }
 });
 
 obj.update({ foo: 'a', bar: 'b' });
@@ -123,14 +123,14 @@ console.log(foo.data === bar.data);
 
 ```js
 foo.addHandler({
-update: function(sender, delta){
-console.log('foo data changed:', delta);
-}
+  update: function(sender, delta){
+    console.log('foo data changed:', delta);
+  }
 });
 bar.addHandler({
-update: function(sender, delta){
-console.log('bar data changed:', delta);
-}
+  update: function(sender, delta){
+    console.log('bar data changed:', delta);
+  }
 });
 
 foo.update({ bar: 'change foo' });
@@ -155,8 +155,8 @@ console.log(bar.root === bar);
 
 Как ни удивительно, но обычно в таких графах большинство объектов изначально планируются быть прокси-объектами, а не источниками данных (к ответу на вопрос, почему так происходит, мы подойдем совсем скоро). Поэтому была введена еще одна важная роль в графе – целевой объект. Такая роль назначается объектам, которые являются источниками данных. При этом, такие объекты не могут иметь делегатов, так как в этом случае, данные будут утеряны. Факт того, что объект является целевым определяет значение свойства `target`. Если оно ссылается на сам объект – то этот объект является целевым. В противном случае, свойство равно `null` или ссылается на целевой объект, если такой объект имеется в графе, по тому же принципу, что и `root`. Чтобы сделать объект целевым, нужно указать `target: true` при его создании или указать это в прототипе класса унаследованного от `basis.data.Object`.
 
-![basis.data.Object#target](img/data-target-1.png)
-![basis.data.Object#target](img/data-target-2.png)
+![basis.data.Object#target](../../img/data-target-1.png)
+![basis.data.Object#target](../../img/data-target-2.png)
 
 ```js
 console.log(foo.target);
@@ -165,7 +165,7 @@ console.log(bar.target);
 // > null
 
 var baz = new DataObject({
-target: true
+  target: true
 });
 bar.setDelegate(baz);
 
@@ -184,22 +184,22 @@ var DataObject = require('basis.data').Object;
 
 var foo = new DataObject();
 var bar = new DataObject({
-delegate: foo,
+  delegate: foo,
 });
 var baz = new DataObject({
-hander: {
-delegateChanged: function(sender, oldDelegate){
-console.log('delegate changed:', oldDelegate, '->', this.delegate);
-}
-},
-listen: {
-root: { // автоматически делает this.root.addHandler(..) и
-// this.root.removeHandler(..) при изменении root
-activeChanged: function(){
-console.log('root active changed');
-}
-}
-}
+  hander: {
+    delegateChanged: function(sender, oldDelegate){
+      console.log('delegate changed:', oldDelegate, '->', this.delegate);
+    }
+  },
+  listen: {
+    root: { // автоматически делает this.root.addHandler(..) и
+            // this.root.removeHandler(..) при изменении root
+      activeChanged: function(){
+        console.log('root active changed');
+      }
+    }
+  }
 });
 
 baz.setDelegate(bar);
