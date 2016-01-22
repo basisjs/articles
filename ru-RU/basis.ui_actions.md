@@ -10,7 +10,7 @@ var node = new basis.ui.Node({
   template:
     '<div>' +
       '<button event-click="up">Up</button>' +
-      '<button event-click="down">Down</button>' +      
+      '<button event-click="down">Down</button>' +
     '</div>',
 
   templateAction: function(name, event){
@@ -34,7 +34,7 @@ basis.ui.Node.prototype.templateAction = function(actionName, event){
     action.call(this, event);
 
   if (!action)
-    basis.dev.warn('template call `' + actionName + '` action, but it isn\'t defined in action list');    
+    basis.dev.warn('template call `' + actionName + '` action, but it isn\'t defined in action list');
 };
 ```
 
@@ -45,7 +45,7 @@ var node = new basis.ui.Node({
   template:
     '<div>' +
       '<button event-click="up">Up</button>' +
-      '<button event-click="down">Down</button>' +      
+      '<button event-click="down">Down</button>' +
     '</div>',
 
   action: {
@@ -61,7 +61,7 @@ var node = new basis.ui.Node({
 
 ## Обработчики по умолчанию
 
-На данный момент для `basis.ui.Node` определен лишь один обработчик по умолчанию - `select`. Он делает выбранным текущий узел, если это возможно. Если у узла есть `contextSelection` и он разрешает множественный выбор узлов, то учитывается состояние клавиш `ctrl` (Windows) и `meta` (Mac OS) для определения режима выделения (множественный выбор или единичный).
+На данный момент для `basis.ui.Node` определен лишь один обработчик по умолчанию - `select`. Он делает текущий узел выбранным, если это возможно. Если у узла есть `contextSelection` и он разрешает множественный выбор узлов, то учитывается состояние клавиш `ctrl` (Windows) и `meta` (Mac OS) для определения режима выделения (множественный выбор или единичный).
 
 ```js
 basis.ui.Node.prototype.action.select = function(event){
@@ -76,3 +76,9 @@ basis.ui.Node.prototype.action.select = function(event){
 ```
 
 Эта реализация покрывает большинство случаев связанных с выделением узлов.
+
+## ??
+
+ - stop-propagation
+ - prevent-default
+ - log-event
