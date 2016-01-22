@@ -79,12 +79,14 @@ basis.ui.Node.prototype.action.select = function(event){
 
 ##  Зарезервированные действия в шаблонизаторе
 
-Шаблонизатор обрабатывает (может обрабатывать) по умолчанию для любого из событий три действия `prevent-default`, `stop-propagation`, `log-event`.
-
-```html
-<button event-click="up prevent-default stop-propagation log-event">Up</button>
-```
+Шаблонизатор поддерживает 3 специальных действия: `prevent-default`, `stop-propagation`, `log-event`.
 
  - `stop-propagation` превращается в `event.stopPropagation()`
  - `prevent-default` превращается в `event.preventDefault()`
  - `log-event` в режиме разработке выводит в консоль информацию о событии (`basis.dev.log('Template event:', event)`)
+
+Например, если требуется отменить действие на клик по умолчанию:
+
+```html
+<a href="..." event-click="prevent-default">...</a>
+```
