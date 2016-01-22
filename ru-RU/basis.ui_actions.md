@@ -77,8 +77,14 @@ basis.ui.Node.prototype.action.select = function(event){
 
 Эта реализация покрывает большинство случаев связанных с выделением узлов.
 
-## ??
+##  Зарезервированные действия в шаблонизаторе
 
- - stop-propagation
- - prevent-default
- - log-event
+Шаблонизатор обрабатывает (может обрабатывать) по умолчанию для любого из событий три действия `prevent-default`, `stop-propagation`, `log-event`.
+
+```html
+<button event-click="up prevent-default stop-propagation log-event">Up</button>
+```
+
+ - `stop-propagation` превращается в `event.stopPropagation()`
+ - `prevent-default` превращается в `event.preventDefault()`
+ - `log-event` в режиме разработке выводит в консоль информацию о событии (`basis.dev.log('Template event:', event)`)
