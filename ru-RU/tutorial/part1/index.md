@@ -35,9 +35,9 @@
 
 ### Индексный файл и подключение basis.js
 
-Для начала нужно добавить папку с исходниками `basis.js` в проект. Для этого можно либо клонировать проект из [репозитария](https://github.com/basisjs/basisjs), либо использовать `bower`:
+Для начала нужно добавить папку с исходниками `basis.js` в проект. Для этого можно либо клонировать проект из [репозитария](https://github.com/basisjs/basisjs), либо использовать `npm`:
 
-    > bower install basis
+    > npm install basis
 
 А теперь создадим основной `html` файл приложения, который пока лишь будет подключать `basis.js` – `index.html`.
 
@@ -49,7 +49,7 @@
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="bower_components/basis/src/basis.js" basis-config=""></script>
+  <script src="node_modules/basis/src/basis.js" basis-config=""></script>
 </body>
 </html>
 ```
@@ -72,7 +72,7 @@
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="bower_components/basis/src/basis.js" basis-config=""></script>
+  <script src="node_modules/basis/src/basis.js" basis-config=""></script>
   <script>
     basis.require('basis.ui');
 
@@ -113,7 +113,7 @@
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="bower_components/basis/src/basis.js" basis-config=""></script>
+  <script src="node_modules/basis/src/basis.js" basis-config=""></script>
   <script>
     basis.require('./hello.js');
   </script>
@@ -511,7 +511,7 @@ var list = new basis.ui.Node({
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="bower_components/basis/src/basis.js" basis-config=""></script>
+  <script src="node_modules/basis/src/basis.js" basis-config=""></script>
   <script>
     basis.require('./hello.js');
     basis.require('./list.js');
@@ -604,7 +604,7 @@ new basis.ui.Node({
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="bower_components/basis/src/basis.js" basis-config=""></script>
+  <script src="node_modules/basis/src/basis.js" basis-config=""></script>
   <script>
     basis.require('./app.js');
   </script>
@@ -622,7 +622,7 @@ new basis.ui.Node({
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="bower_components/basis/src/basis.js" basis-config="autoload: 'app'"></script>
+  <script src="node_modules/basis/src/basis.js" basis-config="autoload: 'app'"></script>
 </body>
 </html>
 ```
@@ -717,14 +717,14 @@ new basis.ui.Node({
 
 ![Структура файлов](file_structure_2.png)
 
-Выглядит не плохо, но файлы и папки самого приложения смешиваются с файлами и папками другого назначения. Поэтому будет лучше, если мы расположим все исходные файлы приложения в одной отдельной папке. Создадим папку `src` и поместим туда все файлы и папки за исключением `bower_components` и `index.html`. После этого нужно подправить один путь в `index.html`:
+Выглядит не плохо, но файлы и папки самого приложения смешиваются с файлами и папками другого назначения. Поэтому будет лучше, если мы расположим все исходные файлы приложения в одной отдельной папке. Создадим папку `src` и поместим туда все файлы и папки за исключением `node_modules` и `index.html`. После этого нужно подправить один путь в `index.html`:
 
 ```html
 <!-- было -->
-<script src="bower_components/basis/src/basis.js" basis-config="autoload: 'app'"></script>
+<script src="node_modules/basis/src/basis.js" basis-config="autoload: 'app'"></script>
 
 <!-- стало -->
-<script src="bower_components/basis/src/basis.js" basis-config="autoload: 'src/app'"></script>
+<script src="node_modules/basis/src/basis.js" basis-config="autoload: 'src/app'"></script>
 ```
 
 Структура файлов должна получится такой:
