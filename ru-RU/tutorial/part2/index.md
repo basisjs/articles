@@ -99,7 +99,6 @@ obj.update({ foo: 'a' });
 ### Делегирование
 
 Объекты поддерживают механизм делегирования, который позволяет нескольким объектам ссылаться на одни и те же данные. Делается это путем связывания объектов. Мы говорим, что объект-Dest делегирует данные другого объекта-Src. В этом случае объект-Dest хранит ссылку на объект-Src, чьи данные он делегирует, в свойстве `delegate`. Меняется делегат методом `setDelegate`.
-Сбросить делегат можно, вызвав метод без аргументов.
 
 ```js
 var DataObject = require('basis.data').Object;
@@ -120,12 +119,23 @@ console.log(foo.data === bar.data);
 // > true
 console.log(foo.delegate === bar);
 // > true
+```
 
+Сбросить делегат можно, вызвав метод без аргументов.
+При этом у объекта `foo` останется изолированная копия `data`. Подробнее [в документации](basis.data.Object.md#Делегирование).
+
+```js
+// FIXME describe delegate reset at the end
 foo.setDelegate()
 console.log(foo.data);
 // > Object { bar: 2 }
 console.log(foo.delegate);
 // null
+foo.update({qux: 4})
+console.log(bar.data)
+// Object {bar: 2}
+console.log(foo.data)
+// Object {bar: 2, qux: 4}
 ```
 
 Так как оба объекта ссылаются на одни и те же данные, то становится неважным, у кого из них вызывать метод `update`, чтобы изменить данные. Если вызов метода `update` приводит к изменениям, событие `update` будет выброшено для обоих объектов.
@@ -158,17 +168,6 @@ console.log(foo.root === bar);
 // > true
 console.log(bar.root === bar);
 // > true
-
-
-//?FIXME
-foo.root.data
-//Object {bar: 2}
-foo.setDelegate()
-//true
-foo.delegate
-//null
-foo.root.data
-//Object {bar: 2}
 ```
 
 ![basis.data.Object#root](../../img/data-delegate-root.png)
