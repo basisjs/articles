@@ -1,6 +1,6 @@
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-module.exports = new basis.ui.Node({
+module.exports = new Node({
   template: resource('./template/list.tmpl'),
   childClass: {
     template: resource('./template/item.tmpl'),

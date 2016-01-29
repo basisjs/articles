@@ -37,7 +37,7 @@
 
 Для начала нужно добавить папку с исходниками `basis.js` в проект. Для этого можно либо клонировать проект из [репозитария](https://github.com/basisjs/basisjs), либо использовать `npm`:
 
-    > npm install basis
+    > npm install basisjs
 
 А теперь создадим основной `html` файл приложения, который пока лишь будет подключать `basis.js` – `index.html`.
 
@@ -49,7 +49,7 @@
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="node_modules/basis/src/basis.js" basis-config=""></script>
+  <script src="node_modules/basisjs/src/basis.js" basis-config=""></script>
 </body>
 </html>
 ```
@@ -72,11 +72,11 @@
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="node_modules/basis/src/basis.js" basis-config=""></script>
+  <script src="node_modules/basisjs/src/basis.js" basis-config=""></script>
   <script>
-    basis.require('basis.ui');
+    var Node = basis.require('basis.ui').Node;
 
-    var view = new basis.ui.Node({
+    var view = new Node({
       container: document.body,
       template: '<h1>Hello world!</h1>'
     });
@@ -113,7 +113,7 @@
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="node_modules/basis/src/basis.js" basis-config=""></script>
+  <script src="node_modules/basisjs/src/basis.js" basis-config=""></script>
   <script>
     basis.require('./hello.js');
   </script>
@@ -126,9 +126,9 @@
 Продолжим разбираться с модульностью. Например, разметка в коде нам ни к чему. А раз так, вынесем описание шаблона в отдельный файл – `hello.tmpl`. Тогда код представления примет такой вид:
 
 ```js
-basis.require('basis.ui');
+var Node = basis.require('basis.ui').Node;
 
-var view = new basis.ui.Node({
+var view = new Node({
   container: document.body,
   template: basis.resource('./hello.tmpl')
 });
@@ -153,9 +153,9 @@ var view = new basis.ui.Node({
 В модулях удобнее использовать именно локальные функции `require` и `resource`. Таким образом, код `hello.js` немного упрощается:
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-var view = new basis.ui.Node({
+var view = new Node({
   container: document.body,
   template: resource('./hello.tmpl')
 });
@@ -196,9 +196,9 @@ h1
 Для задания значений, доступных шаблону, используется свойство `binding` в описании экземпляра или класса, унаследованного от `basis.ui.Node`. Значения задаются в виде объекта, где ключ – это имя, которое будет доступно в шаблоне, а значение – функция, вычисляющая значение для шаблона. Таким функциям единственным параметром передается владелец шаблона, то есть само представление. Вот так можно предоставить шаблону значение `name`:
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-var view = new basis.ui.Node({
+var view = new Node({
   container: document.body,
   name: 'world',
   template: resource('./hello.tmpl'),
@@ -246,9 +246,9 @@ var view = new basis.ui.Node({
 Вот как теперь будет выглядеть представление (`hello.js`):
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-var view = new basis.ui.Node({
+var view = new Node({
   container: document.body,
   name: 'world',
   template: resource('./hello.tmpl'),
@@ -273,9 +273,9 @@ var view = new basis.ui.Node({
 Представления, как и модели, умеют хранить данные в виде ключ-значение. Данные хранятся в свойстве `data` и меняются методом `update`. Когда меняются значения в `data`, срабатывает событие `update`. Воспользуемся этим механизмом для хранения имени:
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-var view = new basis.ui.Node({
+var view = new Node({
   container: document.body,
   data: {
     name: 'world'
@@ -302,9 +302,9 @@ var view = new basis.ui.Node({
 Теперь `updateBind` не вызывается явно. Но для описания биндига потребовалось больше кода. К счастью, у биндингов есть хелперы, сокращающие описание частых ситуаций. Синхронизация с полем из `data` одна из них. Такой биндинг можно записать в более коротком виде, вот так:
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-var view = new basis.ui.Node({
+var view = new Node({
   container: document.body,
   data: {
     name: 'world'
@@ -334,14 +334,14 @@ var view = new basis.ui.Node({
 Итак, теперь мы знаем, как создать простое представление. Давайте создадим еще одно, немного посложнее – список. Для этого создадим новый файл `list.js` с таким содержанием:
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-var list = new basis.ui.Node({
+var list = new Node({
   container: document.body,
   template: resource('./list.tmpl')
 });
 
-var Item = basis.ui.Node.subclass({
+var Item = Node.subclass({
   template: resource('./item.tmpl'),
   binding: {
     name: function(node){
@@ -368,14 +368,14 @@ list.appendChild(new Item({ name: 'baz' }));
 Поэтому уже сейчас можно сделать код немного проще:
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-var list = new basis.ui.Node({
+var list = new Node({
   container: document.body,
   template: resource('./list.tmpl')
 });
 
-var Item = basis.ui.Node.subclass({
+var Item = Node.subclass({
   template: resource('./item.tmpl'),
   binding: {
     name: function(node){
@@ -394,9 +394,9 @@ list.setChildNodes([
 Список дочерних узлов можно задать и в момент создания представления. Попробуем:
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-var Item = basis.ui.Node.subclass({
+var Item = Node.subclass({
   template: resource('./item.tmpl'),
   binding: {
     name: function(node){
@@ -405,7 +405,7 @@ var Item = basis.ui.Node.subclass({
   }
 });
 
-var list = new basis.ui.Node({
+var list = new Node({
   container: document.body,
   template: resource('./list.tmpl'),
   childNodes: [
@@ -429,9 +429,9 @@ basis.ui.Node.prototype.childFactory = function(value){
 Таким образом, все, что нам нужно, это определить `childClass`. Тогда станет возможно добавлять новые элементы в список, не только создавая экземпляр `Item`, но и передавая конфиг.
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-var Item = basis.ui.Node.subclass({
+var Item = Node.subclass({
   template: resource('./item.tmpl'),
   binding: {
     name: function(node){
@@ -440,7 +440,7 @@ var Item = basis.ui.Node.subclass({
   }
 });
 
-var list = new basis.ui.Node({
+var list = new Node({
   container: document.body,
   template: resource('./list.tmpl'),
   childClass: Item,
@@ -457,9 +457,9 @@ var list = new basis.ui.Node({
 Класс `Item` нигде больше не используется, потому нет смысла сохранять его в переменную. Этот класс можно сразу задать в конфиге. Но это не все, что мы можем сделать. Когда создается новый класс или экземпляр, и некоторое его свойство является классом, а мы хотим создать новый класс на его основе, то не обязательно создавать класс явно, можно просто задать объект с расширениями нового класса. Звучит сложно, но, на самом деле, это все про то, что нам не обязательно указывать `basis.ui.Node.subclass`, можно просто передать объект. И мы получаем:
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-var list = new basis.ui.Node({
+var list = new Node({
   container: document.body,
   template: resource('./list.tmpl'),
   childClass: {
@@ -511,7 +511,7 @@ var list = new basis.ui.Node({
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="node_modules/basis/src/basis.js" basis-config=""></script>
+  <script src="node_modules/basisjs/src/basis.js" basis-config=""></script>
   <script>
     basis.require('./hello.js');
     basis.require('./list.js');
@@ -533,9 +533,9 @@ var list = new basis.ui.Node({
 Теперь `hello.js` примет такой вид:
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-module.exports = new basis.ui.Node({
+module.exports = new Node({
   data: {
     name: 'world'
   },
@@ -556,9 +556,9 @@ module.exports = new basis.ui.Node({
 А модуль списка (`list.js`) такой:
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-module.exports = new basis.ui.Node({
+module.exports = new Node({
   template: resource('./list.tmpl'),
   childClass: {
     template: resource('./item.tmpl'),
@@ -581,9 +581,9 @@ module.exports = new basis.ui.Node({
 У любого приложения обычно есть единственная точка входа. Это такой модуль, который создает корневое представление и делает ключевые настройки. Создадим такой файл `app.js`:
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-new basis.ui.Node({
+Node({
   container: document.body,
   childNodes: [
     require('./hello.js'),
@@ -604,7 +604,7 @@ new basis.ui.Node({
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="node_modules/basis/src/basis.js" basis-config=""></script>
+  <script src="node_modules/basisjs/src/basis.js" basis-config=""></script>
   <script>
     basis.require('./app.js');
   </script>
@@ -622,7 +622,7 @@ new basis.ui.Node({
   <title>My first app on basis.js</title>
 </head>
 <body>
-  <script src="node_modules/basis/src/basis.js" basis-config="autoload: 'app'"></script>
+  <script src="node_modules/basisjs/src/basis.js" basis-config="autoload: 'app'"></script>
 </body>
 </html>
 ```
@@ -640,9 +640,9 @@ new basis.ui.Node({
 Вот так будет выглядеть `app.js`, с использованием сателлитов:
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-new basis.ui.Node({
+Node({
   container: document.body,
   template: resource('./app.tmpl'),
   binding: {
@@ -659,9 +659,9 @@ new basis.ui.Node({
 Здесь все должно быть понятно, код не очень сложный. Это полная запись, явное объявление сателлитов и использование их в биндингах. Но то же можно описать и короче:
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-new basis.ui.Node({
+Node({
   container: document.body,
   template: resource('./app.tmpl'),
   binding: {
@@ -701,9 +701,9 @@ new basis.ui.Node({
 Создадим папку `hello` и перенесем туда файлы относящиеся к этому модулю (т.е. `hello.js`, `hello.tmpl` и `hello.css`). А так же папку `list`, в которую перенесем `list.js`, `list.tmpl` и `item.tmpl`. Все что нам осталось – это поменять пути подключения модулей в `app.js`:
 
 ```js
-require('basis.ui');
+var Node = require('basis.ui').Node;
 
-new basis.ui.Node({
+Node({
   container: document.body,
   template: resource('./app.tmpl'),
   binding: {
@@ -721,10 +721,10 @@ new basis.ui.Node({
 
 ```html
 <!-- было -->
-<script src="node_modules/basis/src/basis.js" basis-config="autoload: 'app'"></script>
+<script src="node_modules/basisjs/src/basis.js" basis-config="autoload: 'app'"></script>
 
 <!-- стало -->
-<script src="node_modules/basis/src/basis.js" basis-config="autoload: 'src/app'"></script>
+<script src="node_modules/basisjs/src/basis.js" basis-config="autoload: 'src/app'"></script>
 ```
 
 Структура файлов должна получится такой:
