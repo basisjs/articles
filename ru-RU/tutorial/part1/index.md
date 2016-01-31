@@ -583,7 +583,7 @@ module.exports = new Node({
 ```js
 var Node = require('basis.ui').Node;
 
-Node({
+new Node({
   container: document.body,
   childNodes: [
     require('./hello.js'),
@@ -642,7 +642,7 @@ Node({
 ```js
 var Node = require('basis.ui').Node;
 
-Node({
+new Node({
   container: document.body,
   template: resource('./app.tmpl'),
   binding: {
@@ -661,7 +661,7 @@ Node({
 ```js
 var Node = require('basis.ui').Node;
 
-Node({
+new Node({
   container: document.body,
   template: resource('./app.tmpl'),
   binding: {
