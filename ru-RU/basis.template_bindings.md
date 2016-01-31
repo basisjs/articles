@@ -29,7 +29,9 @@
   * браузерный `DOM` узел – в этом случае узел заменяется на переданный узел; если передается новый `DOM` узел, когда изначальный узел уже заменен, то предыдущий узел заменяется новым; если новое значение не является `DOM` узлом, то восстанавливается оригинальный (который был при создании экземпляра шаблона);
 
     ```js
-    var tmpl = new basis.template.html.Template(
+    var Template = basis.require('basis.template.html').Template;
+
+    var tmpl = new Template(
       '<div>' +
         '<div{example} class="original">' +
       '</div>'
@@ -74,7 +76,9 @@
 В атрибутах могут быть только строковые значения, поэтому значения приводятся к строке. Когда меняется значение биндинга – заменяется значение атрибута. В атрибуте можно указывать несколько биндингов и любой дополнительный текст до и после биндинга.
 
 ```js
-var tmpl = new basis.template.html.Template(
+var Template = basis.require('basis.template.html').Template;
+
+var tmpl = new Template(
   '<div title="страница {page} из {totalPage}"/>'
 ).createInstance();
 
@@ -87,10 +91,12 @@ console.log(tmpl.element.outerHTML);
 // console> <div title="страница 3 из 10"></div>
 ```
 
-Атрибуты `disabled`, `checked`, `selected` и `readonly` – особый случай. Значение приводится к `boolean` и если оно равнозначно `true`, то в качестве значения атрибута ставится его название, либо атрибут удаляется.
+Атрибуты `disabled`, `checked`, `selected` и `readonly` – особые случаи. Значения этих атрибутов приводятся к `boolean`. Если значение равнозначно `true`, то в качестве значения атрибута ставится его название. Иначе атрибут удаляется.
 
 ```js
-var tmpl = new basis.template.html.Template(
+var Template = basis.require('basis.template.html').Template;
+
+var tmpl = new Template(
   '<input type="checkbox" checked="{foo}"/>'
 ).createInstance();
 
@@ -108,12 +114,16 @@ console.log(tmpl.element.outerHTML);
 
 ### style
 
-При изменении биндингов в атрибуте `style` заменяется не значение атрибута, а меняется соответствующее свойство в `style`. Если значение не валидно, то значение стиля не меняется.
+При изменении биндингов в атрибуте `style` заменяется не значение атрибута, а меняется соответствующее свойство в `style`. Если значение невалидно, то значение стиля не меняется.
 
 > В случае неверного значения, значение должно обнуляться. Поэтому текущая реализация не верна и будет исправлена в будущих версиях.
 
+[//]: # (Критично для <svg... style="fill:"/> Потому что у фрагмента svg внезапно может появиться черная заливка)
+
 ```js
-var tmpl = new basis.template.html.Template(
+var Template = basis.require('basis.template.html').Template;
+
+var tmpl = new Template(
   '<div style="color: {color}"/>'
 ).createInstance();
 
@@ -142,7 +152,9 @@ console.log(tmpl.element.outerHTML);
   * если значение число или строка – вставляется как есть (число приводится к строке); если значение является пустой строкой, то класс удаляется;
 
     ```js
-    var tmpl = new basis.template.html.Template(
+    var Template = basis.require('basis.template.html').Template;
+
+    var tmpl = new Template(
       '<div class="item {foo} {bar}">'
     ).createInstance();
 
@@ -165,7 +177,9 @@ console.log(tmpl.element.outerHTML);
   * все другие значения приводятся к `boolean`; если значение равнозначно `true`, то вставляется класс с именем биндинга, иначе класс удаляется;
 
     ```js
-    var tmpl = new basis.template.html.Template(
+    var Template = basis.require('basis.template.html').Template;
+
+    var tmpl = new Template(
       '<div class="item {foo} {bar}">'
     ).createInstance();
 
@@ -189,12 +203,14 @@ console.log(tmpl.element.outerHTML);
     // console> <div class="item"></div>
     ```
 
-Это простые правила, но они не надежны. Для определения того, как обрабатывать значение используется тег [`<b:define>`](basis.template_format.md#bdefine). Этот тег определяет два правила:
+Это простые правила, но они ненадежны. Для определения того, как обрабатывать значение используется тег [`<b:define>`](basis.template_format.md#bdefine). Этот тег определяет два правила:
 
   * `bool` – значение всегда приводится к `boolean` и, в зависимости от результата, либо вставляется класс с именем биндинга, либо удаляется (не вставляется);
 
     ```js
-    var tmpl = new basis.template.html.Template(
+    var Template = basis.require('basis.template.html').Template;
+
+    var tmpl = new Template(
       '<b:define name="foo" type="bool"/>' +
       '<b:define name="bar" type="bool"/>' +
       '<div class="item {foo} {bar}">'
@@ -223,7 +239,9 @@ console.log(tmpl.element.outerHTML);
   * `enum` – определяет значение допустимых значений; если значение равно одному из списка (сравниваются как строки), то значение вставляется как класс, иначе класс удаляется (не вставляется);
 
     ```js
-    var tmpl = new basis.template.html.Template(
+    var Template = basis.require('basis.template.html').Template;
+
+    var tmpl = new Template(
       '<b:define name="foo" type="enum" values="ready processing"/>' +
       '<div class="item {foo}">'
     ).createInstance();
@@ -244,12 +262,14 @@ console.log(tmpl.element.outerHTML);
     // console> <div class="item"></div>
     ```
 
-Определение `<b:define>` для всех биндингов используемых в атрибуте class является крайне желательным, и используется для определения проблем в шаблонах и стилях, а так же получения лучших результатов при сборке приложения (подробнее в описании [`<b:define>`](basis.template_format.md#bdefine)).
+Определение `<b:define>` для всех биндингов, используемых в атрибуте `class`, является крайне желательным, и используется для определения проблем в шаблонах и стилях, а также для получения лучших результатов при сборке приложения (подробнее в описании [`<b:define>`](basis.template_format.md#bdefine)).
 
 Перед любым биндингом в атрибуте `class` может быть некоторая строка - префикс. Это позволяет избегать конфликта имен классов, так как разные биндинги могут иметь одинаковые значения.
 
 ```js
-var tmpl = new basis.template.html.Template(
+var Template = basis.require('basis.template.html').Template;
+
+var tmpl = new Template(
   '<div class="item item_{foo} prefix{bar}">'
 ).createInstance();
 
@@ -267,10 +287,12 @@ console.log(tmpl.element.outerHTML);
 
 ## bindingBridge
 
-Если назначаемое значение поддерживает [`binding bridge`](bindingbridge.md), то шаблон использует его значение полученное методом `bidingBridge.get`, а так же подписывается на изменения этого значения. Таким образом, значения с таким интерфейсом сами тригируют изменения в шаблоне, и нет необходимости самостоятельно передавать в шаблон их новое значение.
+Если назначаемое значение поддерживает [`binding bridge`](bindingbridge.md), то шаблон использует его значение, полученное методом `bidingBridge.get`, а также подписывается на изменения этого значения. Таким образом, значения с таким интерфейсом сами триггируют изменения в шаблоне, и нет необходимости самостоятельно передавать в шаблон их новое значение.
 
 ```js
-var tmpl = new basis.template.html.Template(
+var Template = basis.require('basis.template.html').Template;
+
+var tmpl = new Template(
   '<span>{value}</span>'
 ).createInstance();
 
@@ -288,4 +310,4 @@ console.log(tmpl.element.outerHTML); // но значение в шаблоне 
 // console> <span>hello world</span>
 ```
 
-Шаблон отписывается от изменений, в случае назначения биндингу другого значения или в случае разрушения шаблона.
+Шаблон отписывается от изменений в случае назначения биндингу другого значения или в случае разрушения шаблона.
