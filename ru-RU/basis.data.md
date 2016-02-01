@@ -104,9 +104,9 @@ var source = new basis.data.Object({
   handler: {
     subscribersChanged: function(sender, delta){
       if (delta > 0)
-        console.log('source: I\'m helpful, somebody use me');
+        console.log('source: I\'m helpful, somebody uses me');
       else
-        console.log('source: I\'m useless, nobody use me');
+        console.log('source: I\'m useless, nobody uses me');
     }
   }
 });
@@ -117,11 +117,11 @@ var subscriber = new basis.data.Object({
 });
 
 subscriber.setActive(true);
-// console> source: I\'m helpful, somebody use me
+// console> source: I\'m helpful, somebody uses me
 // console> true
 
 subscriber.setActive(false);
-// console> source: I\'m useless, nobody use me
+// console> source: I\'m useless, nobody uses me
 // console> true
 ```
 
@@ -131,7 +131,7 @@ subscriber.setActive(false);
 var Data = basis.data.Object.subclass({
   emit_subscribersChanged: function(delta){
     basis.data.Object.prototype.emit_subscribersChanged.call(this, delta);
-    console.log(this.name, delta > 0 ? 'started to be in use' : 'stopped to be used');
+    console.log(this.name, delta > 0 ? 'began to be used' : 'is no longer used');
   }
 })
 var a = new Data({ name: 'source A' });
@@ -142,15 +142,15 @@ var subscriber = new basis.data.Object({
   active: true,
   delegate: a  // subscriber ссылается на `a` свойством `delegate`
 });
-// console> source A started to be in use
+// console> source A began to be used
 
 subscriber.setDelegate(b);
-// console> source A stopped to be used
-// console> source B started to be in use
+// console> source A is no longer used
+// console> source B began to be used
 // console> true
 
 subscriber.setDelegate();
-// console> source B stopped to be used
+// console> source B is no longer used
 // console> true
 ```
 
@@ -166,7 +166,7 @@ subscriber.setDelegate();
 
 То, на какие объекты влияет объект (вернее, в каких свойствах они хранятся), определяет свойство `subscribeTo`. Свойство может быть задано при создании объекта или изменено позже методом `setSubscription`. При изменении значения свойства событий не выбрасывается.
 
-> Не известны кейсы, когда было бы необходимо получать событие на изменение свойства `subscribeTo`.
+> Пока неизвестны ситуации, когда было бы необходимо получать событие на изменение свойства `subscribeTo`.
 > На практике это свойство не изменяется в течение жизненного цикла объекта, поэтому есть вероятность того, что метод `setSubscription` будет убран, а задать `subscribeTo` можно будет только при создании объекта.
 
 Специальный объект `basis.data.SUBSCRIPTION` регистрирует свойства объектов (название), которые доступны для подписки, и генерирует для них код. Такие поля должны ссылаться на экземпляры класса `basis.data.AbstractData`. Код свойства – это числовое значение, которое определяется единственным битом на определенной позиции. Таким образом, чтобы определить подписку на несколько свойств, необходимо сложить соответствующие свойству коды (или использовать оператор бинарного "или" `|`):
@@ -254,7 +254,7 @@ basis.data.SUBSCRIPTION.add(
 
   * syncAction – метод, описывающий действия синхронизации. По умолчанию не задан (свойство равно `null`). Если свойство не задано, механизм синхронизации не будет активирован.
 
-Для того чтобы активировать механизм синхронизации, необходимо задать свойство `syncAction`. Оно может быть задано при создании экземпляра либо после создания методом `setSyncAction`. Метод `setSyncAction` принимает единственный параметр – новую функцию синхронизации. Если методу передано значение, которое не является функцией, `syncAction` приравнивается `null`, а сам механизм синхронизации деактивируется.
+Чтобы активировать механизм синхронизации, необходимо задать свойство `syncAction`. Оно может быть задано при создании экземпляра либо после создания методом `setSyncAction`. Метод `setSyncAction` принимает единственный параметр – новую функцию синхронизации. Если методу передано значение, которое не является функцией, `syncAction` приравнивается `null`, а сам механизм синхронизации деактивируется.
 
 ```js
 basis.require('basis.data');
@@ -266,7 +266,7 @@ var example = new basis.data.AbstractData({
 });
 ```
 
-Но определения `syncAction` недостаточно, для того чтобы объект начал синхронизацию. Необходимо чтобы выполнялось условие определенное в методе `isSyncRequired`. Для `AbstractData` этот метод определен так:
+Но определения `syncAction` недостаточно, для того чтобы объект начал синхронизацию. Необходимо чтобы выполнялось условие, определенное в методе `isSyncRequired`. Для `AbstractData` этот метод определен так:
 
 ```js
 basis.data.AbstractData.prototype.isSyncRequired = function(){
@@ -275,7 +275,7 @@ basis.data.AbstractData.prototype.isSyncRequired = function(){
 };
 ```
 
-Для инициации синхронизации необходимо, чтобы объект находился в состоянии `UNDEFINED` или `DEPRECATED` и у него был хотя бы один подписчик. Такое условие удовлетворяет большинству ситуаций возникающих при создании интерфейсов. Для выполнения синхронизации из предыдущего примера не хватает подписчика. Обычно подписчиком является некоторое представление или другой объект, использующий данный объект в качестве источника данных - то есть, в любом случае, это некоторый стороний объект, заинтересованный в том, чтобы данный объект был сихронизирован.
+Для инициации синхронизации необходимо, чтобы объект находился в состоянии `UNDEFINED` или `DEPRECATED`, и у него был хотя бы один подписчик. Такое условие удовлетворяет большинству ситуаций, возникающих при создании интерфейсов. Для выполнения синхронизации из предыдущего примера не хватает подписчика. Обычно подписчиком является некоторое представление или другой объект, использующий данный объект в качестве источника данных - то есть, в любом случае, это некоторый стороний объект, заинтересованный в том, чтобы данный объект был сихронизирован.
 
 Для того, чтобы инициировать синхронизацию сразу при создании экземпляра, можно переопределить метод `isSyncRequired`:
 

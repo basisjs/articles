@@ -1,7 +1,0 @@
-{
-  "name": "basisjs-tutorial-part1",
-  "version": "0.0",
-  "dependencies": {
-    "basis": "1.2.0"
-  }
-}

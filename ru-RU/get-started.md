@@ -118,9 +118,9 @@ basis.ready(function(){
 
     ```$ git clone http://github.com/basisjs/basisjs```
 
-* используем [bower](https://github.com/bower/bower):
+* используем [npm](https://github.com/npm/npm):
 
-    ```$ bower install basisjs```
+    ```$ npm install basisjs```
 
   хороший вариант, если вы не используете submodule и нужно управление версиями
 
