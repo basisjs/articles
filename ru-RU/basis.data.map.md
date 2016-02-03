@@ -31,7 +31,10 @@ basis.data.KeyObjectMap.prototype.resolve = function(value){
 Так же нужно помнить, что при разрушении объектов являющимися значениями, они удаляются из карты. Это делает карты удобными для хнанения значений:
 
 ```js
-var map = new basis.data.KeyObjectMap({
+var DataObject = basis.require('basis.data').Object;
+var KeyObjectMap = basis.require('basis.data').KeyObjectMap;
+
+var map = new KeyObjectMap({
   create: function(key){
     return new DataObject({ data: { value: key } })
   }
