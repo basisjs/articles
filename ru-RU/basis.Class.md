@@ -482,7 +482,7 @@ console.log(baz.data);
 
 ### nestedExtendProperty
 
-Создает такой объект, у которого значения - `extensibleProperty`. `basis.event.Emitter#listen` – пример такого свойства.
+Создает объект, значения которого являются расширяемыми, т.е. `extensibleProperty`. Один из примеров такого свойства – это `basis.event.Emitter#listen`.
 
 ```js
 var Foo = basis.Class(null, {

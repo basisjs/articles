@@ -114,7 +114,9 @@ dataset.addHandler({
 В ходе выполнения методов составляется дельта изменений: какие элементы удалены и какие добавлены. Если дельта не пустая (хотя бы один элемент добавился или удалился), то выбрасывается событие `itemsChanged`.
 
 ```js
-var dataset = new basis.data.Dataset();
+var Dataset = basis.require('basis.data').Dataset;
+
+var dataset = new Dataset();
 
 dataset.add([object1, object2]);
 // console> { inserted: [object1, object2] }
@@ -220,11 +222,12 @@ console.log(node.dataSource === exampleDataset);
 ```js
 var Node = basis.require('basis.ui').Node;
 var Value = basis.require('basis.data').Value;
+var Dataset = basis.require('basis.data').Dataset;
 
 var node = new Node({
   dataSource: Value.factory('update', 'data.items'), // эквивалентно Value.query('data.items')
   data: {
-    items: new basis.data.Dataset()
+    items: new Dataset()
   }
 });
 

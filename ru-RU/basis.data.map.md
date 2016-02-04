@@ -131,20 +131,20 @@ var dataset = new Dataset({
   items: items
 });
 
-var model2node = new basis.data.KeyObjectMap({
-  itemClass: basis.ui.Node.subclass({
+var model2node = new KeyObjectMap({
+  itemClass: Node.subclass({
     init: function(){
       console.log('create');
-      basis.ui.Node.prototype.init.call(this);
+      Node.prototype.init.call(this);
     },
     destroy: function(){
       console.log('destroy');
-      basis.ui.Node.prototype.init.call(this);
+      Node.prototype.init.call(this);
     }
   })
 });
 
-var view = new basis.ui.Node({
+var view = new Node({
   destroyDataSourceMember: false,
   dataSource: dataset,
   selection: { multiple: true },
