@@ -1,5 +1,5 @@
 * Get started
-* [Core](basis.md) (basis.js)
+* Core basis.js
     * Resources
     * Class
     * Token
