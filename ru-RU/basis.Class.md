@@ -85,7 +85,7 @@ console.log(mix2.say());
 // console> bar and mixin
 ```
 
-В расширении нового класса для удобства отладки можно указать свойство `className`. В этом случае в инструментах разработки будет более "говорящее" имя экземпляра.
+Для удобства отладки, в описании класса можно указать свойство `className`. В этом случае в инструментах разработки будет более "говорящее" имя экземпляра.
 
 ![Использование className](img/className-in-console.png)
 
@@ -520,7 +520,7 @@ console.log(baz.data);
 ```js
 var Emitter = basis.require('basis.event').Emitter;
 
-var Foo = Emitter.subclass(null, {
+var Foo = Emitter.subclass({
   events: basis.Class.oneFunctionProperty(function(){
     this.doStuff();
   }, {
