@@ -5,7 +5,9 @@
 Биндинг представляет из себя функцию, которая принимает единственный параметр `node` – владелец шаблона, для которого вычисляется значение. Результат выполнения такой функции передается шаблону. Функция не должна иметь побочного эффекта, то есть не должна что-то менять в объектах.
 
 ```js
-var Foo = basis.ui.Node.subclass({
+var Node = basis.require('basis.ui').Node;
+
+var Foo = Node.subclass({
   template: basis.resource('./path/to/template.tmpl'),
   binding: {
     value: function(node){   // теперь шаблон может использовать {value}
@@ -18,7 +20,9 @@ var Foo = basis.ui.Node.subclass({
 Функция биндинга вычисляется сразу после создания экземпляра шаблона, но только в том случае, если шаблон использует биндинг. По этой причине не важно количество биндингов: вычисляться будут только используемые.
 
 ```js
-var node = new basis.ui.Node({
+var Node = basis.require('basis.ui').Node;
+
+var node = new Node({
   template: '<span>{used}</span>',
   binding: {
     used: function(){
@@ -37,7 +41,9 @@ var node = new basis.ui.Node({
 В случае, если что-то поменялось, и нужно перевычислить значение биндинга, необходимо вызвать метод `updateBind`, которому передается имя биндинга. Если изменения сопровождаются событием (событиями), можно указать это в описании биндинга (для этого используется расширенная форма) и избавиться от самостоятельного вызова `updateBind`. В этом случае биндинг будет вычисляться (если используется шаблоном) при создании шаблона и при возникновении событий из указанного списка.
 
 ```js
-var Foo = basis.ui.Node.subclass({
+var Node = basis.require('basis.ui').Node;
+
+var Foo = Node.subclass({
   template: basis.resource('./path/to/template.tmpl'),
   binding: {
     value: function(node){       // простая запись, без указания событий;
@@ -71,10 +77,13 @@ var Foo = basis.ui.Node.subclass({
   * объект, поддерживающий механизм [`binding bridge`](bindingbridge.md) – значение отдается в шаблон как есть;
 
     ```js
-      // экземпляры basis.data.Value имеют интерфейс bindingBridge
-      var count = new basis.data.Value({ value: 123 });
+      var Node = basis.require('basis.ui').Node;
+      var Value = basis.require('basis.data').Value;
 
-      var node = basis.ui.Node({
+      // экземпляры basis.data.Value имеют интерфейс bindingBridge
+      var count = new Value({ value: 123 });
+
+      var node = new Node({
         binding: {
           count: count,   // эквивалентно
                           // count: function(){
@@ -90,7 +99,7 @@ var Foo = basis.ui.Node.subclass({
   * строка – используется, если возможно, преобразование [сокращения](#Сокращения), иначе значение оборачивается в basis.getter;
 
     ```js
-      var node = basis.ui.Node({
+      var node = new Node({
         binding: {
           value: 'value'  // эквивалентно
                           // value: basis.getter('value')
@@ -101,8 +110,10 @@ var Foo = basis.ui.Node.subclass({
   * экземпляр `basis.ui.Node` – при первом вычислении экземпляр добавляется в список `satellite` узла, а в шаблон отдается значение его свойства `element`.
 
     ```js
-      var satelliteNode = new basis.ui.Node();
-      var node = basis.ui.Node({
+      var Node = basis.require('basis.ui').Node;
+
+      var satelliteNode = new Node();
+      var node = new Node({
         binding: {
           foo: satelliteNode  // эквивалентно
                               // foo: {
@@ -127,7 +138,9 @@ var Foo = basis.ui.Node.subclass({
   * data – предназначен для упрощения прокидывания полей из свойства `data` в шаблон;
 
     ```js
-      var node = basis.ui.Node({
+      var Node = basis.require('basis.ui').Node;
+
+      var node = new Node({
         data: {
           age: 123
         },
@@ -146,7 +159,9 @@ var Foo = basis.ui.Node.subclass({
   * satellite – предназначен для упрощения прокидывания корневого элемента сателлита в шаблон;
 
     ```js
-      var node = basis.ui.Node({
+      var Node = basis.require('basis.ui').Node;
+
+      var node = new Node({
         binding: {
           foo: 'satellite:name',   // эквивалентно
                                    // foo: {

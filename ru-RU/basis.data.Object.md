@@ -11,9 +11,9 @@
 Когда меняются значения в `data` – выбрасывается событие `update`. Обработчики события получают параметр `delta` - дельта изменений. С помощью дельты можно определить, что поменялось и восстановить состояние данных до изменений.
 
 ```js
-basis.require('basis.data');
+var DataObject = require('basis.data').Object;
 
-var foo = new basis.data.Object({
+var foo = new DataObject({
   data: {
     name: 'John',
     age: 25
@@ -50,10 +50,10 @@ console.log(foo.update({ age: 30 }));
 Связывание осуществляется методом `setDelegate`. В метод передается экземпляр `basis.data.Object` или `null`. Ссылка на делегат хранится в свойстве `delegate`.
 
 ```js
-basis.require('basis.data');
+var DataObject = basis.require('basis.data').Object;
 
-var foo = new basis.data.Object();
-var bar = new basis.data.Object();
+var foo = new DataObject();
+var bar = new DataObject();
 
 foo.setDelegate(bar);
 
@@ -111,7 +111,10 @@ console.log(foo.state === bar.state);
 Например, это может быть окно с формой редактирования, которое появляется, когда в его цепочке делегатов есть целевой объект.
 
 ```js
-var myDialog = new basis.ui.window.Window({
+var DataObject = basis.require('basis.data').Object;
+var Window = basis.require('basis.ui.window').Window;
+
+var myDialog = new Window({
   handler: {
     targetChanged: function(){
       if (this.target)
@@ -125,12 +128,12 @@ var myDialog = new basis.ui.window.Window({
 console.log(myDialog.closed);
 // > true
 
-var proxy = new basis.data.Object();
+var proxy = new DataObject();
 myDialog.setDelegate(proxy);
 console.log(myDialog.closed);
 // > true
 
-var target = new basis.data.Object({ target: true });
+var target = new DataObject({ target: true });
 proxy.setDelegate(target);
 console.log(myDialog.closed);
 // > false

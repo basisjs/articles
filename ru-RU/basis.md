@@ -13,7 +13,7 @@
   - Исправления методов для старых браузеров: `Array#splice`, `String#split`, `String#substr`
   - Хелперы для асинхронной работы с `document` (`basis.doc`)
   - `basis.json.parse`
-- Обработка конфига (на данный момент, значение атрибута `basis-config`), результат хранится в `basis.config`
+- Обработка конфига (на данный момент конфиг – это значение атрибута `basis-config`), результат хранится в `basis.config`
 - [Конструирование классов](ru-RU/basis.Class.md) `basis.Class`
 - Модульность:
   - Пространства имен `basis.namespace`
