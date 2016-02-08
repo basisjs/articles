@@ -3,12 +3,15 @@
 Шаблон назначается свойством `template`. При создании класса, производного от `basis.ui.Node` или его экземпляров, этому свойству задается экземпляр `basis.template.html.Template`. Используя его, объект создаст экземпляр шаблона (DOM фрагмент + интерфейс) и будет заниматься его обслуживанием.
 
 ```js
-var Foo = basis.ui.Node.subclass({
-  template: new basis.template.html.Template('<h1>hello world</h1>')
+var Node = basis.require('basis.ui').Node;
+var Template = basis.require('basis.template.html').Template;
+
+var Foo = Node.subclass({
+  template: new Template('<h1>hello world</h1>')
 });
 
-var node = new basis.ui.Node({
-  template: new basis.template.html.Template(basis.resource('./path/to/template.tmpl'))
+var node = new Node({
+  template: new Template(basis.resource('./path/to/template.tmpl'))
 });
 ```
 
@@ -23,11 +26,13 @@ var node = new basis.ui.Node({
 По умолчанию для `basis.ui.Node` и `basis.ui.PartitionNode` задан шаблон с пустым `<div>` элементом. Так как экземпляры `basis.template.html.Template` поддерживают [авторасширение](basis.Class.md#Авторасширение), то необязательно создавать экземпляр `basis.template.html.Template`, достаточно передать значение, которое будет являться источником для нового шаблона.
 
 ```js
-var Foo = basis.ui.Node.subclass({
+var Node = basis.require('basis.ui').Node;
+
+var Foo = Node.subclass({
   template: '<h1>hello world</h1>'  // это эквивалентно new basis.template.html.Template('<h1>hello world</h1>')
 });
 
-var node = new basis.ui.Node({
+var node = new Node({
   template: basis.resource('./path/to/template.tmpl')
 });
 ```
@@ -37,7 +42,9 @@ var node = new basis.ui.Node({
 Шаблон создается в методе `postInit`, так как при создании шаблона могут вычисляться биндинги, использующие еще не определенные свойства. Таким образом, в методе `init` недоступно свойство `tmpl` (оно равно `null`), а `element` и `childNodesElement` ссылаются на временный пустой `DocumentFragment`. Если требуется обращаться к `DOM` фрагменту, который создает шаблон, или изменять его при создании экземпляра `basis.ui.Node`, то это нужно описывать в переопределеном методе `templateSync`.
 
 ```js
-var node = new basis.ui.Node({
+var Node = basis.require('basis.ui').Node;
+
+var node = new Node({
   template: '<div class="foo">{example}</div>',
   binding: {
     example: function(){
@@ -45,7 +52,7 @@ var node = new basis.ui.Node({
     }
   },
   init: function(){
-    basis.ui.Node.prototype.init.call(this);
+    Node.prototype.init.call(this);
 
     console.log(this.tmpl);
     // console> null
@@ -57,7 +64,7 @@ var node = new basis.ui.Node({
     // console> #document-fragment
   },
   templateSync: function(){
-    basis.ui.Node.prototype.templateSync.call(this);
+    Node.prototype.templateSync.call(this);
 
     console.log(this.tmpl);
     // console> { element: div.foo, example: #text, templateId_: 0, set: function(name, value){ .. } }

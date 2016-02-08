@@ -31,9 +31,12 @@ basis.data.KeyObjectMap.prototype.resolve = function(value){
 Так же нужно помнить, что при разрушении объектов являющимися значениями, они удаляются из карты. Это делает карты удобными для хнанения значений:
 
 ```js
-var map = new basis.data.KeyObjectMap({
+var DataObject = basis.require('basis.data').Object;
+var KeyObjectMap = basis.require('basis.data').KeyObjectMap;
+
+var map = new KeyObjectMap({
   create: function(key){
-    return new basis.data.Object({ data: { value: key } })
+    return new DataObject({ data: { value: key } })
   }
 });
 
@@ -71,24 +74,29 @@ console.log(map.get(1));
 Нередко нужно сохранять значения, так как они могут нести информацию о состоянии. Обычно в качестве таких значений выступают экземпляры `basis.ui.Node` и выгодно сохранять их экземпляры, вместо пересоздания. В этом случае, так же необходимо запретить разрушение дочерних узлов через свойство `destroyDataSourceMember`, если используется `dataSource`.
 
 ```js
+var Node = basis.require('basis.ui').Node;
+var DataObject = basis.require('basis.data').Object;
+var Dataset = basis.require('basis.data').Dataset;
+var KeyObjectMap = basis.require('basis.data').KeyObjectMap;
+
 var items = [
-  new basis.data.Object(),
-  new basis.data.Object(),
+  new DataObject(),
+  new DataObject(),
 ];
-var dataset = new basis.data.Dataset();
-var map = new basis.data.KeyObjectMap({
-  itemClass: basis.ui.Node.subclass({
+var dataset = new Dataset();
+var map = new KeyObjectMap({
+  itemClass: Node.subclass({
     init: function(){
       console.log('create');
-      basis.ui.Node.prototype.init.call(this);
+      Node.prototype.init.call(this);
     },
     destroy: function(){
       console.log('destroy');
-      basis.ui.Node.prototype.init.call(this);
+      Node.prototype.init.call(this);
     }
   })
 });
-var view = new basis.ui.Node({
+var view = new Node({
   destroyDataSourceMember: false,
   dataSource: dataset,
   childFactory: function(config){
@@ -104,34 +112,39 @@ dataset.clear();
 
 dataset.set(items);
 
-dataset.add(new basis.data.Object());
+dataset.add(new DataObject());
 // > create
 ```
 
 Иногда требуется, например, синхронизировать некоторый набор с `selection` узла, который выводит некоторый полный набор. В этом случае не известно что будет раньше, создадутся дочерние узлы через `dataSource` и `childFactory` или же синхронизируется `selection`. В любом случае, должны получиться одни и те же узлы (`basis.ui.Node`):
 
 ```js
+var Node = basis.require('basis.ui').Node;
+var DataObject = basis.require('basis.data').Object;
+var Dataset = basis.require('basis.data').Dataset;
+var KeyObjectMap = basis.require('basis.data').KeyObjectMap;
+
 var items = basis.array.create(3, function(){
-  return new basis.data.Object();
+  return new DataObject();
 });
-var dataset = new basis.data.Dataset({
+var dataset = new Dataset({
   items: items
 });
 
-var model2node = new basis.data.KeyObjectMap({
-  itemClass: basis.ui.Node.subclass({
+var model2node = new KeyObjectMap({
+  itemClass: Node.subclass({
     init: function(){
       console.log('create');
-      basis.ui.Node.prototype.init.call(this);
+      Node.prototype.init.call(this);
     },
     destroy: function(){
       console.log('destroy');
-      basis.ui.Node.prototype.init.call(this);
+      Node.prototype.init.call(this);
     }
   })
 });
 
-var view = new basis.ui.Node({
+var view = new Node({
   destroyDataSourceMember: false,
   dataSource: dataset,
   selection: { multiple: true },

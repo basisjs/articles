@@ -28,9 +28,10 @@
 
   <script src="path/to/basisjs/src/basis.js" basis-config></script>
   <script>
-    basis.require('basis.ui');
+    var Node = basis.require('basis.ui').Node;
+
     basis.ready(function(){
-      new basis.ui.Node({
+      new Node({
         container: document.body,
         template: 'Hello world'
       });
@@ -94,9 +95,10 @@
 Так, у приложения входная точка будет `src/app.js`, в которой будет происходить вся инициализация. Для примера с `Hello world` этот файл будет иметь вид:
 
 ```js
-basis.require('basis.ui');
+var Node = basis.require('basis.ui').Node;
+
 basis.ready(function(){
-  new basis.ui.Node({
+  new Node({
     container: document.body,
     template: 'Hello world'
   });

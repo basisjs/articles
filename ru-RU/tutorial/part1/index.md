@@ -703,7 +703,7 @@ new Node({
 ```js
 var Node = require('basis.ui').Node;
 
-Node({
+new Node({
   container: document.body,
   template: resource('./app.tmpl'),
   binding: {

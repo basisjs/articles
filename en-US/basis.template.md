@@ -27,7 +27,9 @@ rules of applications.
 `basis.template.html.Template` is used to create instances of templates.
 
 ```js
-var template = new basis.template.html.Template('<h1>hello world</h1>');
+var Template = basis.require('basis.template.html').Template;
+
+var template = new Template('<h1>hello world</h1>');
 ```
 
 `basis.template.html.Template` constructor takes the only argument - the source
@@ -68,14 +70,17 @@ supports an [`autoexpansion magic`](basis.class.md#Autoexpansion). This feature
 allows you to use shortcut syntax for template definition inside views:
 
 ```js
-var Foo = basis.ui.Node.subclass({
+var Node = basis.require('basis.ui').Node;
+var Template = basis.require('basis.template.html').Template;
+
+var Foo = Node.subclass({
   // shortcut:
   template: '<h1>hello world</h1>'
   // the long version is:
-  template: new basis.template.html.Template('<h1>hello world</h1>')
+  template: new Template('<h1>hello world</h1>')
 });
 
-var node = new basis.ui.Node({
+var node = new Node({
   template: basis.resource('path/to/template.tmpl')
 });
 ```
