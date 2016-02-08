@@ -48,14 +48,15 @@
 Если значения является неправильным (такого кода нет в `basis.data.STATE`), то будет выброшено исключение `Wrong state value`.
 
 ```js
-basis.require('basis.data');
+var AbstractData = basis.require('basis.data').AbstractData;
+var STATE = basis.require('basis.data').STATE;
 
-var obj = new basis.data.AbstractData({
+var obj = new AbstractData({
   state: basis.data.STATE.READY    // можно задавать состояние при создании
                                    // экземпляра, по умолчанию будет UNDEFINED
 });
 
-obj.setState(basis.data.STATE.ERROR, 'Some error text');
+obj.setState(STATE.ERROR, 'Some error text');
 console.log(String(obj.state));    // 'error'
 console.log(obj.state.data);       // 'Some error text'
 ```
@@ -64,19 +65,22 @@ console.log(obj.state.data);       // 'Some error text'
 Несмотря на то, что код состояния задается строкой, его значение хранится как объект (поэтому `obj.state` оборачивается в `String`, чтобы вывести значение как строку). Строковое значение оборачивается в `Object` для того, чтобы можно было добавить свойство `data` (данные состояния). При этом к такому значению хорошо применимы операторы сравнения `==` и `!=` в контексте сравнения со строковым значениями (значение `state` неявно приводится к строке), однако не работает с операторами эквивалентного сравнения `===` и `!==`.
 
 ```js
-obj.state == basis.data.STATE.ERROR;          // true
-obj.state != basis.data.STATE.ERROR;          // false
-obj.state === basis.data.STATE.ERROR;         // false
-obj.state !== basis.data.STATE.ERROR;         // true
-String(obj.state) === basis.data.STATE.ERROR; // true
+var STATE = basis.require('basis.data').STATE;
+
+obj.state == STATE.ERROR;          // true
+obj.state != STATE.ERROR;          // false
+obj.state === STATE.ERROR;         // false
+obj.state !== STATE.ERROR;         // true
+String(obj.state) === STATE.ERROR; // true
 ```
 
 Когда меняется состояние (его значение и/или данные), выбрасывается событие `stateChanged`. Аргументом события является предыдущее значение состояния.
 
 ```js
-basis.require('basis.data');
+var AbstractData = basis.require('basis.data').AbstractData;
+var STATE = basis.require('basis.data').STATE;
 
-var obj = new basis.data.AbstractData({
+var obj = new AbstractData({
   handler: {
     stateChanged: function(sender, oldState){
       console.log('Previous state:', String(oldState), oldState.data);
@@ -85,7 +89,7 @@ var obj = new basis.data.AbstractData({
   }
 });
 
-obj.setState(basis.data.STATE.ERROR, 'Error message');
+obj.setState(STATE.ERROR, 'Error message');
   // В консоли будет выведено:
   // Previous state: 'undefined' undefined
   // Current state: 'error' 'Error message'
@@ -100,7 +104,10 @@ obj.setState(basis.data.STATE.ERROR, 'Error message');
 Процесс подписки и отписки автоматизирован и управляется свойствами `active` и `subscribeTo`.
 
 ```js
-var source = new basis.data.Object({
+var DataObject = basis.require('basis.data').Object;
+var SUBSCRIPTION = basis.require('basis.data').SUBSCRIPTION;
+
+var source = new DataObject({
   handler: {
     subscribersChanged: function(sender, delta){
       if (delta > 0)
@@ -111,8 +118,8 @@ var source = new basis.data.Object({
   }
 });
 
-var subscriber = new basis.data.Object({
-  subscribeTo: basis.data.SUBSCRIPTION.DELEGATE,
+var subscriber = new DataObject({
+  subscribeTo: SUBSCRIPTION.DELEGATE,
   delegate: source
 });
 
@@ -128,17 +135,20 @@ subscriber.setActive(false);
 Если объект-потребитель данных активен (свойство `active` равно `true`, в примере это `subscriber`), то для объектов, которые хранятся в свойствах, перечисленных в `subscribeTo`, счетчик заинтересованных объектов (свойство `subscriberCount`) увеличивается на единицу. Когда объект перестает быть активным (`active` -> `false`), счетчики объектов, на которые он был подписан, уменьшаются на единицу. То же происходит, когда потребитель (`subscriber`) перестает ссылаться на источник (в примере это `source`).
 
 ```js
-var Data = basis.data.Object.subclass({
+var DataObject = basis.require('basis.data').Object;
+var SUBSCRIPTION = basis.require('basis.data').SUBSCRIPTION;
+
+var Data = DataObject.subclass({
   emit_subscribersChanged: function(delta){
-    basis.data.Object.prototype.emit_subscribersChanged.call(this, delta);
+    DataObject.prototype.emit_subscribersChanged.call(this, delta);
     console.log(this.name, delta > 0 ? 'began to be used' : 'is no longer used');
   }
 })
 var a = new Data({ name: 'source A' });
 var b = new Data({ name: 'source B' });
 
-var subscriber = new basis.data.Object({
-  // по умочанию subscribeTo: basis.data.SUBSCRIPTION.DELEGATE + basis.data.SUBSCRIPTION.TARGET
+var subscriber = new DataObject({
+  // по умочанию subscribeTo: SUBSCRIPTION.DELEGATE + SUBSCRIPTION.TARGET
   active: true,
   delegate: a  // subscriber ссылается на `a` свойством `delegate`
 });
@@ -257,9 +267,9 @@ basis.data.SUBSCRIPTION.add(
 Чтобы активировать механизм синхронизации, необходимо задать свойство `syncAction`. Оно может быть задано при создании экземпляра либо после создания методом `setSyncAction`. Метод `setSyncAction` принимает единственный параметр – новую функцию синхронизации. Если методу передано значение, которое не является функцией, `syncAction` приравнивается `null`, а сам механизм синхронизации деактивируется.
 
 ```js
-basis.require('basis.data');
+var AbstractData = basis.require('basis.data').AbstractData;
 
-var example = new basis.data.AbstractData({
+var example = new AbstractData({
   syncAction: function(){
     console.log('sync requested');
   }
@@ -269,7 +279,10 @@ var example = new basis.data.AbstractData({
 Но определения `syncAction` недостаточно, для того чтобы объект начал синхронизацию. Необходимо чтобы выполнялось условие, определенное в методе `isSyncRequired`. Для `AbstractData` этот метод определен так:
 
 ```js
-basis.data.AbstractData.prototype.isSyncRequired = function(){
+var AbstractData = basis.require('basis.data').AbstractData;
+var STATE = basis.require('basis.data').STATE;
+
+AbstractData.prototype.isSyncRequired = function(){
   return this.subscriberCount > 0 &&
          (this.state == STATE.UNDEFINED || this.state == STATE.DEPRECATED);
 };
@@ -280,12 +293,13 @@ basis.data.AbstractData.prototype.isSyncRequired = function(){
 Для того, чтобы инициировать синхронизацию сразу при создании экземпляра, можно переопределить метод `isSyncRequired`:
 
 ```js
-basis.require('basis.data');
+var AbstractData = basis.require('basis.data').AbstractData;
+var STATE = basis.require('basis.data').STATE;
 
 // по умолчанию экземпляр создается в состоянии UNDEFINED
-var example = new basis.data.AbstractData({
+var example = new AbstractData({
   isSyncRequired: function(){
-    return this.state == basis.data.STATE.UNDEFINED;
+    return this.state == STATE.UNDEFINED;
   },
   syncAction: function(){
     console.log('sync requested');
@@ -297,17 +311,18 @@ var example = new basis.data.AbstractData({
 Обычно в `syncAction` выполняется запрос к серверу для получения данных, а синхронизация инициируется при привязке объекта данных к активному представлению:
 
 ```js
-basis.require('basis.data');
-basis.require('basis.ui');
+var Node = basis.require('basis.ui').Node;
+var DataObject = basis.require('basis.data').Object;
+var STATE = basis.require('basis.data').STATE;
 
-var example = new basis.data.Object({
+var example = new Object({
   syncAction: function(){
     var self = this;
     basis.net.request('/api/whatever',
       // success
       function(data){
         self.update(data);
-        self.setState(basis.data.STATE.READY);
+        self.setState(STATE.READY);
       },
       // failure
       function(error){
@@ -317,7 +332,7 @@ var example = new basis.data.Object({
   }
 });
 
-var view = new basis.ui.Node({
+var view = new Node({
   active: true,
   delegate: example
 });
@@ -326,10 +341,10 @@ var view = new basis.ui.Node({
 Для упрощения работы с запросами и сменой состояний используется модуль `basis.net.action`. Предыдущий пример может быть переписан следущим образом:
 
 ```js
-basis.require('basis.data');
-basis.require('basis.ui');
+var Node = basis.require('basis.ui').Node;
+var DataObject = basis.require('basis.data').Object;
 
-var example = new basis.data.Object({
+var example = new Object({
   syncAction: basis.net.action.create({
     url: '/api/whatever',
     success: function(data){
@@ -338,7 +353,7 @@ var example = new basis.data.Object({
   })
 });
 
-var view = new basis.ui.Node({
+var view = new Node({
   active: true,
   delegate: example
 });
@@ -347,9 +362,9 @@ var view = new basis.ui.Node({
 Более того, сами представления, точнее экземпляры `basis.dom.wrapper.Node`, могут получать данные без использования других объектов. Это подходит для простых случаев, когда данные не переиспользуются (но все же рекомендуется получать данные от сервера в объектах данных, а не в представлении) и предыдущий пример может выглядеть так:
 
 ```js
-basis.require('basis.ui');
+var Node = basis.require('basis.ui').Node;
 
-var view = new basis.ui.Node({
+var view = new Node({
   syncAction: basis.net.action.create({
     url: '/api/whatever',
     success: function(data){
