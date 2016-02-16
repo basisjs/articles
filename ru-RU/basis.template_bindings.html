@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="8.2" data-basepath="." data-revision="1426118090885">
+    <div class="book" data-github="basisjs/articles" data-level="8.2" data-basepath="." data-revision="1455641242266">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -989,7 +989,9 @@
 <p>Узловым биндингам могут быть назначены:</p>
 <ul>
 <li><p>браузерный <code>DOM</code> узел – в этом случае узел заменяется на переданный узел; если передается новый <code>DOM</code> узел, когда изначальный узел уже заменен, то предыдущий узел заменяется новым; если новое значение не является <code>DOM</code> узлом, то восстанавливается оригинальный (который был при создании экземпляра шаблона);</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> basis.template.html.Template(
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Template = basis.require(<span class="hljs-string">'basis.template.html'</span>).Template;
+
+<span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> Template(
   <span class="hljs-string">'&lt;div&gt;'</span> +
     <span class="hljs-string">'&lt;div{example} class="original"&gt;'</span> +
   <span class="hljs-string">'&lt;/div&gt;'</span>
@@ -1034,7 +1036,9 @@ console.log(tmpl.element.outerHTML);
 </ul>
 <h2 id="--">Биндинги в атрибутах</h2>
 <p>В атрибутах могут быть только строковые значения, поэтому значения приводятся к строке. Когда меняется значение биндинга – заменяется значение атрибута. В атрибуте можно указывать несколько биндингов и любой дополнительный текст до и после биндинга.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> basis.template.html.Template(
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Template = basis.require(<span class="hljs-string">'basis.template.html'</span>).Template;
+
+<span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> Template(
   <span class="hljs-string">'&lt;div title="страница {page} из {totalPage}"/&gt;'</span>
 ).createInstance();
 
@@ -1046,8 +1050,10 @@ tmpl.set(<span class="hljs-string">'totalPage'</span>, <span class="hljs-number"
 console.log(tmpl.element.outerHTML);
 <span class="hljs-comment">// console&gt; &lt;div title="страница 3 из 10"&gt;&lt;/div&gt;</span>
 </code></pre>
-<p>Атрибуты <code>disabled</code>, <code>checked</code>, <code>selected</code> и <code>readonly</code> – особый случай. Значение приводится к <code>boolean</code> и если оно равнозначно <code>true</code>, то в качестве значения атрибута ставится его название, либо атрибут удаляется.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> basis.template.html.Template(
+<p>Атрибуты <code>disabled</code>, <code>checked</code>, <code>selected</code> и <code>readonly</code> – особый случай. Их значение приводится к <code>boolean</code>. Если заданное в шаблоне значение равнозначно <code>true</code>, то значением атрибута становится его название (например, <code>checked=&quot;checked&quot;</code>). Иначе атрибут удаляется.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Template = basis.require(<span class="hljs-string">'basis.template.html'</span>).Template;
+
+<span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> Template(
   <span class="hljs-string">'&lt;input type="checkbox" checked="{foo}"/&gt;'</span>
 ).createInstance();
 
@@ -1063,11 +1069,13 @@ console.log(tmpl.element.outerHTML);
 <span class="hljs-comment">// console&gt; &lt;input type="checkbox"&gt;</span>
 </code></pre>
 <h3 id="style">style</h3>
-<p>При изменении биндингов в атрибуте <code>style</code> заменяется не значение атрибута, а меняется соответствующее свойство в <code>style</code>. Если значение не валидно, то значение стиля не меняется.</p>
+<p>При изменении биндингов в атрибуте <code>style</code> заменяется не значение атрибута, а меняется соответствующее свойство в <code>style</code>. Если значение невалидно, то значение стиля не меняется.</p>
 <blockquote>
-<p>В случае неверного значения, значение должно обнуляться. Поэтому текущая реализация не верна и будет исправлена в будущих версиях.</p>
+<p>В случае неверного значения оно должно сбрасываться. Поэтому текущая реализация не верна и будет исправлена в будущих версиях.</p>
 </blockquote>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> basis.template.html.Template(
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Template = basis.require(<span class="hljs-string">'basis.template.html'</span>).Template;
+
+<span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> Template(
   <span class="hljs-string">'&lt;div style="color: {color}"/&gt;'</span>
 ).createInstance();
 
@@ -1091,7 +1099,9 @@ console.log(tmpl.element.outerHTML);
 <p>По умолчанию применяются правила:</p>
 <ul>
 <li><p>если значение число или строка – вставляется как есть (число приводится к строке); если значение является пустой строкой, то класс удаляется;</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> basis.template.html.Template(
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Template = basis.require(<span class="hljs-string">'basis.template.html'</span>).Template;
+
+<span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> Template(
   <span class="hljs-string">'&lt;div class="item {foo} {bar}"&gt;'</span>
 ).createInstance();
 
@@ -1112,7 +1122,9 @@ console.log(tmpl.element.outerHTML);
 </code></pre>
 </li>
 <li><p>все другие значения приводятся к <code>boolean</code>; если значение равнозначно <code>true</code>, то вставляется класс с именем биндинга, иначе класс удаляется;</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> basis.template.html.Template(
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Template = basis.require(<span class="hljs-string">'basis.template.html'</span>).Template;
+
+<span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> Template(
   <span class="hljs-string">'&lt;div class="item {foo} {bar}"&gt;'</span>
 ).createInstance();
 
@@ -1137,10 +1149,12 @@ console.log(tmpl.element.outerHTML);
 </code></pre>
 </li>
 </ul>
-<p>Это простые правила, но они не надежны. Для определения того, как обрабатывать значение используется тег <a href="basis.template_format.html#bdefine"><code>&lt;b:define&gt;</code></a>. Этот тег определяет два правила:</p>
+<p>Это простые правила, но они ненадежны. Для определения того, как обрабатывать значение используется тег <a href="basis.template_format.html#bdefine"><code>&lt;b:define&gt;</code></a>. Этот тег определяет два правила:</p>
 <ul>
 <li><p><code>bool</code> – значение всегда приводится к <code>boolean</code> и, в зависимости от результата, либо вставляется класс с именем биндинга, либо удаляется (не вставляется);</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> basis.template.html.Template(
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Template = basis.require(<span class="hljs-string">'basis.template.html'</span>).Template;
+
+<span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> Template(
   <span class="hljs-string">'&lt;b:define name="foo" type="bool"/&gt;'</span> +
   <span class="hljs-string">'&lt;b:define name="bar" type="bool"/&gt;'</span> +
   <span class="hljs-string">'&lt;div class="item {foo} {bar}"&gt;'</span>
@@ -1167,7 +1181,9 @@ console.log(tmpl.element.outerHTML);
 </code></pre>
 </li>
 <li><p><code>enum</code> – определяет значение допустимых значений; если значение равно одному из списка (сравниваются как строки), то значение вставляется как класс, иначе класс удаляется (не вставляется);</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> basis.template.html.Template(
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Template = basis.require(<span class="hljs-string">'basis.template.html'</span>).Template;
+
+<span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> Template(
   <span class="hljs-string">'&lt;b:define name="foo" type="enum" values="ready processing"/&gt;'</span> +
   <span class="hljs-string">'&lt;div class="item {foo}"&gt;'</span>
 ).createInstance();
@@ -1189,9 +1205,11 @@ console.log(tmpl.element.outerHTML);
 </code></pre>
 </li>
 </ul>
-<p>Определение <code>&lt;b:define&gt;</code> для всех биндингов используемых в атрибуте class является крайне желательным, и используется для определения проблем в шаблонах и стилях, а так же получения лучших результатов при сборке приложения (подробнее в описании <a href="basis.template_format.html#bdefine"><code>&lt;b:define&gt;</code></a>).</p>
+<p>Определение <code>&lt;b:define&gt;</code> для всех биндингов в атрибуте <code>class</code>, является крайне желательным. Так как в таком случае возможно определение проблем в шаблонах и стилях, а так же минификация имен классов (подробнее в описании <a href="basis.template_format.html#bdefine"><code>&lt;b:define&gt;</code></a>).</p>
 <p>Перед любым биндингом в атрибуте <code>class</code> может быть некоторая строка - префикс. Это позволяет избегать конфликта имен классов, так как разные биндинги могут иметь одинаковые значения.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> basis.template.html.Template(
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Template = basis.require(<span class="hljs-string">'basis.template.html'</span>).Template;
+
+<span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> Template(
   <span class="hljs-string">'&lt;div class="item item_{foo} prefix{bar}"&gt;'</span>
 ).createInstance();
 
@@ -1207,8 +1225,10 @@ console.log(tmpl.element.outerHTML);
 <span class="hljs-comment">// console&gt; &lt;div class="item item_test prefixtest"&gt;&lt;/div&gt;</span>
 </code></pre>
 <h2 id="bindingbridge">bindingBridge</h2>
-<p>Если назначаемое значение поддерживает <a href="bindingbridge.html"><code>binding bridge</code></a>, то шаблон использует его значение полученное методом <code>bidingBridge.get</code>, а так же подписывается на изменения этого значения. Таким образом, значения с таким интерфейсом сами тригируют изменения в шаблоне, и нет необходимости самостоятельно передавать в шаблон их новое значение.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> basis.template.html.Template(
+<p>Если назначаемое значение поддерживает интерфейс <a href="bindingbridge.html"><code>binding bridge</code></a>, то шаблон использует его значение, полученное методом <code>bindingBridge.get()</code> и подписывается на изменения этого значения. Таким образом, значения с таким интерфейсом сами триггируют изменения в шаблоне, и нет необходимости самостоятельно передавать в шаблон их новое значение.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Template = basis.require(<span class="hljs-string">'basis.template.html'</span>).Template;
+
+<span class="hljs-keyword">var</span> tmpl = <span class="hljs-keyword">new</span> Template(
   <span class="hljs-string">'&lt;span&gt;{value}&lt;/span&gt;'</span>
 ).createInstance();
 
@@ -1225,7 +1245,7 @@ token.set(<span class="hljs-string">'value'</span>, <span class="hljs-string">'h
 console.log(tmpl.element.outerHTML); <span class="hljs-comment">// но значение в шаблоне обновляется</span>
 <span class="hljs-comment">// console&gt; &lt;span&gt;hello world&lt;/span&gt;</span>
 </code></pre>
-<p>Шаблон отписывается от изменений, в случае назначения биндингу другого значения или в случае разрушения шаблона.</p>
+<p>Шаблон отписывается от изменений в случае назначения биндингу другого значения или в случае разрушения шаблона.</p>
 
                     
                     </section>

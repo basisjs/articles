@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="8" data-basepath="." data-revision="1426118090885">
+    <div class="book" data-github="basisjs/articles" data-level="8" data-basepath="." data-revision="1455641242266">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -961,17 +961,19 @@
                     
                         <h1 id="-basistemplate">Шаблоны (basis.template)</h1>
 <p>Модуль <code>basis.template</code> обеспечивает работу с шаблонами, разбор их исходного кода, построение декларации.</p>
-<p>Основной класс модуля <code>basis.template.Template</code>. Этот класс реализует основу для создания и разрушения экземпляров шаблона. </p>
+<p>Основной класс модуля <code>basis.template.Template</code>. Этот класс реализует основу для создания и разрушения экземпляров шаблона.</p>
 <p>Реализация шаблонов базируется на модели <code>DOM</code>, в то время, как большинство шаблонизаторов генерируют <code>HTML</code> и преобразуют его в <code>DOM</code>, используя <code>innerHTML</code>. Такой подход дает возможность точечного обновления и делает шаблоны быстрыми и эффективными.</p>
 <p>В шаблонах <code>basis.js</code> нет ветвлений, циклов и вычислений, что делает их простыми и наглядными. Шаблоны описываются в формате <code>HTML</code>, с некоторыми дополнениями (см <a href="basis.template_format.html">Формат шаблонов</a>).</p>
-<p><code>basis.template</code> так же поддерживает темы, наборы шаблонов, которые применяются единовременно.</p>
+<p><code>basis.template</code> также поддерживает темы – наборы шаблонов, которые применяются единовременно.</p>
 <h2 id="-">Создание шаблонов</h2>
-<p>Не смотря на то, что класс <code>basis.template.Template</code> реализует основной интерфейс свойственный шаблонам – его экземпляры не могут создавать экземпляры шаблона. Для этой цели используется его потомок – класс <code>basis.template.html.Template</code>. Его потомки могут создавать экземпляры шаблона для браузерного <code>DOM</code>.</p>
+<p>Несмотря на то, что класс <code>basis.template.Template</code> реализует основной интерфейс, свойственный шаблонам, его экземпляры не могут создавать экземпляры шаблона. Для этой цели используется его потомок – класс <code>basis.template.html.Template</code>. Потомки этого класса могут создавать экземпляры шаблона для браузерного <code>DOM</code>.</p>
 <blockquote>
 <p>Такое разделение является следствием того, что модуль <code>basis.template</code> используется при сборке, и должен работать в окружении, где недоступен браузерный <code>DOM</code>.</p>
 </blockquote>
-<p>Экземплярам <code>basis.template.Template</code> при создании задается некоторое описание или источник (source), на основе которого будут создаваться экземпляры шаблона. </p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> template = <span class="hljs-keyword">new</span> basis.template.html.Template(<span class="hljs-string">'&lt;h1&gt;hello world&lt;/h1&gt;'</span>);
+<p>Экземплярам <code>basis.template.Template</code> при создании задается некоторое описание, или источник (source), на основе которого будут создаваться экземпляры шаблона.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Template = basis.require(<span class="hljs-string">'basis.template.html'</span>).Template;
+
+<span class="hljs-keyword">var</span> template = <span class="hljs-keyword">new</span> Template(<span class="hljs-string">'&lt;h1&gt;hello world&lt;/h1&gt;'</span>);
 </code></pre>
 <p>В качестве источника могут выступать:</p>
 <ul>
@@ -979,7 +981,7 @@
 </li>
 <li><p>строка – используется как описание;</p>
 </li>
-<li><p>объект поддерживающий интерфейс <a href="bindingbridge.html"><code>binding bridge</code></a> – в качестве описания используется значение, полученное в результате вызова метода <code>bindingBridge.get(..)</code> и шаблон подписывается на изменение значения; такими значениями, в большинстве случаев, выступают <a href="resources.html">ресурсы</a> и экземпляры <code>basis.template.SourceWrapper</code>;</p>
+<li><p>объект, поддерживающий интерфейс <a href="bindingbridge.html"><code>binding bridge</code></a> – в качестве описания используется значение, полученное в результате вызова метода <code>bindingBridge.get(..)</code>, и шаблон подписывается на изменение значения; такими значениями, в большинстве случаев, выступают <a href="resources.html">ресурсы</a> и экземпляры <code>basis.template.SourceWrapper</code>;</p>
 </li>
 <li><p>массив или объект содержащий токены – не используются в разработке, используется в сборке (в сборке шаблоны хранятся в оптимизированном виде);</p>
 </li>
@@ -987,15 +989,17 @@
 </li>
 </ul>
 <p>Экземпляры <code>basis.template.Template</code> поддерживают <a href="basis.Class.html#Авторасширение">авторасширение</a>, поэтому при создании классов и экземпляров, где шаблон представлен свойством, достаточно передавать описание, шаблон будет создан неявно (<a href="basis.ui_template.html">подробнее</a>).</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> Foo = basis.ui.Node.subclass({
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> Foo = Node.subclass({
   template: <span class="hljs-string">'&lt;h1&gt;hello world&lt;/h1&gt;'</span>  <span class="hljs-comment">// это эквивалентно new basis.template.html.Template('&lt;h1&gt;hello world&lt;/h1&gt;')</span>
 });
 
-<span class="hljs-keyword">var</span> node = <span class="hljs-keyword">new</span> basis.ui.Node({
+<span class="hljs-keyword">var</span> node = <span class="hljs-keyword">new</span> Node({
   template: basis.resource(<span class="hljs-string">'./path/to/template.tmpl'</span>)
 });
 </code></pre>
-<p>Описание может быть изменено в любой момент методом <code>setSource</code>, либо оно может поменяться вследствии изменения значения источника (объекта с интерфейсом <code>binding bridge</code>](bindingbridge.md)). В этом случае уже созданные экземпляры шаблона будут пересозданы по новому описанию. Эта возможность дает большую гибкость и лежит в основе механизма <a href="basis.template_liveupdate.html">динамического обновления</a> (live update), позволяя перестраивать интерфейс без перезагрузки страницы.</p>
+<p>Описание может быть изменено в любой момент методом <code>setSource</code>, либо оно может поменяться в следствие изменения значения источника (объекта с интерфейсом <code>binding bridge</code>](bindingbridge.md)). В этом случае уже созданные экземпляры шаблона будут пересозданы по новому описанию. Эта возможность дает большую гибкость и лежит в основе механизма <a href="basis.template_liveupdate.html">динамического обновления</a> (live update), позволяя перестраивать интерфейс без перезагрузки страницы.</p>
 <p>Шаблоны используются только в рамках экземпляров классов <code>basis.ui.Node</code>, <code>basis.ui.PartitionNode</code> и их потомков. Экземпляры этих классов делают всю работу по созданию экземпляров шаблона и синхронизации состояния и данных с ними. Таким образом, основная часть работы с шаблонами сводится к описанию шаблонов, предоставление им значений через <a href="basis.ui_bindings.html"><code>binding</code></a> и описание реакции на события через <a href="basis.ui_actions.html"><code>action</code></a>.</p>
 
                     

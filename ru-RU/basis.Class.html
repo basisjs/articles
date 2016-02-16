@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="2.2" data-basepath="." data-revision="1426118090885">
+    <div class="book" data-github="basisjs/articles" data-level="2.2" data-basepath="." data-revision="1455641242266">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -961,9 +961,34 @@
                     
                         <h1 id="basisclass-">basis.Class (классы)</h1>
 <p>Функция <code>basis.Class</code> и ее методы упрощают процесс конструирования классов. Наследование базируется на прототипном наследовании javascript.</p>
+<!-- MarkdownTOC depth=3 -->
+
+<ul>
+<li><a href="#создание-классов">Создание классов</a></li>
+<li><a href="#свойства-класса">Свойства класса</a></li>
+<li><a href="#наследование">Наследование</a></li>
+<li><a href="#жизненный-цикл-экземпляра">Жизненный цикл экземпляра</a></li>
+<li><a href="#паттерны-создания-экземпляров">Паттерны создания экземпляров</a></li>
+<li><a href="#авторасширение">Авторасширение</a></li>
+<li><a href="#проверка-принадлежности-экземпляров-классу">Проверка принадлежности экземпляров классу</a></li>
+<li><a href="#преобразование-класс--экземпляр">Преобразование класс  экземпляр</a></li>
+<li><a href="#расширяемые-поля">Расширяемые поля</a><ul>
+<li><a href="#extensibleproperty">extensibleProperty</a></li>
+<li><a href="#customextendproperty">customExtendProperty</a></li>
+<li><a href="#nestedextendproperty">nestedExtendProperty</a></li>
+<li><a href="#onefunctionproperty">oneFunctionProperty</a></li>
+</ul>
+</li>
+<li><a href="#хелперы">Хелперы</a><ul>
+<li><a href="#self">SELF</a></li>
+<li><a href="#isclass">isClass</a></li>
+</ul>
+</li>
+</ul>
+<p><!-- /MarkdownTOC --></p>
 <h2 id="-">Создание классов</h2>
 <p>Классы в <code>basis.js</code> создаются с помощью функции <code>basis.Class</code> или ее алиаса <code>basis.Class.create</code>. Функция принимает произвольное количество аргументов: первый — это класс, от которого наследуется новый класс, второй и последующие — расширения создаваемого класса. Если новый класс не наследуется от другого класса, то в качестве первого параметра передается <code>null</code>.</p>
-<pre><code class="lang-js"><span class="hljs-comment">// класс </span>
+<pre><code class="lang-js"><span class="hljs-comment">// класс</span>
 <span class="hljs-keyword">var</span> Foo = basis.Class(<span class="hljs-literal">null</span>, {
   name: <span class="hljs-string">'default'</span>
 });
@@ -1019,7 +1044,7 @@ console.log(mix1.say());
 console.log(mix2.say());
 <span class="hljs-comment">// console&gt; bar and mixin</span>
 </code></pre>
-<p>Для удобства отладки в расширении нового класса можно указать свойство <code>className</code>. В этом случае в инструментах разработки будет более &quot;говорящее&quot; имя экземпляра.</p>
+<p>Для удобства отладки, в описании класса можно указать свойство <code>className</code>. В этом случае в инструментах разработки будет более &quot;говорящее&quot; имя экземпляра.</p>
 <p><img src="img/className-in-console.png" alt="Использование className"></p>
 <h2 id="-">Свойства класса</h2>
 <ul>
@@ -1079,7 +1104,7 @@ console.log(mario <span class="hljs-keyword">instanceof</span> Human);
 console.log(mario <span class="hljs-keyword">instanceof</span> Gamer);
 <span class="hljs-comment">// console&gt; true</span>
 </code></pre>
-<h2 id="--">Жизненый цикл экземпляра</h2>
+<h2 id="--">Жизненный цикл экземпляра</h2>
 <p>При создании экземпляра класса вызывается конструктор - метод <code>init</code>. В этом методе свойствам присваиваются начальные значения и выполняются действия, необходимые при создании объекта данного класса.</p>
 <p>В <code>basisjs</code> все объекты разрушаемы. Когда экземпляр становится не нужен, вызывается его деструктор — метод <code>destroy</code>. В этом методе описываются действия, которые необходимы при разрушении объекта: обычно это разрушение вспомогательных объектов и обнуление ссылок на другие объекты.</p>
 <p>Все экземпляры, создаваемые классами <code>basis.js</code>, имеют поле basisObjectId, содержащее уникальное значение. С помощью такого поля становится возможным создавать карты объектов и использовать их для быстрого поиска.</p>
@@ -1180,14 +1205,16 @@ console.log(bar.constructor.superClass_ === Foo);
 {
   console.log(cls.className);
   cls = cls.superClass_;
-} 
+}
 <span class="hljs-comment">// console&gt; subclass of Foo</span>
 <span class="hljs-comment">// console&gt; Foo</span>
 <span class="hljs-comment">// console&gt; basis.Class</span>
 </code></pre>
 <h2 id="----">Преобразование класс &lt;-&gt; экземпляр</h2>
-<p>Экземпляры авторасширяющих классов (у которых <code>extendConstructor_</code> == <code>true</code>) создаются похожим образом с созданием нового класса с одним расширяющим объектом. По этой причине преобразование кода создания экземпляра в класс или класса в создание экземпляра является не сложной задачей. Исключением являются свойства <code>className</code> и <code>extendConstructor_</code>, которые для экземпляра являются обычными полями, а в случае создания класса копируются в класс, а не в прототип.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> basis.ui.Node({
+<p>Экземпляры авторасширяющих классов (у которых <code>extendConstructor_</code> == <code>true</code>) создаются подобно созданию нового класса с одним расширяющим объектом. По этой причине преобразование кода создания экземпляра в класс или класса в создание экземпляра является несложной задачей. Исключением являются свойства <code>className</code> и <code>extendConstructor_</code>, которые для экземпляра являются обычными полями, а в случае создания класса копируются в класс, а не в прототип.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> Node({
   template: resource(<span class="hljs-string">'./path/to/view.tmpl'</span>),
   childClass: {
     template: resource(<span class="hljs-string">'./path/to/item.tmpl'</span>),
@@ -1199,7 +1226,7 @@ console.log(bar.constructor.superClass_ === Foo);
 
 <span class="hljs-comment">// если объект данного типа используется неоднократно,</span>
 <span class="hljs-comment">// можно преобразовать его конфиг в класс</span>
-<span class="hljs-keyword">var</span> Foo = <span class="hljs-keyword">new</span> basis.ui.Node.subclass({
+<span class="hljs-keyword">var</span> Foo = Node.subclass({
   className: <span class="hljs-string">'app.example.View'</span>,   <span class="hljs-comment">// для классов имеет смысл добавлять имя класса,</span>
                                    <span class="hljs-comment">// что облегчает отладку</span>
   template: resource(<span class="hljs-string">'./path/to/view.tmpl'</span>),
@@ -1220,38 +1247,42 @@ console.log(bar.constructor.superClass_ === Foo);
 });
 </code></pre>
 <p>В случае преобразования экземпляр-&gt;класс стоит помнить, что все экземпляры класса разделяют данные, находящиеся в прототипе. Это относится и к объектам, которые могут иметь только одного владельца.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> basis.ui.Node({
-  counter: <span class="hljs-number">0</span>,              <span class="hljs-comment">// ОК: собственное значение, которое ни с кем не разделяется</span>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> Button = basis.require(<span class="hljs-string">'basis.ui'</span>).Button;
+
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> Node({
+  counter: <span class="hljs-number">0</span>,                <span class="hljs-comment">// ОК: собственное значение, которое ни с кем не разделяется</span>
   incCounter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
     <span class="hljs-keyword">this</span>.counter++;
   },
   satellite: {
-    button: <span class="hljs-keyword">new</span> basis.ui.Button(...)   <span class="hljs-comment">// ОК: собственный объект, который ни с кем не разделяется</span>
+    button: <span class="hljs-keyword">new</span> Button(...)  <span class="hljs-comment">// ОК: собственный объект, который ни с кем не разделяется</span>
   }
 });
 
 <span class="hljs-comment">// в то же время, использование такого же объекта для создания класса имеет проблемы</span>
-<span class="hljs-keyword">var</span> Foo = basis.ui.Node.subclass({
+<span class="hljs-keyword">var</span> Foo = Node.subclass({
   counter: <span class="hljs-number">0</span>,
   incCounter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-    <span class="hljs-keyword">this</span>.counter++;  <span class="hljs-comment">// ОШИБКА: так как все экземпляры будут иметь одно и то же значение</span>
+    <span class="hljs-keyword">this</span>.counter++;  <span class="hljs-comment">// ОШИБКА: так как все экземпляры будут иметь одно и то же значение;</span>
                      <span class="hljs-comment">// необходимо либо явно в init присвоить начальное значение,</span>
                      <span class="hljs-comment">// либо использовать `this.counter += 1;`</span>
   },
   satellite: {
-    button: <span class="hljs-keyword">new</span> basis.ui.Button(...)   <span class="hljs-comment">// ОШИБКА: каждый новый экземпляр Foo будет становится</span>
-                                       <span class="hljs-comment">// новым владельцем кнопки; необходимо позаботиться,</span>
-                                       <span class="hljs-comment">// чтобы для каждого экземпляра создавался собственный</span>
-                                       <span class="hljs-comment">// экземплря `basis.ui.Button`</span>
+    button: <span class="hljs-keyword">new</span> Button(...)  <span class="hljs-comment">// ОШИБКА: каждый новый экземпляр Foo будет становиться</span>
+                             <span class="hljs-comment">// новым владельцем кнопки; необходимо позаботиться,</span>
+                             <span class="hljs-comment">// чтобы для каждого экземпляра создавался собственный</span>
+                             <span class="hljs-comment">// экземпляр `basis.ui.Button`</span>
   }
 });
 </code></pre>
-<p>Если создается множество экземпляров с одинаковым или очень похожим конфигом, то часто выгоднее создать новый класс. Также стоит помнить про авторасширяемые поля, которые могут неявно образовывать объекты, которые можно было не создавать.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> data = [...];
+<p>Если создается множество экземпляров с одинаковым или очень похожим конфигом, то выгоднее создать новый класс. Стоит помнить: авторасширяемые поля могут неявно создавать новые объекты, что может быть нежелательным.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> data = [...];
 <span class="hljs-keyword">var</span> nodes = [];
 
 <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; data.length; i++)
-  nodes.push(<span class="hljs-keyword">new</span> basis.ui.Node({
+  nodes.push(<span class="hljs-keyword">new</span> Node({
     template: resource(<span class="hljs-string">'./path/to/node.tmpl'</span>),    <span class="hljs-comment">// !!!</span>
     name: data[i],
     childClass: {                                 <span class="hljs-comment">// !!!</span>
@@ -1262,10 +1293,11 @@ console.log(bar.constructor.superClass_ === Foo);
     }
   }));
 </code></pre>
-<p>Строки, отмеченные <code>!!!</code>, показывают проблемные места. В данном примере для каждого экземпляра <code>basis.ui.Node</code> будет создан свой экземпляр шаблона (т.е. экземпляр <code>basis.template.html.Template</code>; один и тот же источник шаблона будет разобран отдельно для каждого экземпляра) и свой класс для дочерних узлов, который, в свою очередь, создает отдельный экземпляр шаблона и новый объект <code>binding</code>. Правильно будет сделать следущим образом:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> data = [...];
+<p>Строки, отмеченные <code>!!!</code>, показывают проблемные места. В данном примере для каждого экземпляра <code>basis.ui.Node</code> будет создан свой экземпляр шаблона (т.е. экземпляр <code>basis.template.html.Template</code>; один и тот же источник шаблона будет разобран отдельно для каждого экземпляра) и свой класс для дочерних узлов, который, в свою очередь, создает отдельный экземпляр шаблона и новый объект <code>binding</code>. Правильно будет сделать следующим образом:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> data = [...];
 <span class="hljs-keyword">var</span> nodes = [];
-<span class="hljs-keyword">var</span> MyNode = basis.ui.Node.subclass({
+<span class="hljs-keyword">var</span> MyNode = Node.subclass({
   template: resource(<span class="hljs-string">'./path/to/node.tmpl'</span>),    <span class="hljs-comment">// !!!</span>
   childClass: {                                 <span class="hljs-comment">// !!!</span>
     template: resource(<span class="hljs-string">'./path/to/item.tmpl'</span>),  <span class="hljs-comment">// !!!</span>
@@ -1282,7 +1314,7 @@ console.log(bar.constructor.superClass_ === Foo);
 </code></pre>
 <p>В этом случае не будет создаваться лишних объектов.</p>
 <h2 id="-">Расширяемые поля</h2>
-<p>Существует несколько вспомогательных функций, создающие расширяемые свойства, то есть такие свойства, которые не перезаписываются, а порождают новое значение на основе текущего и нового значения. Принцип их работы основан на расширении через метод <code>__extend__</code>. То есть они создают такие объекты, у которых есть метод <code>__extend__</code>, создающий объекты, которые имеют такой же метод <code>__extend__</code>.</p>
+<p>Существует несколько вспомогательных функций, создающих расширяемые свойства. Такие свойства не перезаписываются, а порождают новое значение на основе текущего и нового значения. Принцип их работы основан на расширении через метод <code>__extend__</code>. То есть они создают такие объекты, у которых есть метод <code>__extend__</code>, создающий объекты, которые имеют такой же метод <code>__extend__</code>.</p>
 <h3 id="extensibleproperty">extensibleProperty</h3>
 <p>Обычное дополняющее свойство.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> Foo = basis.Class(<span class="hljs-literal">null</span>, {
@@ -1351,7 +1383,7 @@ console.log(baz.data);
 <span class="hljs-comment">// console&gt; { foo: 333, bar: 2, baz: 3, basis:true }</span>
 </code></pre>
 <h3 id="nestedextendproperty">nestedExtendProperty</h3>
-<p>Создает такой объект, у которого значения - <code>extensibleProperty</code>. basis.event.Emitter#listen пример такого свойства.</p>
+<p>Создает объект, значения которого являются расширяемыми, т.е. <code>extensibleProperty</code>. Один из примеров такого свойства – это <code>basis.event.Emitter#listen</code>.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> Foo = basis.Class(<span class="hljs-literal">null</span>, {
   data: basis.Class.nestedExtendProperty({})
 });
@@ -1381,20 +1413,20 @@ console.log(baz.data);
 </code></pre>
 <h3 id="onefunctionproperty">oneFunctionProperty</h3>
 <p>Создает объект, в котором для любого ключа значением является одна и та же функция. Обычно это триггеры событий.</p>
-<pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.event'</span>);
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Emitter = basis.require(<span class="hljs-string">'basis.event'</span>).Emitter;
 
-<span class="hljs-keyword">var</span> Foo = basis.event.Emitter(<span class="hljs-literal">null</span>, {
+<span class="hljs-keyword">var</span> Foo = Emitter.subclass({
   events: basis.Class.oneFunctionProperty(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
     <span class="hljs-keyword">this</span>.doStuff();
   }, {
     event1: <span class="hljs-literal">true</span>,
-    event2: <span class="hljs-literal">true</span> 
+    event2: <span class="hljs-literal">true</span>
   }),
   init: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
     <span class="hljs-keyword">this</span>.addHandler(<span class="hljs-keyword">this</span>.events, <span class="hljs-keyword">this</span>);
   },
   doStuff: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-    <span class="hljs-comment">// do cool stuff </span>
+    <span class="hljs-comment">// do cool stuff</span>
   }
 });
 

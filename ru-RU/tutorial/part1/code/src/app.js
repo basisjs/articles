@@ -1,5 +1,6 @@
-require('basis.ui');
-new basis.ui.Node({
+var Node = require('basis.ui').Node;
+
+new Node({
   container: document.body,
   template: resource('./template/app.tmpl'),
   binding: {

@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="7.2" data-basepath="." data-revision="1426118090885">
+    <div class="book" data-github="basisjs/articles" data-level="7.2" data-basepath="." data-revision="1455641242266">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -957,12 +957,14 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_35">
+                    <section class="normal" id="section-gitbook_34">
                     
                         <h1 id="-bindings">Биндинги (bindings)</h1>
-<p>Биндинги – это набор значений, которые доступны для использования в шаблоне. Они сохраняются в свойстве <code>binding</code>. Это <a href="basis.Class.html#extensibleProperty">автораширяемое</a> поле, поэтому при создании класса производного от <code>basis.ui.Node</code> или экземпляра этих классов, новое значение не перезаписывает старое, а дополняет.</p>
+<p>Биндинги – это набор значений, которые доступны для использования в шаблоне. Они сохраняются в свойстве <code>binding</code>. Это <a href="basis.Class.html#extensibleProperty">авторасширяемое</a> поле, поэтому при создании класса, производного от <code>basis.ui.Node</code>, или экземпляра этих классов, новое значение не перезаписывает старое, а дополняет.</p>
 <p>Биндинг представляет из себя функцию, которая принимает единственный параметр <code>node</code> – владелец шаблона, для которого вычисляется значение. Результат выполнения такой функции передается шаблону. Функция не должна иметь побочного эффекта, то есть не должна что-то менять в объектах.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> Foo = basis.ui.Node.subclass({
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> Foo = Node.subclass({
   template: basis.resource(<span class="hljs-string">'./path/to/template.tmpl'</span>),
   binding: {
     value: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>   <span class="hljs-comment">// теперь шаблон может использовать {value}</span>
@@ -971,8 +973,10 @@
   }
 });
 </code></pre>
-<p>Функция биндинга вычисляется сразу после создания экземпляра шаблона, но только в том случае если шаблон использует биндинг. По этой причине не важно количество биндингов, вычиляться будут только используемые.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> node = <span class="hljs-keyword">new</span> basis.ui.Node({
+<p>Функция биндинга вычисляется сразу после создания экземпляра шаблона, но только в том случае, если шаблон использует биндинг. По этой причине не важно количество биндингов: вычисляться будут только используемые.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> node = <span class="hljs-keyword">new</span> Node({
   template: <span class="hljs-string">'&lt;span&gt;{used}&lt;/span&gt;'</span>,
   binding: {
     used: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
@@ -987,8 +991,10 @@
 });
 <span class="hljs-comment">// console&gt; "used" binding calculated</span>
 </code></pre>
-<p>В случае, если что-то поменялось и нужно перевычислить значение биндинга, необходимо вызвать метод <code>updateBind</code>, которому передается имя биндинга. Если изменения сопровождаются событием (событиями) можно указать это в описании биндинга (для этого используется расширенная форма) и избавиться от самостоятельного вызова <code>updateBind</code>. В этом случае биндинг будет вычисляться (если используетя шаблоном) при создании шаблона и при возникновении событий из указанного списка.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> Foo = basis.ui.Node.subclass({
+<p>В случае, если что-то поменялось, и нужно перевычислить значение биндинга, необходимо вызвать метод <code>updateBind</code>, которому передается имя биндинга. Если изменения сопровождаются событием (событиями), можно указать это в описании биндинга (для этого используется расширенная форма) и избавиться от самостоятельного вызова <code>updateBind</code>. В этом случае биндинг будет вычисляться (если используется шаблоном) при создании шаблона и при возникновении событий из указанного списка.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> Foo = Node.subclass({
   template: basis.resource(<span class="hljs-string">'./path/to/template.tmpl'</span>),
   binding: {
     value: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>       <span class="hljs-comment">// простая запись, без указания событий;</span>
@@ -1018,11 +1024,14 @@
 </code></pre>
 <p>Так же в качестве описания биндига принимаются некоторые специальные значения:</p>
 <ul>
-<li><p>объект поддерживающий механизм <a href="bindingbridge.html"><code>binding bridge</code></a> – значение отдается в шаблон как есть;</p>
-<pre><code class="lang-js">  <span class="hljs-comment">// экземпляры basis.data.Value имеют интерфейс bindingBridge</span>
-  <span class="hljs-keyword">var</span> count = <span class="hljs-keyword">new</span> basis.data.Value({ value: <span class="hljs-number">123</span> });
+<li><p>объект, поддерживающий механизм <a href="bindingbridge.html"><code>binding bridge</code></a> – значение отдается в шаблон как есть;</p>
+<pre><code class="lang-js">  <span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+  <span class="hljs-keyword">var</span> Value = basis.require(<span class="hljs-string">'basis.data'</span>).Value;
 
-  <span class="hljs-keyword">var</span> node = basis.ui.Node({
+  <span class="hljs-comment">// экземпляры basis.data.Value имеют интерфейс bindingBridge</span>
+  <span class="hljs-keyword">var</span> count = <span class="hljs-keyword">new</span> Value({ value: <span class="hljs-number">123</span> });
+
+  <span class="hljs-keyword">var</span> node = <span class="hljs-keyword">new</span> Node({
     binding: {
       count: count,   <span class="hljs-comment">// эквивалентно</span>
                       <span class="hljs-comment">// count: function(){</span>
@@ -1036,7 +1045,7 @@
 </code></pre>
 </li>
 <li><p>строка – используется, если возможно, преобразование <a href="#Сокращения">сокращения</a>, иначе значение оборачивается в basis.getter;</p>
-<pre><code class="lang-js">  <span class="hljs-keyword">var</span> node = basis.ui.Node({
+<pre><code class="lang-js">  <span class="hljs-keyword">var</span> node = <span class="hljs-keyword">new</span> Node({
     binding: {
       value: <span class="hljs-string">'value'</span>  <span class="hljs-comment">// эквивалентно</span>
                       <span class="hljs-comment">// value: basis.getter('value')</span>
@@ -1045,8 +1054,10 @@
 </code></pre>
 </li>
 <li><p>экземпляр <code>basis.ui.Node</code> – при первом вычислении экземпляр добавляется в список <code>satellite</code> узла, а в шаблон отдается значение его свойства <code>element</code>.</p>
-<pre><code class="lang-js">  <span class="hljs-keyword">var</span> satelliteNode = <span class="hljs-keyword">new</span> basis.ui.Node();
-  <span class="hljs-keyword">var</span> node = basis.ui.Node({
+<pre><code class="lang-js">  <span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+
+  <span class="hljs-keyword">var</span> satelliteNode = <span class="hljs-keyword">new</span> Node();
+  <span class="hljs-keyword">var</span> node = <span class="hljs-keyword">new</span> Node({
     binding: {
       foo: satelliteNode  <span class="hljs-comment">// эквивалентно</span>
                           <span class="hljs-comment">// foo: {</span>
@@ -1068,7 +1079,9 @@
 <p>В модуле <code>basis.ui</code> определены два типа сокращения:</p>
 <ul>
 <li><p>data – предназначен для упрощения прокидывания полей из свойства <code>data</code> в шаблон;</p>
-<pre><code class="lang-js">  <span class="hljs-keyword">var</span> node = basis.ui.Node({
+<pre><code class="lang-js">  <span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+
+  <span class="hljs-keyword">var</span> node = <span class="hljs-keyword">new</span> Node({
     data: {
       age: <span class="hljs-number">123</span>
     },
@@ -1085,7 +1098,9 @@
 </code></pre>
 </li>
 <li><p>satellite – предназначен для упрощения прокидывания корневого элемента сателлита в шаблон;</p>
-<pre><code class="lang-js">  <span class="hljs-keyword">var</span> node = basis.ui.Node({
+<pre><code class="lang-js">  <span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+
+  <span class="hljs-keyword">var</span> node = <span class="hljs-keyword">new</span> Node({
     binding: {
       foo: <span class="hljs-string">'satellite:name'</span>,   <span class="hljs-comment">// эквивалентно</span>
                                <span class="hljs-comment">// foo: {</span>

@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="4.2" data-basepath="." data-revision="1426118090885">
+    <div class="book" data-github="basisjs/articles" data-level="4.2" data-basepath="." data-revision="1455641242266">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -965,9 +965,9 @@
 <h2 id="--">Работа с данными</h2>
 <p>Данные экземпляра хранятся в свойстве <code>data</code>. Для обновления данных необходимо использоваться метод <code>update</code>. Методу передается объект - набор новых значений. Метод <code>update</code> сравнивает значения ключей в переданном объекте с имеющимися, и если все значения совпадают – возвращает <code>false</code>. Если есть различия, то возвращает дельту, объект, который содержит изменные ключи и их значения до изменения.</p>
 <p>Когда меняются значения в <code>data</code> – выбрасывается событие <code>update</code>. Обработчики события получают параметр <code>delta</code> - дельта изменений. С помощью дельты можно определить, что поменялось и восстановить состояние данных до изменений.</p>
-<pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.data'</span>);
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.data'</span>).Object;
 
-<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> basis.data.Object({
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> DataObject({
   data: {
     name: <span class="hljs-string">'John'</span>,
     age: <span class="hljs-number">25</span>
@@ -998,11 +998,11 @@ console.log(foo.update({ age: <span class="hljs-number">30</span> }));
 </code></pre>
 <h2 id="">Делегирование</h2>
 <p>Несколько экземпляров <code>basis.data.Object</code> могут разделять данные и состояние. Этот процесс называется делегированием. При делегировании связанные экземпляры указывают на один тот же объект данных (их свойства <code>data</code> тождественно равны), и имеют одно и то же состояние (их свойства <code>state</code> тождественно равны).</p>
-<p>Связывание осуществляется методом <code>setDelegate</code>. В метод передается экземпляр <code>basis.data.Object</code> или <code>null</code>. Ссылка на делегат, хранится в свойстве <code>delegate</code>.</p>
-<pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.data'</span>);
+<p>Связывание осуществляется методом <code>setDelegate</code>. В метод передается экземпляр <code>basis.data.Object</code> или <code>null</code>. Ссылка на делегат хранится в свойстве <code>delegate</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
 
-<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> basis.data.Object();
-<span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">new</span> basis.data.Object();
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> DataObject();
+<span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">new</span> DataObject();
 
 foo.setDelegate(bar);
 
@@ -1037,16 +1037,19 @@ console.log(foo.state === bar.state);
 <p>Экземпляр может ссылаться только на один делегат, но на экземпляр могут ссылаться сколько угодно других объектов. Объекты могут образовывать деревья (граф без циклов). Свойство <code>root</code> каждого экземпляра указывает на корень дерева, экземпляр, который ссылается сам на себя. Когда меняется значение свойства <code>root</code>, выбрасывается событие <code>rootChanged</code>, обработчикам события передается значение до изменения свойства – <code>oldRoot</code>.</p>
 <p><img src="img/data-delegate-root.png" alt="Пример графа basis.data.Object"></p>
 <p>Так как связанные экземпляры ссылаются на одни и те же данные и имеют общее состояние, не имеет значения, чей метод <code>update</code> или <code>setState</code> будет вызван - данные и состояние будут изменены у всех связанных объектов, и для всех объектов будут выброшены соответствующие события, при необходимости.</p>
-<p>При сбросе делегата, объект создает копию свойств <code>data</code> и <code>state</code>, и перестает разделять их с другими. При этом событий <code>update</code> и <code>stateChanged</code> не выбрасывается (в сущности для экземпляра ничего не меняется).</p>
+<p>При сбросе делегата объект создает копию свойств <code>data</code> и <code>state</code> и перестает разделять их с другими. При этом события <code>update</code> и <code>stateChanged</code> не выбрасываются (в сущности для экземпляра ничего не меняется).</p>
 <p>Можно добавить обработчики событий для <code>delegate</code> и <code>root</code> используя <a href="basis.event.html#listen">listen</a>.</p>
-<p>Чтобы определить связанны ли экземпляры делегированием используется функция <code>basis.data.isConnected</code>.</p>
+<p>Чтобы определить, связаны ли экземпляры делегированием, используется функция <code>basis.data.isConnected</code>.</p>
 <h2 id="target">target</h2>
 <p>Некоторые экземпляры могут быть целевыми. В этом случае его свойство <code>target</code> указывает на самого себя. При делегировании значение свойства <code>target</code> заимствуется у делегата.</p>
 <p>Используя <code>target</code> можно образовывать деревья связанных через <code>delegate</code> объектов, которые &quot;работают&quot; только когда в дереве есть целевой объект. В такой ситуации вся структура находится в &quot;спящем&quot; состоянии без целевого объекта. Но как только корню назначается делегатом целевой объект или новый делегат имеет такой объект в своей цепочке делегатов (а значит его свойство <code>target</code> будет указывать на этот объект), то все объекты начинают ссылаться на него, то есть обновляется их свойство <code>target</code>, срабатывает событие <code>targetChanged</code> и структура &quot;оживает&quot;.</p>
 <p><img src="img/data-target-1.png" alt="basis.data.Object#target">
 <img src="img/data-target-2.png" alt="basis.data.Object#target"></p>
 <p>Например, это может быть окно с формой редактирования, которое появляется, когда в его цепочке делегатов есть целевой объект.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> myDialog = <span class="hljs-keyword">new</span> basis.ui.window.Window({
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+<span class="hljs-keyword">var</span> Window = basis.require(<span class="hljs-string">'basis.ui.window'</span>).Window;
+
+<span class="hljs-keyword">var</span> myDialog = <span class="hljs-keyword">new</span> Window({
   handler: {
     targetChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
       <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.target)
@@ -1060,12 +1063,12 @@ console.log(foo.state === bar.state);
 console.log(myDialog.closed);
 <span class="hljs-comment">// &gt; true</span>
 
-<span class="hljs-keyword">var</span> proxy = <span class="hljs-keyword">new</span> basis.data.Object();
+<span class="hljs-keyword">var</span> proxy = <span class="hljs-keyword">new</span> DataObject();
 myDialog.setDelegate(proxy);
 console.log(myDialog.closed);
 <span class="hljs-comment">// &gt; true</span>
 
-<span class="hljs-keyword">var</span> target = <span class="hljs-keyword">new</span> basis.data.Object({ target: <span class="hljs-literal">true</span> });
+<span class="hljs-keyword">var</span> target = <span class="hljs-keyword">new</span> DataObject({ target: <span class="hljs-literal">true</span> });
 proxy.setDelegate(target);
 console.log(myDialog.closed);
 <span class="hljs-comment">// &gt; false</span>

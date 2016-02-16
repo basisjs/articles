@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="1" data-basepath="." data-revision="1426118090885">
+    <div class="book" data-github="basisjs/articles" data-level="1" data-basepath="." data-revision="1455641242266">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -978,9 +978,10 @@
 
   <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"path/to/basisjs/src/basis.js"</span> <span class="hljs-attribute">basis-config</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">script</span>&gt;</span><span class="javascript">
-    basis.require(<span class="hljs-string">'basis.ui'</span>);
+    <span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+
     basis.ready(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-      <span class="hljs-keyword">new</span> basis.ui.Node({
+      <span class="hljs-keyword">new</span> Node({
         container: document.body,
         template: <span class="hljs-string">'Hello world'</span>
       });
@@ -1029,9 +1030,10 @@
 <span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
 </code></pre>
 <p>Так, у приложения входная точка будет <code>src/app.js</code>, в которой будет происходить вся инициализация. Для примера с <code>Hello world</code> этот файл будет иметь вид:</p>
-<pre><code class="lang-js">basis.require(<span class="hljs-string">'basis.ui'</span>);
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+
 basis.ready(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-  <span class="hljs-keyword">new</span> basis.ui.Node({
+  <span class="hljs-keyword">new</span> Node({
     container: document.body,
     template: <span class="hljs-string">'Hello world'</span>
   });
@@ -1050,8 +1052,8 @@ basis.ready(<span class="hljs-function"><span class="hljs-keyword">function</spa
 <li><p>клонируем фреймворк из репозитария, выполнив в папке приложения:</p>
 <p>  <code>$ git clone http://github.com/basisjs/basisjs</code></p>
 </li>
-<li><p>используем <a href="https://github.com/bower/bower" target="_blank">bower</a>:</p>
-<p>  <code>$ bower install basisjs</code></p>
+<li><p>используем <a href="https://github.com/npm/npm" target="_blank">npm</a>:</p>
+<p>  <code>$ npm install basisjs</code></p>
 <p>хороший вариант, если вы не используете submodule и нужно управление версиями</p>
 </li>
 <li><p>используем <code>basisjs-tools</code></p>

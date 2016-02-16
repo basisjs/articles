@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="6.6" data-basepath="." data-revision="1426118090885">
+    <div class="book" data-github="basisjs/articles" data-level="6.6" data-basepath="." data-revision="1455641242266">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -960,20 +960,295 @@
                     <section class="normal" id="section-gitbook_14">
                     
                         <h1 id="-disableenable">Доступность (disable/enable)</h1>
-<p>При наступлении различных условий необходимо блокировать часть интерфейса, чтобы пользователь не мог совершить непреднамеренных действий. Для реализации этого используется паттерн disabled/enabled.</p>
-<p>В случае если узел недоступен (disabled), он не должен реагировать на пользовательские действия. Недоступность не распространяется на пользовательский код, то есть не влияет на действия, которые иницируются не пользователем.</p>
+<p>В интерфейсах нередко возникает необходимость блокировать часть интерфейса, чтобы пользователь не мог совершить определенные действия. Для этого используется механизм доступности.</p>
+<p>Если узел недоступен (<code>disabled</code>), он не должен реагировать на пользовательские действия. Недоступность не распространяется на логику приложения, то есть не влияет на действия, которые иницируются программно. Поэтому нужно проверять доступность узлов и игнорировать пользовательский ввод в зависимости от этого, если это необходимо.</p>
 <h2 id="-">Принцип работы</h2>
-<p>Для задания состояния &quot;недоступен&quot; используется свойство <code>disabled</code>, которое по умолчанию равно <code>false</code>. Для изменения используются методы <code>disable</code> (меняет значение на <code>true</code>), <code>enable</code> (меняет значение на <code>false</code>) и <code>setDisabled</code> (меняет значение в зависимости от переданного значения).</p>
-<p>Но на доступность или недоступность узла влияет не только свойство <code>disabled</code>, но и свойство <code>disabled</code> вышестоящих узлов. То есть важно в каком контексте находится узел.</p>
+<p>Для задания состояния &quot;недоступен&quot; используется свойство <code>disabled</code>. Для изменения значения этого свойства используются методы:</p>
+<ul>
+<li><code>disable()</code> – меняет значение на <code>true</code>;</li>
+<li><code>enable()</code> - меняет значение на <code>false</code>;</li>
+<li><code>setDisabled(state)</code> – где <code>state</code> приводится к <code>boolean</code> и это значение присваивается.</li>
+</ul>
+<p>Все методы возвращают <code>true</code>, если значение было изменено, и <code>false</code> в противном случае.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node();
+
+console.log(view.disabled);
+<span class="hljs-comment">// &gt; false</span>
+
+view.disable();
+console.log(view.disabled);
+<span class="hljs-comment">// &gt; true</span>
+
+view.enable();
+console.log(view.disabled);
+<span class="hljs-comment">// &gt; false</span>
+
+view.setDisabled(<span class="hljs-number">123</span>);
+console.log(view.disabled);
+<span class="hljs-comment">// &gt; true</span>
+</code></pre>
+<p>Значение свойства <code>disabled</code> может быть выставлено при создании экземпляра. По умолчанию оно равно <code>false</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> Node();
+<span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">new</span> Node({ disabled: <span class="hljs-literal">true</span> });
+<span class="hljs-keyword">var</span> baz = <span class="hljs-keyword">new</span> Node({ disabled: <span class="hljs-literal">false</span> });
+
+console.log(foo.disabled);
+<span class="hljs-comment">// &gt; false</span>
+console.log(bar.disabled);
+<span class="hljs-comment">// &gt; true</span>
+console.log(baz.disabled);
+<span class="hljs-comment">// &gt; false</span>
+</code></pre>
+<p>Когда узел становится недоступным, то выбрасывается событие <code>disable</code>, а когда доступным – событие <code>enable</code>. События не выбрасываются при создании экземпляра.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node({
+  handler: {
+    disable: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      console.log(<span class="hljs-string">'view is disabled'</span>);
+    },
+    enable: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      console.log(<span class="hljs-string">'view is enabled'</span>);
+    }
+  }
+});
+
+view.disable();
+<span class="hljs-comment">// &gt; view is disabled</span>
+
+view.disable();
+<span class="hljs-comment">// события не будет, т.к. view уже недоступно</span>
+
+view.enable();
+<span class="hljs-comment">// &gt; view is enabled</span>
+</code></pre>
 <h2 id="">Контекст</h2>
-<p>Узел со значением свойства <code>disabled</code> равным <code>true</code> влияет на все свои нижестоящие узлы (то есть на дочерние узлы, дочерние узлы дочерних узлов и т.д.) и сателлиты, другими словами, создает контекст. Для распространения влияния вышестоящего узла на нижестоящие, используется свойство <code>contextDisabled</code>.</p>
+<p>На доступность узла влияет не только значение собственного свойство <code>disabled</code>, но и значения <code>disabled</code> вышестоящих узлов (<code>ancestors</code>). Другими словами зависит от контекста.</p>
+<p>Узел со значением свойства <code>disabled</code> равным <code>true</code> влияет на свое поддерево, то есть на свои дочерние узлы, дочерние узлы дочерних узлов и т.д., это распространяется и на все сателлиты. Для распространения влияния используется свойство <code>contextDisabled</code>.</p>
 <blockquote>
-<p>Каждый узел имеет свое значение свойства <code>disabled</code> и его нельзя менять, иначе при разблокировке вышестоящего узла (установке <code>disable</code> в значение <code>false</code>) можно потерять настоящее состояние нижестоящих узлов, которые должны остаться заблокированными.</p>
+<p>Введение дополнительного свойства обусловлено тем, что каждый узел имеет свое собственное значение свойства <code>disabled</code>, которое зависит от определенной логики. Его нельзя менять из-за изменений в контексте, иначе при разблокировке вышестоящего узла (установке <code>disable</code> в значение <code>false</code>) будет потеряно настоящее состояние узла, который, возможно, должен остаться заблокированным.</p>
 </blockquote>
-<p>При изменении свойства <code>disabled</code>, на то же значение меняются и свойства <code>contextDisabled</code> для всех нижестоящих узлов, ровно до тех узлов, у которых свойство <code>disabled</code> имеет значение <code>true</code>, так как последние создают собственный контекст.</p>
-<p>Узел считает недоступным если его свойство <code>disabled</code> или свойство <code>contextDisabled</code> равно <code>true</code>. Для проверки доступности узла используется метод <code>isDisabled</code>.</p>
-<h2 id="">События</h2>
-<p>Когда узел становится недоступным (<code>disabled</code> или <code>contextDisabled</code> равно <code>true</code>), то выбрасывается событие <code>disable</code>, когда становится доступным (<code>disabled</code> и <code>contextDisabled</code> равны <code>false</code>) – событие <code>enable</code>. События не выбрасываются при создании экземпляра.</p>
+<p>Значение свойства <code>contextDisabled</code> обновляется автоматически. Оно хранит <code>true</code>, если среди вышестоящих узлов есть хотя бы один с <code>disabled</code> равным <code>true</code>. Иначе в нем хранится <code>false</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> Node({
+  childNodes: [
+    <span class="hljs-keyword">new</span> Node()
+  ]
+});
+
+console.log(list.disabled);
+<span class="hljs-comment">// &gt; false</span>
+console.log(list.contextDisabled);
+<span class="hljs-comment">// &gt; false</span>
+console.log(list.firstChild.disabled);
+<span class="hljs-comment">// &gt; false</span>
+console.log(list.firstChild.contextDisabled);
+<span class="hljs-comment">// &gt; false</span>
+
+list.setDisabled(<span class="hljs-literal">true</span>);
+
+console.log(list.disabled);
+<span class="hljs-comment">// &gt; true</span>
+console.log(list.contextDisabled);
+<span class="hljs-comment">// &gt; false</span>
+console.log(list.firstChild.disabled);
+<span class="hljs-comment">// &gt; false</span>
+console.log(list.firstChild.contextDisabled);
+<span class="hljs-comment">// &gt; true</span>
+</code></pre>
+<p>Принцип обновления <code>contextDisabled</code>: при изменении свойства <code>disabled</code> узла, на то же значение меняется <code>contextDisabled</code> для всех нижестоящих узлов. При этом поддеревья узлов с <code>disabled</code> равным <code>true</code> игнорируются, так как такие узлы создают собственный контекст.</p>
+<p>При отвязывании узла от его родителя или <a href="basis.dom.wrapper_owner.html">владельца</a> <code>contextDisabled</code> не изменяется (чтобы избежать лишних событий). Но при привязывании узла к новому родителю или владельцу <code>contextDisabled</code> меняется согласно текущему состоянию контекста.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> child = <span class="hljs-keyword">new</span> Node();
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> Node({
+  disabled: <span class="hljs-literal">true</span>,  <span class="hljs-comment">// список заблокирован по умолчанию</span>
+  childNodes: [
+    child
+  ]
+});
+
+console.log(child.contextDisabled);
+<span class="hljs-comment">// &gt; true</span>
+
+list.removeChild(child);
+console.log(child.contextDisabled);
+<span class="hljs-comment">// &gt; true</span>
+
+list.enable();
+list.appendChild(child);
+console.log(child.contextDisabled);
+<span class="hljs-comment">// &gt; false</span>
+</code></pre>
+<p>Узел считается недоступным если его свойство <code>disabled</code> или свойство <code>contextDisabled</code> равно <code>true</code>. Пример функции проверяющей доступность:</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isViewDisabled</span><span class="hljs-params">(view)</span>{</span>
+  <span class="hljs-keyword">return</span> view.disabled || view.contextDisabled;
+}
+</code></pre>
+<p>Но в такой функции нет необходимости, так как у узлов есть метод <code>isDisabled()</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> Node({
+  childNodes: [
+    <span class="hljs-keyword">new</span> Node()
+  ]
+});
+
+console.log(list.isDisabled());
+<span class="hljs-comment">// &gt; false</span>
+console.log(list.firstChild.isDisabled());
+<span class="hljs-comment">// &gt; false</span>
+
+list.disable();
+
+console.log(list.isDisabled());
+<span class="hljs-comment">// &gt; true</span>
+console.log(list.firstChild.isDisabled());
+<span class="hljs-comment">// &gt; true</span>
+</code></pre>
+<p>При изменении <code>contextDisabled</code> так же выбрасывается событие <code>disable</code> или <code>enable</code>. Фактически эти события выбрасываются, когда меняется возвращаемый результат метода <code>isDisabled()</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> LogNode = Node.subclass({
+  emit_disable: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    Node.prototype.emit_disable.call(<span class="hljs-keyword">this</span>);
+    console.log(<span class="hljs-keyword">this</span>.name, <span class="hljs-string">'disabled'</span>);
+  },
+  emit_enable: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    Node.prototype.emit_enable.call(<span class="hljs-keyword">this</span>);
+    console.log(<span class="hljs-keyword">this</span>.name, <span class="hljs-string">'enabled'</span>);
+  }
+});
+
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> LogNode({
+  name: <span class="hljs-string">'list'</span>,
+  childNodes: [
+    <span class="hljs-keyword">new</span> LogNode({ name: <span class="hljs-string">'item1'</span> }),
+    <span class="hljs-keyword">new</span> LogNode({ name: <span class="hljs-string">'item2'</span> })
+  ],
+  satellite: {
+    foo: <span class="hljs-keyword">new</span> LogNode({ name: <span class="hljs-string">'foo'</span> })
+  }
+});
+
+list.disable();
+<span class="hljs-comment">// &gt; item1 disabled</span>
+<span class="hljs-comment">// &gt; item2 disabled</span>
+<span class="hljs-comment">// &gt; foo disabled</span>
+<span class="hljs-comment">// &gt; list disabled</span>
+
+list.firstChild.disable();
+<span class="hljs-comment">// событий не будет, первый ребенок и так уже недоступен</span>
+
+list.enable();
+<span class="hljs-comment">// &gt; item2 enabled</span>
+<span class="hljs-comment">// &gt; foo enabled</span>
+<span class="hljs-comment">// &gt; list enabled</span>
+<span class="hljs-comment">// item1 остался недоступным</span>
+</code></pre>
+<p>Использование контекста избавляет от необходимости делать недоступными каждое отдельное представление или элемент управления. Для этого достаточно сделать недоступным лишь одно &quot;главное&quot; представление отвечающее за контекст. Например, форма с полями: не нужно делать недоступным каждое поле, достаточно сделать недоступной только форму, ее поля так же станут недоступными.</p>
+<h2 id="-">Реактивные значения</h2>
+<p>Начиная с версии <code>1.4</code> в качестве значения <code>disabled</code> можно задать объект с интерфейсом <a href="bindingbridge.html"><code>binding bridge</code></a> (<code>bb-value</code>). В этом случае <code>disabled</code> будет автоматически синхрозироваться с таким объектом (его значение приводится к <code>boolean</code>). При этом <code>disabled</code> по прежнему хранит <code>true</code> или <code>false</code>, а при изменениях срабатывают события <code>disable</code> и <code>enable</code>. Связь с <code>bb-value</code> &quot;прячется&quot; в приватном свойстве <code>disabledRA_</code>, в котором хранится специальный адаптер-наблюдатель.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> someValue = <span class="hljs-keyword">new</span> basis.Token(<span class="hljs-literal">false</span>);
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node({
+  disabled: someValue
+});
+
+console.log(view.disabled);
+<span class="hljs-comment">// &gt; false</span>
+
+someValue.set(<span class="hljs-literal">true</span>);
+console.log(view.disabled);
+<span class="hljs-comment">// &gt; true</span>
+</code></pre>
+<p>Можно использовать эту возможность для более сложных сценариев. Например, блокировать кнопку, если у владельца нет <a href="basis.dom.wrapper_selection.html">выбранных узлов</a>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> Node({
+  selection: <span class="hljs-literal">true</span>,
+  childNodes: [
+    { name: <span class="hljs-string">'foo'</span> },
+    { name: <span class="hljs-string">'bar'</span> }
+  ],
+  satellite: {
+    deleteButton: <span class="hljs-keyword">new</span> Node({
+      disabled: Value
+        .factory(<span class="hljs-string">'ownerChanged'</span>, <span class="hljs-string">'owner.selection'</span>)
+        .pipe(<span class="hljs-string">'itemsChanged'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(selection)</span>{</span>
+          <span class="hljs-keyword">return</span> !selection.itemCount;
+        })
+    })
+  }
+});
+
+console.log(list.selection.itemCount);
+<span class="hljs-comment">// &gt; 0</span>
+console.log(list.satellite.deleteButton.disabled);
+<span class="hljs-comment">// &gt; true</span>
+
+list.firstChild.select();
+console.log(list.selection.itemCount);
+<span class="hljs-comment">// &gt; 1</span>
+console.log(list.satellite.deleteButton.disabled);
+<span class="hljs-comment">// &gt; false</span>
+
+list.selection.clear();
+console.log(list.selection.itemCount);
+<span class="hljs-comment">// &gt; 0</span>
+console.log(list.satellite.deleteButton.disabled);
+<span class="hljs-comment">// &gt; true</span>
+</code></pre>
+<p>Стоит принимать во внимание следующие особенности использования <code>bb-value</code> в качестве значения <code>disabled</code>:</p>
+<ul>
+<li>вызов методов <code>disable()</code> и <code>enable()</code> не меняет состояние <code>disabled</code> (в режиме разработки выводится предупреждение), когда для него установлено <code>bb-value</code>;</li>
+<li>для привязки и сбрасывания <code>bb-value</code> необходимо использовать метод <code>setDisabled(newValue)</code>.</li>
+</ul>
+<h2 id="">Примеры</h2>
+<h3 id="---">Недоступность при загрузке данных</h3>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> STATE = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.data'</span>).STATE;
+
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node({
+  handler: {
+    stateChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">this</span>.setDisabled(<span class="hljs-keyword">this</span>.state == STATE.PROCESSING);
+    }
+  }
+});
+
+<span class="hljs-comment">// альтернативное решение</span>
+<span class="hljs-comment">// basis.js 1.4</span>
+<span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> Value = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.data'</span>).Value;
+<span class="hljs-keyword">var</span> STATE = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.data'</span>).STATE;
+
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node({
+  disabled: Value.factory(<span class="hljs-string">'stateChanged'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>
+    <span class="hljs-keyword">return</span> node.state == STATE.PROCESSING;
+  }
+});
+</code></pre>
+<h3 id="">Биндинги</h3>
+<p>В модуле <code>basis.ui</code> уже определены биндинги <code>disabled</code> и <code>enabled</code>, в их описании нет необходимости. Здесь приведено их описание в качестве примера, как можно использовать доступность в биндингах.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node({
+  binding: {
+    disabled: {
+      events: <span class="hljs-string">'disable enable'</span>,
+      getter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>
+        <span class="hljs-keyword">return</span> node.isDisabled();
+      }
+    },
+    enabled: {
+      events: <span class="hljs-string">'disable enable'</span>,
+      getter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>
+        <span class="hljs-keyword">return</span> !node.isDisabled();
+      }
+    }
+  }
+});
+</code></pre>
 
                     
                     </section>

@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="3" data-basepath="." data-revision="1426118090885">
+    <div class="book" data-github="basisjs/articles" data-level="3" data-basepath="." data-revision="1455641242266">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -1186,7 +1186,7 @@ emitter.emit_customEvent(<span class="hljs-string">'test'</span>);
 });
 </code></pre>
 <h3 id="">Отладка</h3>
-<p>В <code>dev</code> режиме доступно свойство <code>emit_debug</code>. Данное свойство можно задать как для экземпляра, так и для любого класса (наследника <code>Emitter</code>). Если этому свойству присвоена функция, то эта функция будет вызываться на любое событие после обработки всех обработчиков. Такая функция получает единственный аргумент - объект, который содержит поля:</p>
+<p>В <code>dev</code> режиме доступно свойство <code>debug_emit</code>. Данное свойство можно задать как для экземпляра, так и для любого класса (наследника <code>Emitter</code>). Если этому свойству присвоена функция, то эта функция будет вызываться на любое событие после обработки всех обработчиков. Такая функция получает единственный аргумент - объект, который содержит поля:</p>
 <ul>
 <li><p>type - название события;</p>
 </li>
@@ -1195,7 +1195,7 @@ emitter.emit_customEvent(<span class="hljs-string">'test'</span>);
 <li><p>args - аргументы, с которыми было инициировано событие.</p>
 </li>
 </ul>
-<pre><code class="lang-js">basis.data.Object.prototype.emit_debug = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span>{</span>
+<pre><code class="lang-js">basis.data.Object.prototype.debug_emit = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span>{</span>
   console.log(event.type, event.sender, event.args);
 };
 

@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="2.5" data-basepath="." data-revision="1426118090885">
+    <div class="book" data-github="basisjs/articles" data-level="2.5" data-basepath="." data-revision="1455641242266">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -960,7 +960,7 @@
                     <section class="normal" id="section-gitbook_37">
                     
                         <h1 id="binding-bridge">Binding bridge</h1>
-<p>Механизм <code>binding bridge</code> служит для обеспечения простой связи объектов и одностороней синхронизации некоторого значения между ними. Он позволяет абстрагироваться от конкретной реализации класса (объекта), того, что является значением, как оно хранится, как хранятся, добавляются и удаляются обработчики, срабатываюшие на изменение значения.</p>
+<p>Механизм <code>binding bridge</code> служит для обеспечения простой связи объектов и односторонней синхронизации некоторого значения между ними. Он позволяет абстрагироваться от конкретной реализации класса (объекта), того, что является значением, как оно хранится, как хранятся, добавляются и удаляются обработчики, срабатывающие на изменение значения.</p>
 <p>Считается, что экземпляр (класс) поддерживает данный механизм, если у него есть свойство <code>bindingBridge</code>, в котором содержится объект. Этот объект является универсальным интерфейсом и должен предоставлять 3 метода:</p>
 <ul>
 <li><p>attach(host, fn, context) - метод для добавления обработчика, где:</p>
@@ -976,9 +976,9 @@
 </li>
 </ul>
 <blockquote>
-<p>Для корретного удаления обработчика, методу <code>detach</code> необходимо передавать те же значения, что и методу <code>attach</code>, они должны быть эквивалентны.</p>
+<p>Для корректного удаления обработчика методу <code>detach</code> необходимо передавать те же значения, что и методу <code>attach</code>, они должны быть эквивалентны.</p>
 </blockquote>
-<p>Обработчик вызывается в случае изменения значения и ему передается единственный аргумент – новое значение. В этот момент <code>bindingBridge.get</code> должен возвращать то же значение.</p>
+<p>Обработчик вызывается в случае изменения значения, и ему передается единственный аргумент – новое значение. В этот момент <code>bindingBridge.get</code> должен возвращать то же значение.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> token = <span class="hljs-keyword">new</span> basis.Token(<span class="hljs-number">123</span>);
 <span class="hljs-keyword">var</span> logChanges = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span>{</span>
   console.log(<span class="hljs-string">'new value is'</span>, value, <span class="hljs-string">'and it'</span>,
@@ -995,7 +995,7 @@ token.set(<span class="hljs-number">1</span>);
 <span class="hljs-comment">// в консоль ничего выведено не будет</span>
 </code></pre>
 <blockquote>
-<p>Может возникнуть вопрос, зачем передавать в метод владельца интерфейса и почему не используется <code>this</code> внутри методов интерфейса. Дело в том, что методы интерфейса находятся в объекте <code>bindingBridge</code> и не будут иметь нужного контекста при обычном вызове. Для задания контекста требуется вызов <code>token.bindingBridge.attach.call(token, logChanges)</code>. Можно заметить, что аргументы остались те же, но добавилось <code>.call</code>. Текущая реализация не требует <code>.call</code> и вызов таких методов оказывается немного короче.</p>
+<p>Может возникнуть вопрос, зачем передавать в метод владельца интерфейса и почему не используется <code>this</code> внутри методов интерфейса. Дело в том, что методы интерфейса находятся в объекте <code>bindingBridge</code> и не будут иметь нужного контекста при обычном вызове. Для задания контекста требуется вызов <code>token.bindingBridge.attach.call(token, logChanges)</code>. Можно заметить, что аргументы остались те же, но добавился <code>.call</code>. Текущая реализация не требует <code>.call</code>, и вызов таких методов оказывается немного короче.</p>
 </blockquote>
 <p>Данный интерфейс широко используется в <a href="basis.template.html">шаблонах</a>.</p>
 <p>Интерфейс <code>binding bridge</code> предоставляют:</p>

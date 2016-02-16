@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="7.3" data-basepath="." data-revision="1426118090885">
+    <div class="book" data-github="basisjs/articles" data-level="7.3" data-basepath="." data-revision="1455641242266">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -957,7 +957,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_34">
+                    <section class="normal" id="section-gitbook_35">
                     
                         <h1 id="--actions">Обратная связь (actions)</h1>
 <p>Чтобы получать события, которые происходят в DOM шаблона, используется метод <code>templateAction</code>. Этот метод получает два параметра: <code>name</code> имя действия и <code>event</code> - браузерное событие.</p>
@@ -969,7 +969,7 @@
   template:
     <span class="hljs-string">'&lt;div&gt;'</span> +
       <span class="hljs-string">'&lt;button event-click="up"&gt;Up&lt;/button&gt;'</span> +
-      <span class="hljs-string">'&lt;button event-click="down"&gt;Down&lt;/button&gt;'</span> +      
+      <span class="hljs-string">'&lt;button event-click="down"&gt;Down&lt;/button&gt;'</span> +
     <span class="hljs-string">'&lt;/div&gt;'</span>,
 
   templateAction: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, event)</span>{</span>
@@ -982,7 +982,7 @@
 <span class="hljs-comment">// для кнопки "Down" в консоли будет</span>
 <span class="hljs-comment">// console&gt; "down" "click"</span>
 </code></pre>
-<p>Для удобства добавления обработчиков на определенные действия, используется свойство <code>action</code>. Это расширяемое свойство (<a href="basis.Class.html#extensibleproperty">extensibeProperty</a>), где ключи являются названями действий, а значения - функции-обработчики этих действий, которые получают объект события <code>event</code>. Для того, чтобы вызывался определенный обработчик в <code>basis.ui.Node</code> метод <code>templateAction</code> определен так:</p>
+<p>Для удобства добавления обработчиков на определенные действия, используется свойство <code>action</code>. Это расширяемое свойство (<a href="basis.Class.html#extensibleproperty">extensibeProperty</a>), где ключи являются названиями действий, а значения - функции-обработчики этих действий, которые получают объект события <code>event</code>. Для того, чтобы вызывался определенный обработчик в <code>basis.ui.Node</code> метод <code>templateAction</code> определен так:</p>
 <pre><code class="lang-js">basis.ui.Node.prototype.templateAction = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(actionName, event)</span>{</span>
   <span class="hljs-keyword">var</span> action = <span class="hljs-keyword">this</span>.action[actionName];
 
@@ -990,7 +990,7 @@
     action.call(<span class="hljs-keyword">this</span>, event);
 
   <span class="hljs-keyword">if</span> (!action)
-    basis.dev.warn(<span class="hljs-string">'template call `'</span> + actionName + <span class="hljs-string">'` action, but it isn\'t defined in action list'</span>);    
+    basis.dev.warn(<span class="hljs-string">'template call `'</span> + actionName + <span class="hljs-string">'` action, but it isn\'t defined in action list'</span>);
 };
 </code></pre>
 <p>Если обработчик есть в <code>action</code>, то он вызывается. Иначе в консоли будет выведено предупреждающее сообщение, так как это скорей всего ошибка в шаблоне или в <code>action</code>. В результате такого определения метода <code>templateAction</code>, становится просто определять обработчики на определенные действия.</p>
@@ -998,7 +998,7 @@
   template:
     <span class="hljs-string">'&lt;div&gt;'</span> +
       <span class="hljs-string">'&lt;button event-click="up"&gt;Up&lt;/button&gt;'</span> +
-      <span class="hljs-string">'&lt;button event-click="down"&gt;Down&lt;/button&gt;'</span> +      
+      <span class="hljs-string">'&lt;button event-click="down"&gt;Down&lt;/button&gt;'</span> +
     <span class="hljs-string">'&lt;/div&gt;'</span>,
 
   action: {
@@ -1012,7 +1012,7 @@
 });
 </code></pre>
 <h2 id="--">Обработчики по умолчанию</h2>
-<p>На данный момент для <code>basis.ui.Node</code> определен лишь один обработчик по умолчанию - <code>select</code>. Он делает выбранным текущий узел, если это возможно. Если у узла есть <code>contextSelection</code> и он разрешает множественный выбор узлов, то учитывается состояние клавиш <code>ctrl</code> (Windows) и <code>meta</code> (Mac OS) для определения режима выделения (множественный выбор или единичный).</p>
+<p>На данный момент для <code>basis.ui.Node</code> определен лишь один обработчик по умолчанию - <code>select</code>. Он делает текущий узел выбранным, если это возможно. Если у узла есть <code>contextSelection</code> и он разрешает множественный выбор узлов, то учитывается состояние клавиш <code>ctrl</code> (Windows) и <code>meta</code> (Mac OS) для определения режима выделения (множественный выбор или единичный).</p>
 <pre><code class="lang-js">basis.ui.Node.prototype.action.select = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(event)</span>{</span>
   <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isDisabled())
     <span class="hljs-keyword">return</span>;
@@ -1024,6 +1024,16 @@
 };
 </code></pre>
 <p>Эта реализация покрывает большинство случаев связанных с выделением узлов.</p>
+<h2 id="---">Зарезервированные действия в шаблонизаторе</h2>
+<p>Шаблонизатор поддерживает 3 специальных действия: <code>prevent-default</code>, <code>stop-propagation</code>, <code>log-event</code>.</p>
+<ul>
+<li><code>stop-propagation</code> превращается в <code>event.stopPropagation()</code></li>
+<li><code>prevent-default</code> превращается в <code>event.preventDefault()</code></li>
+<li><code>log-event</code> в режиме разработке выводит в консоль информацию о событии (<code>basis.dev.log(&#39;Template event:&#39;, event)</code>)</li>
+</ul>
+<p>Например, если требуется отменить действие на клик по умолчанию:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"..."</span> <span class="hljs-attribute">event-click</span>=<span class="hljs-value">"prevent-default"</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>
+</code></pre>
 
                     
                     </section>

@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="4.4" data-basepath="." data-revision="1426118090885">
+    <div class="book" data-github="basisjs/articles" data-level="4.4" data-basepath="." data-revision="1455641242266">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -981,9 +981,12 @@
 <p>Если метод <code>create</code> не переопределен, то, в качестве значения, создается экземпляр <code>basis.data.Object</code>. Класс значения по умолчанию можно задать через свойство <code>itemClass</code> (по умолчанию <code>basis.data.Object</code>). Конфигурация для создания зависит от типа (см &quot;Разрешение ключевого значения&quot;).</p>
 <p>По умолчанию, при разрушении карты, разрушаются и все его значения. Это исторически сложившееся поведение. С версии <code>1.3</code> этим поведением можно управлять через свойство <code>autoDestroyMembers</code> (по умолчанию <code>true</code>). Если выставить его в <code>false</code>, то значения не будут разрушены при разрушении карты.</p>
 <p>Так же нужно помнить, что при разрушении объектов являющимися значениями, они удаляются из карты. Это делает карты удобными для хнанения значений:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> map = <span class="hljs-keyword">new</span> basis.data.KeyObjectMap({
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+<span class="hljs-keyword">var</span> KeyObjectMap = basis.require(<span class="hljs-string">'basis.data'</span>).KeyObjectMap;
+
+<span class="hljs-keyword">var</span> map = <span class="hljs-keyword">new</span> KeyObjectMap({
   create: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span>{</span>
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> basis.data.Object({ data: { value: key } })
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DataObject({ data: { value: key } })
   }
 });
 
@@ -1014,24 +1017,29 @@ console.log(map.get(<span class="hljs-number">1</span>));
 <h2 id="">Использование</h2>
 <p>Карты используются в качестве кеша (переиспользования значений) или для получения одних и тех же значений в разных частях кода в условиях конкуренции.</p>
 <p>Нередко нужно сохранять значения, так как они могут нести информацию о состоянии. Обычно в качестве таких значений выступают экземпляры <code>basis.ui.Node</code> и выгодно сохранять их экземпляры, вместо пересоздания. В этом случае, так же необходимо запретить разрушение дочерних узлов через свойство <code>destroyDataSourceMember</code>, если используется <code>dataSource</code>.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> items = [
-  <span class="hljs-keyword">new</span> basis.data.Object(),
-  <span class="hljs-keyword">new</span> basis.data.Object(),
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+<span class="hljs-keyword">var</span> Dataset = basis.require(<span class="hljs-string">'basis.data'</span>).Dataset;
+<span class="hljs-keyword">var</span> KeyObjectMap = basis.require(<span class="hljs-string">'basis.data'</span>).KeyObjectMap;
+
+<span class="hljs-keyword">var</span> items = [
+  <span class="hljs-keyword">new</span> DataObject(),
+  <span class="hljs-keyword">new</span> DataObject(),
 ];
-<span class="hljs-keyword">var</span> dataset = <span class="hljs-keyword">new</span> basis.data.Dataset();
-<span class="hljs-keyword">var</span> map = <span class="hljs-keyword">new</span> basis.data.KeyObjectMap({
-  itemClass: basis.ui.Node.subclass({
+<span class="hljs-keyword">var</span> dataset = <span class="hljs-keyword">new</span> Dataset();
+<span class="hljs-keyword">var</span> map = <span class="hljs-keyword">new</span> KeyObjectMap({
+  itemClass: Node.subclass({
     init: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
       console.log(<span class="hljs-string">'create'</span>);
-      basis.ui.Node.prototype.init.call(<span class="hljs-keyword">this</span>);
+      Node.prototype.init.call(<span class="hljs-keyword">this</span>);
     },
     destroy: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
       console.log(<span class="hljs-string">'destroy'</span>);
-      basis.ui.Node.prototype.init.call(<span class="hljs-keyword">this</span>);
+      Node.prototype.init.call(<span class="hljs-keyword">this</span>);
     }
   })
 });
-<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> basis.ui.Node({
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node({
   destroyDataSourceMember: <span class="hljs-literal">false</span>,
   dataSource: dataset,
   childFactory: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(config)</span>{</span>
@@ -1047,31 +1055,36 @@ dataset.clear();
 
 dataset.set(items);
 
-dataset.add(<span class="hljs-keyword">new</span> basis.data.Object());
+dataset.add(<span class="hljs-keyword">new</span> DataObject());
 <span class="hljs-comment">// &gt; create</span>
 </code></pre>
 <p>Иногда требуется, например, синхронизировать некоторый набор с <code>selection</code> узла, который выводит некоторый полный набор. В этом случае не известно что будет раньше, создадутся дочерние узлы через <code>dataSource</code> и <code>childFactory</code> или же синхронизируется <code>selection</code>. В любом случае, должны получиться одни и те же узлы (<code>basis.ui.Node</code>):</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> items = basis.array.create(<span class="hljs-number">3</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> basis.data.Object();
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+<span class="hljs-keyword">var</span> Dataset = basis.require(<span class="hljs-string">'basis.data'</span>).Dataset;
+<span class="hljs-keyword">var</span> KeyObjectMap = basis.require(<span class="hljs-string">'basis.data'</span>).KeyObjectMap;
+
+<span class="hljs-keyword">var</span> items = basis.array.create(<span class="hljs-number">3</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DataObject();
 });
-<span class="hljs-keyword">var</span> dataset = <span class="hljs-keyword">new</span> basis.data.Dataset({
+<span class="hljs-keyword">var</span> dataset = <span class="hljs-keyword">new</span> Dataset({
   items: items
 });
 
-<span class="hljs-keyword">var</span> model2node = <span class="hljs-keyword">new</span> basis.data.KeyObjectMap({
-  itemClass: basis.ui.Node.subclass({
+<span class="hljs-keyword">var</span> model2node = <span class="hljs-keyword">new</span> KeyObjectMap({
+  itemClass: Node.subclass({
     init: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
       console.log(<span class="hljs-string">'create'</span>);
-      basis.ui.Node.prototype.init.call(<span class="hljs-keyword">this</span>);
+      Node.prototype.init.call(<span class="hljs-keyword">this</span>);
     },
     destroy: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
       console.log(<span class="hljs-string">'destroy'</span>);
-      basis.ui.Node.prototype.init.call(<span class="hljs-keyword">this</span>);
+      Node.prototype.init.call(<span class="hljs-keyword">this</span>);
     }
   })
 });
 
-<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> basis.ui.Node({
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node({
   destroyDataSourceMember: <span class="hljs-literal">false</span>,
   dataSource: dataset,
   selection: { multiple: <span class="hljs-literal">true</span> },

@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="6.7" data-basepath="." data-revision="1426118090885">
+    <div class="book" data-github="basisjs/articles" data-level="6.7" data-basepath="." data-revision="1455641242266">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -1005,7 +1005,7 @@ console.log(view.selected);
 <span class="hljs-comment">// &gt; true</span>
 
 view.select();
-<span class="hljs-comment">// событие select выброшено не будет, так как </span>
+<span class="hljs-comment">// событие select выброшено не будет, так как</span>
 <span class="hljs-comment">// значение selected не было изменено</span>
 
 view.unselect();
@@ -1356,11 +1356,11 @@ console.log(menu.childNodes.map(<span class="hljs-function"><span class="hljs-ke
 }));
 <span class="hljs-comment">// &gt; [false, true]</span>
 </code></pre>
-<p>Стоит принимать во внимание следующие особенности использования <code>bb-value</code> в качестве <code>selected</code>:</p>
+<p>Стоит принимать во внимание следующие особенности использования <code>bb-value</code> в качестве значения <code>selected</code>:</p>
 <ul>
 <li>узлы с привязанным <code>bb-value</code> не учавствуют в контексте выделения и из нельзя добавить в экземпляр <code>Selection</code>;</li>
-<li>вызов методов <code>select()</code>, <code>setSelected()</code> и <code>unselect()</code> сбрасывают связь с <code>bb-value</code>;</li>
-<li>для привязки <code>bb-value</code> необходимо использовать метод <code>setSelected(newValue)</code>.</li>
+<li>вызов методов <code>select()</code> и <code>unselect()</code> не меняет состояние <code>selected</code> (в режиме разработки выводится предупреждение), когда для него установлено <code>bb-value</code>;</li>
+<li>для привязки и сбрасывания <code>bb-value</code> необходимо использовать метод <code>setSelected(newValue)</code>.</li>
 </ul>
 <h2 id="-">Примеры использования</h2>
 <p>Несколько примеров использования можно найти в <a href="http://basisjs.com/basisjs/demo/" target="_blank">демонстрациях</a>:</p>
@@ -1419,7 +1419,7 @@ list.selection.addHandler({
 </code></pre>
 <h3 id="------">Привязка выбранного элемента списка к другому представлению</h3>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
-<span class="hljs-keyword">var</span> Value = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Value;
+<span class="hljs-keyword">var</span> Value = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.data'</span>).Value;
 
 <span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> Node({
   selection: <span class="hljs-literal">true</span>
@@ -1442,7 +1442,7 @@ list.selection.addHandler({
 </code></pre>
 <h3 id="--">Привязка к роутеру</h3>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
-<span class="hljs-keyword">var</span> Value = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Value;
+<span class="hljs-keyword">var</span> Value = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.data'</span>).Value;
 <span class="hljs-keyword">var</span> router = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.router'</span>);
 
 <span class="hljs-keyword">var</span> menu = <span class="hljs-keyword">new</span> Node({
@@ -1473,6 +1473,27 @@ router.add(<span class="hljs-string">'/:name'</span>, <span class="hljs-function
     { name: <span class="hljs-string">'bar'</span> }, <span class="hljs-comment">// будет выбран если путь '/bar'</span>
     { name: <span class="hljs-string">'baz'</span> }  <span class="hljs-comment">// и т.д.</span>
   ]
+});
+</code></pre>
+<h3 id="">Биндинги</h3>
+<p>В модуле <code>basis.ui</code> уже определены биндинги <code>selected</code> и <code>unselected</code>, в их описании нет необходимости. Здесь приведено их описание в качестве примера, как можно использовать состояние выделения в биндингах.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.ui'</span>).Node;
+
+<span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node({
+  binding: {
+    selected: {
+      events: <span class="hljs-string">'select unselect'</span>,
+      getter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>
+        <span class="hljs-keyword">return</span> node.selected;
+      }
+    },
+    unselected: {
+      events: <span class="hljs-string">'select unselect'</span>,
+      getter: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(node)</span>{</span>
+        <span class="hljs-keyword">return</span> !node.selected;
+      }
+    }
+  }
 });
 </code></pre>
 <hr>

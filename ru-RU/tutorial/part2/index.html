@@ -32,7 +32,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="12.2" data-basepath="../.." data-revision="1426118090885">
+    <div class="book" data-github="basisjs/articles" data-level="12.2" data-basepath="../.." data-revision="1455641242266">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -962,10 +962,10 @@
 <h2 id="">Введение</h2>
 <p>В первой части мы расмотрели азы <code>basis.js</code>, как строится интерфейс. Но интерфейс обычно не имеет смысла без важного компонента приложения – данных. В этой главе будет рассказано о подходах и механизмах работы с данными, которые предоставляет фреймворк.</p>
 <h2 id="-">Классы данных</h2>
-<p>У <code>basis.js</code> богатый ассортимент абстракций для хранения данных, их трансформации и различных вычислений. В основном они представлены классами. Не стоит пугаться их количества, большинство классов обычно выполняет одну функцию и используется для определенных задач. Некоторые задачи будут рассмотрены в этой статье.</p>
-<p>Все классы делять на четыре категории, в зависимости от того как они хранят данные:</p>
+<p>У <code>basis.js</code> богатый ассортимент абстракций для хранения данных, их трансформации и различных вычислений. В основном абстракции представлены классами. Не стоит пугаться их количества, большинство классов обычно выполняет одну функцию и используется для определенных задач. Некоторые задачи будут рассмотрены в этой статье.</p>
+<p>Все классы делятся на четыре категории, в зависимости от того, как они хранят данные:</p>
 <ul>
-<li><p>Скаляр (value) – атомарное (не делимое) значение;</p>
+<li><p>Скаляр (value) – атомарное (неделимое) значение;</p>
 </li>
 <li><p>Объект (object) – данные хранятся как ключ-значение;</p>
 </li>
@@ -974,7 +974,7 @@
 <li><p>Карта (map) – ассоциация произвольного значения с объектом данных.</p>
 </li>
 </ul>
-<p>Не зависимо от категории, классы данных наследуются от <code>basis.data.AbstractData</code>, а он в свою очередь от <code>basis.event.Emitter</code>. Последнее означает, что у экземпляров таких классов могут возникать события и на них можно подписаться. Класс <code>AbstractData</code> не описывает способа хранения данных (потому и <code>Abstract</code>), но определяет все общее, что присуще любому классу данных. Это такие механизмы, как состояние, подписка и синхронизация. Понять эти механизмы без знания о том, как работают типы данных, достаточно не просто. Потому рассмотрим каждый тип, основные принципы их работы и их вариации.</p>
+<p>Независимо от категории классы данных наследуются от <code>basis.data.AbstractData</code>, а он в свою очередь – от <code>basis.event.Emitter</code>. Последнее означает, что у экземпляров таких классов могут возникать события, и на них можно подписаться. Класс <code>AbstractData</code> не описывает способа хранения данных (потому и <code>Abstract</code>), но определяет все общее, что присуще любому классу данных. Это такие механизмы, как состояние, подписка и синхронизация. Понять эти механизмы без знания о том, как работают типы данных, достаточно непросто. Потому рассмотрим каждый тип, основные принципы их работы и их вариации.</p>
 <h2 id="-">Объект (модель)</h2>
 <p>Под объектом понимается не плоский JavaScript-объект (<code>plain object</code>), а специальный интерфейс данных, хранящихся как ключ-значение. Такие классы и экземпляры еще называют моделью (<code>model</code>). Это наиболее распространенная абстракция, потому начнем с нее.</p>
 <p>Объекты хранят свои данные в поле <code>data</code>.</p>
@@ -1005,7 +1005,7 @@ delta = obj.update({
 console.log(delta);
 <span class="hljs-comment">// &gt; false</span>
 </code></pre>
-<p>Если с данными объекта происходят изменения, то так же выбрасывается событие <code>update</code>. Не зависимо от количества изменных ключей, событие всегда одно и оно так же содержит дельту изменений (такую же как вызова метода <code>update</code>). Поэтому не сложно следить за изменениями в объекте:</p>
+<p>Если с данными объекта происходят изменения, то также выбрасывается событие <code>update</code>. Независимо от количества изменных ключей событие всегда одно, и оно также содержит дельту изменений (такую же, как вызова метода <code>update</code>). Поэтому не сложно следить за изменениями в объекте:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.data'</span>).Object;
 
 <span class="hljs-keyword">var</span> obj = <span class="hljs-keyword">new</span> DataObject({
@@ -1032,11 +1032,11 @@ obj.update({ baz: <span class="hljs-string">'test'</span> });
 obj.update({ foo: <span class="hljs-string">'a'</span> });
 <span class="hljs-comment">// нет изменений – не будет события и сообщений</span>
 </code></pre>
-<p>Как можно заметить, ключи и их значения никак не ограничиваются – они могут быть любыми. Это сделано намеряно, чтобы экземпляры этого класса несли основной функционал и были максимально дешевыми (время и память). [xxx] - ссылка на слайд сравнения.</p>
+<p>Как можно заметить, ключи и их значения никак не ограничиваются – они могут быть любыми. Это сделано намеренно, чтобы экземпляры этого класса несли основной функционал и были максимально дешевыми (время и память). [xxx] - ссылка на слайд сравнения.</p>
 <p>// TODO: про то что data не копируется при создании</p>
 <p>Базовый класс объектов (<code>basis.data.Object</code>) отлично подходит для простых случаев. Когда нужно больше логики, используется модуль <code>basis.entity</code>. Он позволяет создавать типизированные объекты, то есть фиксированный набор ключей и строгий тип значений в <code>data</code>. Но об этом мы поговорим позже. А сейчас об одном замечательном паттерне &quot;делегирование&quot;.</p>
 <h3 id="">Делегирование</h3>
-<p>Объекты поддерживают механизм делегирования, который позволяет нескольким объектам ссылаться на одни и те же данные. Делается это путем связывания объектов, мы говорим, что объект делегирует данные другого объекта. В этом случае объект хранит ссылку на объект, чьи данные он делегирует, в свойстве <code>delegate</code>. Меняется делегат методом <code>setDelegate</code>.</p>
+<p>Объекты поддерживают механизм делегирования, который позволяет нескольким объектам ссылаться на одни и те же данные. Делается это путем связывания объектов. Мы говорим, что объект делегирует данные другого объекта (делегат). В этом случае объект хранит ссылку на объект-делегат в свойстве <code>delegate</code>. Меняется делегат методом <code>setDelegate</code>.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.data'</span>).Object;
 
 <span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> DataObject({ data: { foo: <span class="hljs-number">1</span> } });
@@ -1053,8 +1053,24 @@ console.log(foo.data);
 <span class="hljs-comment">// &gt; Object { bar: 2 }</span>
 console.log(foo.data === bar.data);
 <span class="hljs-comment">// &gt; true</span>
+console.log(foo.delegate === bar);
+<span class="hljs-comment">// &gt; true</span>
 </code></pre>
-<p>Так как оба объекта ссылаются на одни и те же данные, то становится не важным у кого из них вызывать метод <code>update</code>, чтобы изменить данные. Если вызов метода <code>update</code> приводит к изменениям, событие <code>update</code> будет выброшено для обоих объектов.</p>
+<p>Сбросить делегат можно, вызвав метод без аргументов.
+При этом у объекта <code>foo</code> останется изолированная копия <code>data</code>. Подробнее <a href="basis.data.Object.html#Делегирование">в документации</a>.</p>
+<pre><code class="lang-js"><span class="hljs-comment">// FIXME describe delegate reset at the end</span>
+foo.setDelegate()
+console.log(foo.data);
+<span class="hljs-comment">// &gt; Object { bar: 2 }</span>
+console.log(foo.delegate);
+<span class="hljs-comment">// null</span>
+foo.update({ qux: <span class="hljs-number">4</span> })
+console.log(bar.data)
+<span class="hljs-comment">// Object {bar: 2}</span>
+console.log(foo.data)
+<span class="hljs-comment">// Object {bar: 2, qux: 4}</span>
+</code></pre>
+<p>Так как оба объекта ссылаются на одни и те же данные, то становится неважным, у кого из них вызывать метод <code>update</code>, чтобы изменить данные. Если вызов метода <code>update</code> приводит к изменениям, событие <code>update</code> будет выброшено для обоих объектов.</p>
 <pre><code class="lang-js">foo.addHandler({
   update: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sender, delta)</span>{</span>
     console.log(<span class="hljs-string">'foo data changed:'</span>, delta);
@@ -1074,7 +1090,7 @@ bar.update({ bar: <span class="hljs-string">'change bar'</span> });
 <span class="hljs-comment">// &gt; bar data changed: Object { bar: 'change foo' }</span>
 <span class="hljs-comment">// &gt; foo data changed: Object { bar: 'change foo' }</span>
 </code></pre>
-<p>Логично предположить, что таким образом можно связать произвольное количество объектов. В результате получается граф, а точнее дерево, так как циклы исключены. Единственный объект, не имеющий делегата (свойство <code>delegate</code> равно <code>null</code>), является корнем и все объекты имееют на него ссылку в свойстве <code>root</code>. А когда у объекта нет делегата, то есть свойство <code>root</code> ссылается на самого себя.</p>
+<p>Логично предположить, что таким образом можно связать произвольное количество объектов. В результате получается граф, а точнее дерево, так как циклы исключены. Единственный объект, не имеющий делегата (свойство <code>delegate</code> равно <code>null</code>), является корнем, и все объекты имееют на него ссылку в свойстве <code>root</code>. А когда у объекта нет делегата, свойство <code>root</code> ссылается на самого себя.</p>
 <pre><code class="lang-js">console.log(foo.root === bar);
 <span class="hljs-comment">// &gt; true</span>
 console.log(bar.root === bar);
@@ -1082,8 +1098,8 @@ console.log(bar.root === bar);
 </code></pre>
 <p><img src="../../img/data-delegate-root.png" alt="basis.data.Object#root"></p>
 <p>Как ни удивительно, но обычно в таких графах большинство объектов изначально планируются быть прокси-объектами, а не источниками данных (к ответу на вопрос, почему так происходит, мы подойдем совсем скоро). Поэтому была введена еще одна важная роль в графе – целевой объект. Такая роль назначается объектам, которые являются источниками данных. При этом, такие объекты не могут иметь делегатов, так как в этом случае, данные будут утеряны. Факт того, что объект является целевым определяет значение свойства <code>target</code>. Если оно ссылается на сам объект – то этот объект является целевым. В противном случае, свойство равно <code>null</code> или ссылается на целевой объект, если такой объект имеется в графе, по тому же принципу, что и <code>root</code>. Чтобы сделать объект целевым, нужно указать <code>target: true</code> при его создании или указать это в прототипе класса унаследованного от <code>basis.data.Object</code>.</p>
-<p><img src="img/data-target-1.png" alt="basis.data.Object#target">
-<img src="img/data-target-2.png" alt="basis.data.Object#target"></p>
+<p><img src="../../img/data-target-1.png" alt="basis.data.Object#target">
+<img src="../../img/data-target-2.png" alt="basis.data.Object#target"></p>
 <pre><code class="lang-js">console.log(foo.target);
 <span class="hljs-comment">// &gt; null</span>
 console.log(bar.target);
@@ -1101,7 +1117,7 @@ console.log(foo.target === baz);
 console.log(bar.target === baz);
 <span class="hljs-comment">// &gt; true</span>
 </code></pre>
-<p>Свойства <code>root</code> и <code>target</code> меняются автоматически. При этом выбрасываются события <code>rootChanged</code> и <code>targetChanged</code>, которые получают предыдущее значение свойства (до изменения). Когда меняется <code>delegate</code> по аналогии выбрасывается событие <code>delegateChanged</code>. Кроме того, для всех трех свойств поддерживается <code>listen</code>, так что можно удобно добавлять обработчики на соотвествующие объекты.</p>
+<p>Свойства <code>root</code> и <code>target</code> меняются автоматически. При этом выбрасываются события <code>rootChanged</code> и <code>targetChanged</code>, которые получают предыдущее значение свойства (до изменения). Когда меняется <code>delegate</code> по аналогии выбрасывается событие <code>delegateChanged</code>. Кроме того, для всех трех свойств поддерживается <code>listen</code>, так что можно удобно добавлять обработчики на соответствующие объекты.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.data'</span>).Object;
 
 <span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> DataObject();
@@ -1115,7 +1131,7 @@ console.log(bar.target === baz);
     }
   },
   listen: {
-    root: { <span class="hljs-comment">// автоматически делает this.root.addHandler(..) и </span>
+    root: { <span class="hljs-comment">// автоматически делает this.root.addHandler(..) и</span>
             <span class="hljs-comment">// this.root.removeHandler(..) при изменении root</span>
       activeChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
         console.log(<span class="hljs-string">'root active changed'</span>);
@@ -1135,7 +1151,7 @@ foo.setActive(<span class="hljs-literal">false</span>);
 </code></pre>
 <h3 id="--basisuinode">Родство с basis.ui.Node</h3>
 <h2 id="">Состояние</h2>
-<p>Понятие состояния является очень важным, определяет состояние данных и что с ними происходит. Значение состояния хранится в поле <code>state</code></p>
+<p>Понятие состояния является очень важным, определяет состояние данных и то, что с ними происходит. Значение состояния хранится в поле <code>state</code>.</p>
 
                     
                     </section>

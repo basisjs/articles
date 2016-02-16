@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="11" data-basepath="." data-revision="1426118090885">
+    <div class="book" data-github="basisjs/articles" data-level="11" data-basepath="." data-revision="1455641242266">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -1080,7 +1080,7 @@ console.log(location.hash);
 <span class="hljs-comment">// &gt; '#foo'</span>
 
 router.navigate(<span class="hljs-string">'one'</span>);       <span class="hljs-comment">// добавит #one в историю</span>
-router.navigate(<span class="hljs-string">'two'</span>, <span class="hljs-literal">true</span>); <span class="hljs-comment">// перезапишет #one на #two </span>
+router.navigate(<span class="hljs-string">'two'</span>, <span class="hljs-literal">true</span>); <span class="hljs-comment">// перезапишет #one на #two</span>
 console.log(location.hash);
 <span class="hljs-comment">// &gt; '#two'</span>
 
@@ -1097,11 +1097,11 @@ console.log(location.hash);
 router.debug = <span class="hljs-literal">true</span>;
 router.start();
 <span class="hljs-comment">// &gt; basis.router started</span>
-<span class="hljs-comment">// &gt; basis.router: hash changed to "foo" </span>
+<span class="hljs-comment">// &gt; basis.router: hash changed to "foo"</span>
 <span class="hljs-comment">//   &lt;no matches&gt;</span>
 
 router.add(<span class="hljs-string">'foo'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>});
-<span class="hljs-comment">// &gt; basis.router: add handler for route `asd3` </span>
+<span class="hljs-comment">// &gt; basis.router: add handler for route `asd3`</span>
 <span class="hljs-comment">//   Object {type: "match", path: "foo", cb: Object, route: Object, args: Array[0]}</span>
 </code></pre>
 <blockquote>
