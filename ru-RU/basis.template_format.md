@@ -216,11 +216,15 @@
 
     * для типа `enum` – если указано значение из списка (`values`), то оно будет по умолчанию, если значения нет в списке или атрибут не указан – по умолчанию будет пустая строка (класс не будет проставлен в эталон).
 
+  * from – имя существующего биндинга, источник значения для нового биндинга
+
 ```html
 <b:define name="selected" type="bool"/>
 <b:define name="state" type="enum" values="processing ready error"/>
+<b:define name="notReady" from="state" type="enum" values="processing"/>
+<b:define name="hasName" from="username" type="bool"/>
 
-<div class="item item_{selected} item_{state}"/>
+<div class="item item_{selected} item_{state} {notReady} {hasName}"/>
 ```
 
 В данном примере, если значение для `selected` равноценно `true`, то будет вставлен класс `item_selected`, иначе такого класса у элемента не будет. Для `state` будут приниматься только три значения и образовываться классы `item_processing`, `item_ready` и `item_error`; при других значениях класс добавлен не будет.
