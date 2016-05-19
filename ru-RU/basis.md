@@ -14,9 +14,9 @@
   - Хелперы для асинхронной работы с `document` (`basis.doc`)
   - `basis.json.parse`
 - Обработка конфига (на данный момент конфиг – это значение атрибута `basis-config`), результат хранится в `basis.config`
-- [Конструирование классов](ru-RU/basis.Class.md) `basis.Class`
+- [Конструирование классов](basis.Class.md) `basis.Class`
 - Модульность:
   - Пространства имен `basis.namespace`
-  - [Ресурсы](ru-RU/resources.md): `basis.resource`, `basis.require`, `basis.asset`
-- Класс [basis.Token](ru-RU/basis.Token.md)
+  - [Ресурсы](resources.md): `basis.resource`, `basis.require`, `basis.asset`
+- Класс [basis.Token](basis.Token.md)
 - Утилизатор `basis.cleaner`
