@@ -233,7 +233,7 @@ var obj = new MyClass({
 
 // метод __extend__ у классов позволяет сократить код
 var obj = new MyClass({
-  childClass: { ... } //неявно будет вызван метод __extend__ у ChildClass
+  childClass: { ... } //неявно будет вызван метод __extend__ у текущего значения, то есть у `MyClass.prototype.childClass.__extend__`.
 });
 ```
 
@@ -261,7 +261,7 @@ console.log(baz instanceof basis.Class);
 // console> true
 ```
 
-Заметьте, что базовым классом, для всех классов в basis.js, является basis.Class
+Заметьте, что базовым классом, для всех классов в basis.js, является `basis.Class`
 
 Получить доступ к классу экземпляра можно через его свойство `constructor`, а получить доступ к суперклассу класса можно через свойство `superClass_`. Свойство `superClass_` может использоваться только для отладки в `dev` режиме.
 
@@ -543,17 +543,12 @@ var Foo = Emitter.subclass({
   }
 });
 
-var foo = new Foo({
-  events: {
-    update: true
-  }
-});
+var foo = new Foo();
 
-console.log(foo);
+console.log(foo.events);
 // console> {
 //            event1: function(){ this.doStuff() },
 //            event2: function(){ this.doStuff() },
-//            update: function(){ this.doStuff() },
 //          }
 ```
 
