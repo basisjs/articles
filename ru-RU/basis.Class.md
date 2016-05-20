@@ -99,7 +99,7 @@ console.log(mix2.say());
   * isSubclassOf – метод, определяющий, является ли текущий класс потомком другого класса
     ```js
       var Foo = basis.Class();
-      var Bar = Foo.subclass({...});
+      var Bar = Foo.subclass();
 
       console.log(Bar.isSubclassOf(Foo));
       // console> true
@@ -233,7 +233,7 @@ var obj = new MyClass({
 
 // метод __extend__ у классов позволяет сократить код
 var obj = new MyClass({
-  childClass: { ... } //неявно будет вызван метод __extend__ у текущего значения, то есть у `MyClass.prototype.childClass.__extend__`.
+  childClass: { ... } //неявно будет вызван метод __extend__ у текущего значения, то есть `MyClass.prototype.childClass.__extend__`
 });
 ```
 
