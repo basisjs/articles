@@ -11,9 +11,10 @@
 Инициация события осуществляется вызовом специального метода. Такие методы принято называть с префиксом `emit_`, а функция метода создается с помощью функции `basis.event.create`. (см. Событийные методы)
 
 ```js
-var Example = basis.event.Emmiter.subclass({
-  emit_myEvent: basis.event.create('myEvent') // создание события myEvent
-});
+var Events = basis.require('basis.event'),
+  Example = Events.Emitter.subclass({
+    emit_myEvent:Events.create('myEvent') // создание события myEvent
+  });
 var foo = new Example();
 foo.emit_myEvent(); // инициация события
 ```
@@ -27,12 +28,13 @@ foo.emit_myEvent(); // инициация события
 При вызове событийного метода (инициации события) указываются параметры которые должны получить обработчики. Но обработчикам, помимо этих аргументов, первым аргументом всегда передается инициатор события `sender`. Это единственный способ получить ссылку на инициатора события, так как контекст обработчика может быть переопределен.
 
 ```js
-var Example = basis.event.Emitter.subclass({
-  emit_testEvent: basis.event.create('testEvent'),
-  emit_eventWithArgs: basis.event.create('eventWithArgs', 'a', 'b')
-});
-var foo = new Example({ name: 'foo' });
-var bar = new Example({ name: 'bar' });
+var Events = basis.require('basis.event'),
+  Example = Events.Emitter.subclass({
+    emit_testEvent: Events.create('testEvent'),
+    emit_eventWithArgs: Events.create('eventWithArgs', 'a', 'b')
+  });
+var foo = new Example({name: 'foo'});
+var bar = new Example({name: 'bar'});
 
 foo.addHandler({
   testEvent: function(){        // testEvent - название события
@@ -51,7 +53,7 @@ foo.addHandler({
   eventWithArgs: function(sender, a, b){
     // sender -> foo
     // this -> bar
-    console.log('eventWithArgs:', a, b);
+    console.log('sum event in', this.name,'context, result:', a + b);
   }
 }, bar);                        // устанавливаем в качестве контекста bar
 
@@ -100,56 +102,59 @@ foo.removeHandler(FOO_HANDLER, bar);
 Обработчик можно назначить при создании экземпляра `Emitter` (или его наследников).
 
 ```js
-var foo = new basis.event.Emitter({
-  handler: {                       // обработчик, контекстом будет сам экземпляр
-    event1: function(){ .. },
-    event2: function(){ .. }
-  }
-});
+var Events = basis.require('basis.event'),
+  foo = new Events.Emitter({
+    handler: {                       // обработчик, контекстом будет сам экземпляр
+      event1: function(){ .. },
+      event2: function(){ .. }
+    }
+  });
 ```
 
 Если нужно задать контекст для функций обработчика, отличный от создаваемого экземпляра, нужно воспользоваться следующей конструкцией.
 
 ```js
-var foo = new basis.event.Emitter({
-  handler: {
-    context: bar,
-    callbacks: {                   // обработчик
-      event1: function(){ .. },
-      event2: function(){ .. }
+var Events = basis.require('basis.event'),
+  foo = new Events.Emitter({
+    handler: {
+      context: bar,
+      callbacks: {                   // обработчик
+        event1: function(){ .. },
+        event2: function(){ .. }
+      }
     }
-  }
-});
+  });
 ```
 
 В текущей реализации не рекомендуется задавать обработчик по умолчанию для классов, производных от `Emitter` (в их прототипе). Это усложняет наследование от таких классов и может сломать поведение экземпляра, если в обработчике присутствует некоторая логика.
 
 ```js
-var ClassA = basis.event.Emitter({
-  emit_event: basis.event.create('event'),
-  eventCount: 0,
-  handler: {
-    event: function(sender){
-      this.eventCount++;
+var Events = basis.require('basis.event'),
+  ClassA = Events.Emitter({
+    emit_event: Events.create('event'),
+    eventCount: 0,
+    handler: {
+      event: function(sender){
+        this.eventCount++;
+      }
     }
-  }
-});
+  });
 
 var ClassB = ClassA.subclass({
-  handler: {  // свойство переопределено, счетчик eventCount не будет изменяться
-    ...
-  }
-});
+    handler: {  // свойство переопределено, счетчик eventCount не будет изменяться
+      ...
+    }
+  });
 
 var ClassC = ClassA.subclass({
-  handler: {
-    event: function(){
-      ClassA.prototype.handler.event.apply(this, agruments);
+    handler: {
+      event: function(){
+        ClassA.prototype.handler.event.apply(this, agruments);
+        ...
+      },
       ...
-    },
-    ...
-  }
-});
+    }
+  });
 ```
 
 В данном случае, вместо назначения `handler` будет лучше определить логику в методе `emit_event`.
@@ -157,6 +162,10 @@ var ClassC = ClassA.subclass({
 ### Событийные методы
 
 Событийные методы создаются с помощью функции `basis.event.create`, которой передается название события. Такие функции обходят список обработчиков и вызывают функции для конкретного события. Такие функции сохраняются в прототип класса или экземпляр с префиксом `emit_`, после чего идет имя события.
+
+Более того, когда происходит создание событийного метода при помощи `basis.event.create`, сам метод сохраняется в свойстве `basis.event.events.ИМЯ_СОБЫТИЯ`.
+
+Таким образом, можно инициировать любое события любого Emitter'а, просто вызвав метод `basis.event.events.ИМЯ_СОБЫТИЯ` в контексте нужного Emitter'а. Пример такого вызова будет показан ниже.
 
 Имя события может быть любым, за исключением `*`.
 
@@ -169,9 +178,10 @@ var ClassC = ClassA.subclass({
   * args - аргументы, с которыми было инициировано событие.
 
 ```js
-var emitter = new basis.event.Emitter({
-  emit_customEvent: basis.event.create('customEvent')
-});
+var Events = basis.require('basis.event'),
+  emitter = new Events.Emitter({
+    emit_customEvent: Events.create('customEvent')
+  });
 
 emitter.addHandler({
   customEvent: function(sender, arg){
@@ -204,16 +214,19 @@ var Example = basis.data.Object.subclass({
 Если нужно добавить логику добавляемому событийному методу, то можно воспользоваться слудующей техникой:
 
 ```js
-var Example = basis.event.Emitter.subclass({
-  emit_myEvent: basis.event.create('myEvent', 'arg') && function(arg){
-    // действия до обработки обработчиков
+var Events = basis.require('basis.event'),
+  Example = Events.Emitter.subclass({
+    emit_myEvent: Events.create('myEvent', 'arg') && function(arg){
+      // действия до обработки обработчиков
 
-    basis.event.events.myEvent.call(this, arg);
+      Events.events.myEvent.call(this, arg);
 
-    // действия после обработки обработчиков
-  }
-});
+      // действия после обработки обработчиков
+    }
+  });
 ```
+При таком подходе, будет зарегистрировано событие myEvent, а в свойство emit_myEvent будет записана функция, которая выполняет "кастомный" код и вызывает событийный метод, созданный при помощи `basis.event.create`.
+Обратитесь к разделу [событийные методы](#Событийные-методы) для более подробное информации.
 
 ### destroy
 
@@ -227,34 +240,35 @@ var Example = basis.event.Emitter.subclass({
 
 ```js
 // класс
-var Foo = basis.event.Emitter.subclass({
-  listen: {
-    bar: {
-      event: function(sender){
-        // sender -> foo.bar
-        // this -> foo
+var Events = basis.require('basis.event'),
+  Foo = Events.Emitter.subclass({
+    listen: {
+      bar: {
+        event: function(sender){
+          // sender -> foo.bar
+          // this -> foo
+        }
+      }
+    },
+
+   /**
+    * @type {basis.event.Emitter}
+    */
+    bar: null,
+
+    setBar: function(bar){
+      if (this.bar !== bar)
+      {
+        if (this.bar && this.listen.bar)
+          this.bar.removeHandler(this.listen.bar, this);
+
+        this.bar = bar;
+
+        if (this.bar && this.listen.bar)
+          this.bar.addHandler(this.listen.bar, this);
       }
     }
-  },
-
- /**
-  * @type {basis.event.Emitter}
-  */
-  bar: null,
-
-  setBar: function(bar){
-    if (this.bar !== bar)
-    {
-      if (this.bar && this.listen.bar)
-        this.bar.removeHandler(this.listen.bar, this);
-
-      this.bar = bar;
-
-      if (this.bar && this.listen.bar)
-        this.bar.addHandler(this.listen.bar, this);
-    }
-  }
-});
+  });
 
 // экземпляр
 var list = new basis.ui.Node({
