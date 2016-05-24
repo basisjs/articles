@@ -11,8 +11,9 @@
 Инициация события осуществляется вызовом специального метода. Такие методы принято называть с префиксом `emit_`, а функция метода создается с помощью функции `basis.event.create`. (см. Событийные методы)
 
 ```js
-var Example = basis.event.Emmiter.subclass({
-  emit_myEvent: basis.event.create('myEvent') // создание события myEvent
+var event = basis.require('basis.event');
+var Example = event.Emitter.subclass({
+  emit_myEvent: event.create('myEvent') // создание события myEvent
 });
 var foo = new Example();
 foo.emit_myEvent(); // инициация события
@@ -27,9 +28,10 @@ foo.emit_myEvent(); // инициация события
 При вызове событийного метода (инициации события) указываются параметры которые должны получить обработчики. Но обработчикам, помимо этих аргументов, первым аргументом всегда передается инициатор события `sender`. Это единственный способ получить ссылку на инициатора события, так как контекст обработчика может быть переопределен.
 
 ```js
-var Example = basis.event.Emitter.subclass({
-  emit_testEvent: basis.event.create('testEvent'),
-  emit_eventWithArgs: basis.event.create('eventWithArgs', 'a', 'b')
+var event = basis.require('basis.event');
+var Example = event.Emitter.subclass({
+  emit_testEvent: event.create('testEvent'),
+  emit_eventWithArgs: event.create('eventWithArgs', 'a', 'b')
 });
 var foo = new Example({ name: 'foo' });
 var bar = new Example({ name: 'bar' });
@@ -60,7 +62,7 @@ foo.emit_testEvent();
 // console> testEvent: event context is foo
 
 foo.emit_eventWithArgs(1, 2);
-// console> sum event in bar context, result: 3
+// console> eventWithArgs: 1 2
 ```
 
 Удаляются обработчики методом `Emitter#removeHandler`. При вызове `Emitter#removeHandler` нужно передать те же значения, что и при вызове метода `Emitter#addHandler`.
@@ -100,7 +102,8 @@ foo.removeHandler(FOO_HANDLER, bar);
 Обработчик можно назначить при создании экземпляра `Emitter` (или его наследников).
 
 ```js
-var foo = new basis.event.Emitter({
+var event = basis.require('basis.event');
+var foo = new event.Emitter({
   handler: {                       // обработчик, контекстом будет сам экземпляр
     event1: function(){ .. },
     event2: function(){ .. }
@@ -111,7 +114,8 @@ var foo = new basis.event.Emitter({
 Если нужно задать контекст для функций обработчика, отличный от создаваемого экземпляра, нужно воспользоваться следующей конструкцией.
 
 ```js
-var foo = new basis.event.Emitter({
+var event = basis.require('basis.event');
+var foo = new event.Emitter({
   handler: {
     context: bar,
     callbacks: {                   // обработчик
@@ -125,8 +129,9 @@ var foo = new basis.event.Emitter({
 В текущей реализации не рекомендуется задавать обработчик по умолчанию для классов, производных от `Emitter` (в их прототипе). Это усложняет наследование от таких классов и может сломать поведение экземпляра, если в обработчике присутствует некоторая логика.
 
 ```js
-var ClassA = basis.event.Emitter({
-  emit_event: basis.event.create('event'),
+var event = basis.require('basis.event');
+var ClassA = event.Emitter.subclass({
+  emit_event: event.create('event'),
   eventCount: 0,
   handler: {
     event: function(sender){
@@ -158,6 +163,8 @@ var ClassC = ClassA.subclass({
 
 Событийные методы создаются с помощью функции `basis.event.create`, которой передается название события. Такие функции обходят список обработчиков и вызывают функции для конкретного события. Такие функции сохраняются в прототип класса или экземпляр с префиксом `emit_`, после чего идет имя события.
 
+Кроме того, событийный метод, который возвращает `basis.event.create`, становится свойством объекта `basis.event.events`.
+
 Имя события может быть любым, за исключением `*`.
 
 Ключ `*` в обработчике используется для назначения функции, которая будет выполняться на любое событие. Такая функция получает объект описывающий событие, где:
@@ -169,8 +176,9 @@ var ClassC = ClassA.subclass({
   * args - аргументы, с которыми было инициировано событие.
 
 ```js
-var emitter = new basis.event.Emitter({
-  emit_customEvent: basis.event.create('customEvent')
+var event = basis.require('basis.event');
+var emitter = new event.Emitter({
+  emit_customEvent: event.create('customEvent')
 });
 
 emitter.addHandler({
@@ -204,16 +212,19 @@ var Example = basis.data.Object.subclass({
 Если нужно добавить логику добавляемому событийному методу, то можно воспользоваться слудующей техникой:
 
 ```js
-var Example = basis.event.Emitter.subclass({
-  emit_myEvent: basis.event.create('myEvent', 'arg') && function(arg){
+var event = basis.require('basis.event');
+var Example = event.Emitter.subclass({
+  emit_myEvent: event.create('myEvent', 'arg') && function(arg){
     // действия до обработки обработчиков
 
-    basis.event.events.myEvent.call(this, arg);
+    event.events.myEvent.call(this, arg);
 
     // действия после обработки обработчиков
   }
 });
 ```
+Таким образом, в прототип класса `Example` будет добавлен метод, который оборачивает вызов событийного метода для события `myEvent`.
+Обратитесь к разделу [событийные методы](#Событийные-методы) для более подробной информации.
 
 ### destroy
 
@@ -227,7 +238,8 @@ var Example = basis.event.Emitter.subclass({
 
 ```js
 // класс
-var Foo = basis.event.Emitter.subclass({
+var event = basis.require('basis.event');
+var Foo = event.Emitter.subclass({
   listen: {
     bar: {
       event: function(sender){
@@ -290,4 +302,4 @@ foo.update({ value: 123 });
 // console> 'update' [object basis.data.Object] { value: undefined }
 ```
 
-Так как обработчики хранятся в виде линейных списков, то не удобно просматривать полный список добавленных обработчиков. Для просмотра списка обработчиков в виде массива можно воспользоваться методом `Emitter#handler_list`. Этот метод доступен только в `dev` режиме.
+Так как обработчики хранятся в виде линейных списков, то не удобно просматривать полный список добавленных обработчиков. Для просмотра списка обработчиков в виде массива можно воспользоваться методом `Emitter#debug_handlers`. Этот метод доступен только в `dev` режиме.
