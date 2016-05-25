@@ -50,10 +50,11 @@ console.log(foo.update({ age: 30 }));
 Связывание осуществляется методом `setDelegate`. В метод передается экземпляр `basis.data.Object` или `null`. Ссылка на делегат хранится в свойстве `delegate`.
 
 ```js
-var data = basis.require('basis.data');
+var DataObject = basis.require('basis.data').Object;
+var STATE = basis.require('basis.data').STATE;
 
-var foo = new data.Object();
-var bar = new data.Object();
+var foo = new DataObject();
+var bar = new DataObject();
 
 foo.setDelegate(bar);
 
@@ -78,7 +79,7 @@ console.log(bar.data.prop);
 
 console.log(String(foo.state));
 // > 'undefined'
-bar.setState(data.STATE.PROCESSING);
+bar.setState(STATE.PROCESSING);
 console.log(String(foo.state));
 // > 'processing'
 console.log(foo.state === bar.state);
