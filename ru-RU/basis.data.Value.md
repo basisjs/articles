@@ -11,7 +11,8 @@
 > У события `change` до версии `1.0.0` была другая сигнатура: вторым параметром (перед oldValue) передавалось текущее значение объекта. Это не имело смысла, так как это значение доступно в свойстве `value` и было убрано в `1.0.0`.
 
 ```js
-var value = new basis.data.Value({
+var data = basis.require('basis.data');
+var value = new data.Value({
   value: 1,
   handler: {
     change: function(sender, oldValue){  // до 1.0.0 передавались параметры: sender, value, oldValue
@@ -22,7 +23,7 @@ var value = new basis.data.Value({
 
 value.set(2);
 // console> value changed 1 -> 2
-// console> true
+// value.set вернет true
 
 value.set(2);
 // console> false
@@ -31,7 +32,8 @@ value.set(2);
 У `Value` есть свойство `initValue`, которое хранит значение, назначенное объекту при создании. Метод `reset` меняет текущее значение на значение свойства `initValue`.
 
 ```js
-var value = new basis.data.Value({
+var data = basis.require('basis.data');
+var value = new data.Value({
   value: 1,
   handler: {
     change: function(sender, oldValue){
@@ -50,7 +52,8 @@ value.reset();
 Когда требуется произвести множество изменений, можно заблокировать объект методом `lock`. При этом значение будет изменяться, но событий выбрасываться не будет. Это нужно для того, чтобы минимизировать количество событий. Для разблокировки объекта используется метод `unlock`, при этом сравнивается текущее значение и значение, которое было до блокировки, и если они отличаются - выбрасывается событие `change`.
 
 ```js
-var value = new basis.data.Value({
+var data = basis.require('basis.data');
+var value = new data.Value({
   value: 0,
   handler: {
     change: function(sender, oldValue){
@@ -79,16 +82,13 @@ value.unlock();
 
 Часто нужно не текущее значение экземпляра `Value`, а преобразованное по некоторому правилу, с возможностью отслеживать эти изменения. Для этого используются методы `as` и `deferred`
 
-Метод `as` возвращает экземпляр `basis.Token` или `basis.DeferredToken` ([подробнее](basis.Token.md)) (в зависимости от параметров), который хранит преобразованное значение. Метод принимает два параметра:
+Метод `as` возвращает экземпляр `basis.Token` ([подробнее](basis.Token.md)), который хранит преобразованное значение. Метод принимает один параметр:
 
   * fn - преобразующая функция, результат которой задается токену;
 
-  * deferred - булево значение:
-    * false - метод вернет экземпляр `basis.Token`,
-    * true - метод вернет экземпляр `basis.DeferredToken`.
-
 ```js
-var example = new basis.data.Value({
+var data = basis.require('basis.data');
+var example = new data.Value({
   value: 1
 });
 var doubleValue = example.as(function(value){
@@ -108,29 +108,33 @@ console.log(doubleValue.value);
 // console> 4
 ```
 
-Для одних и тех же значений параметров `fn` и `deferred` возвращается один и тот же токен.
+До версии 1.4, метод `as` принимал второй параметр
+  * deferred - булево значение:
+    * false - метод вернет экземпляр `basis.Token`,
+    * true - метод вернет экземпляр `basis.DeferredToken`.
+
+Начиная с версии 1.4, для того, чтобы получить `basis.DeferredToken`, необходимо вызвать метод `deferred` полученного токена([подробнее](basis.Token.md)):
+```js
+var doubleValue = example.as(function(value){ .. }).deferred();
+```
+
+Для одних и тех же значений параметра `fn` возвращается один и тот же токен.
 
 ```js
-var example = new basis.data.Value({
+var data = basis.require('basis.data');
+var example = new data.Value({
   value: 1
 });
 
 var double = function(){ .. };
 console.log(example.as(double) === example.as(double));
-console.log(example.as(double, true) === example.as(double, true));
-```
-
-Метод `deferred` работает так же, как и метод `as`, но принимает только один аргумент `fn` и всегда возвращает экземпляр `basis.DeferredToken`.
-
-```js
-console.log(example.deferred(double) === example.as(double, true));
 ```
 
 ## Фабрика токенов
 
 Иногда нужно получать преобразование значение экземпляра `Value`, которое также зависит от другого экземпляра `basis.event.Emitter`. Для этого создается фабрика токенов - функция, которая возвращает `basis.Token` для заданого экземпляра `basis.event.Emitter`. Такая функция создается методом `compute`. Этот метод принимает два аргумента:
 
-  * events - список названий событий, который может быть опущен; список представляется в виде массива строк (названий событий) или строкой, где названия событий разделены пробелом;
+  * events - список названий событий(не обязательный); список представляется в виде массива строк (названий событий) или строкой, где названия событий разделены пробелом;
 
   * fn - функция вычисления значения; такая фунция получает два аргумента:
 
@@ -141,14 +145,15 @@ console.log(example.deferred(double) === example.as(double, true));
 Значение для токена вычисляется при его создании и перевычисляется, когда меняется значение у экземпляра `Value` или выбрасывается событие, которое указано в списке событий. В случае разрушения `Value` или объекта разрушается и токен.
 
 ```js
-var example = new basis.data.Value({
+var data = basis.require('basis.data');
+var example = new data.Value({
   value: 2
 });
 var sum = example.compute('update', function(object, value){
   return object.data.property * value;
 });
 
-var object = new basis.data.Object({
+var object = new data.Object({
   data: {
     property: 3
   }
@@ -170,8 +175,10 @@ console.log(token.value);
 Фабрики удобно использовать в биндингах `basis.ui.Node`, когда нужно получать значение, которое зависит от некоторого внешнего значения.
 
 ```js
-var commission = new basis.data.Value({ value: 10 });
-var list = new basis.ui.Node({
+var ui = basis.require('basis.ui');
+var data = basis.require('basis.data');
+var commission = new data.Value({ value: 10 });
+var list = new ui.Node({
   container: document.body,
   childClass: {
     template: '<div>amount: {amount}, commission: {commission}</div>',
