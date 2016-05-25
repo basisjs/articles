@@ -48,15 +48,15 @@
 Если значение является неправильным (такого кода нет в `basis.data.STATE`), то будет выброшено исключение `Wrong state value`.
 
 ```js
-var data = basis.require('basis.data');
-var AbstractData = data.AbstractData;
+var STATE = basis.require('basis.data').STATE;
+var AbstractData = basis.require('basis.data').AbstractData;
 
 var obj = new AbstractData({
-  state: data.STATE.READY          // можно задавать состояние при создании
+  state: STATE.READY               // можно задавать состояние при создании
                                    // экземпляра, по умолчанию будет UNDEFINED
 });
 
-obj.setState(data.STATE.ERROR, 'Some error text');
+obj.setState(STATE.ERROR, 'Some error text');
 console.log(String(obj.state));    // 'error'
 console.log(obj.state.data);       // 'Some error text'
 ```
@@ -311,9 +311,9 @@ var example = new AbstractData({
 
 ```js
 var net = basis.require('basis.net.ajax');
-var data = basis.require('basis.data');
 var Node = basis.require('basis.ui').Node;
-var DataObject = data.Object;
+var DataObject = basis.require('basis.data').Object;
+var STATE = basis.require('basis.data').STATE;
 
 var example = new DataObject({
   syncAction: function(){
@@ -322,11 +322,11 @@ var example = new DataObject({
       // success
       function(data){
         self.update(data);
-        self.setState(data.STATE.READY);
+        self.setState(STATE.READY);
       },
       // failure
       function(error){
-        self.setState(data.STATE.ERROR, error);
+        self.setState(STATE.ERROR, error);
       }
     );
   }
