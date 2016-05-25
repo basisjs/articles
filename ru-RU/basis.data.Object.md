@@ -51,6 +51,7 @@ console.log(foo.update({ age: 30 }));
 
 ```js
 var DataObject = basis.require('basis.data').Object;
+var STATE = basis.require('basis.data').STATE;
 
 var foo = new DataObject();
 var bar = new DataObject();
@@ -78,7 +79,7 @@ console.log(bar.data.prop);
 
 console.log(String(foo.state));
 // > 'undefined'
-bar.setState(basis.data.STATE.PROCESSING);
+bar.setState(STATE.PROCESSING);
 console.log(String(foo.state));
 // > 'processing'
 console.log(foo.state === bar.state);
@@ -125,22 +126,22 @@ var myDialog = new Window({
   }
 });
 
-console.log(myDialog.closed);
-// > true
+console.log(myDialog.visible);
+// > false
 
 var proxy = new DataObject();
 myDialog.setDelegate(proxy);
-console.log(myDialog.closed);
-// > true
+console.log(myDialog.visible);
+// > false
 
 var target = new DataObject({ target: true });
 proxy.setDelegate(target);
-console.log(myDialog.closed);
-// > false
+console.log(myDialog.visible);
+// > true
 
 target.destroy();
-console.log(myDialog.closed);
-// > true
+console.log(myDialog.visible);
+// > false
 ```
 
 Сделать экземпляр целевым можно только при его создании. Для этого в качестве значения свойства `target` задается значение `true`.
