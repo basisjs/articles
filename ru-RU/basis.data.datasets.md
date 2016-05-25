@@ -136,13 +136,13 @@ dataset.set([object3, object2]);
 // console> { inserted: [object2], deleted: [object1] }
 ```
 
-Процесс синхронизации (метод `sync()`) подразумевает сравнение текущего набора с переданным списком элементом. В случае удаления элемента из набора, он разрушается (вызывается его метод `destroy`).
+Процесс синхронизации (метод `setAndDestroyRemoved()`) подразумевает сравнение текущего набора с переданным списком элементом. В случае удаления элемента из набора, он разрушается (вызывается его метод `destroy`).
 
 Синхронизация работает следующим образом. Пусть текущий список элементов это `A`, а переданный список – `B`. Если элемент присутствует в обоих списках, то никаких действий с ним не производится. Если элемент есть только в `A`, но отсутствует в `B`, то элемент разрушается (вызывается его метод `destroy`). Если элемента нет в списке `A`, но он есть в `B`, то он добавляется в набор.
 
 ```js
-var DataObject = require('basis.data').Object;
-var Dataset = require('basis.data').Dataset;
+var DataObject = basis.require('basis.data').Object;
+var Dataset = basis.require('basаis.data').Dataset;
 
 var DemoObject = DataObject.subclass({
   destroy: function(){
@@ -156,9 +156,9 @@ var dataset = new Dataset();
 
 dataset.set([object1, object2]);
 
-dataset.sync([object2, object3]);
+dataset.setAndDestroyRemoved([object2, object3]);
 // console> object1 destroy
-// console> { inserted: [object3], deleted: [object1] }
+// console> [object3]
 ```
 
 Можно задать состав набора при его создании, используя свойство `items`. В дальнейшем это свойство никак не используется и равно `null`.
