@@ -142,7 +142,7 @@ dataset.set([object3, object2]);
 
 ```js
 var DataObject = basis.require('basis.data').Object;
-var Dataset = basis.require('basаis.data').Dataset;
+var Dataset = basis.require('basis.data').Dataset;
 
 var DemoObject = DataObject.subclass({
   destroy: function(){
