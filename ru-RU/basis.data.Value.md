@@ -24,7 +24,7 @@ var value = new Value({
 
 value.set(2);
 // console> value changed 1 -> 2
-// value.set вернет true
+// value.set(2) вернет true
 
 value.set(2);
 // console> false
