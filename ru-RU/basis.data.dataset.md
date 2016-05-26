@@ -53,28 +53,20 @@ var DataObject = basis.require('basis.data').Object;
 var Dataset = basis.require('basis.data').Dataset;
 var Merge = basis.require('basis.data.dataset').Merge;
 
-var object1 = new DataObject({ data: { name: 'object 1' } });
-var object2 = new DataObject({ data: { name: 'object 2' } });
-var object3 = new DataObject({ data: { name: 'object 3' } });
+var foo = new DataObject({ data: { name: 'foo' } });
+var bar = new DataObject({ data: { name: 'bar' } });
+var baz = new DataObject({ data: { name: 'baz' } });
 
-var source1 = new Dataset({ items: [object1, object2] });
-var source2 = new Dataset({ items: [object1, object3] });
+var source1 = new Dataset({ items: [foo, bar] });
+var source2 = new Dataset({ items: [foo, baz] });
 
 var merge = new Merge({
   sources: [source1, source2],
-  rule: Merge.MORE_THAN_ONE_INCLUDE,
-  handler: {
-    itemsChanged: function(sender, delta){
-      console.log('dataset is updated', delta);
-    }
-  }
+  rule: Merge.INTERSECTION
 });
 
-// > dataset is updated { inserted: [object1, object2] }
-// > dataset is updated { deleted: [object2] }
-
 console.log(merge.getValues('data.name'));
-// > ['object 1']
+// > ['foo']
 ```
 
 ## Subtract
@@ -118,43 +110,29 @@ console.log(subtract.getValues('data.value'));
 
 Инкапсулирует работу с источником данных. Чаще всего не используется напрямую, а, как будет показано ниже, является предком для других автоматических наборов.
 
-Источник данных задается в свойстве `source`, при создании экземпляра (или методом `setSource` экземпляра).
-
-Для источника данных применяется [resolveDataset](basis.data.datasets.md#resolvedataset), для получения ссылок на набор.
+Источник данных задается в свойстве `source`, при создании набора, или методом `setSource` после.
+Перед установкой значения свойству source, к новому значению применяется [resolveDataset](basis.data.datasets.md#resolvedataset), для получения ссылок на набор.
 
 При смене источника данных инициируется событие `sourceChanged`, а в качестве аргументов передаются: `sender` (экземпляр `SourceDataset`) и ссылка на старый источник данных.
-
-Кроме этого, при смене источника данных, инициируется два (первое, только при наличии старого источника данных) события `itemsChanged`. В качестве аргументов (помимо `sender`), в первое событие передается список удаленных элементов (элементы старого источника), а во второе событие - список добавленных элементов (элементы нового источника).
-
-Так же, `SourceDataset` поддерживает `listen` и, при изменении состава элементов в установленном источнике данных, инициируется событие `itemsChanged`:
 
 ```javascript
 var DataObject = basis.require('basis.data').Object;
 var Dataset = basis.require('basis.data').Dataset;
 var SourceDataset = basis.require('basis.data.dataset').SourceDataset;
-var MyDataset = SourceDataset.subclass({
-  listen: {
-    source: {
-      itemsChanged: function(sender, delta){
-        console.log(delta);
-      }
-    }
-  }
-});
+var MyDataset = SourceDataset.subclass();
 
-var object1 = new DataObject();
-var object2 = new DataObject();
+var foo = new DataObject();
+var bar = new DataObject();
 
-var datasource = new Dataset({ items: [object1, object2] });
-var datasource2 = new Dataset({ items: [object2] });
+var datasource = new Dataset({ items: [foo, bar] });
+var datasource2 = new Dataset({ items: [bar] });
 
 var myDataset = new MyDataset({ source: datasource });
-// > { inserted: [object1, object2] }
 
 myDataset.setSource(datasource2);
-// > { deleted: [object1, object2] }
-// > { inserted: [object2] }
 ```
+
+Так же, `SourceDataset` поддерживает [listen](basis.event.md#listen) для `source`
 
 ## Slice
 
@@ -195,14 +173,14 @@ console.log(top3max.getValues('data.value'));
 
 ## MapFilter
 
-Класс-наследник `SourceDataset`, задача которого - проецировать элементы источника данных в другой набор данных.
-Одновременно с этим, выполняется фильтрация данных по заданному правилу.
+Класс-наследник `SourceDataset`, задача которого - конвертировать/проецировать элементы источника данных в другие объекты.
+Одновременно с этим, может выполняться фильтрация данных по заданному правилу.
 
-За проецирование данных отвечается функция, которая задается в свойстве `map`, при создании экземпляра (или методом `setMap` экземпляра).
-Эта функция будет вызвана для каждого элемента источника данных.
-В качестве аргумента, функция принимает элемент источника данных, и должна вернуть `basis.data.Object`, который и будет являться проекцией элемента, для которого в данный момент вызвана функция.
+За проецирование данных отвечается функция, которая задается в свойстве `map`, при создании набора, или методом `setMap` после.
+Эта функция вызывается для каждого элемента источника и должна вернуть `basis.data.Object`, который и будет являться проекцией элемента.
+В качестве приближенного аналога, можно обратиться к описанию метода [Array#map](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/map).
 
-Если функция проекции вернет что-то отличное от `basis.data.Object`, то элемент, для которого вызвана функция не войдет в итоговый набор данных.
+Если функция проекции вернет что-то отличное от `basis.data.Object`, то элемент, для которого вызвана функция не войдет в итоговый набор данных потому, что наборы могут содержать только экземпляры `basis.data.Object` или его потомков.
 Таким образом, функция проекции может так же выполнять неявную фильтрацию данных:
 
 ```js
@@ -218,9 +196,9 @@ var mapFilter = new MapFilter({ source: datasource });
 console.log(mapFilter.getValues('data.value'));
 // > [1, 2, 3, 4]
 
-var delta = mapFilter.setMap(function(object){
-  if (object.data.value > 2)
-    return new DataObject({ data: { value: object.data.value * 2 } });
+var delta = mapFilter.setMap(function(item){
+  if (item.data.value > 2)
+    return new DataObject({ data: { value: item.data.value * 2 } });
 });
 
 console.log(delta);
@@ -234,16 +212,16 @@ console.log(mapFilter.getValues('data.value'));
 // > [6, 8, 100]
 ```
 
-Как видно из примера - при установке функции проекции, проекция всех элементов источника выполняется заново, а при изменении значения одного из элементов источника, происходит перепроверка только измененного элемента.
+Как видно из примера - при установке функции проекции (методом `setMap`), проекция всех элементов источника выполняется заново, а при изменении значения одного из элементов источника, происходит перепроверка только измененного элемента.
 
-Список событий, когда должно перевычисляться правило задается только при создании набора свойством `ruleEvents`.
+Список событий, когда должно перевычисляться правило задается только при создании набора, свойством `ruleEvents`.
 Значением этого свойства может быть строка (список событий разделенных пробелом) или массив строк. По умолчанию у элементов источника слушается событие `update`.
 
 Если проекция или фильтрация приводит к изменению итогового набора данных, то инициируется событие `itemsChanged`.
 
 Как было сказано выше - функция проекции может выполнять неявную фильтрацию данных, но изначально не предназначена для этого.
 
-Для фильтрации данных, используется функция, которая задается свойством `filter`, при создании экземпляра (или методом `setFilter` экземпляра).
+Для фильтрации данных, используется функция, которая задается свойством `filter`, при создании набора, или методом `setFilter` после.
 
 Эта функция будет вызвана для каждого элемента из тех, что вернула функция проекции.
 В качестве аргемента, функция принимает элемент-проекцию, и должна вернуть `false` если элемент прошел проверку, и `true` если не прошел:
@@ -261,22 +239,23 @@ var mapFilter = new MapFilter({ source: datasource });
 console.log(mapFilter.getValues('data.value'));
 // > [1, 2, 3, 4]
 
-mapFilter.setMap(function(object){
-	return new DataObject({ data: { value: object.data.value * 2 } });
+mapFilter.setMap(function(item){
+  return new DataObject({ data: { value: item.data.value * 2 } });
 });
 console.log(mapFilter.getValues('data.value'));
 // > [2, 4, 6, 8]
 
-mapFilter.setFilter(function(object){ return object.data.value > 6 });
+mapFilter.setFilter(function(item){
+  return item.data.value > 6;
+});
 
 console.log(mapFilter.getValues('data.value'));
 // > [2, 4, 6]
 ```
 
-Как видите, функция фильтрации имеет обратную логику: `false` - проверка пройдена, `true` - проверка не пройдена.
+Функция фильтрации имеет обратную логику по отношению к [Array#filter](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/filter).
 
-Для упрощения кода функции фильтрации, `MapFilter` обладает еще одной интересной возможностью.
-Через свойство `rule`, при создании экземпляра (или методом `setRule` экземпляра), можно указать getter для быстрого доступа к необходимому свойству объекта:
+Через свойство `rule`, при создании набора, или методом `setRule` после, можно указать getter для быстрого доступа к необходимому свойству объекта:
 
 ```js
 var DataObject = basis.require('basis.data').Object;
@@ -291,13 +270,15 @@ var mapFilter = new MapFilter({ source: datasource, rule: 'data.value' });
 console.log(mapFilter.getValues('data.value'));
 // > [1, 2, 3, 4]
 
-mapFilter.setMap(function(object){
-	return new DataObject({ data: { value: object.data.value * 2 } });
+mapFilter.setMap(function(item){
+  return new DataObject({ data: { value: item.data.value * 2 } });
 });
 console.log(mapFilter.getValues('data.value'));
 // > [2, 4, 6, 8]
 
-mapFilter.setFilter(function(object){ return this.rule(object) > 6 });
+mapFilter.setFilter(function(item){
+  return this.rule(item) > 6;
+});
 
 console.log(mapFilter.getValues('data.value'));
 // > [2, 4, 6]
@@ -305,7 +286,7 @@ console.log(mapFilter.getValues('data.value'));
 
 По умолчанию, `rule` представлен в виде getter'а, который вседа возвращает `true`.
 
-При установке нового правла, инициируется событие `ruleChanged`.
+При установке нового правила инициируется событие `ruleChanged`.
 
 ## Filter
 
@@ -315,13 +296,13 @@ console.log(mapFilter.getValues('data.value'));
 
 По сути, `Filter` отличается от `MapFilter` только переопределением функции фильтрации. У `Filter` она, по умолчанию, выглядит так:
 ```js
-basis.data.dataset.Filter.prototype.filter = function(object){
-  return !this.rule(object);
+basis.data.dataset.Filter.prototype.filter = function(item){
+  return !this.rule(item);
 }
 ```
 
-То есть всё, что вам нужно - это определить правило (`rule`), результат которого будет приведен к `boolean` и на основании этого, элемент либо будет включен в состав набора, либо нет.
-Напомним, что, по умолчанию, `rule` представлен каке getter, который всегда возвращает `true`.
+Как видно из примера, результат правила (`rule`) будет приведен к `boolean` и обработан функцией фильтрации.
+Напомним, что, по умолчанию, `rule` представлен как getter, который всегда возвращает `true`.
 
 ```js
 var DataObject = basis.require('basis.data').Object;
