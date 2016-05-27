@@ -210,7 +210,91 @@ console.log(splitByCountry.getSubset('Unknown'));
 
 ## Cloud
 
-[TODO]
+`Cloud`, как и `Split`, позволяет разделить элементы на подмножества по результату выполнения функции-правила (свойство `rule`).
+Разница заключается в том, как интерпретируется результат применения `rule`.
+Ко всем элементам источника данных будет применено правило (`rule`).
+Задача правила - сформировать группу элементов связанных с элементом источника данных определенным образом.
+Для каждого уникального элемента этих групп, `Cloud` сформирует [KeyObjectMap](basis.data.map.md).
+Ключами карты будут являться уникальные элементы групп, сформированных правилом (`rule`).
+Значениями карты будут являться [наборы](basis.data.datasets.md), содержащие элементы сформированных группы.
+
+Другими словами: экземпляр `Cloud` содержит карту соответвий исходных элементов и наборов, которые были сформированы из этих элементов.
+
+Рассмотрим пример в котором найдем такие делители от 2 до 10, которые будут нацело делить числа от 2 до 10:
+
+```js
+var Dataset = basis.require('basis.data').Dataset;
+var Cloud = basis.require('basis.data.dataset').Cloud;
+
+//массив со значениями 2..10
+var numbers = basis.array.create(10, function(idx){
+  return idx + 1;
+}).slice(1);
+var data = basis.require('basis.data').wrap(numbers, true);
+
+var datasource = new Dataset({ items: data });
+var cloud = new Cloud({
+  source: datasource,
+  rule: function(item) {
+    //для каждого числа возвращаем список делителей, которые будут делить это число нацело
+    return numbers.filter(function(n) {
+      return !(item.data.value % n);
+    });
+  }
+});
+
+cloud.getValues(function(item){
+  console.log(item.ruleValue, item.getValues('data.value'))
+});
+// > 2 [2, 4, 6, 8, 10]
+// > 3 [3, 6, 9]
+// > 4 [4, 8]
+// > 5 [5, 10]
+// > 6 [6]
+// > 7 [7]
+// > 8 [8]
+// > 9 [9]
+// > 10 [10]
+```
+
+Обратите внимание, что у каждого значения карты соответвия есть свойство ruleValue, в котором содержится значение, для которого было сформировано это значение (набор).
+
+Обратившись к методу `getSubset` и передав ему интересующее значение, можно получить набор, который был сформирован для данного значения:
+
+```js
+var Dataset = basis.require('basis.data').Dataset;
+var Cloud = basis.require('basis.data.dataset').Cloud;
+
+//массив со значениями 2..10
+var numbers = basis.array.create(10, function(idx){
+  return idx + 1;
+}).slice(1);
+var data = basis.require('basis.data').wrap(numbers, true);
+
+var datasource = new Dataset({ items: data });
+var cloud = new Cloud({
+  source: datasource,
+  //для каждого числа возвращаем список делителей, которые будут делить это число нацело
+  rule: function(item) {
+    return numbers.filter(function(n) {
+      return !(item.data.value % n);
+    });
+  }
+});
+
+var subset = cloud.getSubset(4);
+console.log(subset.ruleValue, subset.getValues('data.value'));
+// > 4 [4, 8]
+```
+
+Список событий, когда должно перевычисляться правило, задается только при создании набора свойством `ruleEvents`.
+Значением этого свойства может быть строка (список событий разделенных пробелом) или массив строк. По умолчанию у элементов источника слушается событие `update`.
+
+Вы так же можете подписаться на изменение содержимого набора конкретного значения:
+
+```js
+cloud.getSubset(4).addHandler({ itemsChanged: function(){ .. } });
+```
 
 ## Extract
 
