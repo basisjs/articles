@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="4" data-basepath="." data-revision="1455641242266">
+    <div class="book" data-github="basisjs/articles" data-level="4" data-basepath="." data-revision="1464472063967">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -957,7 +957,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_11">
+                    <section class="normal" id="section-gitbook_10">
                     
                         <h1 id="basisdata">basis.data</h1>
 <p>Базовым модулем описания данных является <code>basis.data</code>, в нем описываются основные базовые классы данных.</p>
@@ -1003,12 +1003,12 @@
 <li>state - новое значение состояния;</li>
 <li>data - данные состояния (опционально).</li>
 </ul>
-<p>Если значения является неправильным (такого кода нет в <code>basis.data.STATE</code>), то будет выброшено исключение <code>Wrong state value</code>.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> AbstractData = basis.require(<span class="hljs-string">'basis.data'</span>).AbstractData;
-<span class="hljs-keyword">var</span> STATE = basis.require(<span class="hljs-string">'basis.data'</span>).STATE;
+<p>Если значение является неправильным (такого кода нет в <code>basis.data.STATE</code>), то будет выброшено исключение <code>Wrong state value</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> STATE = basis.require(<span class="hljs-string">'basis.data'</span>).STATE;
+<span class="hljs-keyword">var</span> AbstractData = basis.require(<span class="hljs-string">'basis.data'</span>).AbstractData;
 
 <span class="hljs-keyword">var</span> obj = <span class="hljs-keyword">new</span> AbstractData({
-  state: basis.data.STATE.READY    <span class="hljs-comment">// можно задавать состояние при создании</span>
+  state: STATE.READY               <span class="hljs-comment">// можно задавать состояние при создании</span>
                                    <span class="hljs-comment">// экземпляра, по умолчанию будет UNDEFINED</span>
 });
 
@@ -1077,7 +1077,6 @@ subscriber.setActive(<span class="hljs-literal">false</span>);
 </code></pre>
 <p>Если объект-потребитель данных активен (свойство <code>active</code> равно <code>true</code>, в примере это <code>subscriber</code>), то для объектов, которые хранятся в свойствах, перечисленных в <code>subscribeTo</code>, счетчик заинтересованных объектов (свойство <code>subscriberCount</code>) увеличивается на единицу. Когда объект перестает быть активным (<code>active</code> -&gt; <code>false</code>), счетчики объектов, на которые он был подписан, уменьшаются на единицу. То же происходит, когда потребитель (<code>subscriber</code>) перестает ссылаться на источник (в примере это <code>source</code>).</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
-<span class="hljs-keyword">var</span> SUBSCRIPTION = basis.require(<span class="hljs-string">'basis.data'</span>).SUBSCRIPTION;
 
 <span class="hljs-keyword">var</span> Data = DataObject.subclass({
   emit_subscribersChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(delta)</span>{</span>
@@ -1089,7 +1088,7 @@ subscriber.setActive(<span class="hljs-literal">false</span>);
 <span class="hljs-keyword">var</span> b = <span class="hljs-keyword">new</span> Data({ name: <span class="hljs-string">'source B'</span> });
 
 <span class="hljs-keyword">var</span> subscriber = <span class="hljs-keyword">new</span> DataObject({
-  <span class="hljs-comment">// по умочанию subscribeTo: SUBSCRIPTION.DELEGATE + SUBSCRIPTION.TARGET</span>
+  <span class="hljs-comment">// по умочанию subscribeTo: basis.data.SUBSCRIPTION.DELEGATE + basis.data.SUBSCRIPTION.TARGET</span>
   active: <span class="hljs-literal">true</span>,
   delegate: a  <span class="hljs-comment">// subscriber ссылается на `a` свойством `delegate`</span>
 });
@@ -1199,7 +1198,7 @@ basis.data.SUBSCRIPTION.add(
 <li><p>syncAction – метод, описывающий действия синхронизации. По умолчанию не задан (свойство равно <code>null</code>). Если свойство не задано, механизм синхронизации не будет активирован.</p>
 </li>
 </ul>
-<p>Чтобы активировать механизм синхронизации, необходимо задать свойство <code>syncAction</code>. Оно может быть задано при создании экземпляра либо после создания методом <code>setSyncAction</code>. Метод <code>setSyncAction</code> принимает единственный параметр – новую функцию синхронизации. Если методу передано значение, которое не является функцией, <code>syncAction</code> приравнивается <code>null</code>, а сам механизм синхронизации деактивируется.</p>
+<p>Чтобы активировать механизм синхронизации, необходимо задать свойство <code>syncAction</code>. Оно может быть задано при создании экземпляра либо после создания, методом <code>setSyncAction</code>. Метод <code>setSyncAction</code> принимает единственный параметр – новую функцию синхронизации. Если методу передано значение, которое не является функцией, <code>syncAction</code> приравнивается <code>null</code>, а сам механизм синхронизации деактивируется.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> AbstractData = basis.require(<span class="hljs-string">'basis.data'</span>).AbstractData;
 
 <span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> AbstractData({
@@ -1234,14 +1233,15 @@ AbstractData.prototype.isSyncRequired = <span class="hljs-function"><span class=
 <span class="hljs-comment">// console&gt; sync requested</span>
 </code></pre>
 <p>Обычно в <code>syncAction</code> выполняется запрос к серверу для получения данных, а синхронизация инициируется при привязке объекта данных к активному представлению:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> net = basis.require(<span class="hljs-string">'basis.net.ajax'</span>);
+<span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
 <span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
 <span class="hljs-keyword">var</span> STATE = basis.require(<span class="hljs-string">'basis.data'</span>).STATE;
 
-<span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>({
+<span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> DataObject({
   syncAction: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
-    basis.net.request(<span class="hljs-string">'/api/whatever'</span>,
+    net.request(<span class="hljs-string">'/api/whatever'</span>,
       <span class="hljs-comment">// success</span>
       <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span>{</span>
         self.update(data);
@@ -1249,7 +1249,7 @@ AbstractData.prototype.isSyncRequired = <span class="hljs-function"><span class=
       },
       <span class="hljs-comment">// failure</span>
       <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error)</span>{</span>
-        self.setState(basis.data.STATE.ERROR, error);
+        self.setState(STATE.ERROR, error);
       }
     );
   }
@@ -1261,11 +1261,12 @@ AbstractData.prototype.isSyncRequired = <span class="hljs-function"><span class=
 });
 </code></pre>
 <p>Для упрощения работы с запросами и сменой состояний используется модуль <code>basis.net.action</code>. Предыдущий пример может быть переписан следущим образом:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> action = basis.require(<span class="hljs-string">'basis.net.action'</span>);
+<span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
 <span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
 
-<span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>({
-  syncAction: basis.net.action.create({
+<span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> DataObject({
+  syncAction: action.create({
     url: <span class="hljs-string">'/api/whatever'</span>,
     success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span>{</span>
       <span class="hljs-keyword">this</span>.update(data);
@@ -1279,10 +1280,11 @@ AbstractData.prototype.isSyncRequired = <span class="hljs-function"><span class=
 });
 </code></pre>
 <p>Более того, сами представления, точнее экземпляры <code>basis.dom.wrapper.Node</code>, могут получать данные без использования других объектов. Это подходит для простых случаев, когда данные не переиспользуются (но все же рекомендуется получать данные от сервера в объектах данных, а не в представлении) и предыдущий пример может выглядеть так:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> action = basis.require(<span class="hljs-string">'basis.net.action'</span>);
+<span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
 
 <span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> Node({
-  syncAction: basis.net.action.create({
+  syncAction: action.create({
     url: <span class="hljs-string">'/api/whatever'</span>,
     success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span>{</span>
       <span class="hljs-keyword">this</span>.update(data);

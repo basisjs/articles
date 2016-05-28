@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="3" data-basepath="." data-revision="1455641242266">
+    <div class="book" data-github="basisjs/articles" data-level="3" data-basepath="." data-revision="1464472063967">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -965,8 +965,9 @@
 <h2 id="emitter">Emitter</h2>
 <p>Класс <code>basis.event.Emitter</code> (<a href="http://basisjs.com/docs#basis.event.Emitter" target="_blank">docs</a>) является предком для большинства классов <code>basisjs</code>.</p>
 <p>Инициация события осуществляется вызовом специального метода. Такие методы принято называть с префиксом <code>emit_</code>, а функция метода создается с помощью функции <code>basis.event.create</code>. (см. Событийные методы)</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> Example = basis.event.Emmiter.subclass({
-  emit_myEvent: basis.event.create(<span class="hljs-string">'myEvent'</span>) <span class="hljs-comment">// создание события myEvent</span>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> event = basis.require(<span class="hljs-string">'basis.event'</span>);
+<span class="hljs-keyword">var</span> Example = event.Emitter.subclass({
+  emit_myEvent: event.create(<span class="hljs-string">'myEvent'</span>) <span class="hljs-comment">// создание события myEvent</span>
 });
 <span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> Example();
 foo.emit_myEvent(); <span class="hljs-comment">// инициация события</span>
@@ -975,9 +976,10 @@ foo.emit_myEvent(); <span class="hljs-comment">// инициация событ�
 <p>Для того чтобы совершать некоторые действия при возникновении события, объекту добавляются обработчики событий. Обработчик - это <code>plain object</code>, где ключ - название события, а значение - функция, которая должна быть вызвана, когда это событие наступит. Обработчики добавляются методом <code>Emitter#addHandler</code>, при этом также можно указать контекст выполнения для функций обработчика. Если контекст не задан, то контекстом будет объект, чей метод <code>Emitter#addHandler</code> был вызван.</p>
 <p>Повторный вызов <code>Emitter#addHandler</code> с теми же самыми аргументами приведет к выводу предупреждения в консоли, так как это, скорее всего, ошибка. Количество добавляемых экземпляру обработчиков не ограничивается.</p>
 <p>При вызове событийного метода (инициации события) указываются параметры которые должны получить обработчики. Но обработчикам, помимо этих аргументов, первым аргументом всегда передается инициатор события <code>sender</code>. Это единственный способ получить ссылку на инициатора события, так как контекст обработчика может быть переопределен.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> Example = basis.event.Emitter.subclass({
-  emit_testEvent: basis.event.create(<span class="hljs-string">'testEvent'</span>),
-  emit_eventWithArgs: basis.event.create(<span class="hljs-string">'eventWithArgs'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>)
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> event = basis.require(<span class="hljs-string">'basis.event'</span>);
+<span class="hljs-keyword">var</span> Example = event.Emitter.subclass({
+  emit_testEvent: event.create(<span class="hljs-string">'testEvent'</span>),
+  emit_eventWithArgs: event.create(<span class="hljs-string">'eventWithArgs'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>)
 });
 <span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> Example({ name: <span class="hljs-string">'foo'</span> });
 <span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">new</span> Example({ name: <span class="hljs-string">'bar'</span> });
@@ -1008,7 +1010,7 @@ foo.emit_testEvent();
 <span class="hljs-comment">// console&gt; testEvent: event context is foo</span>
 
 foo.emit_eventWithArgs(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
-<span class="hljs-comment">// console&gt; sum event in bar context, result: 3</span>
+<span class="hljs-comment">// console&gt; eventWithArgs: 1 2</span>
 </code></pre>
 <p>Удаляются обработчики методом <code>Emitter#removeHandler</code>. При вызове <code>Emitter#removeHandler</code> нужно передать те же значения, что и при вызове метода <code>Emitter#addHandler</code>.</p>
 <pre><code class="lang-js"><span class="hljs-comment">// НЕПРАВИЛЬНО</span>
@@ -1040,7 +1042,8 @@ foo.removeHandler(FOO_HANDLER, bar);
 <p>Порядок выполнения добавленных обработчиков может быть произвольным, программная логика не должна от него зависеть. Прекратить выполнение обработчиков события нельзя. Обработчики не должны влиять друг на друга, т.е. не должны знать друг о друге.</p>
 <h3 id="--">Обработчик по умолчанию</h3>
 <p>Обработчик можно назначить при создании экземпляра <code>Emitter</code> (или его наследников).</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> basis.event.Emitter({
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> event = basis.require(<span class="hljs-string">'basis.event'</span>);
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> event.Emitter({
   handler: {                       <span class="hljs-comment">// обработчик, контекстом будет сам экземпляр</span>
     event1: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span> .. },
     event2: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span> .. }
@@ -1048,7 +1051,8 @@ foo.removeHandler(FOO_HANDLER, bar);
 });
 </code></pre>
 <p>Если нужно задать контекст для функций обработчика, отличный от создаваемого экземпляра, нужно воспользоваться следующей конструкцией.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> basis.event.Emitter({
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> event = basis.require(<span class="hljs-string">'basis.event'</span>);
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> event.Emitter({
   handler: {
     context: bar,
     callbacks: {                   <span class="hljs-comment">// обработчик</span>
@@ -1059,8 +1063,9 @@ foo.removeHandler(FOO_HANDLER, bar);
 });
 </code></pre>
 <p>В текущей реализации не рекомендуется задавать обработчик по умолчанию для классов, производных от <code>Emitter</code> (в их прототипе). Это усложняет наследование от таких классов и может сломать поведение экземпляра, если в обработчике присутствует некоторая логика.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> ClassA = basis.event.Emitter({
-  emit_event: basis.event.create(<span class="hljs-string">'event'</span>),
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> event = basis.require(<span class="hljs-string">'basis.event'</span>);
+<span class="hljs-keyword">var</span> ClassA = event.Emitter.subclass({
+  emit_event: event.create(<span class="hljs-string">'event'</span>),
   eventCount: <span class="hljs-number">0</span>,
   handler: {
     event: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sender)</span>{</span>
@@ -1088,6 +1093,7 @@ foo.removeHandler(FOO_HANDLER, bar);
 <p>В данном случае, вместо назначения <code>handler</code> будет лучше определить логику в методе <code>emit_event</code>.</p>
 <h3 id="-">Событийные методы</h3>
 <p>Событийные методы создаются с помощью функции <code>basis.event.create</code>, которой передается название события. Такие функции обходят список обработчиков и вызывают функции для конкретного события. Такие функции сохраняются в прототип класса или экземпляр с префиксом <code>emit_</code>, после чего идет имя события.</p>
+<p>Кроме того, событийный метод, который возвращает <code>basis.event.create</code>, становится свойством объекта <code>basis.event.events</code>.</p>
 <p>Имя события может быть любым, за исключением <code>*</code>.</p>
 <p>Ключ <code>*</code> в обработчике используется для назначения функции, которая будет выполняться на любое событие. Такая функция получает объект описывающий событие, где:</p>
 <ul>
@@ -1098,8 +1104,9 @@ foo.removeHandler(FOO_HANDLER, bar);
 <li><p>args - аргументы, с которыми было инициировано событие.</p>
 </li>
 </ul>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> emitter = <span class="hljs-keyword">new</span> basis.event.Emitter({
-  emit_customEvent: basis.event.create(<span class="hljs-string">'customEvent'</span>)
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> event = basis.require(<span class="hljs-string">'basis.event'</span>);
+<span class="hljs-keyword">var</span> emitter = <span class="hljs-keyword">new</span> event.Emitter({
+  emit_customEvent: event.create(<span class="hljs-string">'customEvent'</span>)
 });
 
 emitter.addHandler({
@@ -1127,23 +1134,27 @@ emitter.emit_customEvent(<span class="hljs-string">'test'</span>);
 });
 </code></pre>
 <p>Если нужно добавить логику добавляемому событийному методу, то можно воспользоваться слудующей техникой:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> Example = basis.event.Emitter.subclass({
-  emit_myEvent: basis.event.create(<span class="hljs-string">'myEvent'</span>, <span class="hljs-string">'arg'</span>) &amp;&amp; <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(arg)</span>{</span>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> event = basis.require(<span class="hljs-string">'basis.event'</span>);
+<span class="hljs-keyword">var</span> Example = event.Emitter.subclass({
+  emit_myEvent: event.create(<span class="hljs-string">'myEvent'</span>, <span class="hljs-string">'arg'</span>) &amp;&amp; <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(arg)</span>{</span>
     <span class="hljs-comment">// действия до обработки обработчиков</span>
 
-    basis.event.events.myEvent.call(<span class="hljs-keyword">this</span>, arg);
+    event.events.myEvent.call(<span class="hljs-keyword">this</span>, arg);
 
     <span class="hljs-comment">// действия после обработки обработчиков</span>
   }
 });
 </code></pre>
+<p>Таким образом, в прототип класса <code>Example</code> будет добавлен метод, который оборачивает вызов событийного метода для события <code>myEvent</code>.
+Обратитесь к разделу <a href="#Событийные-методы">событийные методы</a> для более подробной информации.</p>
 <h3 id="destroy">destroy</h3>
 <p><code>Emitter</code> определяет единственное событие <code>destroy</code>, которое выбрасывается при разрушении экземпляра (вызов метода <code>destroy</code>).</p>
 <p>При переопределении <code>destroy</code> метода, рекомендуется вызвать переопределенный метод как можно раньше, чтобы событие <code>destroy</code> было выброшено и объекты, ссылающиеся на разрушаемый объект, смогли успешно обработать ситуацию (убрать ссылки).</p>
 <h3 id="listen">listen</h3>
 <p>Класс <code>Emitter</code> определяет расширяемое свойство (<code>basis.Class.nestedExtendProperty</code>), для хранения обработчиков на вложенные объекты (экземпляры <code>Emitter</code> или его наследников). Сам <code>Emitter</code> не использует это свойство, однако его широко используют классы унаследованные от него.</p>
 <pre><code class="lang-js"><span class="hljs-comment">// класс</span>
-<span class="hljs-keyword">var</span> Foo = basis.event.Emitter.subclass({
+<span class="hljs-keyword">var</span> event = basis.require(<span class="hljs-string">'basis.event'</span>);
+<span class="hljs-keyword">var</span> Foo = event.Emitter.subclass({
   listen: {
     bar: {
       event: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sender)</span>{</span>
@@ -1203,7 +1214,7 @@ emitter.emit_customEvent(<span class="hljs-string">'test'</span>);
 foo.update({ value: <span class="hljs-number">123</span> });
 <span class="hljs-comment">// console&gt; 'update' [object basis.data.Object] { value: undefined }</span>
 </code></pre>
-<p>Так как обработчики хранятся в виде линейных списков, то не удобно просматривать полный список добавленных обработчиков. Для просмотра списка обработчиков в виде массива можно воспользоваться методом <code>Emitter#handler_list</code>. Этот метод доступен только в <code>dev</code> режиме.</p>
+<p>Так как обработчики хранятся в виде линейных списков, то не удобно просматривать полный список добавленных обработчиков. Для просмотра списка обработчиков в виде массива можно воспользоваться методом <code>Emitter#debug_handlers</code>. Этот метод доступен только в <code>dev</code> режиме.</p>
 
                     
                     </section>

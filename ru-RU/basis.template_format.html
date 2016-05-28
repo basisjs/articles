@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="8.1" data-basepath="." data-revision="1455641242266">
+    <div class="book" data-github="basisjs/articles" data-level="8.1" data-basepath="." data-revision="1464472063967">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -957,7 +957,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_31">
+                    <section class="normal" id="section-gitbook_30">
                     
                         <h1 id="-">Формат шаблонов</h1>
 <p>Шаблоны описываются в формате <code>HTML</code>, но имеет несколько правил:</p>
@@ -1135,11 +1135,15 @@
 </li>
 </ul>
 </li>
+<li><p>from – имя существующего биндинга, источник значения для нового биндинга</p>
+</li>
 </ul>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:define</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"selected"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"bool"</span>/&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">b:define</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"state"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"enum"</span> <span class="hljs-attribute">values</span>=<span class="hljs-value">"processing ready error"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">b:define</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"notReady"</span> <span class="hljs-attribute">from</span>=<span class="hljs-value">"state"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"enum"</span> <span class="hljs-attribute">values</span>=<span class="hljs-value">"processing"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">b:define</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"hasName"</span> <span class="hljs-attribute">from</span>=<span class="hljs-value">"username"</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"bool"</span>/&gt;</span>
 
-<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"item item_{selected} item_{state}"</span>/&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"item item_{selected} item_{state} {notReady} {hasName}"</span>/&gt;</span>
 </code></pre>
 <p>В данном примере, если значение для <code>selected</code> равноценно <code>true</code>, то будет вставлен класс <code>item_selected</code>, иначе такого класса у элемента не будет. Для <code>state</code> будут приниматься только три значения и образовываться классы <code>item_processing</code>, <code>item_ready</code> и <code>item_error</code>; при других значениях класс добавлен не будет.</p>
 <p>Указание <code>default</code> позволяет оптимизировать создание шаблона. Если известно, что некоторый биндинг при создании чаще всего имеет определенное значение, можно изначально проставить класс с этим значением и избежать операции вставки этого класса при создании экземпляра шаблона. Например, практически все экземпляры <code>basis.ui.Node</code> создаются с <code>selected</code> == <code>false</code> и <code>unselected</code> == <code>true</code>. Если в шаблоне используются оба значения, то выгоднее описать шаблон так:</p>

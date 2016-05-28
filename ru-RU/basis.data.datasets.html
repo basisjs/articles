@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="4.3" data-basepath="." data-revision="1455641242266">
+    <div class="book" data-github="basisjs/articles" data-level="4.3" data-basepath="." data-revision="1464472063967">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -1070,10 +1070,10 @@ dataset.set([object1, object3]);
 dataset.set([object3, object2]);
 <span class="hljs-comment">// console&gt; { inserted: [object2], deleted: [object1] }</span>
 </code></pre>
-<p>Процесс синхронизации (метод <code>sync()</code>) подразумевает сравнение текущего набора с переданным списком элементом. В случае удаления элемента из набора, он разрушается (вызывается его метод <code>destroy</code>).</p>
+<p>Процесс синхронизации (метод <code>setAndDestroyRemoved()</code>) подразумевает сравнение текущего набора с переданным списком элементом. В случае удаления элемента из набора, он разрушается (вызывается его метод <code>destroy</code>).</p>
 <p>Синхронизация работает следующим образом. Пусть текущий список элементов это <code>A</code>, а переданный список – <code>B</code>. Если элемент присутствует в обоих списках, то никаких действий с ним не производится. Если элемент есть только в <code>A</code>, но отсутствует в <code>B</code>, то элемент разрушается (вызывается его метод <code>destroy</code>). Если элемента нет в списке <code>A</code>, но он есть в <code>B</code>, то он добавляется в набор.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.data'</span>).Object;
-<span class="hljs-keyword">var</span> Dataset = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.data'</span>).Dataset;
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+<span class="hljs-keyword">var</span> Dataset = basis.require(<span class="hljs-string">'basis.data'</span>).Dataset;
 
 <span class="hljs-keyword">var</span> DemoObject = DataObject.subclass({
   destroy: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
@@ -1087,9 +1087,9 @@ dataset.set([object3, object2]);
 
 dataset.set([object1, object2]);
 
-dataset.sync([object2, object3]);
+dataset.setAndDestroyRemoved([object2, object3]);
 <span class="hljs-comment">// console&gt; object1 destroy</span>
-<span class="hljs-comment">// console&gt; { inserted: [object3], deleted: [object1] }</span>
+<span class="hljs-comment">// console&gt; [object3]</span>
 </code></pre>
 <p>Можно задать состав набора при его создании, используя свойство <code>items</code>. В дальнейшем это свойство никак не используется и равно <code>null</code>.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> Dataset = <span class="hljs-built_in">require</span>(<span class="hljs-string">'basis.data'</span>).Dataset;

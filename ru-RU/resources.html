@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="2.3" data-basepath="." data-revision="1455641242266">
+    <div class="book" data-github="basisjs/articles" data-level="2.3" data-basepath="." data-revision="1464472063967">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -957,7 +957,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_41">
+                    <section class="normal" id="section-gitbook_40">
                     
                         <h1 id="">Модульность</h1>
 <h2 id="basisresource">basis.resource</h2>
@@ -976,7 +976,7 @@ console.log(someText.fetch());  <span class="hljs-comment">// эквивален
 <p>Ресурсы обеспечивают возможность раннего связывания и поздней инициализации. Пример:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
 <span class="hljs-keyword">var</span> example = basis.resource(<span class="hljs-string">'./path/to/template.tmpl'</span>);
-<span class="hljs-keyword">var</span> MyControl = Node.subclass({
+<span class="hljs-keyword">var</span> MyView = Node.subclass({
   template: example
 });
 
@@ -1174,7 +1174,7 @@ example.myExtension();
 </code></pre>
 <p>Патчи применимы для контролируемого переопределения или дополнения существующих модулей. Например, если есть необходимость дополнить функциональность стандартного модуля. Или если есть баг в модуле, можно воспользоваться <code>basis.patch</code> для горячего исправления, пока он не появится в официальной версии.</p>
 <p>Несмотря на то, что патч может быть применен сразу к уже разрешенному ресурсу, стоит стараться добавлять патчи до разрешения ресурса, к которому он применяется. Это позволит избежать проблем с кодом, который может полагаться на патч.</p>
-<p>Важной особенностью <code>basis.patch</code> является тот факт, что подобное объявление не влияет на информацию о ресурсах. Другими словами, не приводит к разрешению ресурса или регистрации имени файла. Также функции, добавленные <code>basis.patch</code>, гарантировано выполняются перед функциями, добавленными методом <code>ready</code>, и, таким образом, последние получают уже пропатченное значение.</p>
+<p>Важной особенностью <code>basis.patch</code> является тот факт, что подобное объявление не влияет на информацию о ресурсах. Другими словами, не приводит к разрешению ресурса или регистрации имени файла. Так же, функции, добавленные при помощи <code>basis.patch</code>, гарантировано выполняются перед функциями, добавленными методом <code>ready</code>, и, таким образом, последние получают уже пропатченное значение.</p>
 <p>Несмотря на возможности, предоставляемые <code>basis.patch</code>, стоит прибегать к этой функциональности только в случае крайней необходимости.</p>
 <h2 id="basisassetpath">basis.asset(path)</h2>
 <p>Ресурсы описывают контент, который является частью программы. Но существуют ситуации, когда контент должен остаться отдельным файлом. Например, изображения или JavaScript для Web Worker&#39;ов.</p>
@@ -1336,7 +1336,7 @@ basis.resource.extensions[<span class="hljs-string">'.coffee'</span>] = <span cl
 
 exports.process = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(content, file, baseURI, console)</span>{</span>
   console.log(<span class="hljs-string">'Compile '</span> + file.relpath + <span class="hljs-string">' to JavaScript'</span>);
-  file.filename = file.filename.replace(<span class="hljs-regexp">/.coffee$/i</span>, <span class="hljs-string">'.js'</span>);
+  file.filename = file.filename.replace(<span class="hljs-regexp">/\.coffee$/i</span>, <span class="hljs-string">'.js'</span>);
   <span class="hljs-keyword">return</span> CoffeeScript.compile(content);
 }
 </code></pre>

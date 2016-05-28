@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="2.2" data-basepath="." data-revision="1455641242266">
+    <div class="book" data-github="basisjs/articles" data-level="2.2" data-basepath="." data-revision="1464472063967">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -1055,7 +1055,7 @@ console.log(mix2.say());
 <li>__extend__ – метод авторасширения, создает новый класс-наследник от текущего класса на основании переданного параметра (см &quot;<a href="#Авторасширение">Авторасширение</a>&quot;);</li>
 <li><p>isSubclassOf – метод, определяющий, является ли текущий класс потомком другого класса</p>
 <pre><code class="lang-js">  <span class="hljs-keyword">var</span> Foo = basis.Class();
-  <span class="hljs-keyword">var</span> Bar = Foo.subclass(Foo);
+  <span class="hljs-keyword">var</span> Bar = Foo.subclass();
 
   console.log(Bar.isSubclassOf(Foo));
   <span class="hljs-comment">// console&gt; true</span>
@@ -1076,7 +1076,7 @@ console.log(mix2.say());
     <span class="hljs-keyword">this</span>.name = name;
   },
   say: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-    <span class="hljs-keyword">return</span> <span class="hljs-string">'My name is {0}.'</span>.format(<span class="hljs-keyword">this</span>.name);
+    <span class="hljs-keyword">return</span> basis.string.format(<span class="hljs-string">'My name is {0}.'</span>, <span class="hljs-keyword">this</span>.name);
   }
 });
 
@@ -1088,7 +1088,7 @@ console.log(mix2.say());
   },
   say: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
     <span class="hljs-keyword">return</span> Human.prototype.say.call(<span class="hljs-keyword">this</span>) +
-      <span class="hljs-string">' I\'m {0} level.'</span>.format(<span class="hljs-keyword">this</span>.level);
+      basis.string.format(<span class="hljs-string">' I\'m {0} level.'</span>, <span class="hljs-keyword">this</span>.level);
   }
 });
 
@@ -1105,13 +1105,15 @@ console.log(mario <span class="hljs-keyword">instanceof</span> Gamer);
 <span class="hljs-comment">// console&gt; true</span>
 </code></pre>
 <h2 id="--">Жизненный цикл экземпляра</h2>
-<p>При создании экземпляра класса вызывается конструктор - метод <code>init</code>. В этом методе свойствам присваиваются начальные значения и выполняются действия, необходимые при создании объекта данного класса.</p>
+<p>При создании экземпляра класса вызывается конструктор - метод <code>init</code>. В этом методе свойствам присваиваются начальные значения и выполняются действия, необходимые при создании объекта данного класса.
+В качестве аргументов, в этот метод передаются значения, указанные при создании экземпляра.</p>
 <p>В <code>basisjs</code> все объекты разрушаемы. Когда экземпляр становится не нужен, вызывается его деструктор — метод <code>destroy</code>. В этом методе описываются действия, которые необходимы при разрушении объекта: обычно это разрушение вспомогательных объектов и обнуление ссылок на другие объекты.</p>
 <p>Все экземпляры, создаваемые классами <code>basis.js</code>, имеют поле basisObjectId, содержащее уникальное значение. С помощью такого поля становится возможным создавать карты объектов и использовать их для быстрого поиска.</p>
 <h2 id="--">Паттерны создания экземпляров</h2>
 <p>В базовом варианте классы, созданные с помощью <code>basis.Create</code>, практически ничем не отличаются от классов, созданных стандартным путем (с помощью обычной функции), кроме вызова метода <code>init</code> при создании экземпляра.</p>
 <p>Но часто бывает, что у класса может быть много свойств, которые необходимо задавать при создании экземпляра. В этом случае удобно использовать паттерн авторасширения экземпляра при создании. Его суть состоит в том, что при создании экземпляра передается единственный параметр — объект <code>config</code>. Перед тем как будет вызван метод <code>init</code>, все свойства из <code>config</code> копируются в экземпляр.</p>
 <p>Свойство класса <code>extendConstructor_</code> определяет, какой паттерн будет использоваться при создании экземпляров. Оно задается при создании класса. Если свойство не задано, его значение наследуется от родительского класса. Если оно <code>true</code>, то используется паттерн авторасширения экземпляра.</p>
+<p>Другими словами: если <code>extendConstructor_</code> равно <code>true</code>, то расширять будущий экземпляр новыми свойствами можно прямо при его создании, передав объект-расширение в качестве аргумента.</p>
 <pre><code class="lang-js"><span class="hljs-comment">// простой класс, похожий на те, что создаются обычными средствами</span>
 <span class="hljs-keyword">var</span> SimpleClass = basis.Class(<span class="hljs-literal">null</span>, {
   name: <span class="hljs-string">'no name'</span>,
@@ -1127,7 +1129,7 @@ console.log(mario <span class="hljs-keyword">instanceof</span> Gamer);
   name: <span class="hljs-string">'no name'</span>
 });
 <span class="hljs-keyword">var</span> autoExtend = <span class="hljs-keyword">new</span> AutoExtendClass({
-  name: <span class="hljs-string">'Jhon'</span>, <span class="hljs-comment">// переопределяем свойство описание в классе</span>
+  name: <span class="hljs-string">'Jhon'</span>, <span class="hljs-comment">// переопределяем свойство описанное в классе</span>
   newProperty: <span class="hljs-string">'something'</span> <span class="hljs-comment">// новое свойство</span>
 });
 
@@ -1150,11 +1152,11 @@ console.log(autoExtend.newProperty);
 }
 </code></pre>
 <p>Такая же логика используется при создании экземпляра класса с авторасширением (свойство класса <code>extendConstructor_</code> == <code>true</code>). Этот подход позволяет сокращать количество кода при наследовании классов и создании экземпляров, делая код более простым и читаемым.</p>
-<p>Например, все классы созданные <code>basis.Create</code>, имеют метод <code>__extend__</code>. Если ему передать в качестве аргумента объект или функцию (но не &quot;класс&quot;), то будет создан и возвращен новый класс, унаследованный от того, у которого был вызван метод. В противном случае метод вернет то значение, что ему передали.</p>
+<p>Например, все классы созданные при помощи <code>basis.Class</code>, имеют метод <code>__extend__</code>. Если ему передать в качестве аргумента объект или функцию (но не &quot;класс&quot;), то будет создан и возвращен новый класс, унаследованный от того, у которого был вызван метод. В противном случае метод вернет то значение, что ему передали.</p>
 <pre><code class="lang-js"><span class="hljs-comment">// создание класса, у которого в качестве</span>
 <span class="hljs-comment">// свойства childClass другой класс</span>
 <span class="hljs-keyword">var</span> MyClass = SomeClass.subclass({
-  childClass: ChildClass
+  childClass: ChildClass <span class="hljs-comment">//уже имеет метод __extend__</span>
 });
 
 <span class="hljs-comment">// явное создание класса</span>
@@ -1164,7 +1166,7 @@ console.log(autoExtend.newProperty);
 
 <span class="hljs-comment">// метод __extend__ у классов позволяет сократить код</span>
 <span class="hljs-keyword">var</span> obj = <span class="hljs-keyword">new</span> MyClass({
-  childClass: { ... }
+  childClass: { ... } <span class="hljs-comment">//неявно будет вызван метод __extend__ у текущего значения, то есть `MyClass.prototype.childClass.__extend__`</span>
 });
 </code></pre>
 <h2 id="---">Проверка принадлежности экземпляров классу</h2>
@@ -1184,9 +1186,10 @@ console.log(baz <span class="hljs-keyword">instanceof</span> Bar);
 console.log(baz <span class="hljs-keyword">instanceof</span> Foo);
 <span class="hljs-comment">// console&gt; true</span>
 
-console.log(baz <span class="hljs-keyword">instanceof</span> basis.Class.BaseClass);
+console.log(baz <span class="hljs-keyword">instanceof</span> basis.Class);
 <span class="hljs-comment">// console&gt; true</span>
 </code></pre>
+<p>Заметьте, что базовым классом, для всех классов в basis.js, является <code>basis.Class</code></p>
 <p>Получить доступ к классу экземпляра можно через его свойство <code>constructor</code>, а получить доступ к суперклассу класса можно через свойство <code>superClass_</code>. Свойство <code>superClass_</code> может использоваться только для отладки в <code>dev</code> режиме.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> Foo = basis.Class(<span class="hljs-literal">null</span>, { className: <span class="hljs-string">'Foo'</span> });
 <span class="hljs-keyword">var</span> Bar = basis.Class(Foo);
@@ -1211,7 +1214,7 @@ console.log(bar.constructor.superClass_ === Foo);
 <span class="hljs-comment">// console&gt; basis.Class</span>
 </code></pre>
 <h2 id="----">Преобразование класс &lt;-&gt; экземпляр</h2>
-<p>Экземпляры авторасширяющих классов (у которых <code>extendConstructor_</code> == <code>true</code>) создаются подобно созданию нового класса с одним расширяющим объектом. По этой причине преобразование кода создания экземпляра в класс или класса в создание экземпляра является несложной задачей. Исключением являются свойства <code>className</code> и <code>extendConstructor_</code>, которые для экземпляра являются обычными полями, а в случае создания класса копируются в класс, а не в прототип.</p>
+<p>Экземпляры авторасширяющихся классов (у которых <code>extendConstructor_</code> == <code>true</code>) создаются подобно созданию нового класса с одним расширяющим объектом. По этой причине преобразование кода создания экземпляра в класс или класса в создание экземпляра является несложной задачей. Исключением являются свойства <code>className</code> и <code>extendConstructor_</code>, которые для экземпляра являются обычными полями, а в случае создания класса копируются в класс, а не в прототип.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
 
 <span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> Node({
@@ -1324,6 +1327,7 @@ console.log(bar.constructor.superClass_ === Foo);
   })
 });
 <span class="hljs-keyword">var</span> Baz = Foo.subclass({
+  extendConstructor_: <span class="hljs-literal">true</span>,
   data: {
     bar: <span class="hljs-string">'baz'</span>,
     baz: <span class="hljs-number">123</span>
@@ -1351,13 +1355,14 @@ console.log(baz.data);
 <h3 id="customextendproperty">customExtendProperty</h3>
 <p>То же, что и extensibleProperty, но позволяет определить собственную функцию дополнения. <code>extensibleProperty</code> эквивалентно <code>customExtendProperty({}, basis.object.extend)</code>.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> Foo = basis.Class(<span class="hljs-literal">null</span>, {
-  data: basis.Class.extensibleProperty({  <span class="hljs-comment">// ключи по умолчанию</span>
+  data: basis.Class.customExtendProperty({  <span class="hljs-comment">// ключи по умолчанию</span>
     foo: <span class="hljs-number">1</span>,
     bar: <span class="hljs-number">2</span>
   }, basis.object.complete)  <span class="hljs-comment">// Если использовать complete вместо extend, свойство data</span>
                              <span class="hljs-comment">// будет расширяться только новыми ключами</span>
 });
 <span class="hljs-keyword">var</span> Baz = Foo.subclass({
+  extendConstructor_: <span class="hljs-literal">true</span>,
   data: {
     bar: <span class="hljs-string">'baz'</span>,              <span class="hljs-comment">// это свойство будет проигнорировано</span>
     baz: <span class="hljs-number">3</span>
@@ -1388,6 +1393,7 @@ console.log(baz.data);
   data: basis.Class.nestedExtendProperty({})
 });
 <span class="hljs-keyword">var</span> Baz = Foo.subclass({
+  extendConstructor_: <span class="hljs-literal">true</span>,
   data: {
     prop: {
       a: <span class="hljs-number">1</span>,
@@ -1430,18 +1436,12 @@ console.log(baz.data);
   }
 });
 
-<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> Foo({
-  events: {
-    event1: <span class="hljs-literal">false</span>,
-    update: <span class="hljs-literal">true</span>
-  }
-});
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> Foo();
 
 console.log(foo.events);
 <span class="hljs-comment">// console&gt; {</span>
-<span class="hljs-comment">//            event1: null,</span>
+<span class="hljs-comment">//            event1: function(){ this.doStuff() },</span>
 <span class="hljs-comment">//            event2: function(){ this.doStuff() },</span>
-<span class="hljs-comment">//            update: function(){ this.doStuff() },</span>
 <span class="hljs-comment">//          }</span>
 </code></pre>
 <h2 id="">Хелперы</h2>

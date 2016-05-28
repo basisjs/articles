@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="4.2" data-basepath="." data-revision="1455641242266">
+    <div class="book" data-github="basisjs/articles" data-level="4.2" data-basepath="." data-revision="1464472063967">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -1000,6 +1000,7 @@ console.log(foo.update({ age: <span class="hljs-number">30</span> }));
 <p>Несколько экземпляров <code>basis.data.Object</code> могут разделять данные и состояние. Этот процесс называется делегированием. При делегировании связанные экземпляры указывают на один тот же объект данных (их свойства <code>data</code> тождественно равны), и имеют одно и то же состояние (их свойства <code>state</code> тождественно равны).</p>
 <p>Связывание осуществляется методом <code>setDelegate</code>. В метод передается экземпляр <code>basis.data.Object</code> или <code>null</code>. Ссылка на делегат хранится в свойстве <code>delegate</code>.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+<span class="hljs-keyword">var</span> STATE = basis.require(<span class="hljs-string">'basis.data'</span>).STATE;
 
 <span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> DataObject();
 <span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">new</span> DataObject();
@@ -1027,7 +1028,7 @@ console.log(bar.data.prop);
 
 console.log(<span class="hljs-built_in">String</span>(foo.state));
 <span class="hljs-comment">// &gt; 'undefined'</span>
-bar.setState(basis.data.STATE.PROCESSING);
+bar.setState(STATE.PROCESSING);
 console.log(<span class="hljs-built_in">String</span>(foo.state));
 <span class="hljs-comment">// &gt; 'processing'</span>
 console.log(foo.state === bar.state);
@@ -1060,22 +1061,22 @@ console.log(foo.state === bar.state);
   }
 });
 
-console.log(myDialog.closed);
-<span class="hljs-comment">// &gt; true</span>
+console.log(myDialog.visible);
+<span class="hljs-comment">// &gt; false</span>
 
 <span class="hljs-keyword">var</span> proxy = <span class="hljs-keyword">new</span> DataObject();
 myDialog.setDelegate(proxy);
-console.log(myDialog.closed);
-<span class="hljs-comment">// &gt; true</span>
+console.log(myDialog.visible);
+<span class="hljs-comment">// &gt; false</span>
 
 <span class="hljs-keyword">var</span> target = <span class="hljs-keyword">new</span> DataObject({ target: <span class="hljs-literal">true</span> });
 proxy.setDelegate(target);
-console.log(myDialog.closed);
-<span class="hljs-comment">// &gt; false</span>
+console.log(myDialog.visible);
+<span class="hljs-comment">// &gt; true</span>
 
 target.destroy();
-console.log(myDialog.closed);
-<span class="hljs-comment">// &gt; true</span>
+console.log(myDialog.visible);
+<span class="hljs-comment">// &gt; false</span>
 </code></pre>
 <p>Сделать экземпляр целевым можно только при его создании. Для этого в качестве значения свойства <code>target</code> задается значение <code>true</code>.</p>
 <p>Типизированные объекты модуля <code>basis.entity</code> являются целевыми по умолчанию.</p>

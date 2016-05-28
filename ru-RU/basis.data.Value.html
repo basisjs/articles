@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="4.1" data-basepath="." data-revision="1455641242266">
+    <div class="book" data-github="basisjs/articles" data-level="4.1" data-basepath="." data-revision="1464472063967">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -967,7 +967,9 @@
 <blockquote>
 <p>У события <code>change</code> до версии <code>1.0.0</code> была другая сигнатура: вторым параметром (перед oldValue) передавалось текущее значение объекта. Это не имело смысла, так как это значение доступно в свойстве <code>value</code> и было убрано в <code>1.0.0</code>.</p>
 </blockquote>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> value = <span class="hljs-keyword">new</span> basis.data.Value({
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Value = basis.require(<span class="hljs-string">'basis.data'</span>).Value;
+
+<span class="hljs-keyword">var</span> value = <span class="hljs-keyword">new</span> Value({
   value: <span class="hljs-number">1</span>,
   handler: {
     change: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sender, oldValue)</span>{</span>  <span class="hljs-comment">// до 1.0.0 передавались параметры: sender, value, oldValue</span>
@@ -978,13 +980,15 @@
 
 value.set(<span class="hljs-number">2</span>);
 <span class="hljs-comment">// console&gt; value changed 1 -&gt; 2</span>
-<span class="hljs-comment">// console&gt; true</span>
+<span class="hljs-comment">// value.set(2) вернет true</span>
 
 value.set(<span class="hljs-number">2</span>);
 <span class="hljs-comment">// console&gt; false</span>
 </code></pre>
 <p>У <code>Value</code> есть свойство <code>initValue</code>, которое хранит значение, назначенное объекту при создании. Метод <code>reset</code> меняет текущее значение на значение свойства <code>initValue</code>.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> value = <span class="hljs-keyword">new</span> basis.data.Value({
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Value = basis.require(<span class="hljs-string">'basis.data'</span>).Value;
+
+<span class="hljs-keyword">var</span> value = <span class="hljs-keyword">new</span> Value({
   value: <span class="hljs-number">1</span>,
   handler: {
     change: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sender, oldValue)</span>{</span>
@@ -1000,7 +1004,9 @@ value.reset();
 <span class="hljs-comment">// console&gt; value changed 2 -&gt; 1</span>
 </code></pre>
 <p>Когда требуется произвести множество изменений, можно заблокировать объект методом <code>lock</code>. При этом значение будет изменяться, но событий выбрасываться не будет. Это нужно для того, чтобы минимизировать количество событий. Для разблокировки объекта используется метод <code>unlock</code>, при этом сравнивается текущее значение и значение, которое было до блокировки, и если они отличаются - выбрасывается событие <code>change</code>.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> value = <span class="hljs-keyword">new</span> basis.data.Value({
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Value = basis.require(<span class="hljs-string">'basis.data'</span>).Value;
+
+<span class="hljs-keyword">var</span> value = <span class="hljs-keyword">new</span> Value({
   value: <span class="hljs-number">0</span>,
   handler: {
     change: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sender, oldValue)</span>{</span>
@@ -1026,18 +1032,13 @@ value.unlock();
 </code></pre>
 <h2 id="-">Преобразование значений</h2>
 <p>Часто нужно не текущее значение экземпляра <code>Value</code>, а преобразованное по некоторому правилу, с возможностью отслеживать эти изменения. Для этого используются методы <code>as</code> и <code>deferred</code></p>
-<p>Метод <code>as</code> возвращает экземпляр <code>basis.Token</code> или <code>basis.DeferredToken</code> (<a href="basis.Token.html">подробнее</a>) (в зависимости от параметров), который хранит преобразованное значение. Метод принимает два параметра:</p>
+<p>Метод <code>as</code> возвращает экземпляр <code>basis.Token</code> (<a href="basis.Token.html">подробнее</a>), который хранит преобразованное значение. Метод принимает один параметр:</p>
 <ul>
-<li><p>fn - преобразующая функция, результат которой задается токену;</p>
-</li>
-<li><p>deferred - булево значение:</p>
-<ul>
-<li>false - метод вернет экземпляр <code>basis.Token</code>,</li>
-<li>true - метод вернет экземпляр <code>basis.DeferredToken</code>.</li>
+<li>fn - преобразующая функция, результат которой задается токену;</li>
 </ul>
-</li>
-</ul>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> basis.data.Value({
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Value = basis.require(<span class="hljs-string">'basis.data'</span>).Value;
+
+<span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> Value({
   value: <span class="hljs-number">1</span>
 });
 <span class="hljs-keyword">var</span> doubleValue = example.as(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span>{</span>
@@ -1056,22 +1057,23 @@ console.log(example.value);
 console.log(doubleValue.value);
 <span class="hljs-comment">// console&gt; 4</span>
 </code></pre>
-<p>Для одних и тех же значений параметров <code>fn</code> и <code>deferred</code> возвращается один и тот же токен.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> basis.data.Value({
+<p>Для того, чтобы получить <code>basis.DeferredToken</code>, необходимо вызвать метод <code>deferred</code> полученного токена (<a href="basis.Token.html">подробнее</a>):</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> doubleValue = example.as(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span>{</span> .. }).deferred();
+</code></pre>
+<p>Для одних и тех же значений параметра <code>fn</code> возвращается один и тот же токен.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Value = basis.require(<span class="hljs-string">'basis.data'</span>).Value;
+
+<span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> Value({
   value: <span class="hljs-number">1</span>
 });
 
 <span class="hljs-keyword">var</span> double = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span> .. };
 console.log(example.as(double) === example.as(double));
-console.log(example.as(double, <span class="hljs-literal">true</span>) === example.as(double, <span class="hljs-literal">true</span>));
-</code></pre>
-<p>Метод <code>deferred</code> работает так же, как и метод <code>as</code>, но принимает только один аргумент <code>fn</code> и всегда возвращает экземпляр <code>basis.DeferredToken</code>.</p>
-<pre><code class="lang-js">console.log(example.deferred(double) === example.as(double, <span class="hljs-literal">true</span>));
 </code></pre>
 <h2 id="-">Фабрика токенов</h2>
 <p>Иногда нужно получать преобразование значение экземпляра <code>Value</code>, которое также зависит от другого экземпляра <code>basis.event.Emitter</code>. Для этого создается фабрика токенов - функция, которая возвращает <code>basis.Token</code> для заданого экземпляра <code>basis.event.Emitter</code>. Такая функция создается методом <code>compute</code>. Этот метод принимает два аргумента:</p>
 <ul>
-<li><p>events - список названий событий, который может быть опущен; список представляется в виде массива строк (названий событий) или строкой, где названия событий разделены пробелом;</p>
+<li><p>events - список названий событий (необязательный); список представляется в виде массива строк (названий событий) или строкой, где названия событий разделены пробелом;</p>
 </li>
 <li><p>fn - функция вычисления значения; такая фунция получает два аргумента:</p>
 <ul>
@@ -1083,14 +1085,17 @@ console.log(example.as(double, <span class="hljs-literal">true</span>) === examp
 </li>
 </ul>
 <p>Значение для токена вычисляется при его создании и перевычисляется, когда меняется значение у экземпляра <code>Value</code> или выбрасывается событие, которое указано в списке событий. В случае разрушения <code>Value</code> или объекта разрушается и токен.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> basis.data.Value({
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Value = basis.require(<span class="hljs-string">'basis.data'</span>).Value;
+<span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+
+<span class="hljs-keyword">var</span> example = <span class="hljs-keyword">new</span> Value({
   value: <span class="hljs-number">2</span>
 });
 <span class="hljs-keyword">var</span> sum = example.compute(<span class="hljs-string">'update'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(object, value)</span>{</span>
   <span class="hljs-keyword">return</span> object.data.property * value;
 });
 
-<span class="hljs-keyword">var</span> object = <span class="hljs-keyword">new</span> basis.data.Object({
+<span class="hljs-keyword">var</span> object = <span class="hljs-keyword">new</span> DataObject({
   data: {
     property: <span class="hljs-number">3</span>
   }
@@ -1109,8 +1114,10 @@ console.log(token.value);
 <span class="hljs-comment">// console&gt; 100</span>
 </code></pre>
 <p>Фабрики удобно использовать в биндингах <code>basis.ui.Node</code>, когда нужно получать значение, которое зависит от некоторого внешнего значения.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> commission = <span class="hljs-keyword">new</span> basis.data.Value({ value: <span class="hljs-number">10</span> });
-<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> basis.ui.Node({
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Node = basis.require(<span class="hljs-string">'basis.ui'</span>).Node;
+<span class="hljs-keyword">var</span> Value = basis.require(<span class="hljs-string">'basis.data'</span>).Value;
+<span class="hljs-keyword">var</span> commission = <span class="hljs-keyword">new</span> Value({ value: <span class="hljs-number">10</span> });
+<span class="hljs-keyword">var</span> list = <span class="hljs-keyword">new</span> Node({
   container: document.body,
   childClass: {
     template: <span class="hljs-string">'&lt;div&gt;amount: {amount}, commission: {commission}&lt;/div&gt;'</span>,

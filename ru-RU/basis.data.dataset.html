@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="5" data-basepath="." data-revision="1455641242266">
+    <div class="book" data-github="basisjs/articles" data-level="5" data-basepath="." data-revision="1464472063967">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -1006,118 +1006,278 @@
 <li><p><code>AT_LEAST_ONE_EXCLUDE</code> – отсутствует хотя бы в одном источнике;</p>
 </li>
 </ul>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+<span class="hljs-keyword">var</span> Dataset = basis.require(<span class="hljs-string">'basis.data'</span>).Dataset;
+<span class="hljs-keyword">var</span> Merge = basis.require(<span class="hljs-string">'basis.data.dataset'</span>).Merge;
+
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> DataObject({ data: { name: <span class="hljs-string">'foo'</span> } });
+<span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">new</span> DataObject({ data: { name: <span class="hljs-string">'bar'</span> } });
+<span class="hljs-keyword">var</span> baz = <span class="hljs-keyword">new</span> DataObject({ data: { name: <span class="hljs-string">'baz'</span> } });
+
+<span class="hljs-keyword">var</span> source1 = <span class="hljs-keyword">new</span> Dataset({ items: [foo, bar] });
+<span class="hljs-keyword">var</span> source2 = <span class="hljs-keyword">new</span> Dataset({ items: [foo, baz] });
+
+<span class="hljs-keyword">var</span> merge = <span class="hljs-keyword">new</span> Merge({
+  sources: [source1, source2],
+  rule: Merge.INTERSECTION
+});
+
+console.log(merge.getValues(<span class="hljs-string">'data.name'</span>));
+<span class="hljs-comment">// &gt; ['foo']</span>
+</code></pre>
 <h2 id="subtract">Subtract</h2>
-<p>Набор хранящий результат вычитания одного набора из другого.</p>
+<p>Набор, хранящий результат вычитания одного набора из другого.</p>
 <p>Уменьшаемое хранится в свойстве <code>minuend</code>, его можно задать методом <code>setMinuend</code>. Вычитаемое хранится в свойстве <code>subtrahend</code>, которое можно менять методом <code>setSubtrahend</code>. Оба операнда можно изменить разом используя метод <code>setOperands</code>. С версии 1.3 для обоих операндов используется <a href="basis.data.datasets.html#resolvedataset">resolveDataset</a>.</p>
-<p>Когда меняется уменьшаемое выбрасывается событие <code>minuendChanged</code>, а при изменении вычитаемого – <code>subtrahendChanged</code>. Если один из аперандов не задан, то набор будет пустым.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> data = basis.data.wrap([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>], <span class="hljs-literal">true</span>);
-<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> basis.data.Dataset({
+<p>Когда меняется уменьшаемое, выбрасывается событие <code>minuendChanged</code>, а при изменении вычитаемого – <code>subtrahendChanged</code>. Если один из аперандов не задан, то набор будет пустым.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Dataset = basis.require(<span class="hljs-string">'basis.data'</span>).Dataset;
+<span class="hljs-keyword">var</span> Subtract = basis.require(<span class="hljs-string">'basis.data.dataset'</span>).Subtract;
+
+<span class="hljs-keyword">var</span> data = basis.require(<span class="hljs-string">'basis.data'</span>).wrap([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>], <span class="hljs-literal">true</span>);
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> Dataset({
   items: data.slice(<span class="hljs-number">0</span>, <span class="hljs-number">5</span>)  <span class="hljs-comment">// 1, 2, 3, 4, 5</span>
 });
-<span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">new</span> basis.data.Dataset({
+<span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">new</span> Dataset({
   items: data.slice(<span class="hljs-number">2</span>, <span class="hljs-number">6</span>)  <span class="hljs-comment">// 3, 4, 5, 6</span>
 });
 
-<span class="hljs-keyword">var</span> subtract = <span class="hljs-keyword">new</span> basis.data.dataset.Subtract({
+<span class="hljs-keyword">var</span> subtract = <span class="hljs-keyword">new</span> Subtract({
   minuend: foo,
   subtrahend: bar
 });
 
-console.log(subtract.getItems().map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span> <span class="hljs-keyword">return</span> item.data.value; }));
+console.log(subtract.getValues(<span class="hljs-string">'data.value'</span>));
 <span class="hljs-comment">// &gt; [1, 2]</span>
 
 foo.add(data[<span class="hljs-number">6</span>]);
-console.log(subtract.getItems().map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span> <span class="hljs-keyword">return</span> item.data.value; }));
+console.log(subtract.getValues(<span class="hljs-string">'data.value'</span>));
 <span class="hljs-comment">// &gt; [1, 2, 7]</span>
 
 bar.remove(data[<span class="hljs-number">2</span>]);
-console.log(subtract.getItems().map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span> <span class="hljs-keyword">return</span> item.data.value; }));
-<span class="hljs-comment">// &gt; [1, 2, 7, 3]</span>
+console.log(subtract.getValues(<span class="hljs-string">'data.value'</span>));
+<span class="hljs-comment">// &gt; [1, 2, 3, 7]</span>
 </code></pre>
 <h2 id="sourcedataset">SourceDataset</h2>
-<p>[TODO]</p>
+<p>Инкапсулирует работу с источником данных. Чаще всего не используется напрямую, а, как будет показано ниже, является предком для других автоматических наборов.</p>
+<p>Источник данных задается в свойстве <code>source</code> при создании набора или методом <code>setSource</code> после.
+К значению свойства <code>source</code> применяется <a href="basis.data.datasets.html#resolvedataset">resolveDataset</a> для получения ссылок на набор.</p>
+<p>При смене источника данных инициируется событие <code>sourceChanged</code>, а в качестве аргументов передаются: <code>sender</code> (экземпляр <code>SourceDataset</code>) и ссылка на старый источник данных.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+<span class="hljs-keyword">var</span> Dataset = basis.require(<span class="hljs-string">'basis.data'</span>).Dataset;
+<span class="hljs-keyword">var</span> SourceDataset = basis.require(<span class="hljs-string">'basis.data.dataset'</span>).SourceDataset;
+<span class="hljs-keyword">var</span> MyDataset = SourceDataset.subclass();
+
+<span class="hljs-keyword">var</span> foo = <span class="hljs-keyword">new</span> DataObject();
+<span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">new</span> DataObject();
+
+<span class="hljs-keyword">var</span> datasource = <span class="hljs-keyword">new</span> Dataset({ items: [foo, bar] });
+<span class="hljs-keyword">var</span> datasource2 = <span class="hljs-keyword">new</span> Dataset({ items: [bar] });
+
+<span class="hljs-keyword">var</span> myDataset = <span class="hljs-keyword">new</span> MyDataset({ source: datasource });
+
+myDataset.setSource(datasource2);
+</code></pre>
+<p>Так же, <code>SourceDataset</code> поддерживает <a href="basis.event.html#listen">listen</a> для <code>source</code></p>
 <h2 id="slice">Slice</h2>
 <p>Класс-наследник <code>SourceDataset</code>, содержит <code>limit</code> элементов из источника <code>source</code>, отсортированных по правилу <code>rule</code>, начиная со смещения <code>offset</code>.</p>
 <p>Правило должно возвращать значение, по которому будут сортироваться элементы источника. Правило задается свойством <code>rule</code>, а направление сортировки – свойством <code>orderDesc</code>. Правило и направление сортировки можно изменить методом <code>setRule(rule, orderDesc)</code>. Когда меняется правило выбрасывается событие <code>ruleChanged</code>.</p>
 <p>Максимальное количество элементов задается свойством <code>limit</code>, которое можно изменить методом <code>setLimit(limit)</code>. Смещение, или количество элементов которое должно быть пропущено, задается свойством <code>offset</code> и меняется методом <code>setOffset(offset)</code>. Одновременно поменять оба свойства можно методом <code>setRange(offset, limit)</code>. Когда меняется смещение или лимит выбрасывается событие <code>rangeChanged(oldOffset, oldLimit)</code>.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> dataset = <span class="hljs-keyword">new</span> basis.data.Dataset({
-  items: basis.data.wrap([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], <span class="hljs-literal">true</span>)
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+<span class="hljs-keyword">var</span> Dataset = basis.require(<span class="hljs-string">'basis.data'</span>).Dataset;
+<span class="hljs-keyword">var</span> Slice = basis.require(<span class="hljs-string">'basis.data.dataset'</span>).Slice;
+
+<span class="hljs-keyword">var</span> data = basis.require(<span class="hljs-string">'basis.data'</span>).wrap([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], <span class="hljs-literal">true</span>);
+<span class="hljs-keyword">var</span> dataset = <span class="hljs-keyword">new</span> Dataset({
+  items: data
 });
-<span class="hljs-keyword">var</span> top3max = <span class="hljs-keyword">new</span> basis.data.dataset.Slice({
+<span class="hljs-keyword">var</span> top3max = <span class="hljs-keyword">new</span> Slice({
   source: dataset,
   rule: <span class="hljs-string">'data.value'</span>,
   orderDesc: <span class="hljs-literal">true</span>,
   limit: <span class="hljs-number">3</span>
 });
 
-console.log(top3max.getItems().map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span> <span class="hljs-keyword">return</span> item.data.value; }));
+console.log(top3max.getValues(<span class="hljs-string">'data.value'</span>));
 <span class="hljs-comment">// console&gt; [3, 4, 5]</span>
 
-<span class="hljs-keyword">var</span> obj = <span class="hljs-keyword">new</span> basis.data.Object({ data: { value: <span class="hljs-number">123</span> } });
+<span class="hljs-keyword">var</span> obj = <span class="hljs-keyword">new</span> DataObject({ data: { value: <span class="hljs-number">123</span> } });
 dataset.add(obj);
-console.log(top3max.getItems().map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span> <span class="hljs-keyword">return</span> item.data.value; }));
+console.log(top3max.getValues(<span class="hljs-string">'data.value'</span>));
 <span class="hljs-comment">// console&gt; [4, 5, 123]</span>
 
 obj.update({ value: <span class="hljs-number">4.5</span> });
-console.log(top3max.getItems().map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span> <span class="hljs-keyword">return</span> item.data.value; }));
+console.log(top3max.getValues(<span class="hljs-string">'data.value'</span>));
 <span class="hljs-comment">// console&gt; [4, 5, 4.5]</span>
 </code></pre>
 <h2 id="mapfilter">MapFilter</h2>
-<p>[TODO]</p>
+<p>Класс-наследник <code>SourceDataset</code>, задача которого - конвертировать/проецировать элементы источника данных в другие объекты.
+Одновременно с этим может выполняться фильтрация данных по заданному правилу.</p>
+<p>За проецирование данных отвечается функция, которая задается в свойстве <code>map</code> при создании набора или методом <code>setMap</code> после.
+Эта функция вызывается для каждого элемента источника и должна вернуть <code>basis.data.Object</code>, который и будет являться проекцией элемента.
+В качестве приближенного аналога, можно обратиться к описанию метода <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/map" target="_blank">Array#map</a>.</p>
+<p>Если функция проекции вернет что-то отличное от <code>basis.data.Object</code>, то элемент, для которого вызвана функция, не войдет в итоговый набор данных потому, что наборы могут содержать только экземпляры <code>basis.data.Object</code> или его потомков.
+Таким образом, функция проекции может выполнять неявную фильтрацию данных:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+<span class="hljs-keyword">var</span> Dataset = basis.require(<span class="hljs-string">'basis.data'</span>).Dataset;
+<span class="hljs-keyword">var</span> MapFilter = basis.require(<span class="hljs-string">'basis.data.dataset'</span>).MapFilter;
+
+<span class="hljs-keyword">var</span> data = basis.require(<span class="hljs-string">'basis.data'</span>).wrap([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>], <span class="hljs-literal">true</span>);
+<span class="hljs-keyword">var</span> datasource = <span class="hljs-keyword">new</span> Dataset({
+  items: data
+});
+<span class="hljs-keyword">var</span> mapFilter = <span class="hljs-keyword">new</span> MapFilter({ source: datasource });
+console.log(mapFilter.getValues(<span class="hljs-string">'data.value'</span>));
+<span class="hljs-comment">// &gt; [1, 2, 3, 4]</span>
+
+<span class="hljs-keyword">var</span> delta = mapFilter.setMap(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
+  <span class="hljs-keyword">if</span> (item.data.value &gt; <span class="hljs-number">2</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DataObject({ data: { value: item.data.value * <span class="hljs-number">2</span> } });
+});
+
+console.log(delta);
+<span class="hljs-comment">// &gt; { deleted: [{ value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }], inserted: [{ value: 6 }, { value: 8 }] }</span>
+
+console.log(mapFilter.getValues(<span class="hljs-string">'data.value'</span>));
+<span class="hljs-comment">// &gt; [6, 8]</span>
+
+data[<span class="hljs-number">0</span>].update({ value: <span class="hljs-number">100</span> });
+console.log(mapFilter.getValues(<span class="hljs-string">'data.value'</span>));
+<span class="hljs-comment">// &gt; [6, 8, 100]</span>
+</code></pre>
+<p>Как видно из примера, при установке функции проекции (методом <code>setMap</code>) проекция всех элементов источника выполняется заново, а при изменении значения одного из элементов источника, происходит перепроверка только измененного элемента.</p>
+<p>Список событий, когда должно перевычисляться правило, задается только при создании набора свойством <code>ruleEvents</code>.
+Значением этого свойства может быть строка (список событий разделенных пробелом) или массив строк. По умолчанию у элементов источника слушается событие <code>update</code>.</p>
+<p>Если проекция или фильтрация приводит к изменению итогового набора данных, то инициируется событие <code>itemsChanged</code>.</p>
+<p>Как было сказано выше, функция проекции может выполнять неявную фильтрацию данных, но изначально не предназначена для этого.</p>
+<p>Для фильтрации данных, используется функция, которая задается свойством <code>filter</code> при создании набора или методом <code>setFilter</code> после.</p>
+<p>Эта функция будет вызвана для каждого элемента из тех, что вернула функция проекции.
+В качестве аргумента функция принимает элемент-проекцию и должна вернуть <code>false</code>, если элемент прошел проверку, и <code>true</code>, если не прошел:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+<span class="hljs-keyword">var</span> Dataset = basis.require(<span class="hljs-string">'basis.data'</span>).Dataset;
+<span class="hljs-keyword">var</span> MapFilter = basis.require(<span class="hljs-string">'basis.data.dataset'</span>).MapFilter;
+
+<span class="hljs-keyword">var</span> data = basis.require(<span class="hljs-string">'basis.data'</span>).wrap([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>], <span class="hljs-literal">true</span>);
+<span class="hljs-keyword">var</span> datasource = <span class="hljs-keyword">new</span> Dataset({
+  items: data
+});
+<span class="hljs-keyword">var</span> mapFilter = <span class="hljs-keyword">new</span> MapFilter({ source: datasource });
+console.log(mapFilter.getValues(<span class="hljs-string">'data.value'</span>));
+<span class="hljs-comment">// &gt; [1, 2, 3, 4]</span>
+
+mapFilter.setMap(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DataObject({ data: { value: item.data.value * <span class="hljs-number">2</span> } });
+});
+console.log(mapFilter.getValues(<span class="hljs-string">'data.value'</span>));
+<span class="hljs-comment">// &gt; [2, 4, 6, 8]</span>
+
+mapFilter.setFilter(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
+  <span class="hljs-keyword">return</span> item.data.value &gt; <span class="hljs-number">6</span>;
+});
+
+console.log(mapFilter.getValues(<span class="hljs-string">'data.value'</span>));
+<span class="hljs-comment">// &gt; [2, 4, 6]</span>
+</code></pre>
+<p>Функция фильтрации имеет обратную логику по отношению к <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/filter" target="_blank">Array#filter</a>.</p>
+<p>Через свойство <code>rule</code> можно указать getter для быстрого доступа к необходимому свойству объекта.
+Это можно сделать при создании набора или методом <code>setRule</code> после:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+<span class="hljs-keyword">var</span> Dataset = basis.require(<span class="hljs-string">'basis.data'</span>).Dataset;
+<span class="hljs-keyword">var</span> MapFilter = basis.require(<span class="hljs-string">'basis.data.dataset'</span>).MapFilter;
+
+<span class="hljs-keyword">var</span> data = basis.require(<span class="hljs-string">'basis.data'</span>).wrap([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>], <span class="hljs-literal">true</span>);
+<span class="hljs-keyword">var</span> datasource = <span class="hljs-keyword">new</span> Dataset({
+  items: data
+});
+<span class="hljs-keyword">var</span> mapFilter = <span class="hljs-keyword">new</span> MapFilter({ source: datasource, rule: <span class="hljs-string">'data.value'</span> });
+console.log(mapFilter.getValues(<span class="hljs-string">'data.value'</span>));
+<span class="hljs-comment">// &gt; [1, 2, 3, 4]</span>
+
+mapFilter.setMap(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DataObject({ data: { value: item.data.value * <span class="hljs-number">2</span> } });
+});
+console.log(mapFilter.getValues(<span class="hljs-string">'data.value'</span>));
+<span class="hljs-comment">// &gt; [2, 4, 6, 8]</span>
+
+mapFilter.setFilter(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.rule(item) &gt; <span class="hljs-number">6</span>;
+});
+
+console.log(mapFilter.getValues(<span class="hljs-string">'data.value'</span>));
+<span class="hljs-comment">// &gt; [2, 4, 6]</span>
+</code></pre>
+<p>По умолчанию <code>rule</code> представлен в виде getter&#39;а, который всегда возвращает <code>true</code>.</p>
+<p>При установке нового правила инициируется событие <code>ruleChanged</code>.</p>
 <h2 id="filter">Filter</h2>
 <blockquote>
 <p>До версии 1.3 класс назывался <code>Subset</code>.</p>
 </blockquote>
-<p>Экземпляры этого класса добавляют в свой состав из источника только те элементы, для которых правило возвращает положительный результат (приводимое к <code>true</code>).</p>
-<p>Функция-фильтр хранится в свойстве <code>rule</code>, ее можно изменить методом <code>setRule</code>.</p>
-<p>Список событий, когда должно перевычисляться правило задается только при создании набора свойством <code>ruleEvents</code>. Значением этого свойства может быть строка (список событий разделенных пробелом) или массив строк. По умолчанию у элементов источника слушается событие <code>update</code>.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> data = basis.data.wrap([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], <span class="hljs-literal">true</span>);
+<p>Класс-наследник <code>MapFilter</code>. Экземпляры этого класса добавляют в свой состав только те элементы источника, для которых правило возвращает положительный результат (приводимый к <code>true</code>).</p>
+<p>По сути, <code>Filter</code> отличается от <code>MapFilter</code> только переопределением функции фильтрации. У <code>Filter</code> она по умолчанию выглядит так:</p>
+<pre><code class="lang-js">basis.data.dataset.Filter.prototype.filter = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
+  <span class="hljs-keyword">return</span> !<span class="hljs-keyword">this</span>.rule(item);
+}
+</code></pre>
+<p>Как видно из примера, результат правила (<code>rule</code>) будет приведен к <code>boolean</code> и обработан функцией фильтрации.
+Напомним, что по умолчанию <code>rule</code> представлен как getter, который всегда возвращает <code>true</code>.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> DataObject = basis.require(<span class="hljs-string">'basis.data'</span>).Object;
+<span class="hljs-keyword">var</span> Dataset = basis.require(<span class="hljs-string">'basis.data'</span>).Dataset;
+<span class="hljs-keyword">var</span> Filter = basis.require(<span class="hljs-string">'basis.data.dataset'</span>).Filter;
+
+<span class="hljs-keyword">var</span> data = basis.require(<span class="hljs-string">'basis.data'</span>).wrap([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], <span class="hljs-literal">true</span>);
 
 <span class="hljs-comment">// создаем набор-источник (нужен для примера)</span>
-<span class="hljs-keyword">var</span> dataSource = <span class="hljs-keyword">new</span> basis.data.Dataset({
+<span class="hljs-keyword">var</span> dataSource = <span class="hljs-keyword">new</span> Dataset({
   items: data
 });
 
 <span class="hljs-comment">// создаем подмножество</span>
-<span class="hljs-keyword">var</span> filter = <span class="hljs-keyword">new</span> basis.data.dataset.Filter({
+<span class="hljs-keyword">var</span> filter = <span class="hljs-keyword">new</span> Filter({
   source: dataSource,            <span class="hljs-comment">// задаем источник</span>
   rule: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>          <span class="hljs-comment">// правило</span>
     <span class="hljs-keyword">return</span> item.data.value % <span class="hljs-number">2</span>;  <span class="hljs-comment">// только нечетные</span>
   }
 });
 
-console.log(filter.getItems().map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span> <span class="hljs-keyword">return</span> item.data.value; }));
+console.log(filter.getValues(<span class="hljs-string">'data.value'</span>));
 <span class="hljs-comment">// &gt; [1, 3, 5]</span>
 
 data[<span class="hljs-number">0</span>].update({ value: <span class="hljs-number">0</span> });
-console.log(filter.getItems().map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span> <span class="hljs-keyword">return</span> item.data.value; }));
+console.log(filter.getValues(<span class="hljs-string">'data.value'</span>));
 <span class="hljs-comment">// &gt; [3, 5]</span>
 
 data[<span class="hljs-number">1</span>].update({ value: <span class="hljs-number">33</span> });
-console.log(filter.getItems().map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span> <span class="hljs-keyword">return</span> item.data.value; }));
-<span class="hljs-comment">// &gt; [3, 5, 33]</span>
+console.log(filter.getValues(<span class="hljs-string">'data.value'</span>));
+<span class="hljs-comment">// &gt; [33, 3, 5]</span>
 
 dataSource.remove([data[<span class="hljs-number">0</span>], data[<span class="hljs-number">1</span>], data[<span class="hljs-number">2</span>]]);
-console.log(filter.getItems().map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span> <span class="hljs-keyword">return</span> item.data.value; }));
+console.log(filter.getValues(<span class="hljs-string">'data.value'</span>));
 <span class="hljs-comment">// &gt; [5]</span>
 </code></pre>
 <h2 id="split">Split</h2>
 <p><code>Split</code> позволяет разделить элементы на подмножества по результату выполнения функции-правила (свойство <code>rule</code>). При этом членами набора становятся наборы-группы, по которым распределяются элементы набора-источника (свойство <code>source</code>). Каждый элемент может находиться только в одной группе.</p>
-<p>Правило задается при создании через свойство <code>rule</code>, меняется методом <code>setRule</code>. В качестве значения можно указать функцию или строку – значение пропускается через <code>basis.getter</code>. Функция должна возвращать некоторое значение, которое будет являться ключом группы. Для сравнения значение приводится к строке, а если значение экземпляр <code>basis.data.Object</code>, то его идентификатор (<code>basisObjectId</code>). Для каждого нового значения создается новое подмножество – группа, и добавляется в набор. Если группа становится пустой, то она удаляется из набора.</p>
-<p>Группа это экземпляр класса <code>basis.data.DatasetWrapper</code>. Значение, для которого она была создана, хранится в свойстве <code>ruleValue</code>. В качестве <code>dataset</code> задан набор, который содержит все элементы группы. Если значением группы является экземпляр <code>basis.data.Object</code>, то он будет назначен делегатом.</p>
+<p>Правило задается при создании через свойство <code>rule</code>, меняется методом <code>setRule</code>.
+В качестве значения можно указать функцию или строку – значение пропускается через <code>basis.getter</code>.
+Функция должна возвращать некоторое значение, которое будет являться ключом группы.
+Для сравнения значение приводится к строке, а если значение – экземпляр basis.data.Object, то берется его идентификатор (basisObjectId).
+Для каждого нового значения создается новое подмножество – группа, и добавляется в набор.
+Если группа становится пустой, то она удаляется из набора.</p>
+<p>Группа - это экземпляр класса <code>basis.data.DatasetWrapper</code>. Значение, для которого она была создана, хранится в свойстве <code>ruleValue</code>. В качестве <code>dataset</code> задан набор, который содержит все элементы группы. Если значением группы является экземпляр <code>basis.data.Object</code>, то он будет назначен делегатом.</p>
 <p>Для получения объекта группы используется метод <code>getSubset</code>, которому передается ключ группы. Группа возвращается, только если для значения уже существует группа. Если требуется получить группу и при необходимости создать ее, то вторым параметром передается конфиг для группы или <code>true</code>.</p>
 <p>Класс для объекта группы определяется свойством <code>subsetWrapperClass</code> (по умолчанию <code>basis.data.DatasetWrapper</code>), а класс для набора – <code>subsetClass</code> (по умолчанию <code>basis.data.ReadOnlyDataset</code>). Управляет группами экземпляр класса <code>basis.object.KeyObjectMap</code>. Его можно задать при создании набора, указав в свойстве <code>keyMap</code> экземпляр <code>basis.object.KeyObjectMap</code> или конфиг для него.</p>
 <p>Набор слушает изменения в элементах источника и перемещает элемент из одной группы в другую, при необходимости.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> cities = <span class="hljs-keyword">new</span> basis.data.Dataset({
-  items: basis.data.wrap([
-    { city: <span class="hljs-string">'Moscow'</span>, country: <span class="hljs-string">'Russia'</span> },
-    { city: <span class="hljs-string">'St. Peterburg'</span>, country: <span class="hljs-string">'Russia'</span> },
-    { city: <span class="hljs-string">'Orenburg'</span>, country: <span class="hljs-string">'Russia'</span> },
-    { city: <span class="hljs-string">'Washington'</span>, country: <span class="hljs-string">'USA'</span> },
-    { city: <span class="hljs-string">'New York'</span>, country: <span class="hljs-string">'USA'</span> },
-  ], <span class="hljs-literal">true</span>)
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> Dataset = basis.require(<span class="hljs-string">'basis.data'</span>).Dataset;
+<span class="hljs-keyword">var</span> Split = basis.require(<span class="hljs-string">'basis.data.dataset'</span>).Split;
+
+<span class="hljs-keyword">var</span> data = basis.require(<span class="hljs-string">'basis.data'</span>).wrap([
+  { city: <span class="hljs-string">'Moscow'</span>, country: <span class="hljs-string">'Russia'</span> },
+  { city: <span class="hljs-string">'St. Peterburg'</span>, country: <span class="hljs-string">'Russia'</span> },
+  { city: <span class="hljs-string">'Orenburg'</span>, country: <span class="hljs-string">'Russia'</span> },
+  { city: <span class="hljs-string">'Washington'</span>, country: <span class="hljs-string">'USA'</span> },
+  { city: <span class="hljs-string">'New York'</span>, country: <span class="hljs-string">'USA'</span> },
+], <span class="hljs-literal">true</span>);
+<span class="hljs-keyword">var</span> cities = <span class="hljs-keyword">new</span> Dataset({
+  items: data
 });
-<span class="hljs-keyword">var</span> splitByCountry = <span class="hljs-keyword">new</span> basis.data.dataset.Split({
+<span class="hljs-keyword">var</span> splitByCountry = <span class="hljs-keyword">new</span> Split({
   source: cities,
   rule: <span class="hljs-string">'data.country'</span>
 });
@@ -1128,9 +1288,7 @@ console.log(splitByCountry.getItems());
 console.log(splitByCountry.getSubset(<span class="hljs-string">'Russia'</span>, <span class="hljs-literal">true</span>).itemCount);
 <span class="hljs-comment">// console&gt; 3</span>
 
-console.log(splitByCountry.getSubset(<span class="hljs-string">'Russia'</span>, <span class="hljs-literal">true</span>).getItems().map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
-  <span class="hljs-keyword">return</span> item.data.city;
-}));
+console.log(splitByCountry.getSubset(<span class="hljs-string">'Russia'</span>, <span class="hljs-literal">true</span>).getValues(<span class="hljs-string">'data.city'</span>));
 <span class="hljs-comment">// console&gt; [{ data: { city: 'Moscow', .. }, .. }, .. ]</span>
 
 console.log(splitByCountry.getSubset(<span class="hljs-string">'Unknown'</span>));
