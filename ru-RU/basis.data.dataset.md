@@ -217,48 +217,39 @@ console.log(splitByCountry.getSubset('Unknown'));
 `Extract` позволяет рекурсивно извлекать/разворачивать элементы из вложенных наборов, превращая их в плоскую структуру.
 
 Правило извлечения задается при создании через свойство `rule`, меняется методом `setRule`.
-При помощи правила можно трансформировать значение в новый набор данных ("развернуть" значение) или указать свойство объекта, в котором находится уже готовый набор данных.
-В таком случае, набор будет извлечен автоматически:
+При помощи правила можно трансформировать значение в новый набор данных ("развернуть" значение) или указать `basis.getter`.
+Если правило возвращает `basis.data.ReadOnlyDataset` (или потомков), то в результат добавляются все его элементы, при этом к каждому новому элементу (если он еще не встречался ранее) вновь применяется `rule`.
+Изменения в таком наборе отслеживаются автоматически.
 
 ```js
 var Dataset = basis.require('basis.data').Dataset;
+var Filter = basis.require('basis.data.dataset').Filter;
 var Extract = basis.require('basis.data.dataset').Extract;
 var wrap = basis.require('basis.data').wrap;
+var adminUsers = new Dataset({ items: wrap([{ name: 'Admin User 1' }, { name: 'Admin User 2' }], true) })
+var contentUsers = new Dataset({ items: wrap([{ name: 'Content User 1' }, { name: 'Content User 2' }], true) })
 
-var dataset = new Dataset({
+var groups = new Dataset({
   items: wrap([
-    { value: 1, items: new Dataset({ items: wrap([2, 3], true) }) },
-    { value: 4, items: new Dataset({ items: wrap([5, 6], true) }) },
-    { value: 7, items: new Dataset({ items: wrap([8, 9], true) }) },
-    { value: 10 }
+    { id: 'admin', users: adminUsers },
+    { id: 'content', users: contentUsers },
   ], true)
 });
 
-var extract = new Extract({
-  source: dataset,
-  rule: 'data.items'
+var extract = new Filter({
+  source: new Extract({
+    source: groups,
+    rule: 'data.users'
+  }),
+  rule: 'data.name'
 });
 
-console.log(extract.getValues('data.value'));
-// > [1, 4, 7, 10, 2, 3, 5, 6, 8, 9]
+console.log(extract.getValues('data.name'));
+// > ["Admin User 1", "Admin User 2", "Content User 1", "Content User 2"]
+
+adminUsers.add(wrap([{ name: 'Admin User 3' }], true));
+console.log(extract.getValues('data.name'));
+// > ["Admin User 1", "Admin User 2", "Content User 1", "Content User 2", "Admin User 3"]
 ```
 
-Если `rule` вернет `basis.data.Object` или `basis.data.ReadOnlyDataset` (или потомков), то `rule` будет запущена снова для каждого полученного значения в качестве аргумента.
-Таким образом достигается рекурсивность извлечения данных.
-
-Список событий, когда должно перевычисляться правило задается только при создании набора свойством `ruleEvents`. Значением этого свойства может быть строка (список событий разделенных пробелом) или массив строк.
-По умолчанию у элементов источника слушается событие `update`.
-
-При изменении содержимого набора инициируется событие `itemsChanged`:
-
-```js
-extract.addHandler({
-  itemsChanged: function(sender, delta){
-    console.log('changed', delta);
-  }
-});
-
-dataset.pick().data.items.add(wrap([1000], true));
-console.log(extract.getValues('data.value'));
-// > [2, 3, 5, 6, 8, 9, 1, 4, 7, 10, 1000]
-```
+В данном случае, `Extract` используется в паре с `Filter` для того, чтобы отбросить `группы` и оставить только `пользователей`.
