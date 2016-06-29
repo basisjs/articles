@@ -18,7 +18,15 @@
     * [Объект](ru-RU/basis.data.Object.md)
     * [Набор](ru-RU/basis.data.datasets.md)
     * [Карта](ru-RU/basis.data.map.md)
-* [basis.data.dataset](ru-RU/basis.data.dataset.md) \[todo:complete]
+* [basis.data.dataset](ru-RU/basis.data.dataset.md)
+    * [Merge](dataset/merge.md) - объединение по правилу
+    * [Subtract](dataset/subtract.md) - вычитание
+    * [MapFilter](dataset/mapfilter.md) - конвертация и/или фильтрация
+    * [Filter](dataset/filter.md) - фильтрация (подмножество)
+    * [Slice](dataset/slice.md) - срез
+    * [Split](dataset/split.md) - разбиение 1:1 (группировка)
+    * [Cloud](dataset/cloud.md) - разбиение 1:M
+    * [Extract](dataset/extract.md) - разворачивание
 * basis.data.value
 * basis.data.index
 * basis.entity

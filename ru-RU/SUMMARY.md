@@ -12,6 +12,14 @@
   * [Набор](basis.data.datasets.md)
   * [Карта](basis.data.map.md)
 * [basis.data.dataset](basis.data.dataset.md)
+  * [Merge](dataset/merge.md) - объединение по правилу
+  * [Subtract](dataset/subtract.md) - вычитание
+  * [MapFilter](dataset/mapfilter.md) - конвертация и/или фильтрация
+  * [Filter](dataset/filter.md) - фильтрация (подмножество)
+  * [Slice](dataset/slice.md) - срез
+  * [Split](dataset/split.md) - разбиение 1:1 (группировка)
+  * [Cloud](dataset/cloud.md) - разбиение 1:M
+  * [Extract](dataset/extract.md) - разворачивание
 * [basis.dom.wrapper](basis.dom.wrapper.md)
   * [DOM](basis.dom.wrapper_dom.md)
   * [Дочерние узлы](basis.dom.wrapper_childNodes.md)
