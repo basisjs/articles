@@ -24,9 +24,14 @@
           <b:include src="#123"/>
         ```
 
-  * `id` – этот атрибут будет назначен элементу с ссылкой `element` в вставляемом описании;
-
-  * `class` – значение этого атрибута будет добавлено к значению атрибута `class` элемента со ссылкой `element`
+  * `id` → `<b:set-attr name="id" value="(значение атрибута)">`
+  * `class` → `<b:append-class value="(значение атрибута)">`
+  * `ref` → `<b:add-ref name="(значение атрибута)">`
+  * `role` → `<b:set-role name="(значение атрибута)">`
+  * `show` → `<b:show expr="(значение атрибута)">`
+  * `hide` → `<b:hide expr="(значение атрибута)">`
+  * `visible` → `<b:visible expr="(значение атрибута)">`
+  * `hidden` → `<b:hidden expr="(значение атрибута)">`
 
 Исходный шаблон:
 
@@ -55,10 +60,15 @@ foo.tmpl:
 * [`<b:replace>`](#breplace) – замена узела
 * [`<b:remove>`](#bremove) – удаление узла
 * [`<b:attr>`](#battr-bset-attr), [`<b:set-attr>`](#battr-bset-attr) – установка атрибута
-* [`<b:append-attr>`](#bappend) – добавление значения к значению атрибута
-* [`<b:remove-attr>`](#bremove) – удаление атрибута
+* [`<b:append-attr>`](#bappend-attr) – добавление значения к значению атрибута
+* [`<b:remove-attr>`](#bremove-attr) – удаление атрибута
 * [`<b:class>`](#bclass-bappend-class), [`<b:append-class>`](#bclass-bappend-class) – добавление класса (классов) в атрибут `class`;
-* [`<b:set-class>`](#bset) – замещение значения атрибута `class`
+* [`<b:set-class>`](#bset-class) – замещение значения атрибута `class`
+* [`<b:add-ref>`](#badd-ref) – добавление [ссылки](basis.template_format.md#Ссылки) на узел
+* [`<b:remove-ref>`](#bremove-ref) – удаление [ссылки](basis.template_format.md#Ссылки) на узел
+* [`<b:role>`](#brole-set-role), [`<b:set-role>`](#brole-set-role) – установка маркера роли
+* [`<b:remove-role>`](#bremove-role) – удаление маркера роли
+* [`<b:show>`](#bshow-bhide-bvisible-bhidden), [`<b:hide>`](#bshow-bhide-bvisible-bhidden), [`<b:visible>`](#bshow-bhide-bvisible-bhidden), [`<b:hidden>`](#bshow-bhide-bvisible-bhidden) – установление соотвествующего специального атрибута на элемент
 
 ## \<b:before>
 
@@ -359,3 +369,48 @@ foo.tmpl:
   <span{label} class="foo foo_{selected}">{title}</span>
 </div>
 ```
+
+## \<b:add-ref>
+
+## \<b:remove-ref>
+
+## \<b:role>, \<b:set-role>
+
+## \<b:remove-role>
+
+## \<b:show>, \<b:hide>, \<b:visible>, \<b:hidden>
+
+Устанавливает соответствующий атрибут заданному элементу.
+
+```html
+<b:include src="./foo.tmpl">
+  <b:show expr="{expr1}"/>
+  <b:hide ref="a" expr="{expr2}"/>
+  <b:visible ref="b" expr="{expr3}"/>
+  <b:hidden ref="c" expr="{expr4}"/>
+</b:inclide>
+```
+
+foo.tmpl:
+
+```html
+<div class="example" b:hide="{something}">
+  <span{a}/>
+  <span{b}/>
+  <span{c}/>
+</div>
+```
+
+Эквивалентно:
+
+```html
+<div class="example" b:show="{expr1}">
+  <span{a} b:hide="{expr2}"/>
+  <span{b} b:visible="{expr3}"/>
+  <span{c} b:hidden="{expr4}"/>
+</div>
+```
+
+Нужно заметить, что `b:hide` в `foo.tmpl` был отброшен, так как `b:show` и `b:hide` (как и `b:visible`/`b:hidden`) взаимообратные и выигрывает последний.
+
+Подробнее про специальные атрибуты в [Специальные атрибуты в шаблонах](attribute.md)
