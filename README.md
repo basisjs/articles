@@ -19,14 +19,14 @@
     * [Набор](ru-RU/basis.data.datasets.md)
     * [Карта](ru-RU/basis.data.map.md)
 * [basis.data.dataset](ru-RU/basis.data.dataset.md)
-    * [Merge](dataset/merge.md) - объединение по правилу
-    * [Subtract](dataset/subtract.md) - вычитание
-    * [MapFilter](dataset/mapfilter.md) - конвертация и/или фильтрация
-    * [Filter](dataset/filter.md) - фильтрация (подмножество)
-    * [Slice](dataset/slice.md) - срез
-    * [Split](dataset/split.md) - разбиение 1:1 (группировка)
-    * [Cloud](dataset/cloud.md) - разбиение 1:M
-    * [Extract](dataset/extract.md) - разворачивание
+    * [Merge](ru-RU/dataset/merge.md) - объединение по правилу
+    * [Subtract](ru-RU/dataset/subtract.md) - вычитание
+    * [MapFilter](ru-RU/dataset/mapfilter.md) - конвертация и/или фильтрация
+    * [Filter](ru-RU/dataset/filter.md) - фильтрация (подмножество)
+    * [Slice](ru-RU/dataset/slice.md) - срез
+    * [Split](ru-RU/dataset/split.md) - разбиение 1:1 (группировка)
+    * [Cloud](ru-RU/dataset/cloud.md) - разбиение 1:M
+    * [Extract](ru-RU/dataset/extract.md) - разворачивание
 * basis.data.value
 * basis.data.index
 * basis.entity
@@ -52,7 +52,7 @@
         * [`<b:define>`](ru-RU/template/b-define.md)
         * [`<b:text>`](ru-RU/template/b-text.md)
         * [`<b:include>`](ru-RU/template/b-include.md)
-        * [Специальные атрибуты](template/atrtibute.md)
+        * [Специальные атрибуты](ru-RU/template/atrtibute.md)
     * [Правила применения значений биндингам](ru-RU/basis.template_bindings.md)
     * [Темы](ru-RU/basis.template_theme.md)
 * [basis.l10n](ru-RU/basis.l10n.md)
