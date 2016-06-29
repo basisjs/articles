@@ -11,7 +11,7 @@
   * [Объект](basis.data.Object.md)
   * [Набор](basis.data.datasets.md)
   * [Карта](basis.data.map.md)
-* [basis.data.dataset](basis.data.dataset.md) \[todo:complete]
+* [basis.data.dataset](basis.data.dataset.md)
 * [basis.dom.wrapper](basis.dom.wrapper.md)
   * [DOM](basis.dom.wrapper_dom.md)
   * [Дочерние узлы](basis.dom.wrapper_childNodes.md)
