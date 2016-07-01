@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="8.1.5" data-basepath=".." data-revision="1467414378435">
+    <div class="book" data-github="basisjs/articles" data-level="8.1.5" data-basepath=".." data-revision="1467415177440">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -1241,28 +1241,32 @@
                 
                     <section class="normal" id="section-gitbook_54">
                     
-                        <h1 id="btext">\<b:text></h1>
+                        <h1 id="ltbtextgt">&lt;b:text&gt;</h1>
 <p>Данный тег служит для альтернативного описания текстового узла. Его отличительная черта – все внутри этого тега воспринимается как текст и не разбирается по обычным правилам.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:text</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span> – это не будет разобрано как тег и останется текстом
-  маркеры тоже не разбираются, поэтому {example} не будет заменяться ни при каких условиях
+  маркеры и специальная резметка тоже не разбираются, поэтому
+  {example}
+  и
+  <span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">".example.tmpl"</span>/&gt;</span>
+  не будут заменяться ни при каких условиях
 <span class="hljs-tag">&lt;/<span class="hljs-title">b:text</span>&gt;</span>
 </code></pre>
 <p>Этим тегом удобно обрамлять текст, который не должен разбираться, например, пример исходного кода.</p>
 <p>По умолчанию, если до первого или после последнего перевода строки идут только пробельные символы – они вырезаются.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:text</span>&gt;</span>
-  1
-  2
+  hello
+  world
 <span class="hljs-tag">&lt;/<span class="hljs-title">b:text</span>&gt;</span>
 </code></pre>
-<p>В данном примере, текстом будет строка &quot;  1\n  2&quot;. Чтобы оставить текст без изменений используется атрибут <code>notrim</code>.</p>
+<p>В данном примере, текстом будет строка <span style="white-space: pre">&quot;  hello\n  world&quot;</span>. Чтобы оставить текст без изменений используется атрибут <code>notrim</code>.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:text</span> <span class="hljs-attribute">notrim</span>&gt;</span>
-  1
-  2
+  hello
+  world
 <span class="hljs-tag">&lt;/<span class="hljs-title">b:text</span>&gt;</span>
 </code></pre>
-<p>Здесь текстом будет &quot;\n  1\n  2\n&quot;.</p>
-<p>Можно добавить маркер на такой текстовый узел, используя атрибут <code>ref</code>.</p>
+<p>Здесь текстом будет <span style="white-space: pre">&quot;\n  hello\n  world\n&quot;</span>.</p>
+<p>Можно добавить <a href="basis.template_format.html#маркеры">маркер</a> на такой текстовый узел, используя атрибут <code>ref</code>.</p>
 
                     
                     </section>

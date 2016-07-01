@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="9" data-basepath="." data-revision="1467414378435">
+    <div class="book" data-github="basisjs/articles" data-level="9" data-basepath="." data-revision="1467415177440">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -1239,15 +1239,15 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_23">
+                    <section class="normal" id="section-gitbook_24">
                     
                         <h1 id="basisl10n">basis.l10n</h1>
 <p>Модуль <code>basis.l10n</code> обеспечивает <a href="http://ru.wikipedia.org/wiki/%D0%AF%D0%B7%D1%8B%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F_%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F" target="_blank">локализацию</a>, то есть возможность использовать те или иные значения в зависимости от выбраной культуры (языка).</p>
 <p>Этот модуль оперирует в рамках трех типов сущностей:</p>
 <ul>
-<li><a href="#Словарь">Словарь</a> – набор значений;</li>
-<li><a href="#Культура">Культура</a> – язык и его настройки;</li>
-<li><a href="#Токен">Токен</a> (значение) – непосредственное значение, которое используется.</li>
+<li><a href="#словарь">Словарь</a> – набор значений;</li>
+<li><a href="#культура">Культура</a> – язык и его настройки;</li>
+<li><a href="#токен">Токен</a> (значение) – непосредственное значение, которое используется.</li>
 </ul>
 <p>Локализация предоставляемая <code>basis.l10n</code> является полностью динамической, т.е. позволяет изменять выбранную культуру и содержимое словарей без перезагрузки страницы. В разработке могут использоваться <a href="#Инструменты">инструменты</a>, которые упрощают работу с локализацией.</p>
 <h2 id="">Словарь</h2>
@@ -1269,7 +1269,7 @@
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> myDict = basis.l10n.dictionary(__filename);
 </code></pre>
 <p>Задаваемый путь к файлу разрешается относительно корня приложения. Если требуется указать путь относительно модуля, можно использовать локальную переменную <code>__dirname</code>.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> myDict = basis.l10n.dictionary(__dirname + <span class="hljs-string">'relative/path/to/dict.l10n'</span>);
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> myDict = basis.l10n.dictionary(__dirname + <span class="hljs-string">'/relative/path/to/dict.l10n'</span>);
 </code></pre>
 <p>Словарь предоставляет доступ к своим ключам посредством метода <code>token</code>, которому передается имя токена. Если токена с заданым именем нет, то он создается. Значением токена является значение из файла словаря для текущей культуры, с учетом альтернатив.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> myDict = basis.l10n.dictionary(__filename);
@@ -1414,7 +1414,7 @@ basis.l10n.setCulture(<span class="hljs-string">'ru-RU'</span>);
 <span class="hljs-comment">// не будет сообщений в консоли</span>
 </code></pre>
 <h2 id="">Токен</h2>
-<p>Токены являются экземплярами класса <code>basis.l10n.Token</code>, который унаследован от <code>[basis.Token](basis.Token.md)</code>. Эти объекты хранят значение, которое соответствует текущей культуре.</p>
+<p>Токены являются экземплярами класса <code>basis.l10n.Token</code>, который унаследован от <a href="basis.Token.html"><code>basis.Token</code></a>. Эти объекты хранят значение, которое соответствует текущей культуре.</p>
 <p>Получить токен можно следующими способами:</p>
 <ul>
 <li>вызвав метод словаря <code>token(path)</code>;</li>
@@ -1634,19 +1634,7 @@ basis.require(<span class="hljs-string">'basis.ui'</span>);
   {l10n:example}
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<p>Для маркеров с префиксом <code>l10n:</code> допускается использование биндинга в качестве последней части пути. Это применяется для перечислений (<code>enum</code> токены) и грамматического числа (<code>plural</code> токены). Таким образом при изменении значения биндинга значение в шаблоне будет перевычисляться (выбираться тот или иной токен).</p>
-<pre><code>&lt;div class=&quot;example&quot;&gt;
-  Enum: {l10n:state.{state}}&lt;br/&gt;
-  Plural: {l10n:plural.{number}}
-&lt;/div&gt;
-</code></pre><p>Файл словаря указывается с помощью тега <code>&lt;b:l10n&gt;</code>, в котором в атрибуте <code>src</code> указывается путь к файлу (относительно шаблона). Если имя файла словаря отличается от имени файла шаблона только разрешением (например, путь к файлу шаблона <code>path/to/template.tmpl</code>, а путь к словарю <code>path/to/template.l10n</code>), то указывать тег <code>&lt;b:l10n&gt;</code> необязательно (обычно не указывается).</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:l10n</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./path/to/dict.l10n"</span>/&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">title</span>=<span class="hljs-value">"{l10n:attr.example}: {value}"</span>&gt;</span>
-  {l10n:example}
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-</code></pre>
-<p>Шаблон использует словарь, только если в описании шаблона есть хотя бы один маркер с префиксом <code>l10n:</code>. Заданный (явно или неявно) словарь применяется только для маркеров в самом описании шаблона, и на включаемые описания (подключаемые через <code>&lt;b:include&gt;</code>) не распространяется.</p>
+<p>Подробнее в разделе <a href="template/b-l10n.html">Локализация в шаблонах</a></p>
 <h2 id="">Инструменты</h2>
 <p>Для работы с локализацией можно использовать панель разработчика <code>basis.devpanel</code> и <a href="https://chrome.google.com/webstore/detail/basisjs-tools/paeokpmlopbdaancddhdhmfepfhcbmek" target="_blank">плагин</a> для <code>Google Chrome</code>.</p>
 <p><img src="img/basis.l10n-devpanel.png" alt="basis.devpanel"></p>

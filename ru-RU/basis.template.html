@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="8" data-basepath="." data-revision="1467414378435">
+    <div class="book" data-github="basisjs/articles" data-level="8" data-basepath="." data-revision="1467415177440">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -1281,7 +1281,7 @@
   template: basis.resource(<span class="hljs-string">'./path/to/template.tmpl'</span>)
 });
 </code></pre>
-<p>Описание может быть изменено в любой момент методом <code>setSource</code>, либо оно может поменяться в следствие изменения значения источника (объекта с интерфейсом <code>binding bridge</code>](bindingbridge.md)). В этом случае уже созданные экземпляры шаблона будут пересозданы по новому описанию. Эта возможность дает большую гибкость и лежит в основе механизма <a href="basis.template_liveupdate.html">динамического обновления</a> (live update), позволяя перестраивать интерфейс без перезагрузки страницы.</p>
+<p>Описание может быть изменено в любой момент методом <code>setSource</code>, либо оно может поменяться в следствие изменения значения источника (объекта с интерфейсом <a href="bindingbridge.html"><code>binding bridge</code></a>). В этом случае уже созданные экземпляры шаблона будут пересозданы по новому описанию. Эта возможность дает большую гибкость и лежит в основе механизма <a href="basis.template_liveupdate.html">динамического обновления</a> (live update), позволяя перестраивать интерфейс без перезагрузки страницы.</p>
 <p>Шаблоны используются только в рамках экземпляров классов <code>basis.ui.Node</code>, <code>basis.ui.PartitionNode</code> и их потомков. Экземпляры этих классов делают всю работу по созданию экземпляров шаблона и синхронизации состояния и данных с ними. Таким образом, основная часть работы с шаблонами сводится к описанию шаблонов, предоставление им значений через <a href="basis.ui_bindings.html"><code>binding</code></a> и описание реакции на события через <a href="basis.ui_actions.html"><code>action</code></a>.</p>
 
                     

@@ -1,30 +1,30 @@
 CACHE MANIFEST
-# Revision 1467414378436
+# Revision 1467415177441
 
 CACHE:
 basis.html
-index.html
 basis.Class.html
+index.html
 basis.Token.html
 basis.data.Object.html
 basis.data.Value.html
 basis.data.dataset.html
 basis.data.datasets.html
-basis.data.html
 basis.data.map.html
-basis.dom.wrapper_childNodes.html
+basis.data.html
 basis.dom.wrapper.html
+basis.dom.wrapper_childNodes.html
 basis.dom.wrapper_data.html
 basis.dom.wrapper_disabled.html
 basis.dom.wrapper_dom.html
 basis.dom.wrapper_grouping.html
 basis.dom.wrapper_satellite.html
 basis.dom.wrapper_owner.html
-basis.dom.wrapper_selection.html
 basis.dom.wrapper_sorting.html
+basis.dom.wrapper_selection.html
 basis.event.html
-basis.l10n.html
 basis.net.action.html
+basis.l10n.html
 basis.net.ajax.html
 basis.net.html
 basis.net.service.html
@@ -38,21 +38,21 @@ basis.ui_actions.html
 basis.ui_bindings.html
 basis.ui_template.html
 bindingbridge.html
-config.html
 dataset/cloud.html
+config.html
+dataset/extract.html
 dataset/filter.html
 dataset/mapfilter.html
-dataset/extract.html
+dataset/merge.html
 dataset/slice.html
 dataset/split.html
 dataset/subtract.html
-dataset/merge.html
 get-started.html
 resources.html
 template/b-define.html
 template/b-include.html
-template/b-isolate.html
 template/b-l10n.html
+template/b-isolate.html
 template/b-style.html
 template/b-text.html
 tutorial/index.html

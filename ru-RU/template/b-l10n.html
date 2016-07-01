@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="8.1.1" data-basepath=".." data-revision="1467414378435">
+    <div class="book" data-github="basisjs/articles" data-level="8.1.1" data-basepath=".." data-revision="1467415177440">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -1239,16 +1239,22 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_52">
+                    <section class="normal" id="section-gitbook_51">
                     
-                        <h1 id="bl10n">\<b:l10n></h1>
+                        <h1 id="---ltbl10ngt">Локализация в шаблонах (&lt;b:l10n&gt;)</h1>
 <p>Для определения файла словаря, который используется шаблоном, используется тег <code>&lt;b:l10n&gt;</code>. Если описание шаблона находится в отдельном файле, то по умолчанию шаблон будет использовать словарь с таким же именем файла как имя шаблона, но с расширением <code>.l10n</code> (для шаблона <code>path/to/template.tmpl</code> будет использован файл <code>path/to/template.l10n</code>). Таким образом, использование <code>&lt;b:l10n&gt;</code> имеет смысл, только если нужно использовать другой файл или описание шаблона находится не в отдельном файле.</p>
 <p>Тег имеет единственный атрибут <code>src</code>, в котором указывается путь к файлу словаря. Если описание шаблона находится в отдельном файле, то путь разрешается относительно него, иначе относительно корня приложения.</p>
+<p>Шаблон использует словарь, только если в описании шаблона есть хотя бы один маркер с префиксом <code>l10n:</code>. Заданный (явно или неявно) словарь применяется только для маркеров в самом описании шаблона, и на включаемые описания (подключаемые через <code>&lt;b:include&gt;</code>) не распространяется.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:l10n</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./path/to/dict.l10n"</span>/&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>{l10n:greeting}<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
 </code></pre>
-<p><code>&lt;b:l10n&gt;</code> не влияет на подключаемые описания.</p>
+<p>Для маркеров с префиксом <code>l10n:</code> допускается использование биндинга в качестве последней части пути. Это применяется для перечислений (<code>enum</code> токены) и грамматического числа (<code>plural</code> токены). Таким образом при изменении значения биндинга значение в шаблоне будет перевычисляться (выбираться тот или иной токен).</p>
+<pre><code>&lt;div class=&quot;example&quot;&gt;
+  Enum: {l10n:state.{state}}&lt;br/&gt;
+  Plural: {l10n:plural.{number}}
+&lt;/div&gt;
+</code></pre><p><code>&lt;b:l10n&gt;</code> не влияет на подключаемые описания.</p>
 
                     
                     </section>
