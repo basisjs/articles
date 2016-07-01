@@ -45,7 +45,7 @@
     * [Специальные атрибуты](template/atrtibute.md)
   * [Правила применения значений биндингам](basis.template_bindings.md)
   * [Темы](basis.template_theme.md)
-* [L10n](basis.l10n.md)
+* [basis.l10n](basis.l10n.md)
 * [basis.net](basis.net.md)
   * [basis.net.ajax](basis.net.ajax.md)
   * [basis.net.action](basis.net.action.md)
