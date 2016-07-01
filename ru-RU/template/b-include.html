@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-github="basisjs/articles" data-level="8.1.6" data-basepath=".." data-revision="1467415359099">
+    <div class="book" data-github="basisjs/articles" data-level="8.1.6" data-basepath=".." data-revision="1467415552504">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -1305,7 +1305,7 @@
 <li><a href="#bremove-role"><code>&lt;b:remove-role&gt;</code></a> – удаление маркера роли</li>
 <li><a href="#bshow-bhide-bvisible-bhidden"><code>&lt;b:show&gt;</code></a>, <a href="#bshow-bhide-bvisible-bhidden"><code>&lt;b:hide&gt;</code></a>, <a href="#bshow-bhide-bvisible-bhidden"><code>&lt;b:visible&gt;</code></a>, <a href="#bshow-bhide-bvisible-bhidden"><code>&lt;b:hidden&gt;</code></a> – установление соотвествующего специального атрибута на элемент</li>
 </ul>
-<h2 id="bbefore">\<b:before></h2>
+<h2 id="ltbbefore">&lt;b:before&gt;</h2>
 <p>Cодержимое этого тега вставляется перед узлом с указанной ссылкой. Атрибут <code>ref</code> должен содержать название ссылки на узел, а если такого атрибута нет или в подключаемом описании нет узла с такой ссылкой, то данный тег игнорируется.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">b:before</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span>&gt;</span>
@@ -1324,7 +1324,7 @@
   <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h2 id="bafter">\<b:after></h2>
+<h2 id="ltbafter">&lt;b:after&gt;</h2>
 <p>Работает так же как и <code>&lt;b:before&gt;</code>, но вставка происходит после указанного узла.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">b:after</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span>&gt;</span>
@@ -1343,7 +1343,7 @@
   [inserted content]
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h2 id="bprepend">\<b:prepend></h2>
+<h2 id="ltbprepend">&lt;b:prepend&gt;</h2>
 <p>Инструкци вставляет содержимое в начало элемента с указаной в атрибуте <code>ref</code> ссылкой. Если атрибут отсутствует, то используется ссылка <code>element</code>. Если узла с указанной ссылкой нет или узел не является элементом, то тег игнорируется.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">b:prepend</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span>&gt;</span>
@@ -1361,7 +1361,7 @@
   <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>[inserted content]{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h2 id="bappend">\<b:append></h2>
+<h2 id="ltbappend">&lt;b:append&gt;</h2>
 <p>Работает так же, как и <code>&lt;b:prepend&gt;</code>, но вставляет содержимое в конец элемента.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">b:append</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span>&gt;</span>
@@ -1379,7 +1379,7 @@
   <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>{title}[inserted content]<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h2 id="breplace">\<b:replace></h2>
+<h2 id="ltbreplace">&lt;b:replace&gt;</h2>
 <p>Инструкция заменяет содержимым узел с указаной в атрибуте <code>ref</code> ссылкой. Если атрибут отсутствует, то используется ссылка <code>element</code>. Если узла с указанной ссылкой нет или узел не является элементом, то тег игнорируется.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">b:replace</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span>&gt;</span>
@@ -1397,7 +1397,7 @@
   [new content]
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h2 id="bremove">\<b:remove></h2>
+<h2 id="ltbremove">&lt;b:remove&gt;</h2>
 <p>Инструкция заменяет содержимым узел с указаной в атрибуте <code>ref</code> ссылкой. Если атрибут отсутствует, то используется ссылка <code>element</code>. Если узла с указанной ссылкой нет или узел не является элементом, то тег игнорируется.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"foo.tmpl"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">b:remove</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span>/&gt;</span>
@@ -1414,7 +1414,7 @@
   <span class="hljs-tag">&lt;<span class="hljs-title">span</span>&gt;</span>{value}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h2 id="battr-bset-attr">\<b:attr>, \<b:set-attr></h2>
+<h2 id="ltbattr-ltbset-attr">&lt;b:attr&gt;, &lt;b:set-attr&gt;</h2>
 <p>Уставливает атрибут с именем <code>name</code> и значением <code>value</code> элементу с ссылкой <code>ref</code>.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">b:attr</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"foo"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"bar"</span>/&gt;</span>
@@ -1430,7 +1430,7 @@
   <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span> <span class="hljs-attribute">foo</span>=<span class="hljs-value">"bar"</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h2 id="bappend-attr">\<b:append-attr></h2>
+<h2 id="ltbappend-attr">&lt;b:append-attr&gt;</h2>
 <p>Добавляет значение к значению атрибута.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">b:append-attr</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"foo"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"def"</span>/&gt;</span>
@@ -1463,7 +1463,7 @@
   <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h2 id="bclass-bappend-class">\<b:class>, \<b:append-class></h2>
+<h2 id="ltbclass-ltbappend-class">&lt;b:class&gt;, &lt;b:append-class&gt;</h2>
 <p>Добавляет класс (классы) в атрибут <code>class</code>.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">b:class</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"foo foo_{selected}"</span>/&gt;</span>
@@ -1479,7 +1479,7 @@
   <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"bar foo foo_{selected}"</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h2 id="bset-class">\<b:set-class></h2>
+<h2 id="ltbset-class">&lt;b:set-class&gt;</h2>
 <p>Замещает значение атрибута <code>class</code> на новое значение;</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">b:set-class</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">"label"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"foo foo_{selected}"</span>/&gt;</span>
@@ -1495,7 +1495,7 @@
   <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"foo foo_{selected}"</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h2 id="badd-ref">\<b:add-ref></h2>
+<h2 id="ltbadd-ref">&lt;b:add-ref&gt;</h2>
 <p>Добавляет дополнительную ссылку узлу разметки.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">b:add-ref</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"demo"</span>/&gt;</span>
@@ -1512,7 +1512,7 @@
   <span class="hljs-tag">&lt;<span class="hljs-title">span{foo|bar}</span>/&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h2 id="bremove-ref">\<b:remove-ref></h2>
+<h2 id="ltbremove-ref">&lt;b:remove-ref&gt;</h2>
 <p>Добавляет дополнительную ссылку узлу разметки.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">b:remove-ref</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"demo"</span>/&gt;</span>
@@ -1532,7 +1532,7 @@
 <blockquote>
 <p>Нет необходимости удалять ссылку <code>element</code>, так как она всегда удаляется из подключаемой разметки.</p>
 </blockquote>
-<h2 id="brole-bset-role">\<b:role>, \<b:set-role></h2>
+<h2 id="ltbrole-ltbset-role">&lt;b:role&gt;, &lt;b:set-role&gt;</h2>
 <p>Устанавливает маркет роли на элемент. Подробнее в <a href="role.html">Роли</a></p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">b:set-role</span>/&gt;</span>
@@ -1552,7 +1552,7 @@
 <blockquote>
 <p>В старых версиях basis.js вместо атрибута <code>name</code> использовался атрибут <code>value</code>.</p>
 </blockquote>
-<h2 id="bremove-role">\<b:remove-role></h2>
+<h2 id="ltbremove-role">&lt;b:remove-role&gt;</h2>
 <p>Удаляет маркет роли с элемента. Подробнее в <a href="role.html">Роли</a></p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">b:remove-role</span>/&gt;</span>
@@ -1569,7 +1569,7 @@
   <span class="hljs-tag">&lt;<span class="hljs-title">span{label}</span>/&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
 </code></pre>
-<h2 id="bshow-bhide-bvisible-bhidden">\<b:show>, \<b:hide>, \<b:visible>, \<b:hidden></h2>
+<h2 id="ltbshow-ltbhide-ltbvisible-ltbhidden">&lt;b:show&gt;, &lt;b:hide&gt;, &lt;b:visible&gt;, &lt;b:hidden&gt;</h2>
 <p>Устанавливает соответствующий атрибут заданному элементу.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-title">b:include</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"./foo.tmpl"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">b:show</span> <span class="hljs-attribute">expr</span>=<span class="hljs-value">"{expr1}"</span>/&gt;</span>
