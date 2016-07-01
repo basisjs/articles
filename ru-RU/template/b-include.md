@@ -6,7 +6,7 @@
 
   * `src` – ссылка на подключаемое описание, это может быть:
 
-      * путь к файлу; если путь относительный (не начинается с `/`), то он разрешается относительно файла шаблона или относительно корня приложения, если описание находится не в отдельном файле;
+      * путь к файлу; относительные пути (начинаются не с `/`) разрешаются относительно файла шаблона или относительно корня приложения, если описание находится не в отдельном файле;
 
         ```html
           <b:include src="./path/to/file.tmpl"/>
@@ -18,16 +18,24 @@
           <b:include src="foo.bar.baz"/>
         ```
 
-      * ссылка вида `#N`, где N - идентификатор шаблона (значение свойства `templateId`); в основном используется внутренними механизмами.
+      * ссылка вида `#N`, где `N` - идентификатор шаблона (значение свойства `templateId`); в основном используется внутренними механизмами.
 
         ```html
           <b:include src="#123"/>
         ```
 
+      * ссылка вида `id:name`, где `name` - значение атрибута `id` у тега `<script type="text/basis-template">`. Если элемент успешно найден в документе, то для описания шаблона используется его содержимое.
+
+        ```html
+          <b:include src="id:my-template"/>
+        ```
+
+  * `no-style` – включается только разметка, все стили игнорируется.
+  * `isolate` – указывает, что стили и разметку нужно изолировать перед включением; в качестве значения указывается префикс, который подставляется всем класса, а если атрибут не имеет значения, то генерируется случайный; подробнее в [Изоляция стилей](isolate-style.md)
+  * `role` – позволяет задать пространство имен для ролей в подключаемой разметке; подробнее в [Роли](role.md)
   * `id` → `<b:set-attr name="id" value="(значение атрибута)">`
   * `class` → `<b:append-class value="(значение атрибута)">`
   * `ref` → `<b:add-ref name="(значение атрибута)">`
-  * `role` → `<b:set-role name="(значение атрибута)">`
   * `show` → `<b:show expr="(значение атрибута)">`
   * `hide` → `<b:hide expr="(значение атрибута)">`
   * `visible` → `<b:visible expr="(значение атрибута)">`
@@ -372,11 +380,115 @@ foo.tmpl:
 
 ## \<b:add-ref>
 
+Добавляет дополнительную ссылку узлу разметки.
+
+```html
+<b:include src="./foo.tmpl">
+  <b:add-ref name="demo"/>
+  <b:add-ref ref="foo" name="bar"/>
+</b:inclide>
+```
+
+foo.tmpl:
+
+```html
+<div class="example">
+  <span{foo}/>
+</div>
+```
+
+Эквивалентно:
+
+```html
+<div{demo} class="example">
+  <span{foo|bar}/>
+</div>
+```
+
 ## \<b:remove-ref>
+
+Добавляет дополнительную ссылку узлу разметки.
+
+```html
+<b:include src="./foo.tmpl">
+  <b:remove-ref name="demo"/>
+  <b:remove-ref name="bar"/>
+</b:inclide>
+```
+
+foo.tmpl:
+
+```html
+<div{demo} class="example">
+  <span{foo|bar}/>
+</div>
+```
+
+Эквивалентно:
+
+```html
+<div class="example">
+  <span{foo}/>
+</div>
+```
+
+> Нет необходимости удалять ссылку `element`, так как она всегда удаляется из подключаемой разметки.
 
 ## \<b:role>, \<b:set-role>
 
+Устанавливает маркет роли на элемент. Подробнее в [Роли](role.md)
+
+```html
+<b:include src="./foo.tmpl">
+  <b:set-role/>
+  <b:set-role ref="label" name="count"/>
+</b:inclide>
+```
+
+foo.tmpl:
+
+```html
+<div class="example">
+  <span{label}/>
+</div>
+```
+
+Эквивалентно:
+
+```html
+<div class="example" b:role>
+  <span{label} b:role="count"/>
+</div>
+```
+
+> В старых версиях basis.js вместо атрибута `name` использовался атрибут `value`.
+
 ## \<b:remove-role>
+
+Удаляет маркет роли с элемента. Подробнее в [Роли](role.md)
+
+```html
+<b:include src="./foo.tmpl">
+  <b:remove-role/>
+  <b:remove-role ref="label"/>
+</b:inclide>
+```
+
+foo.tmpl:
+
+```html
+<div class="example" b:role>
+  <span{label} b:role="something"/>
+</div>
+```
+
+Эквивалентно:
+
+```html
+<div class="example">
+  <span{label}/>
+</div>
+```
 
 ## \<b:show>, \<b:hide>, \<b:visible>, \<b:hidden>
 
