@@ -1,6 +1,6 @@
 # basis.net.ajax
 
-Модуль обеспечивает базовую работу с `ajax`-запросами, предоставляет два класса `Request` и `Transport`, а так же функцию [request](#basisnetajaxrequest).
+Модуль обеспечивает базовую работу с `ajax`-запросами, предоставляет два класса `Request` и `Transport`, а также функцию [request](#basisnetajaxrequest).
 
 ## Transport и Request
 
@@ -14,10 +14,12 @@
   - `requestHeaders` - базовые заголовки для запроса
   - `responseType` - тип ответа (`XMLHttpRequest#responseType`)
   - `url` - адрес для запроса
-  - `params` - список параметров, дополняющий в `queryString`
+  - `params` - список параметров, дополняющий `queryString`
   - `routerParams` - объект, значения которого используются для подстановок в `url`
-  - `contentType` - тип передаваемого содержимого, используется если есть `postBody` (по умолчанию `application/x-www-form-urlencoded`)
-  - `postBody` - тело запроса (строка или `XML`)
+  - `contentType` - тип передаваемого содержимого (по умолчанию `application/x-www-form-urlencoded`)
+  - `postBody` - (DEPRECATED) тело запроса (строка или `XML`)
+  - `body` - тело запроса (строка или `XML`)
+  - `bodyContext` - ???
 
 Все эти значения используются как базовые, если они не указаны в параметрах запроса. Значения `params` подмешиваются к `params` запроса, `routerParams` к `routerParams`, а `requestHeaders` к `headers`. Все эти значения можно задать (переопределить) при выполнении запроса методом `request`, который принимает объект со значениями.
 
