@@ -31,7 +31,7 @@
         ```
 
   * `no-style` – включается только разметка, все стили игнорируется.
-  * `isolate` – указывает, что стили и разметку нужно изолировать перед включением; в качестве значения указывается префикс, который подставляется всем класса, а если атрибут не имеет значения, то генерируется случайный; подробнее в [Изоляция стилей](isolate-style.md)
+  * `isolate` – указывает, что стили и разметку нужно [изолировать](isolate-style.md) перед включением; в качестве значения указывается префикс, который подставляется всем класса, а если атрибут не имеет значения, то генерируется случайный; подробнее в [Изоляция стилей](isolate-style.md)
   * `role` – позволяет задать пространство имен для ролей в подключаемой разметке; подробнее в [Роли](role.md)
   * `id` → `<b:set-attr name="id" value="(значение атрибута)">`
   * `class` → `<b:append-class value="(значение атрибута)">`
@@ -526,3 +526,69 @@ foo.tmpl:
 Нужно заметить, что `b:hide` в `foo.tmpl` был отброшен, так как `b:show` и `b:hide` (как и `b:visible`/`b:hidden`) взаимообратные и выигрывает последний.
 
 Подробнее про специальные атрибуты в [Специальные атрибуты в шаблонах](attribute.md)
+
+## isolate
+
+Для [изоляции](isolate-style.md) подключаемого шаблона, в тег `<b:include/>` добавляется атрибут `isolate`:
+
+`template.tmpl`:
+```html
+<b:style>
+  .some-class {
+    color: red;
+  }
+</b:style>
+
+<div>
+  <div class="some-class">Компонент</div>
+  <b:include src="./innerTemplate.tmpl" isolate/>
+</div>
+```
+`innerTemplate.tmpl`:
+```html
+<b:style>
+  .gold-border {
+    border: 1px solid gold;
+  }
+</b:style>
+
+<div class="gold-border">Подключаемый шаблон</div>
+```
+В результате будет сгенерировано следующее содержимое:
+```html
+<div>
+  <div class="some-class">Компонент</div>
+  <div class="t234t23t2__gold-border">Подключаемый шаблон</div>
+</div>
+```
+```css
+.some-class {
+  color: red;
+}
+.t234t23t2__gold-border {
+  border: 1px solid gold;
+}
+```
+Можно задать собственный префикс, указав значение атрибуту `isolate`:
+
+`template.tmpl`:
+```html
+...
+<b:include src="./innerTemplate.tmpl" isolate="my-prefix_"/>
+...
+```
+В результате будет сгенерировано следующее содержимое:
+```html
+<div>
+  <div class="some-class">Компонент</div>
+  <div class="my-prefix_gold-border">Подключаемый шаблон</div>
+</div>
+```
+```css
+.some-class {
+  color: red;
+}
+.my-prefix_gold-border {
+  border: 1px solid gold;
+}
+```
