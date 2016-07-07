@@ -1,8 +1,0 @@
-{
-  "name": "basisjs-tutorial-part1",
-  "description": "tutorial sandbox",
-  "private": true,
-  "dependencies": {
-    "basisjs": "^1.6.1"
-  }
-}
