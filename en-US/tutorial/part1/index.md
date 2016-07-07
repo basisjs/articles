@@ -136,6 +136,34 @@ In the meantime, let's see how we created the representation. Firstly we passed 
 
 ## Build process
 
+While developing there is no need to build your project. Everything works as it is. One need to build a project only for publushng purposes. It is a way to reduce a number of files and decrease its' size. For that kind of work one may need a builder form `basisjs-tools`.
+
+As one may remember, we have changed our project structure a few times. When we start to develop it is not really clear how to organize modules and where to put all those files. Even more! During the work on a particular project tasks change, requirements change, effective solutions appear, bright ideas about better project structure come to us. So it is ok for a project structure to be modified from time to time.
+
+The builder tries to understand the project structure. Almost like a human it opens files, reads them and understands.
+
+In the beginning of the build process the builder takes a `html`-file (in out case it is `index.html`), finds there `<script>`, `<link rel="stylesheet">`, `<style>` and other tags. Understand which files where included. Next the builder analyzes these files, finds in them other instructions which require something else, etc. What kind of instructions do we mean here? For example in `javascript` files those insructions are `basis.require`, `basis.resource` and the like. For `css` files – `@import`, `url(..)`. Yu already know all those examples. So the buider recursively processes all files in that way and build an application graph. After that the builder analyzes links between files, reorganizes files and optimizes them. As a result of that work there will be a separate folder with a builded version of our project. And there will be significantly less files in that folder than in the source version of our project.
+
+Let's build the project:
+
+    > basis build
+
+That's it! As a result we'll see three files in a `build` folder: `index.html`, `script.js` and `style.css`. This _is_ a builded verion of our app. To deploy our project the only thing we need is to copy those files to a production server.
+
+There are few optimizations that are disabled by default. To learn more type:
+
+    > basis build --help
+
+The most common optimization is removing debugging code and compression of `javascript` and `css`. It can be applied with a `--pack` option (`-p` is a shortcut):
+
+    > basis build --pack
+
+We will see following:
+
+![Result of running `basis build --pack`](../../../ru-RU/tutorial/part1/build.png)
+
+So the builder does a lot of work! Besides when running with a `--verbose` option it shows all those tiny little details of its work. But we may care less about creating of a builded version of a project. Instead we will develop the app itself and other crazy stuff.
+
 ## Outro
 
 We covered here core concepts for app development with `basis.js`, tried few ways to define views and how to organize files in your project.
