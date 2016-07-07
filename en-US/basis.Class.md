@@ -1,27 +1,26 @@
-<!-- MarkdownTOC depth=3 -->
-
-- [basis.Class \(Classes\)](#basisclass-classes)
-    - [Creating classes](#creating-classes)
-    - [Class properties](#class-properties)
-    - [Inheritance](#inheritance)
-    - [The life cycle of an instance](#the-life-cycle-of-an-instance)
-    - [Creating instance patterns](#creating-instance-patterns)
-    - [Autoextension](#autoextension)
-    - [How to check if an object is an instance of a given class](#how-to-check-if-an-object-is-an-instance-of-a-given-class)
-    - [Class to instance transormation](#class-to-instance-transormation)
-    - [Extensible properties](#extensible-properties)
-        - [extensibleProperty](#extensibleproperty)
-        - [customExtendProperty](#customextendproperty)
-        - [nestedExtendProperty](#nestedextendproperty)
-        - [oneFunctionProperty](#onefunctionproperty)
-    - [Helpers](#helpers)
-        - [SELF](#self)
-        - [isClass](#isclass)
-
-<!-- /MarkdownTOC -->
 # basis.Class (Classes)
 
 A `basis.Class` function and its methods simplify the process of designing classes. Inheritance relies on prototype-based javascript inheritance.
+<!-- MarkdownTOC -->
+
+- [Creating classes](#creating-classes)
+- [Class properties](#class-properties)
+- [Inheritance](#inheritance)
+- [The life cycle of an instance](#the-life-cycle-of-an-instance)
+- [Creating instance patterns](#creating-instance-patterns)
+- [Autoextension](#autoextension)
+- [How to check if an object is an instance of a given class](#how-to-check-if-an-object-is-an-instance-of-a-given-class)
+- [Class to instance transormation](#class-to-instance-transormation)
+- [Extensible properties](#extensible-properties)
+    - [extensibleProperty](#extensibleproperty)
+    - [customExtendProperty](#customextendproperty)
+    - [nestedExtendProperty](#nestedextendproperty)
+    - [oneFunctionProperty](#onefunctionproperty)
+- [Helpers](#helpers)
+    - [SELF](#self)
+    - [isClass](#isclass)
+
+<!-- /MarkdownTOC -->
 
 ## Creating classes
 
@@ -43,7 +42,6 @@ var Bar = basis.Class(Foo, {
 ```
 
 As an extension one can provide:
-
 
   * an object – all object properties (including those that are in prototype chain) will be copied to the new class prototype;
 
@@ -93,10 +91,10 @@ For the convenience of debugging one can specify a `className` property in the e
 
 ## Class properties
 
-  * className – class name;
+  * className – a class name;
   * basisClassId_ – the unique identifier of the class, it is available only in `dev` mode and is used for debugging purposes;
   * superClass_ – link to a parent class;
-  * extendConstructor_ – конструктор, используется авторасширение экземпляра (see [Creating instance patterns](#creating-instance-patterns));
+  * extendConstructor_ – a constructor, autoextension of an instance is used here (see [Creating instance patterns](#creating-instance-patterns));
   * \_\_extend\_\_ – autoextension method, creates a new class depending on a passed argument, the new class inherits from the current class (see "[Autoextension](#autoextension)");
   * isSubclassOf – method determines if the current class is the child of another class
     ```js
@@ -107,8 +105,8 @@ For the convenience of debugging one can specify a `className` property in the e
       // console> true
     ```
 
-  * extend – method для расширения прототипа класса;
-  * subclass – method, создающий новый класс, унаследованный от текущего, может служить альтернативой `basis.Class`; следующие две записи эквивалентны:
+  * extend – a method to expand a ptototype class;
+  * subclass – a method to create a new class inherited from the current class. Can be an alternative to `basis.Class`; following lines are equivalent
     ```js
     var MyClass = basis.Class(SomeClass,  { .. });
     var MyClass = SomeClass.subclass({ .. });
@@ -116,7 +114,7 @@ For the convenience of debugging one can specify a `className` property in the e
 
 ## Inheritance
 
-Любое свойство может быть переопределено в новом классе. Доступ к свойствам суперкласса производится через свойство `prototype` суперкласса.
+Any property can be reassigned in a new class. Superclass'es properties can be accessed through `prototype` property of the superclass.
 
 ```js
 var Human = basis.Class(null, {
@@ -168,6 +166,46 @@ console.log(mario instanceof Gamer);
 ## Class to instance transormation
 
 ...
+
+```js
+var Node = basis.require('basis.ui').Node;
+var data = [...];
+var nodes = [];
+
+for (var i = 0; i < data.length; i++)
+  nodes.push(new Node({
+    template: resource('./path/to/node.tmpl'),    // !!!
+    name: data[i],
+    childClass: {                                 // !!!
+      template: resource('./path/to/item.tmpl'),  // !!!
+      binding: {                                  // !!!
+        title: 'data:'
+      }
+    }
+  }));
+```
+
+Lines marked with `!!!` point to problems. In this case there will be created an extra `basis.template.html.Template` instance for every `basis.ui.Node` instance. Meaning one and the same template source will be processd for every node instance. As well as that piece of code will create its own class for child nodes, each of them will create its own template instance and a new `binding` object. It will be better to do this way:
+
+```js
+var Node = basis.require('basis.ui').Node;
+var data = [...];
+var nodes = [];
+var MyNode = Node.subclass({
+  template: resource('./path/to/node.tmpl'),    // !!!
+  childClass: {                                 // !!!
+    template: resource('./path/to/item.tmpl'),  // !!!
+    binding: {                                  // !!!
+      title: 'data:'
+    }
+  }
+})
+
+for (var i = 0; i < data.length; i++)
+  nodes.push(new MyNode({
+    name: data[i]
+  }));
+```
 
 There will be no extra objects in this case.
 
