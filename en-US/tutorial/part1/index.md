@@ -165,6 +165,51 @@ In this case `basis.require` can be used. But more often case is when templates 
 
 ### Advantages of using modules
 
+When the code is described in a separate file and is connected as a module, it is wrapped in a special way, and several additional variables and functions  became available in the code.
+
+For example, the file name can be obtained from a variable `__filename`, and the folder name where the module was placed can be obtained from a variable` __dirname`.
+
+But more important is that local functions `require` and `resource` became available too. They work the same way as `basis.require` and `basis.resource`, except the way how relative file paths are resolved. If the function `basis.require` and `basis.resource` are provided with a relative path, it is resolved with respect to `html` file (in our case it is `index.html`). At the same time, `require` and` resource` resolve such a path relative to the module (ie, to the its `__dirname`).
+
+It is more convenient to use local functions and `require`` resource` inside modules. So the code in `hello.js` is a little easier now:
+
+```js
+var Node = require('basis.ui').Node;
+
+var view = new Node({
+  container: document.body,
+  template: resource('./hello.tmpl')
+});
+```
+
+> Modularity provides additional capabilities not only to `javascript` modules, but also to other types of content. For example, if the description of the template lies in a separate file, it is not necessary to update the page when it changes. Once the changes have been saved, all instances of the representations that use the modified template, update their own `DOM` fragments. And all this happens without reloading the page, maintaining the current state of the application.
+
+The same applies to the `css` files, to localization files and to some other file types. The only changes that require a page reload are changing the `html` file and changing any `javascript` modules that have already been initialized.
+
+It is the dev-server from `basisjs-tools` who provides this mechanism of updatig files. This is one of the main reasons why it is wise to use it, rather than the usual web server.
+
+Let's try how it works. Create a file `hello.css`, like this:
+
+```css
+h1
+{
+  color: red;
+}
+```
+
+And let's change slightly the template (`hello.tmpl`):
+
+```html
+<b:style src="./hello.css"/>
+<h1>Hello world!</h1>
+```
+
+Once the template changes are saved, the text turns red. There is no need to refresh the page.
+
+In the template, we have added a special tag `<b: style>`. This tag says that when you use this template, you need to connect the specified stylesheet to the page. Relative paths are resolved with respect to the template file. Any number of stylesheet files can be connected to a template. We do not need to worry about adding and removing styles. The framework takes  care of it.
+
+So, we have just created a simple static view. But in web applications it is all about dynamics. So let's try to use ​in the template some values ​from the presentation and try to somehow communicate with it. For the first one can use _bindings_, and for the second - for cimmunication - _actions_.
+
 ## Bindings and actions
 
 ## A list
