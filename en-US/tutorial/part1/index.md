@@ -120,6 +120,49 @@ In the meantime, let's see how we created the representation. Firstly we passed 
 
 ## Modules
 
+While developing we try to isolate logical parts of our app and put those parts in separate files. Less code in a file, easier to work with it. Ideally a module's code should fit into one screen, a maximum of two. But, of course, there are always exceptions.
+
+Let's move a representation code into a separate module. To do this, create a file `hello.js` and move lines from `<script>` into it.
+
+And that's all for now. Just include this new module in `index.html`:
+
+```html
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first app on basis.js</title>
+</head>
+<body>
+  <script src="node_modules/basisjs/src/basis.js" basis-config=""></script>
+  <script>
+    basis.require('./hello.js');
+  </script>
+</body>
+</html>
+```
+
+Again one can `basis.require` function, but now its argument is a path to a file. It's important to start the path with `./`, `../` or `/`. This tells to `basis.require` to treat the argument as a path to a file not as a module name. The same convention works in `node.js`.
+
+Continue to modularity. For example why do we need `html` in a javascript file? Let's move it to a separate file, name it `hello.tmpl`. See the changes in our module:
+
+```js
+var Node = basis.require('basis.ui').Node;
+
+var view = new Node({
+  container: document.body,
+  template: basis.resource('./hello.tmpl')
+});
+```
+
+The difference is a stirng describing a template was replaced with a call to a `basis.resource` function. This function creates an "interface" to the file. This approach makes it possible to determine which files are really needed, and download them not earlier than there is need for them.
+
+An interface created by `basis.resource` is a function with extra methods. A call to this function or to its method `fetch` downloads the file. The files is loaded only once, and the result is cached. More details on that can be found in an article [Resources (modularity)](../../resources.md).
+
+And one more thing. Call to `basis.require('./file.name')` is equivalent to `basis.resource('./file.name').fetch()`.
+
+In this case `basis.require` can be used. But more often case is when templates are described directly in classes. And there is no need to load a file before at least one instance of the class is created. We'll see it later in examples. For uniformity reasons it is better to use `basis.resource` when assigning a template to a node.
+
 ### Advantages of using modules
 
 ## Bindings and actions
@@ -162,7 +205,7 @@ We will see following:
 
 ![Result of running `basis build --pack`](../../../ru-RU/tutorial/part1/build.png)
 
-So the builder does a lot of work! Besides when running with a `--verbose` option it shows all those tiny little details of its work. But we may care less about creating of a builded version of a project. Instead we will develop the app itself and other crazy stuff.
+So the builder does a lot of work! Besides when running with a `--verbose` option it shows all those tiny little details of its work. But we may care less about creating of a builded version of a project every time we need it. Instead we will develop the app itself and do other crazy stuff.
 
 ## Outro
 
