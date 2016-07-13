@@ -208,9 +208,147 @@ Once the template changes are saved, the text turns red. There is no need to ref
 
 In the template, we have added a special tag `<b: style>`. This tag says that when you use this template, you need to connect the specified stylesheet to the page. Relative paths are resolved with respect to the template file. Any number of stylesheet files can be connected to a template. We do not need to worry about adding and removing styles. The framework takes  care of it.
 
-So, we have just created a simple static view. But in web applications it is all about dynamics. So let's try to use ​in the template some values ​from the presentation and try to somehow communicate with it. For the first one can use _bindings_, and for the second - for cimmunication - _actions_.
+So, we have just created a simple static view. But in web applications it is all about dynamics. So let's try to use ​in the template some values ​from the presentation and try to somehow communicate with it. For the first one can use _bindings_, and for the second - for communication - _actions_.
 
 ## Bindings and actions
+
+Bindings allow to transfer values ​​from a representation to its `DOM` fragment. Unlike most template systems, `basis.js` templates have no direct access to properties of a representation. And so bindings can use only those values ​​that the representation itself provides to a template.
+
+To set ​​which values will be available in a given template, use a `binding` property in a description of an instance or of a class that inherits from `basis.ui.Node`. The values (bindings) are described in the form of the object, where keys are names that will be available in the template, and each value (of a `basis.ui.Node.binding` object) is a function that calculates a corresponding value (a binding) for the template. So the function only parameter is the owner of the template, that is the representation itself. This is how you can provide a `name` value in a template:
+
+```js
+var Node = require('basis.ui').Node;
+
+var view = new Node({
+  container: document.body,
+  name: 'world',
+  template: resource('./hello.tmpl'),
+  binding: {
+    name: function(node){
+      return node.name;
+    }
+  }
+});
+```
+
+It is worth mentioning that the `binding` property is an [auto-extensible property](../../basis.Class.md#autoextending). When you set a new value for the property, or when you create an instance of the class, the new value extends the previous one, adding and overriding previous values. By default, `basis.ui.Node` already have [some useful properties](../../basis.ui_bindings.md#default-bindings), which can be used together with a certain contact `name`.
+
+Let's change the template (`hello.tmpl`) to use the `name`.
+
+```html
+<b:style src="./hello.css"/>
+<h1>Hello, {name}!</h1>
+```
+
+TODO markers - special inserts are used in the template. They are used to obtain links on certain parts of the template and placement values. These inserts are specified in curly brackets. In this case, we have added a `{name}`, insert the values ​​as plain text.
+
+Description Template looks like a description of the format of other template systems. But unlike them, `basis.js` template works with` DOM` nodes. For a description of this item `<h1>` will be created, which will contain three text node `Hello,`, `{name}` and `!`. The first and last are static, and the text will not change. But the average value will be marked from (will change its property `nodeValue`).
+
+But enough words, let's update the page and look at the result!
+
+TODO Now add a field that will introduce the name and that it is substituted in the title. Let's start with a template:
+
+```html
+<b:style src="./hello.css"/>
+<div>
+  <h1>Hello, {name}!</h1>
+  <input value="{name}" event-keyup="setName"/>
+</div>
+```
+
+TODO The template added element `<input>`. For his `value` attribute uses the same Binding as the title -` {name} `. But it works only for entries in `DOM`.
+
+To view reacted to the events in his `DOM` fragment desired item is added to the attribute whose name is the name of the event with the prefix` event-`. We can add the execution of the action to any element to any event. And on one event action can be somewhat, the main divide action names with a space.
+
+In our example, we added an attribute `event-keyup`, which obliges the idea to perform an action` setName`, when an event is triggered `keyup`. If the submission is not some kind of action will be determined in the console we will see a warning message about this and nothing else will happen.
+
+And now add the description of the action. To do this, use the property `action`. It works similar to `binding`, but only describes the action. Options in `action` receive an event object parameter. This is not the original event and the copy with additional methods and properties (the original is kept in the event of his property `event_`).
+
+TODO Here's how an idea will look now ( `hello.js`):
+
+```js
+var Node = require('basis.ui').Node;
+
+var view = new Node({
+  container: document.body,
+  name: 'world',
+  template: resource('./hello.tmpl'),
+  binding: {
+    name: function(node){
+      return node.name;
+    }
+  },
+  action: {
+    setName: function(event){
+      this.name = event.sender.value;
+      this.updateBind('name');
+    }
+  }
+});
+```
+
+TODO Here we read a value from the `event.sender`, as an element, in which the event occurred -` <input> `. In order for an idea to re-calculate the value and passes it to the template, we called the method `updateBind`.
+
+TODO Calling explicitly recalculated values ​​need not always for the template. If you change the values ​​that are used to calculate the bindings, there are events that can be specified in the description of these events, and Binding will be recalculated automatically when they arise.
+
+TODO Performances as a model, able to store data in the form of key-value. The data is stored in the property `data` and changing the method of` update`. When changing values ​​in the `data`, triggered event` update`. We use this mechanism to store name:
+
+```js
+var Node = require('basis.ui').Node;
+
+var view = new Node({
+  container: document.body,
+  data: {
+    name: 'world'
+  },
+  template: resource('./hello.tmpl'),
+  binding: {
+    name: {
+      events: 'update',
+      getter: function(node){
+        return node.data.name;
+      }
+    }
+  },
+  action: {
+    setName: function(event){
+      this.update({
+        name: event.sender.value
+      });
+    }
+  }
+});
+```
+
+Now `updateBind` is not called explicitly. But it requires more code to describe that binding this way. Luckily, there are helpers that reduce the description im the most common cases. One of the examples is synchronization with the `data` field. This binding can be written in a shorter form, like this:
+
+```js
+var Node = require('basis.ui').Node;
+
+var view = new Node({
+  container: document.body,
+  data: {
+    name: 'world'
+  },
+  template: resource('./hello.tmpl'),
+  binding: {
+    name: 'data:name'
+  },
+  action: {
+    setName: function(event){
+      this.update({
+        name: event.sender.value
+      });
+    }
+  }
+});
+```
+
+The helper which was just used is only syntactic sugar. It will unfold in full form, which has been presented in the previous example. More details can be found in the article [Bindings](../../ basis.ui_bindings.md).
+
+The main thing to remember is the following. A representation calculates and transmits values to its template, the `binding` property is used for that. The template captures and transmits events to its representation, it triggers actions listed in the `action` property. In other words `binding` and` action` are the two main points of contact between the representation and its template. At the same time, the representation knows almost nothing about how its template is organized, and the template knows nothing about the representation realisation. All the logic (`javascript`) is on the side of the representation, and all the work with `DOM` is on the side of the template. So, in most cases, a complete separation of logic and representation is achieved.
+
+![Split logic and markup](../../../ru-RU/tutorial/part1/split_logic_markup.png)
 
 ## A list
 
