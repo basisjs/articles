@@ -4,25 +4,6 @@
 
 От `basis.data.Value` образуются другие классы, например, в пространствах имен `basis.data.value` и `basis.data.index`.
 
-<!-- MarkdownTOC -->
-
-- [Работа со значением](#работа-со-значением)
-- [Преобразование значений](#преобразование-значений)
-  - [Value#as\(fn\)](#valueasfn)
-  - [Value#deferred\(\)](#valuedeferred)
-  - [Value#compute\(events, fn\)](#valuecomputeevents-fn)
-  - [Value#pipe\(events, fn\)](#valuepipeevents-fn)
-  - [Value#query\(path\)](#valuequerypath)
-- [Фабрики](#фабрики)
-  - [Value.from\(target, \[events\], fn\)](#valuefromtarget-events-fn)
-  - [Value.factory\(\[events\], fn\)](#valuefactoryevents-fn)
-  - [Value.state\(\)](#valuestate)
-  - [Value.stateFactory\(\)](#valuestatefactory)
-  - [Value.query\(\[target\], path\)](#valuequerytarget-path)
-
-<!-- /MarkdownTOC -->
-
-
 ## Работа со значением
 
 Значение хранится в свойстве `value` и может иметь любой тип. Его можно задать при создании объекта или используя метод `set()`. Если значение меняется (для сравнения используется `===`), то метод `set` возвращает `true` и выбрасывается событие `change`. Обработчику события `change` передается предыдущее значение, которое было до изменения.
