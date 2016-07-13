@@ -87,6 +87,7 @@ value.unlock();
 
 - `as()` – простое преобразование
 - `deferred()` – отложенное значение
+- `compute()` – создаение фабрики для создания совместного вычисления с экземпляром `basis.event.Emitter`'а
 - `pipe()` – преобразование `basis.event.Emitter`'а хранимого в качестве значения
 - `query()` – подзапрос к значению
 
@@ -117,7 +118,7 @@ console.log(doubleValue.value);
 // > 4
 ```
 
-Для одних и тех же значений параметра `fn` возвращается один и тот же токен.
+Для одних и тех же значений параметра `fn` возвращается один и тот же производное значение.
 
 ```js
 var Value = require('basis.data').Value;
@@ -162,60 +163,7 @@ setTimeout(function(){
 }, 10);
 ```
 
-### Value#pipe(events, fn)
-
-Если оригинальное значение хранит экземпляр `Emitter`, то позволяет слушать у него события и перевычислять производное значение в случае их совершения.
-
-Параметры:
-
-- `events` - события, которые необходимо слушать (список событий в виде строки разделенные пробелом или массив строк)
-- `fn` - функция преобразования или строку (пропускается через `basis.getter`)
-
-```js
-var DataObject = require('basis.data').Object;
-var Value = require('basis.data').Value;
-
-var foo = new DataObject({ data: { prop: 1 } });
-var val = new Value({
-  value: foo
-});
-var pipe = val.pipe('update', function(object){
-  return object.data.prop;
-});
-
-console.log(pipe.value);
-// > 1
-
-foo.update({ prop: 333 });
-console.log(pipe.value);
-// > 333
-
-val.set(new DataObject({ data: { prop: 777 } }));
-console.log(pipe.value);
-// > 777
-
-val.set();
-console.log(pipe.value);
-// > undefined
-```
-
-### Value#query(path)
-
-Метод–хелпер, для более короткой записи `Value.query()` и отсутсвия необходимости импортировать `Value`.
-
-```js
-var Value = require('basis.data').Value;
-
-var val = new Value();
-
-val.query('foo.bar');
-// эквивалентно
-Value.query(val, 'value.foo.bar');
-```
-
-Также см. [`Value.query()`](#valuequerytarget-path)
-
-## Фабрика токенов
+### Value#compute(events, fn)
 
 Иногда нужно получать преобразование значение экземпляра `Value`, которое также зависит от другого экземпляра `basis.event.Emitter`. Для этого создается функция-фабрика, которая возвращает `basis.data.ReadOnlyValue` для заданого экземпляра `basis.event.Emitter`. Такая функция создается методом `Value#compute()`. Этот метод принимает два аргумента:
 
@@ -223,9 +171,9 @@ Value.query(val, 'value.foo.bar');
 
   * fn - функция вычисления значения; такая фунция получает два аргумента:
 
-    * object - объект, для которого создан токен;
+    * object - объект, для которого создается вычисление;
 
-    * value - текущее значение экземпляра `Value`, от которого образована фабрика токенов.
+    * value - текущее значение экземпляра `Value`, от которого образована фабрика.
 
 Значение вычисляется при создании и перевычисляется, когда меняется значение экземпляра `Value` или выбрасывается событие, которое указано в списке событий. В случае разрушения `Value` или объекта разрушается и производные значения.
 
@@ -296,6 +244,59 @@ commission.set(15);
 //   <div>amount: 251, commission: 37.65</div>
 // </div>
 ```
+
+### Value#pipe(events, fn)
+
+Если оригинальное значение хранит экземпляр `Emitter`, то позволяет слушать у него события и перевычислять производное значение в случае их совершения.
+
+Параметры:
+
+- `events` - события, которые необходимо слушать (список событий в виде строки разделенные пробелом или массив строк)
+- `fn` - функция преобразования или строку (пропускается через `basis.getter`)
+
+```js
+var DataObject = require('basis.data').Object;
+var Value = require('basis.data').Value;
+
+var foo = new DataObject({ data: { prop: 1 } });
+var val = new Value({
+  value: foo
+});
+var pipe = val.pipe('update', function(object){
+  return object.data.prop;
+});
+
+console.log(pipe.value);
+// > 1
+
+foo.update({ prop: 333 });
+console.log(pipe.value);
+// > 333
+
+val.set(new DataObject({ data: { prop: 777 } }));
+console.log(pipe.value);
+// > 777
+
+val.set();
+console.log(pipe.value);
+// > undefined
+```
+
+### Value#query(path)
+
+Метод–хелпер, для более короткой записи `Value.query()` и отсутсвия необходимости импортировать `Value`.
+
+```js
+var Value = require('basis.data').Value;
+
+var val = new Value();
+
+val.query('foo.bar');
+// эквивалентно
+Value.query(val, 'value.foo.bar');
+```
+
+Также см. [`Value.query()`](#valuequerytarget-path)
 
 ## Фабрики
 
