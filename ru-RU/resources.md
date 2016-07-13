@@ -1,5 +1,46 @@
 # Модульность
 
+<!-- MarkdownTOC -->
+
+- [basis.resource](#basisresource)
+  - [Свойства](#свойства)
+    - [url](#url)
+    - [type](#type)
+    - [virtual](#virtual)
+  - [Методы](#методы)
+    - [fetch\(\)](#fetch)
+    - [get\(\[source\]\)](#getsource)
+    - [update\(value\)](#updatevalue)
+    - [reload\(\)](#reload)
+    - [isResolved\(\)](#isresolved)
+    - [hasChanges\(\)](#haschanges)
+    - [ready\(fn\[, context\]\)](#readyfn-context)
+  - [Наследие basis.Token](#наследие-basistoken)
+- [basis.require\(\)](#basisrequire)
+- [Пространства имен](#пространства-имен)
+- [Виртуальные ресурсы](#виртуальные-ресурсы)
+- [Загрузка и кеш](#загрузка-и-кеш)
+- [Жизненный цикл](#жизненный-цикл)
+- [basis.patch\(path, fn\)](#basispatchpath-fn)
+- [basis.asset\(path\)](#basisassetpath)
+- [Вспомогательные функции и объекты](#вспомогательные-функции-и-объекты)
+  - [basis.resource.resolveURI\(url\[, baseURI\]\)](#basisresourceresolveuriurl-baseuri)
+  - [basis.resource.isResource\(value\)](#basisresourceisresourcevalue)
+  - [basis.resource.isResolved\(filename\)](#basisresourceisresolvedfilename)
+  - [basis.resource.exists\(filename\)](#basisresourceexistsfilename)
+  - [basis.resource.get\(filename\)](#basisresourcegetfilename)
+  - [basis.resource.getFiles\(\[cache\]\)](#basisresourcegetfilescache)
+  - [basis.resource.virtual\(type, content\[, ownerFilename\]\)](#basisresourcevirtualtype-content-ownerfilename)
+  - [basis.resource.extensions](#basisresourceextensions)
+- [Типы ресурсов](#типы-ресурсов)
+  - [JavaScript](#javascript)
+  - [JSON](#json)
+  - [CSS](#css)
+  - [Добавление собственных обработчиков ресурсов](#добавление-собственных-обработчиков-ресурсов)
+
+<!-- /MarkdownTOC -->
+
+
 ## basis.resource
 
 Основой модульности `basis.js` являются ресурсы. Они используются для того, чтобы выносить из кода контент различного типа в отдельные файлы, а также сегментировать (разбивать на меньшие части) сам `JavaScript` код. В общем случае ресурс – это некоторый файл, а точнее, интерфейс, обеспечивающий загрузку и доступ к содержимому файла.
