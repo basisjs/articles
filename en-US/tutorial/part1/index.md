@@ -112,17 +112,17 @@ To start with we said we need `basis.ui` module, using a `basis.require` functio
 
 We needed `basis.ui` module, because it provides all necessary things for building interfaces. However this module requires other modules, one may not think about it, because `basis.js` will do the work. One should require only those modules which are explicitly used in the code that one writes.
 
-Secondly we created a representaion itself as a `basis.ui.Node` class instance. Let's not be confused with the name `Node` instead of classic `View`. The thing is in `basis.js` all components and representations are put one into another. Thus a certain block might look like as a whole thing, but in fact may consists of a plenty of sub-representaions (nodes).
+Secondly we created a representaion itself as a `basis.ui.Node` class instance. Let's not be confused with the name `Node` instead of classic `View`. The thing is in `basis.js` all components and views are put one into another. Thus a certain block might look like as a whole thing, but in fact may consists of a plenty of sub-representaions (nodes).
 
-> The whole interface is organized as a big tree. Representation nodes of the app are the tree nodes. One can transform the tree adding, deleting and moving those nodes. The tree API has a lot in common with the browser `DOM`. We will cover it later.
+> The whole interface is organized as a big tree. View nodes of the app are the tree nodes. One can transform the tree adding, deleting and moving those nodes. The tree API has a lot in common with the browser `DOM`. We will cover it later.
 
-In the meantime, let's see how we created the representation. Firstly we passed to the constructor an object with some "settings" - a config. Setting a `container` property we pointed out where to put the representation's `DOM`-fragment when it will be ready. It must be a `DOM`-element. The `template` property describes a template (who would've thought!). That description was added directly in the config. This option is handy for quick prototyping and for examples. But for real applications it is not a good practice at all. We'll change this part of the example later.
+In the meantime, let's see how we created the view. Firstly we passed to the constructor an object with some "settings" - a config. Setting a `container` property we pointed out where to put the view's `DOM`-fragment when it will be ready. It must be a `DOM`-element. The `template` property describes a template (who would've thought!). That description was added directly in the config. This option is handy for quick prototyping and for examples. But for real applications it is not a good practice at all. We'll change this part of the example later.
 
 ## Modules
 
 While developing we try to isolate logical parts of our app and put those parts in separate files. Less code in a file, easier to work with it. Ideally a module's code should fit into one screen, a maximum of two. But, of course, there are always exceptions.
 
-Let's move a representation code into a separate module. To do this, create a file `hello.js` and move lines from `<script>` into it.
+Let's move a view code into a separate module. To do this, create a file `hello.js` and move lines from `<script>` into it.
 
 And that's all for now. Just include this new module in `index.html`:
 
@@ -165,7 +165,7 @@ In this case `basis.require` can be used. But more often case is when templates 
 
 ### Advantages of using modules
 
-When the code is described in a separate file and is connected as a module, it is wrapped in a special way, and several additional variables and functions  became available in the code.
+When the code is described in a separate file and is connected as a module, it is wrapped in a special way, and several additional variables and functions became available in the code.
 
 For example, the file name can be obtained from a variable `__filename`, and the folder name where the module was placed can be obtained from a variable` __dirname`.
 
@@ -182,7 +182,7 @@ var view = new Node({
 });
 ```
 
-> Modularity provides additional capabilities not only to `javascript` modules, but also to other types of content. For example, if the description of the template lies in a separate file, it is not necessary to update the page when it changes. Once the changes have been saved, all instances of the representations that use the modified template, update their own `DOM` fragments. And all this happens without reloading the page, maintaining the current state of the application.
+> Modularity provides additional capabilities not only to `javascript` modules, but also to other types of content. For example, if the description of the template lies in a separate file, it is not necessary to update the page when it changes. Once the changes have been saved, all instances of the views that use the modified template, update their own `DOM` fragments. And all this happens without reloading the page, maintaining the current state of the application.
 
 The same applies to the `css` files, to localization files and to some other file types. The only changes that require a page reload are changing the `html` file and changing any `javascript` modules that have already been initialized.
 
@@ -206,15 +206,15 @@ And let's change slightly the template (`hello.tmpl`):
 
 Once the template changes are saved, the text turns red. There is no need to refresh the page.
 
-In the template, we have added a special tag `<b: style>`. This tag says that when you use this template, you need to connect the specified stylesheet to the page. Relative paths are resolved with respect to the template file. Any number of stylesheet files can be connected to a template. We do not need to worry about adding and removing styles. The framework takes  care of it.
+In the template we have added a special tag `<b: style>`. This tag says that when you use this template, you need to connect the specified stylesheet to the page. Relative paths are resolved with respect to the template file. Any number of stylesheet files can be connected to a template. We do not need to worry about adding and removing styles. The framework takes care of it.
 
 So, we have just created a simple static view. But in web applications it is all about dynamics. So let's try to use ​in the template some values ​from the presentation and try to somehow communicate with it. For the first one can use _bindings_, and for the second - for communication - _actions_.
 
 ## Bindings and actions
 
-Bindings allow to transfer values ​​from a representation to its `DOM` fragment. Unlike most template systems, `basis.js` templates have no direct access to properties of a representation. And so bindings can use only those values ​​that the representation itself provides to a template.
+Bindings allow to transfer values ​​from a view to its `DOM` fragment. Unlike most template systems, `basis.js` templates have no direct access to properties of a view. And so bindings can use only those values ​​that the view itself provides to a template.
 
-To set ​​which values will be available in a given template, use a `binding` property in a description of an instance or of a class that inherits from `basis.ui.Node`. The values (bindings) are described in the form of the object, where keys are names that will be available in the template, and each value (of a `basis.ui.Node.binding` object) is a function that calculates a corresponding value (a binding) for the template. So the function only parameter is the owner of the template, that is the representation itself. This is how you can provide a `name` value in a template:
+To set ​​which values will be available in a given template, use a `binding` property in a description of an instance or of a class that inherits from `basis.ui.Node`. The values (bindings) are described in the form of the object, where keys are names that will be available in the template, and each value (of a `basis.ui.Node.binding` object) is a function that calculates a corresponding value (a binding) for the template. So the function only parameter is the owner of the template, that is the view itself. This is how you can provide a `name` value in a template:
 
 ```js
 var Node = require('basis.ui').Node;
@@ -260,11 +260,11 @@ An `<input>` element was added to our template. Same binding `{name}` is used in
 
 For view to react on events in its `DOM` fragment let's add to a desired element an attribute which name is the name as the event name but with the prefix` event-`. We can add any action to any element on any event. And each one event on a certain element can trigger a number of actions. To describe it just list all action using space as a separator.
 
-In our example, we added an attribute `event-keyup`, which obliges the representation to perform a `setName` action, when a `keyup` event is triggered. If there is no such action defined in the representation, we will see a warning message about this in the console and nothing else will happen.
+In our example, we added an attribute `event-keyup`, which obliges the view to perform a `setName` action, when a `keyup` event is triggered. If there is no such action defined in the view, we will see a warning message about this in the console and nothing else will happen.
 
 And now let's add a description of the action. To do this, one can use `action` property. It works similar to `binding` but describes actions only. Functions in `action` receive an event object as a parameter. This is not the original event but the copy ofit with additional methods and properties (the original event is kept in its `event_` property).
 
-Here's how the representation (`hello.js`) will look now:
+Here's how the view (`hello.js`) will look now:
 
 ```js
 var Node = require('basis.ui').Node;
@@ -287,11 +287,11 @@ var view = new Node({
 });
 ```
 
-Here `event.sender` is an element on which the event occurred, ie the `<input>` in our case. The `<input>` has `value` property, so we read it to use it in the presentation. For the representation to re-calculate the value and to pass it further to the template, we call the `updateBind` method.
+Here `event.sender` is an element on which the event occurred, ie the `<input>` in our case. The `<input>` has `value` property, so we read it to use it in the presentation. For the view to re-calculate the value and to pass it further to the template, we call the `updateBind` method.
 
 It is not always necessary to explicitly re-calculate values for the template. If you change the values that are used to calculate the bindings, there are events that can be specified in the description of these events, and binding will be recalculated automatically when events happen.
 
-Representations are able to store data in the form of key-value, an so are models. The data is stored in the `data` property and is changed with the `update` method. When any of values ​​in the `data` change, an `update` event is triggered. Let's use this mechanism to store the name:
+Views are able to store data in the form of key-value, an so are models. The data is stored in the `data` property and is changed with the `update` method. When any of values ​​in the `data` change, an `update` event is triggered. Let's use this mechanism to store the name:
 
 ```js
 var Node = require('basis.ui').Node;
@@ -346,7 +346,7 @@ var view = new Node({
 
 The helper which was just used is only syntactic sugar. It will unfold in full form, which has been presented in the previous example. More details can be found in the article [Bindings](../../ basis.ui_bindings.md).
 
-The main thing to remember is the following. A representation calculates and transmits values to its template, the `binding` property is used for that. The template captures and transmits events to its representation, it triggers actions listed in the `action` property. In other words `binding` and` action` are the two main points of contact between the representation and its template. At the same time, the representation knows almost nothing about how its template is organized, and the template knows nothing about the representation realisation. All the logic (`javascript`) is on the side of the representation, and all the work with `DOM` is on the side of the template. So, in most cases, a complete separation of logic and representation is achieved.
+The main thing to remember is the following. A view calculates and transmits values to its template, the `binding` property is used for that. The template captures and transmits events to its view, it triggers actions listed in the `action` property. In other words `binding` and` action` are the two main points of contact between the view and its template. At the same time, the view knows almost nothing about how its template is organized, and the template knows nothing about the view realisation. All the logic (`javascript`) is on the side of the view, and all the work with `DOM` is on the side of the template. So, in most cases, a complete separation of logic and view is achieved.
 
 ![Split logic and markup](../../../ru-RU/tutorial/part1/split_logic_markup.png)
 
