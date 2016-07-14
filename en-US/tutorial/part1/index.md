@@ -240,13 +240,13 @@ Let's change the template (`hello.tmpl`) to use the `name`.
 <h1>Hello, {name}!</h1>
 ```
 
-TODO markers - special inserts are used in the template. They are used to obtain links on certain parts of the template and placement values. These inserts are specified in curly brackets. In this case, we have added a `{name}`, insert the values ​​as plain text.
+To place binded values (bindings) somewhere in a templates one uses markers They look like a string in the curly brackets. In this case, we have added a `{name}` marker, which inserts the value as plain text. Also, the markers are used to obtain links on certain parts of the template, but more on that later.
 
-Description Template looks like a description of the format of other template systems. But unlike them, `basis.js` template works with` DOM` nodes. For a description of this item `<h1>` will be created, which will contain three text node `Hello,`, `{name}` and `!`. The first and last are static, and the text will not change. But the average value will be marked from (will change its property `nodeValue`).
+That template description is similar to formats used in other template systems. But unlike many of them, `basis.js` template engine works with `DOM` nodes. For the current template description there will be created an `<h1>` element, which will contain three text nodes `Hello,`, `{name}` and `!`. The first and the last node are static, and their text remain unchanged. But the middle one will get its value from the representaion (the `nodeValue` property of the corresponding `DOM` node will be changed).
 
 But enough words, let's update the page and look at the result!
 
-TODO Now add a field that will introduce the name and that it is substituted in the title. Let's start with a template:
+Now add an input field to enter a name. And we'll see how the title is changed. Let's start with a template:
 
 ```html
 <b:style src="./hello.css"/>
@@ -256,15 +256,15 @@ TODO Now add a field that will introduce the name and that it is substituted in 
 </div>
 ```
 
-TODO The template added element `<input>`. For his `value` attribute uses the same Binding as the title -` {name} `. But it works only for entries in `DOM`.
+An `<input>` element was added to our template. Same binding `{name}` is used in `value` attribute of the `<input>` and in the title. But it (TODO) works only for entries in `DOM`.
 
-To view reacted to the events in his `DOM` fragment desired item is added to the attribute whose name is the name of the event with the prefix` event-`. We can add the execution of the action to any element to any event. And on one event action can be somewhat, the main divide action names with a space.
+For view to react on events in its `DOM` fragment let's add to a desired element an attribute which name is the name as the event name but with the prefix` event-`. We can add any action to any element on any event. And each one event on a certain element can trigger a number of actions. To describe it just list all action using space as a separator.
 
-In our example, we added an attribute `event-keyup`, which obliges the idea to perform an action` setName`, when an event is triggered `keyup`. If the submission is not some kind of action will be determined in the console we will see a warning message about this and nothing else will happen.
+In our example, we added an attribute `event-keyup`, which obliges the representation to perform a `setName` action, when a `keyup` event is triggered. If there is no such action defined in the representation, we will see a warning message about this in the console and nothing else will happen.
 
-And now add the description of the action. To do this, use the property `action`. It works similar to `binding`, but only describes the action. Options in `action` receive an event object parameter. This is not the original event and the copy with additional methods and properties (the original is kept in the event of his property `event_`).
+And now let's add a description of the action. To do this, one can use `action` property. It works similar to `binding` but describes actions only. Functions in `action` receive an event object as a parameter. This is not the original event but the copy ofit with additional methods and properties (the original event is kept in its `event_` property).
 
-TODO Here's how an idea will look now ( `hello.js`):
+Here's how the representation (`hello.js`) will look now:
 
 ```js
 var Node = require('basis.ui').Node;
@@ -287,11 +287,11 @@ var view = new Node({
 });
 ```
 
-TODO Here we read a value from the `event.sender`, as an element, in which the event occurred -` <input> `. In order for an idea to re-calculate the value and passes it to the template, we called the method `updateBind`.
+Here `event.sender` is an element on which the event occurred, ie the `<input>` in our case. The `<input>` has `value` property, so we read it to use it in the presentation. For the representation to re-calculate the value and to pass it further to the template, we call the `updateBind` method.
 
-TODO Calling explicitly recalculated values ​​need not always for the template. If you change the values ​​that are used to calculate the bindings, there are events that can be specified in the description of these events, and Binding will be recalculated automatically when they arise.
+It is not always necessary to explicitly re-calculate values for the template. If you change the values that are used to calculate the bindings, there are events that can be specified in the description of these events, and binding will be recalculated automatically when events happen.
 
-TODO Performances as a model, able to store data in the form of key-value. The data is stored in the property `data` and changing the method of` update`. When changing values ​​in the `data`, triggered event` update`. We use this mechanism to store name:
+Representations are able to store data in the form of key-value, an so are models. The data is stored in the `data` property and is changed with the `update` method. When any of values ​​in the `data` change, an `update` event is triggered. Let's use this mechanism to store the name:
 
 ```js
 var Node = require('basis.ui').Node;

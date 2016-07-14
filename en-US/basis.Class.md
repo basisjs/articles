@@ -1,26 +1,6 @@
 # basis.Class (Classes)
 
 A `basis.Class` function and its methods simplify the process of designing classes. Inheritance relies on prototype-based javascript inheritance.
-<!-- TOC depthFrom:2 depthTo:3 withLinks:1 updateOnSave:1 orderedList:0 -->
-
-- [Creating classes](#creating-classes)
-- [Class properties](#class-properties)
-- [Inheritance](#inheritance)
-- [The life cycle of an instance](#the-life-cycle-of-an-instance)
-- [Creating instance patterns](#creating-instance-patterns)
-- [Autoextending](#autoextending)
-- [How to check if an object is an instance of a given class](#how-to-check-if-an-object-is-an-instance-of-a-given-class)
-- [Class to instance transormation](#class-to-instance-transormation)
-- [Extensible properties](#extensible-properties)
-	- [extensibleProperty](#extensibleproperty)
-	- [customExtendProperty](#customextendproperty)
-	- [nestedExtendProperty](#nestedextendproperty)
-	- [oneFunctionProperty](#onefunctionproperty)
-- [Helpers](#helpers)
-	- [SELF](#self)
-	- [isClass](#isclass)
-
-<!-- /TOC -->
 <!-- MarkdownTOC -->
 
 - [Creating classes](#creating-classes)
@@ -28,7 +8,7 @@ A `basis.Class` function and its methods simplify the process of designing class
 - [Inheritance](#inheritance)
 - [The life cycle of an instance](#the-life-cycle-of-an-instance)
 - [Creating instance patterns](#creating-instance-patterns)
-- [Autoextension](#autoextension)
+- [Autoextending](#autoextending)
 - [How to check if an object is an instance of a given class](#how-to-check-if-an-object-is-an-instance-of-a-given-class)
 - [Class to instance transormation](#class-to-instance-transormation)
 - [Extensible properties](#extensible-properties)
