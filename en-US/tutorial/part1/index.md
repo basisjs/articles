@@ -13,7 +13,7 @@
 - [Modules](#modules)
     - [Advantages of using modules](#advantages-of-using-modules)
 - [Bindings and actions](#bindings-and-actions)
-- [A list](#a-list)
+- [List](#list)
 - [Composition \(?\)](#composition-)
     - [Satellites](#satellites)
 - [Tuning file structure](#tuning-file-structure)
@@ -208,7 +208,7 @@ Once the template changes are saved, the text turns red. There is no need to ref
 
 In the template we have added a special tag `<b: style>`. This tag says that when you use this template, you need to connect the specified stylesheet to the page. Relative paths are resolved with respect to the template file. Any number of stylesheet files can be connected to a template. We do not need to worry about adding and removing styles. The framework takes care of it.
 
-So, we have just created a simple static view. But in web applications it is all about dynamics. So let's try to use ​in the template some values ​from the presentation and try to somehow communicate with it. For the first one can use _bindings_, and for the second - for communication - _actions_.
+So, we have just created a simple static view. But in web applications it is all about dynamics. So let's try to use ​in the template some values ​from the view and try to somehow communicate with it. For the first one can use _bindings_, and for the second - for communication - _actions_.
 
 ## Bindings and actions
 
@@ -287,7 +287,7 @@ var view = new Node({
 });
 ```
 
-Here `event.sender` is an element on which the event occurred, ie the `<input>` in our case. The `<input>` has `value` property, so we read it to use it in the presentation. For the view to re-calculate the value and to pass it further to the template, we call the `updateBind` method.
+Here `event.sender` is an element on which the event occurred, ie the `<input>` in our case. The `<input>` has `value` property, so we read it to use it in the view. For the view to re-calculate the value and to pass it further to the template, we call the `updateBind` method.
 
 It is not always necessary to explicitly re-calculate values for the template. If you change the values that are used to calculate the bindings, there are events that can be specified in the description of these events, and binding will be recalculated automatically when events happen.
 
@@ -350,7 +350,200 @@ The main thing to remember is the following. A view calculates and transmits val
 
 ![Split logic and markup](../../../ru-RU/tutorial/part1/split_logic_markup.png)
 
-## A list
+## List
+
+So now we know how to create a simple view. Let's create another, a little more complicated - the list. To do this, create a new file `list.js`:
+
+```js
+var Node = require('basis.ui').Node;
+
+var list = new Node({
+  container: document.body,
+  template: resource('./list.tmpl')
+});
+
+var Item = Node.subclass({
+  template: resource('./item.tmpl'),
+  binding: {
+    name: function(node){
+      return node.name;
+    }
+  }
+});
+
+list.appendChild(new Item({ name: 'foo' }));
+list.appendChild(new Item({ name: 'bar' }));
+list.appendChild(new Item({ name: 'baz' }));
+```
+
+The code for this module is similar to the `hello.js`, but few more things were added.
+
+Before we walk through those things, one should mention that in the `basis.js` the component approach is used. So, if we create, for example, a list, it will be not one view but a few. A first view is the list itself. Each element of the list is a view too. So first we  describe behavior of the list, and second we describe the behavior of the list items. Or vice a versa. The order doesn't matter. More details on this approach in the tals "Component approach: boring, uninteresting, pointless": [slides (IN RUSSIAN)](http://www.slideshare.net/basisjs/ss-27142749) and [video (IN RUSSIAN)](https://www.youtube.com/watch?v=QpZy0WW0Ig4).
+
+As it was mentioned before, views can be nested. In this case, the list items are embedded in the list as a whole. Those embedded views are children for the list. It means they are stored in the `childNodes` property of the list. And the list view is their parent meaning the link to the list view is stored in the `parentNode` property of the each item view.
+
+Description of the list is no different from what we did before. The code goes on and there  a new class that inherits from `basis.ui.Node` was created. A template file and a simple binding were specified for that new class. Next three instances of this class were created and were added to the list.
+
+As it was mentioned above, the principles of `DOM` are used in `basis.js`to build a view tree of an application. To insert new nodes to the tree and `appendChild` and `insertBefore` methods are used. To remove nodes `removeChild` method is used, and to replace a node `replaceChild` method is used. Also there are non-standard methods: `setChildNodes` allows one to specify a list of child views, and `clear` removes all child views in one fell swoop.
+
+So now you can make your code a bit easier:
+
+```js
+var Node = require('basis.ui').Node;
+
+var list = new Node({
+  container: document.body,
+  template: resource('./list.tmpl')
+});
+
+var Item = Node.subclass({
+  template: resource('./item.tmpl'),
+  binding: {
+    name: function(node){
+      return node.name;
+    }
+  }
+});
+
+list.setChildNodes([
+  new Item({ name: 'foo' }),
+  new Item({ name: 'bar' }),
+  new Item({ name: 'baz' })
+]);
+```
+
+Child nodes can be set on the view initialisation. Let's try:
+
+```js
+var Node = require('basis.ui').Node;
+
+var Item = Node.subclass({
+  template: resource('./item.tmpl'),
+  binding: {
+    name: function(node){
+      return node.name;
+    }
+  }
+});
+
+var list = new Node({
+  container: document.body,
+  template: resource('./list.tmpl'),
+  childNodes: [
+    new Item({ name: 'foo' }),
+    new Item({ name: 'bar' }),
+    new Item({ name: 'baz' })
+  ]
+});
+```
+
+It 's not so interesting to create one by one child nodes of the same type. It would be good to describe configuration and make the list to create child nodes by itself if it will be necessary. And lukily there is such a possibility! This is controlled by two properties: `childClass` and `childFactory`. The first sets the class which instances can be added as child nodes. The second property defines a function, which does all the magic. By default, this function creates an instance of `childClass`, using the passed value as the config. Again by default elements of the `childNodes` list are passed as such values if an element is not an instance of `childClass`. The goal of such a `childFactory` function is to create an appropriate instance of  `childClass`.
+
+```js
+var Node = require('basis.ui').Node;
+
+Node.prototype.childFactory = function(value){
+  return new this.childClass(value);
+};
+```
+
+This property is defined by default. This is enough for most of the cases. But there are cases when the child views should be of different classes. In this case, the selection logic can be described in this method.
+
+Thus, all we need is to define `childClass`. Then it will be possible to add new items to the list, not only by creating an instance of `Item`, but also passing a configuration.
+
+```js
+var Node = require('basis.ui').Node;
+
+var Item = Node.subclass({
+  template: resource('./item.tmpl'),
+  binding: {
+    name: function(node){
+      return node.name;
+    }
+  }
+});
+
+var list = new Node({
+  container: document.body,
+  template: resource('./list.tmpl'),
+  childClass: Item,
+  childNodes: [
+    { name: 'foo' },
+    { name: 'bar' },
+    { name: 'baz' }
+  ]
+});
+```
+
+Let's continue improving the code. After all, it can be written even simplier.
+
+TODO Class `Item` is not used anywhere else anymore, so it makes no sense to store it in a variable. This class can be set directly in the config file. But this is not all we can do. When you create a new class or an instance, and one of its properties is a class, and we want to create a new class based on it, there is no need to create a class explicitly. One can simply set the object which extends an old class. It may sound complicated, but it really means only that one do not need to specify `basis.ui.Node.subclass`, just pass the object like this:
+
+```js
+var Node = require('basis.ui').Node;
+
+var list = new Node({
+  container: document.body,
+  template: resource('./list.tmpl'),
+  childClass: {
+    template: resource('./item.tmpl'),
+    binding: {
+      name: function(node){
+        return node.name;
+      }
+    }
+  },
+  childNodes: [
+    { name: 'foo' },
+    { name: 'bar' },
+    { name: 'baz' }
+  ]
+});
+```
+
+That's so much better. Now we need only to describe templates.
+
+Let's create a list template `list.tmpl`:
+
+```html
+<div id="mylist">
+  <h2>My first list</h2>
+  <ul{childNodesElement}/>
+</div>
+```
+
+It is a common markup except that in the `ul` tag after its name there is an unfamiliar thing `{childNodesElement}`. Meet, this is also a marker. So we say we want to refer to that element by name `childNodesElement`. In fact, we ourselves do not need this reference. But the list view needs it to find out where to insert child nodes' `DOM` fragments. If we do not specify this marker, the child nodes will be inserted into the root element of the template (in this case directly in `<div id="mylist">`).
+
+So. We do not directly control `DOM` – view do this themselves. TODO START We only suggest what and where to place. And as the movement of units engaged in a view, they perfectly know what and where is, and try to do their work more optimally as possible. Moreover, it is therefore possible to update templates without reloading the page. When you change the template description, view creates a new `DOM` fragment and transfers from the old into the new fragment all necessary. TODO STOP
+
+Now one need to create a template for a list element (`item.tmpl`):
+
+```html
+<li>
+  {name}
+</li>
+```
+
+Finally one need to connect the module to our page:
+
+```html
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first app on basis.js</title>
+</head>
+<body>
+  <script src="node_modules/basisjs/src/basis.js" basis-config=""></script>
+  <script>
+    basis.require('./hello.js');
+    basis.require('./list.js');
+  </script>
+</body>
+</html>
+```
+
+After reloading the page we will see our pretty three element list.
 
 ## Composition (?)
 
