@@ -52,7 +52,7 @@
 </b:include>
 ```
 
-=
+Результат:
 
 ```html
 <button class="button">
@@ -149,7 +149,7 @@
 </b:include>
 ```
 
-=
+Результат:
 
 ```html
 <button class="button">
@@ -217,7 +217,7 @@
 </div>
 ```
 
-=
+Результат:
 
 ```html
 <div>
