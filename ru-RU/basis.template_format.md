@@ -147,6 +147,7 @@
 * [`<b:define>`](template/b-define.md)
 * [`<b:text>`](template/b-text.md)
 * [`<b:include>`](template/b-include.md)
+* [`<b:content>`](template/b-content.md)
 
 Атрибуты:
 

@@ -42,6 +42,7 @@
     * [&lt;b:define&gt;](template/b-define.md)
     * [&lt;b:text&gt;](template/b-text.md)
     * [&lt;b:include&gt;](template/b-include.md)
+    * [&lt;b:content&gt;](template/b-content.md)
     * [Специальные атрибуты](template/atrtibute.md)
   * [Правила применения значений биндингам](basis.template_bindings.md)
   * [Темы](basis.template_theme.md)
