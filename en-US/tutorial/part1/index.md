@@ -553,6 +553,35 @@ After reloading the page we will see our pretty three element list.
 
 ## Tools
 
+With the growth of the application the number of files in it increases, so does its complexity. To make the development process easier and more effective one need tools. `basis.js` has two auxiliary tool: `devpanel` and plugin for `Google Chrome`.
+
+`devpanel` is a small panel with buttons that can be dragged. It looks like this:
+
+![devpanel](../../../img/devpanel.png)
+
+To activate it one need to add a following line in the app (the best place for that is the main module, for example `app.js`):
+
+```js
+/** @cut */ require('basis.devpanel');
+```
+
+The panel should appear on the page after reloading. Here we use a special comment `/ ** @cut * /`, it removes lines when building an app for production purposes. We do not need to show the panel to the app users, right?
+
+Panel allows you to switch a current theme or a language. And also it allows to choose templates or texts that can be translated for further editing. The browser plugin allows to edit templates, styles, and localize strings directly in the browser.
+
+The plugin can be installed from `Google Web Store` [here](https://chrome.google.com/webstore/detail/basisjs-tools/paeokpmlopbdaancddhdhmfepfhcbmek). It requires `devpanel`, as it provides an API for working with `basis.js`.
+
+The plugin provides:
+
+- viewing and editing of localization dictionaries
+- viewing and editing of templates and styles
+- a list of problems in the project, which were discovered by the builder
+- the application file graph, which reveals how all the files are connected one with wanother
+
+Here's what our application is through the eyes of the builder:
+
+! [Application file graph](../../../ru-RU/tutorial/part1/file_graph.png)
+
 ## Build process
 
 While developing there is no need to build your project. Everything works as it is. One need to build a project only for publushng purposes. It is a way to reduce a number of files and decrease its' size. For that kind of work one may need a builder form `basisjs-tools`.
