@@ -580,7 +580,7 @@ The plugin provides:
 
 Here's what our application is through the eyes of the builder:
 
-! [Application file graph](../../../ru-RU/tutorial/part1/file_graph.png)
+![Application file graph](../../../img/file_graph.png)
 
 ## Build process
 
