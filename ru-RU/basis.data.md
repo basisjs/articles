@@ -315,7 +315,7 @@ var Node = basis.require('basis.ui').Node;
 var DataObject = basis.require('basis.data').Object;
 var STATE = basis.require('basis.data').STATE;
 
-var example = new Object({
+var example = new DataObject({
   syncAction: function(){
     var self = this;
     basis.net.request('/api/whatever',
@@ -344,7 +344,7 @@ var view = new Node({
 var Node = basis.require('basis.ui').Node;
 var DataObject = basis.require('basis.data').Object;
 
-var example = new Object({
+var example = new DataObject({
   syncAction: basis.net.action.create({
     url: '/api/whatever',
     success: function(data){
@@ -377,19 +377,12 @@ var view = new Node({
 Если `syncAction` возвращает промис, то состояние объекта данных будет определяться автоматически, в зависимости от состояния промиса:
 
 ```javascript
-var example = new Object({
+var example = new DataObject({
   syncAction: function(){
-    var dataInstance = this;
-    
     return fetch('./data.json').then(function(res) {
-      dataInstance.update(res.json());
-    });
+      this.update(res.json());
+    }.bind(this));
   }
-});
-
-var view = new Node({
-  active: true,
-  delegate: example
 });
 ```
 
