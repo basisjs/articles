@@ -2,65 +2,241 @@
 
 `<b:include>` используется для включения в описание шаблона другого описания (шаблона).
 
+<!-- MarkdownTOC -->
+
+- [Атрибуты](#Атрибуты)
+  - [Ссылка на включаемый шаблон](#Ссылка-на-включаемый-шаблон)
+- [Изоляция стилей](#Изоляция-стилей)
+- [Вставка контента](#Вставка-контента)
+- [Инструкции](#Инструкции)
+  - [&lt;b:style>](#ltbstyle)
+  - [&lt;b:before>](#ltbbefore)
+  - [&lt;b:after>](#ltbafter)
+  - [&lt;b:prepend>](#ltbprepend)
+  - [&lt;b:append>](#ltbappend)
+  - [&lt;b:replace>](#ltbreplace)
+  - [&lt;b:remove>](#ltbremove)
+  - [&lt;b:attr>, &lt;b:set-attr>](#ltbattr-ltbset-attr)
+  - [&lt;b:append-attr>](#ltbappend-attr)
+  - [&lt;b:remove-attr>](#ltbremove-attr)
+  - [&lt;b:class>, &lt;b:append-class>](#ltbclass-ltbappend-class)
+  - [&lt;b:set-class>](#ltbset-class)
+  - [&lt;b:add-ref>](#ltbadd-ref)
+  - [&lt;b:remove-ref>](#ltbremove-ref)
+  - [&lt;b:role>, &lt;b:set-role>](#ltbrole-ltbset-role)
+  - [&lt;b:remove-role>](#ltbremove-role)
+  - [&lt;b:show>, &lt;b:hide>, &lt;b:visible>, &lt;b:hidden>](#ltbshow-ltbhide-ltbvisible-ltbhidden)
+
+<!-- /MarkdownTOC -->
+
+## Атрибуты
+
 Для тега можно указать следующие атрибуты:
 
-  * `src` – ссылка на подключаемое описание, это может быть:
+- [`src`](#Ссылка-на-включаемый-шаблон) – ссылка на подключаемое описание (другой шаблон)
+- `no-style` – включается только разметка, все стили игнорируются
+- [`isolate`](#Изоляция-стилей) – указывает, что стили и разметку нужно изолировать (путем добавления именам классам некоторого префикса) перед включением
+- `role` – позволяет задать пространство имен для ролей в подключаемой разметке; подробнее в [Роли](role.md)
+- `id` → `<b:set-attr name="id" value="(значение атрибута)">`
+- `class` → `<b:append-class value="(значение атрибута)">`
+- `ref` → `<b:add-ref name="(значение атрибута)">`
+- `show` → `<b:show expr="(значение атрибута)">`
+- `hide` → `<b:hide expr="(значение атрибута)">`
+- `visible` → `<b:visible expr="(значение атрибута)">`
+- `hidden` → `<b:hidden expr="(значение атрибута)">`
 
-      * путь к файлу; относительные пути (начинаются не с `/`) разрешаются относительно файла шаблона или относительно корня приложения, если описание находится не в отдельном файле;
+### Ссылка на включаемый шаблон
 
-        ```html
-          <b:include src="./path/to/file.tmpl"/>
-        ```
+Включаемое содержимое может быть:
 
-      * имя шаблона определенное с помощью `basis.template.define` (подробнее ["Темы"](basis.template_theme.md))
-
-        ```html
-          <b:include src="foo.bar.baz"/>
-        ```
-
-      * ссылка вида `#N`, где `N` - идентификатор шаблона (значение свойства `templateId`); в основном используется внутренними механизмами.
-
-        ```html
-          <b:include src="#123"/>
-        ```
-
-      * ссылка вида `id:name`, где `name` - значение атрибута `id` у тега `<script type="text/basis-template">`. Если элемент успешно найден в документе, то для описания шаблона используется его содержимое.
-
-        ```html
-          <b:include src="id:my-template"/>
-        ```
-
-  * `no-style` – включается только разметка, все стили игнорируется.
-  * `isolate` – указывает, что стили и разметку нужно [изолировать](isolate-style.md) перед включением; в качестве значения указывается префикс, который подставляется всем класса, а если атрибут не имеет значения, то генерируется случайный; подробнее в [Изоляция стилей](isolate-style.md)
-  * `role` – позволяет задать пространство имен для ролей в подключаемой разметке; подробнее в [Роли](role.md)
-  * `id` → `<b:set-attr name="id" value="(значение атрибута)">`
-  * `class` → `<b:append-class value="(значение атрибута)">`
-  * `ref` → `<b:add-ref name="(значение атрибута)">`
-  * `show` → `<b:show expr="(значение атрибута)">`
-  * `hide` → `<b:hide expr="(значение атрибута)">`
-  * `visible` → `<b:visible expr="(значение атрибута)">`
-  * `hidden` → `<b:hidden expr="(значение атрибута)">`
-
-Исходный шаблон:
+- внешним файлом, в этом случае указывается относительный или абсолютный путь к файлу; относительные пути (начинаются не с `/`) разрешаются относительно файла шаблона или относительно корня приложения, если описание находится не в отдельном файле;
 
 ```html
-<b:include src="./foo.tmpl" id="foo" class="extra-class with_{binding}"/>
+<b:include src="./path/to/file.tmpl"/>
 ```
 
-foo.tmpl:
+- именованным шаблоном определенным с помощью `basis.template.define()` (подробнее ["Темы"](../basis.template_theme.md)) – указывается имя шаблона, без дополнений
 
 ```html
-<div class="example"/>
+<b:include src="foo.bar.baz"/>
+```
+
+- экземпляром `basis.template.Template` – указывается идентификатор шаблона (значение свойства `templateId`) предваренный `#`; в основном используется внутренними механизмами и для тестов
+
+```html
+<b:include src="#123"/>
+```
+
+```js
+var Template = require('basis.template.html').Template;
+var foo = new Template('...');
+var bar = new Template('<div class="wrapper"><b:include src="#' + foo.templateId + '"/></div>');
+```
+
+- содержимое тега `<script type="text/basis-template">` – указывается ссылка вида `id:name`, где `name` является значением атрибута `id` у `<script>`; eсли элемент успешно найден в документе, то для описания шаблона используется его содержимое
+
+```html
+<script type="text/basis-template" id="my-template">
+  ...
+</script>
+```
+
+```html
+<b:include src="id:my-template"/>
+```
+
+## Изоляция стилей
+
+Для [изоляции](isolate-style.md) стилей подключаемого шаблона используется атрибут `isolate`. При этом генерируется уникальный префикс и подставляется всем именам классов, как в разметке так и в CSS:
+
+`template.tmpl`:
+
+```html
+<b:style>
+  .some-class {
+    color: red;
+  }
+</b:style>
+
+<div>
+  <div class="some-class">Компонент</div>
+  <b:include src="./include.tmpl" isolate/>
+</div>
+```
+
+`include.tmpl`:
+
+```html
+<b:style>
+  .some-class {
+    border: 1px solid gold;
+  }
+</b:style>
+
+<div class="some-class">Подключаемый шаблон</div>
+```
+
+В результате будет сгенерировано следующее содержимое:
+
+```css
+.some-class {
+  color: red;
+}
+.e1tn45k29ie01hl1__some-class {
+  border: 1px solid gold;
+}
+```
+
+```html
+<div>
+  <div class="some-class">Компонент</div>
+  <div class="e1tn45k29ie01hl1__some-class">Подключаемый шаблон</div>
+</div>
+```
+
+Таким образом, не смотря на то, что в обоих шаблонах использовался одинаковое имя класса, использование атрибута `isolate` позволило избежать конфликта имен.
+
+Иногда необходимо задать дополнительные стили подключаемой разметке. Для этого можно задать конкретный префикс или поместить стили внутрь `<b:include>`.
+
+Для того чтобы зафиксировать префикс достаточно указать значение атрибуту `isolate`:
+
+`template.tmpl`:
+
+```html
+<b:style>
+  ...
+  .my-prefix_some-class {
+    /* your styles */
+  }
+</b:style>
+<b:include src="./include.tmpl" isolate="my-prefix__"/>
+...
+```
+
+Результат:
+
+```css
+.some-class {
+  color: red;
+}
+.my-prefix__some-class {
+  border: 1px solid gold;
+}
+.my-prefix__some-class {
+  /* your styles */
+}
+```
+
+```html
+<div>
+  <div class="some-class">Компонент</div>
+  <div class="my-prefix__some-class">Подключаемый шаблон</div>
+</div>
+```
+
+В случае если `<b:style>` поместить внутрь `<b:include>`, то он начинает вести себя так, как будто бы находится внутри подключаемого шаблона. В этом случае используемый префикс не имеет значения:
+
+```html
+...
+<b:include src="./include.tmpl" isolate/>
+  <b:style>
+    .some-class {
+      /* your styles */
+    }
+  </b:style>
+...
+```
+
+Результат:
+
+```css
+.some-class {
+  color: red;
+}
+.hd8rxdr902ywxiaw__some-class {
+  border: 1px solid gold;
+}
+.hd8rxdr902ywxiaw__some-class {
+  /* your styles */
+}
+```
+
+```html
+<div>
+  <div class="some-class">Компонент</div>
+  <div class="hd8rxdr902ywxiaw__some-class">Подключаемый шаблон</div>
+</div>
+```
+
+Другие способы изолировать стили в [Изоляция стилей](isolate-style.md).
+
+## Вставка контента
+
+Содержимое `<b:include>` не обрамленное в [инструкции](#Инструкции) вставляется во включаемый шаблон согласно указанной в нем точки вставки. Такая точка определяется специальным тегом [`<b:content/>`](b-content.md).
+
+Вложенные `<b:include/>` и `<b:content/>` вставляются по в подключаемый шаблон по тем же правилам.
+
+```html
+<b:include src="./button.tmpl">                <!-- <button><b:content/></button>-->
+  <b:include src="./icon.tmpl" class="demo"/>  <!-- <i class="icon"/> -->
+  Hello world!
+</b:include>
 ```
 
 Результат:
 
 ```html
-<div id="foo" class="example extra-class with_{binding}"/>
+<button>
+  <i class="icon demo"/>
+  Hello world!
+</button>
 ```
+
+## Инструкции
 
 Внутри `<b:include>` могут быть другие специальные теги-инструкции, предназначенные для модификации подключаемого описания:
 
+* [`<b:style>`](#bstyle) – добавление CSS стиля с теми же найстройками изоляции, что и подключаемая разметка
 * [`<b:before>`](#bbefore) – вставлка до узла
 * [`<b:after>`](#bafter) – вставка после узла
 * [`<b:prepend>`](#bprepend) – вставка в начало элемента
@@ -78,7 +254,21 @@ foo.tmpl:
 * [`<b:remove-role>`](#bremove-role) – удаление маркера роли
 * [`<b:show>`](#bshow-bhide-bvisible-bhidden), [`<b:hide>`](#bshow-bhide-bvisible-bhidden), [`<b:visible>`](#bshow-bhide-bvisible-bhidden), [`<b:hidden>`](#bshow-bhide-bvisible-bhidden) – установление соотвествующего специального атрибута на элемент
 
-## &lt;b:before>
+Все остальные специальные теги приводят к предупреждению и игнорируются. Исключением являются `<b:include>` и `<b:content>`, которые [вставляются в подключаемый шаблон](#Вставка-контента) так же как свободная разметка (не обрамленная в специальные теги).
+
+### &lt;b:style>
+
+Работает так же как и [`<b:style>`](b-style.md) вне `<b:include>`, за тем исключением, что вставляемый CSS изолируется в рамках включаемой разметки. Имеет смысл, только если у `<b:style>` используется атрибут `ns` или у `<b:include>` – атрибут [`isolate`](#Изоляция-стилей).
+
+Общий принцип работы:
+
+- перенести `<b:style>` во включаемый шаблон
+- если у `<b:style>` используется атрибут [`ns`](b-style.md#Изоляция-стилей), то изолировать CSS и применить пространство имен к подключаемой разметке
+- иначе, если у `<b:include>` используется атрибут `isolate`, то [изолировать по тем же правилам](#Изоляция-стилей), что и остальная разметка
+
+Стиль вставляется в конец списка стилей подключаемого шаблона.
+
+### &lt;b:before>
 
 Cодержимое этого тега вставляется перед узлом с указанной ссылкой. Атрибут `ref` должен содержать название ссылки на узел, а если такого атрибута нет или в подключаемом описании нет узла с такой ссылкой, то данный тег игнорируется.
 
@@ -107,7 +297,7 @@ foo.tmpl:
 </div>
 ```
 
-## &lt;b:after>
+### &lt;b:after>
 
 Работает так же как и `<b:before>`, но вставка происходит после указанного узла.
 
@@ -136,7 +326,7 @@ foo.tmpl:
 </div>
 ```
 
-## &lt;b:prepend>
+### &lt;b:prepend>
 
 Инструкци вставляет содержимое в начало элемента с указаной в атрибуте `ref` ссылкой. Если атрибут отсутствует, то используется ссылка `element`. Если узла с указанной ссылкой нет или узел не является элементом, то тег игнорируется.
 
@@ -164,7 +354,7 @@ foo.tmpl:
 </div>
 ```
 
-## &lt;b:append>
+### &lt;b:append>
 
 Работает так же, как и `<b:prepend>`, но вставляет содержимое в конец элемента.
 
@@ -192,7 +382,7 @@ foo.tmpl:
 </div>
 ```
 
-## &lt;b:replace>
+### &lt;b:replace>
 
 Инструкция заменяет содержимым узел с указаной в атрибуте `ref` ссылкой. Если атрибут отсутствует, то используется ссылка `element`. Если узла с указанной ссылкой нет или узел не является элементом, то тег игнорируется.
 
@@ -220,7 +410,7 @@ foo.tmpl:
 </div>
 ```
 
-## &lt;b:remove>
+### &lt;b:remove>
 
 Инструкция заменяет содержимым узел с указаной в атрибуте `ref` ссылкой. Если атрибут отсутствует, то используется ссылка `element`. Если узла с указанной ссылкой нет или узел не является элементом, то тег игнорируется.
 
@@ -247,7 +437,7 @@ foo.tmpl:
 </div>
 ```
 
-## &lt;b:attr>, &lt;b:set-attr>
+### &lt;b:attr>, &lt;b:set-attr>
 
 Уставливает атрибут с именем `name` и значением `value` элементу с ссылкой `ref`.
 
@@ -273,7 +463,7 @@ foo.tmpl:
 </div>
 ```
 
-## &lt;b:append-attr>
+### &lt;b:append-attr>
 
 Добавляет значение к значению атрибута.
 
@@ -300,7 +490,7 @@ foo.tmpl:
 </div>
 ```
 
-## <b:remove-attr>
+### &lt;b:remove-attr>
 
 Удаляет атрибут.
 
@@ -326,7 +516,7 @@ foo.tmpl:
 </div>
 ```
 
-## &lt;b:class>, &lt;b:append-class>
+### &lt;b:class>, &lt;b:append-class>
 
 Добавляет класс (классы) в атрибут `class`.
 
@@ -352,7 +542,7 @@ foo.tmpl:
 </div>
 ```
 
-## &lt;b:set-class>
+### &lt;b:set-class>
 
 Замещает значение атрибута `class` на новое значение;
 
@@ -378,7 +568,7 @@ foo.tmpl:
 </div>
 ```
 
-## &lt;b:add-ref>
+### &lt;b:add-ref>
 
 Добавляет дополнительную ссылку узлу разметки.
 
@@ -405,7 +595,7 @@ foo.tmpl:
 </div>
 ```
 
-## &lt;b:remove-ref>
+### &lt;b:remove-ref>
 
 Добавляет дополнительную ссылку узлу разметки.
 
@@ -434,7 +624,7 @@ foo.tmpl:
 
 > Нет необходимости удалять ссылку `element`, так как она всегда удаляется из подключаемой разметки.
 
-## &lt;b:role>, &lt;b:set-role>
+### &lt;b:role>, &lt;b:set-role>
 
 Устанавливает маркет роли на элемент. Подробнее в [Роли](role.md)
 
@@ -463,7 +653,7 @@ foo.tmpl:
 
 > В старых версиях basis.js вместо атрибута `name` использовался атрибут `value`.
 
-## &lt;b:remove-role>
+### &lt;b:remove-role>
 
 Удаляет маркет роли с элемента. Подробнее в [Роли](role.md)
 
@@ -490,7 +680,7 @@ foo.tmpl:
 </div>
 ```
 
-## &lt;b:show>, &lt;b:hide>, &lt;b:visible>, &lt;b:hidden>
+### &lt;b:show>, &lt;b:hide>, &lt;b:visible>, &lt;b:hidden>
 
 Устанавливает соответствующий атрибут заданному элементу.
 
@@ -526,80 +716,3 @@ foo.tmpl:
 Нужно заметить, что `b:hide` в `foo.tmpl` был отброшен, так как `b:show` и `b:hide` (как и `b:visible`/`b:hidden`) взаимообратные и выигрывает последний.
 
 Подробнее про специальные атрибуты в [Специальные атрибуты в шаблонах](attribute.md)
-
-## Изоляция шаблона
-
-Для [изоляции](isolate-style.md) подключаемого шаблона, в тег `<b:include/>` добавляется атрибут `isolate`:
-
-`template.tmpl`:
-
-```html
-<b:style>
-  .some-class {
-    color: red;
-  }
-</b:style>
-
-<div>
-  <div class="some-class">Компонент</div>
-  <b:include src="./innerTemplate.tmpl" isolate/>
-</div>
-```
-
-`innerTemplate.tmpl`:
-
-```html
-<b:style>
-  .gold-border {
-    border: 1px solid gold;
-  }
-</b:style>
-
-<div class="gold-border">Подключаемый шаблон</div>
-```
-
-В результате будет сгенерировано следующее содержимое:
-
-```html
-<div>
-  <div class="some-class">Компонент</div>
-  <div class="t234t23t2__gold-border">Подключаемый шаблон</div>
-</div>
-```
-
-```css
-.some-class {
-  color: red;
-}
-.t234t23t2__gold-border {
-  border: 1px solid gold;
-}
-```
-
-Можно задать собственный префикс, указав значение атрибуту `isolate`:
-
-`template.tmpl`:
-
-```html
-...
-<b:include src="./innerTemplate.tmpl" isolate="my-prefix_"/>
-...
-```
-
-В результате будет сгенерировано следующее содержимое:
-
-```html
-<div>
-  <div class="some-class">Компонент</div>
-  <div class="my-prefix_gold-border">Подключаемый шаблон</div>
-</div>
-```
-
-```css
-.some-class {
-  color: red;
-}
-.my-prefix_gold-border {
-  border: 1px solid gold;
-}
-```
