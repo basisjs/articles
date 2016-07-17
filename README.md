@@ -52,6 +52,7 @@
         * [&lt;b:define&gt;](ru-RU/template/b-define.md)
         * [&lt;b:text&gt;](ru-RU/template/b-text.md)
         * [&lt;b:include&gt;](ru-RU/template/b-include.md)
+        * [&lt;b:content&gt;](ru-RU/template/b-content.md)
         * [&lt;b:isolate&gt;](ru-RU/template/b-isolate.md)
         * [Изоляция стилей](ru-RU/template/isolate-style.md)
         * [Специальные атрибуты](ru-RU/template/atrtibute.md)

@@ -2,16 +2,14 @@
 
 Класс `basis.data.Value` ([docs](http://basisjs.com/docs#basis.data.Value)) и его потомки предназначены для хранения атомарных (не делимых) значений. Даже если значение имеет сложную структуру, например, объект, то изменения в его структуре не отслеживаются, и сам объект воспринимается как единое целое.
 
-От `basis.data.Value` образуются другие полезные классы, которые описываются в пространствах имен `basis.data.value` и `basis.data.index`.
+От `basis.data.Value` образуются другие классы, например, в пространствах имен `basis.data.value` и `basis.data.index`.
 
 ## Работа со значением
 
-Значение хранится в свойстве `value` и может иметь любой тип. Его можно задать при создании объекта или используя метод `set`. Если значение меняется (для сравнения используется `===`), то метод `set` возвращает `true` и выбрасывается событие `change`. Обработчику события `change` передается предыдущее значение, которое было до изменения.
-
-> У события `change` до версии `1.0.0` была другая сигнатура: вторым параметром (перед oldValue) передавалось текущее значение объекта. Это не имело смысла, так как это значение доступно в свойстве `value` и было убрано в `1.0.0`.
+Значение хранится в свойстве `value` и может иметь любой тип. Его можно задать при создании объекта или используя метод `set()`. Если значение меняется (для сравнения используется `===`), то метод `set` возвращает `true` и выбрасывается событие `change`. Обработчику события `change` передается предыдущее значение, которое было до изменения.
 
 ```js
-var Value = basis.require('basis.data').Value;
+var Value = require('basis.data').Value;
 
 var value = new Value({
   value: 1,
@@ -23,17 +21,17 @@ var value = new Value({
 });
 
 value.set(2);
-// console> value changed 1 -> 2
+// > value changed 1 -> 2
 // value.set(2) вернет true
 
 value.set(2);
-// console> false
+// > false
 ```
 
-У `Value` есть свойство `initValue`, которое хранит значение, назначенное объекту при создании. Метод `reset` меняет текущее значение на значение свойства `initValue`.
+У `Value` есть свойство `initValue`, которое хранит значение, назначенное объекту при создании. Метод `reset()` меняет текущее значение на значение свойства `initValue`.
 
 ```js
-var Value = basis.require('basis.data').Value;
+var Value = require('basis.data').Value;
 
 var value = new Value({
   value: 1,
@@ -45,16 +43,16 @@ var value = new Value({
 });
 
 value.set(2);
-// console> value changed 1 -> 2
+// > value changed 1 -> 2
 
 value.reset();
-// console> value changed 2 -> 1
+// > value changed 2 -> 1
 ```
 
-Когда требуется произвести множество изменений, можно заблокировать объект методом `lock`. При этом значение будет изменяться, но событий выбрасываться не будет. Это нужно для того, чтобы минимизировать количество событий. Для разблокировки объекта используется метод `unlock`, при этом сравнивается текущее значение и значение, которое было до блокировки, и если они отличаются - выбрасывается событие `change`.
+Когда требуется произвести множество изменений, можно заблокировать объект методом `lock()`. При этом значение будет изменяться, но событий выбрасываться не будет. Это нужно для того, чтобы минимизировать количество событий. Для разблокировки объекта используется метод `unlock()`, при этом сравнивается текущее значение и значение, которое было до блокировки, и если они отличаются - выбрасывается событие `change`.
 
 ```js
-var Value = basis.require('basis.data').Value;
+var Value = require('basis.data').Value;
 
 var value = new Value({
   value: 0,
@@ -67,30 +65,38 @@ var value = new Value({
 
 for (var i = 0; i < 3; i++)
   value.set(i + 1);
-// console> value changed 0 -> 1
-// console> value changed 1 -> 2
-// console> value changed 2 -> 3
+// > value changed 0 -> 1
+// > value changed 1 -> 2
+// > value changed 2 -> 3
 
 value.reset();
-// console> value changed 3 -> 0
+// > value changed 3 -> 0
 
 value.lock();
 for (var i = 0; i < 3; i++)
   value.set(i + 1);
 value.unlock();
-// console> value changed 0 -> 3
+// > value changed 0 -> 3
 ```
 
 ## Преобразование значений
 
-Часто нужно не текущее значение экземпляра `Value`, а преобразованное по некоторому правилу, с возможностью отслеживать эти изменения. Для этого используются методы `as` и `deferred`
+Одна из частых задач, получение производных значений. Другими словами создание новых экземпляров `Value`, которые хранят результат преобразования некоторой функцией значение другого экземпляра `Value`. При это при изменении оригинального значения или других условий автоматически пересчитывается преобразованное.
 
-Метод `as` возвращает экземпляр `basis.Token` ([подробнее](basis.Token.md)), который хранит преобразованное значение. Метод принимает один параметр:
+Получаемые таким образом объекты являются экземплярами `basis.data.ReadOnlyValue` или его производных, то есть их значение нельзя изменять методом `set()`. Производные значения получают следующими методами:
 
-  * fn - преобразующая функция, результат которой задается токену;
+- `as()` – простое преобразование
+- `deferred()` – отложенное значение
+- `compute()` – создаение фабрики для создания совместного вычисления с экземпляром `basis.event.Emitter`'а
+- `pipe()` – преобразование `basis.event.Emitter`'а хранимого в качестве значения
+- `query()` – подзапрос к значению
+
+### Value#as(fn)
+
+Метод возвращает экземпляр `basis.data.ReadOnlyValue`, который хранит преобразованное значение. Метод принимает единственный параметр – преобразующую функцию.
 
 ```js
-var Value = basis.require('basis.data').Value;
+var Value = require('basis.data').Value;
 
 var example = new Value({
   value: 1
@@ -100,27 +106,22 @@ var doubleValue = example.as(function(value){
 });
 
 console.log(doubleValue);
-// console> [object basis.Token]
+// > [object basis.data.ReadOnlyValue]
 console.log(doubleValue.value);
-// console> 1
+// > 1
 
 example.set(2);
 
 console.log(example.value);
-// console> 2
+// > 2
 console.log(doubleValue.value);
-// console> 4
+// > 4
 ```
 
-Для того, чтобы получить `basis.DeferredToken`, необходимо вызвать метод `deferred` полученного токена ([подробнее](basis.Token.md)):
-```js
-var doubleValue = example.as(function(value){ .. }).deferred();
-```
-
-Для одних и тех же значений параметра `fn` возвращается один и тот же токен.
+Для одних и тех же значений параметра `fn` возвращается один и тот же производное значение.
 
 ```js
-var Value = basis.require('basis.data').Value;
+var Value = require('basis.data').Value;
 
 var example = new Value({
   value: 1
@@ -128,25 +129,57 @@ var example = new Value({
 
 var double = function(){ .. };
 console.log(example.as(double) === example.as(double));
+// > true
 ```
 
-## Фабрика токенов
+> Рекомендуется чтобы передаваемые функции были чистыми, так как метод `Value#as()` сравнивает функции по их описанию (`Function#toString()`). Если функции замыкают внутри ссылки на внешние переменные, то рекомендуется оборачивать их в `basis.getter()`.
 
-Иногда нужно получать преобразование значение экземпляра `Value`, которое также зависит от другого экземпляра `basis.event.Emitter`. Для этого создается фабрика токенов - функция, которая возвращает `basis.Token` для заданого экземпляра `basis.event.Emitter`. Такая функция создается методом `compute`. Этот метод принимает два аргумента:
+### Value#deferred()
+
+Создает экземпляр `basis.data.DeferredValue`, который содержит то же значение, что и оригинал, но обновляемое в конце текущего кодового фрейма или в следующем (используется `basis.asap.schedule()`).
+
+```js
+var Value = require('basis.data').Value;
+
+var foo = new Value({
+  value: 1
+});
+var deferred = foo.deferred();
+
+console.log(foo.value);
+// > 1
+console.log(deferred.value); // актуальное значение, т.к. только создали значение
+// > 1
+
+foo.set(123);
+console.log(foo.value);
+// > 123
+console.log(deferred.value);
+// > 1
+
+setTimeout(function(){
+  console.log(deferred.value);
+  // > 123
+}, 10);
+```
+
+### Value#compute(events, fn)
+
+Иногда нужно получать преобразование значение экземпляра `Value`, которое также зависит от другого экземпляра `basis.event.Emitter`. Для этого создается функция-фабрика, которая возвращает `basis.data.ReadOnlyValue` для заданого экземпляра `basis.event.Emitter`. Такая функция создается методом `Value#compute()`. Этот метод принимает два аргумента:
 
   * events - список названий событий (необязательный); список представляется в виде массива строк (названий событий) или строкой, где названия событий разделены пробелом;
 
   * fn - функция вычисления значения; такая фунция получает два аргумента:
 
-    * object - объект, для которого создан токен;
+    * object - объект, для которого создается вычисление;
 
-    * value - текущее значение экземпляра `Value`, от которого образована фабрика токенов.
+    * value - текущее значение экземпляра `Value`, от которого образована фабрика.
 
-Значение для токена вычисляется при его создании и перевычисляется, когда меняется значение у экземпляра `Value` или выбрасывается событие, которое указано в списке событий. В случае разрушения `Value` или объекта разрушается и токен.
+Значение вычисляется при создании и перевычисляется, когда меняется значение экземпляра `Value` или выбрасывается событие, которое указано в списке событий. В случае разрушения `Value` или объекта разрушается и производные значения.
 
 ```js
-var Value = basis.require('basis.data').Value;
-var DataObject = basis.require('basis.data').Object;
+var Value = require('basis.data').Value;
+var DataObject = require('basis.data').Object;
 
 var example = new Value({
   value: 2
@@ -163,22 +196,23 @@ var object = new DataObject({
 var token = sum(object);
 
 console.log(token.value);
-// console> 6
+// > 6
 
 object.update({ property: 10 });
 console.log(token.value);
-// console> 20
+// > 20
 
 example.set(10);
 console.log(token.value);
-// console> 100
+// > 100
 ```
 
 Фабрики удобно использовать в биндингах `basis.ui.Node`, когда нужно получать значение, которое зависит от некоторого внешнего значения.
 
 ```js
-var Node = basis.require('basis.ui').Node;
-var Value = basis.require('basis.data').Value;
+var Node = require('basis.ui').Node;
+var Value = require('basis.data').Value;
+
 var commission = new Value({ value: 10 });
 var list = new Node({
   container: document.body,
@@ -210,3 +244,68 @@ commission.set(15);
 //   <div>amount: 251, commission: 37.65</div>
 // </div>
 ```
+
+### Value#pipe(events, fn)
+
+Если оригинальное значение хранит экземпляр `Emitter`, то позволяет слушать у него события и перевычислять производное значение в случае их совершения.
+
+Параметры:
+
+- `events` - события, которые необходимо слушать (список событий в виде строки разделенные пробелом или массив строк)
+- `fn` - функция преобразования или строку (пропускается через `basis.getter`)
+
+```js
+var DataObject = require('basis.data').Object;
+var Value = require('basis.data').Value;
+
+var foo = new DataObject({ data: { prop: 1 } });
+var val = new Value({
+  value: foo
+});
+var pipe = val.pipe('update', function(object){
+  return object.data.prop;
+});
+
+console.log(pipe.value);
+// > 1
+
+foo.update({ prop: 333 });
+console.log(pipe.value);
+// > 333
+
+val.set(new DataObject({ data: { prop: 777 } }));
+console.log(pipe.value);
+// > 777
+
+val.set();
+console.log(pipe.value);
+// > undefined
+```
+
+### Value#query(path)
+
+Метод–хелпер, для более короткой записи `Value.query()` и отсутсвия необходимости импортировать `Value`.
+
+```js
+var Value = require('basis.data').Value;
+
+var val = new Value();
+
+val.query('foo.bar');
+// эквивалентно
+Value.query(val, 'value.foo.bar');
+```
+
+Также см. [`Value.query()`](#valuequerytarget-path)
+
+## Фабрики
+
+### Value.from(target, [events], fn)
+
+### Value.factory([events], fn)
+
+### Value.state()
+
+### Value.stateFactory()
+
+### Value.query([target], path)
