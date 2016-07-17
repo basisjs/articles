@@ -108,6 +108,7 @@ include.tmpl
 Определенные в шаблоне пространства имен не применяются к описанию подключаемых шаблонов, как и не наследуются из подключаемых шаблонов. Если в префиксе имени класса указано не объявленное имя простраства имен (нет `<b:style>` с определенным значением атрибута `ns`), то такой класс удаляется из разметки.
 
 Шаблон:
+
 ```html
 <b:style src="./1.css" ns="foo">
 <div class="foo:one bar:two">
@@ -115,13 +116,15 @@ include.tmpl
 </div>
 ```
 
-`include.tmpl`
+`include.tmpl`:
+
 ```html
 <b:style src="./2.css" ns="bar">
 <div class="foo:one bar:two"/>
 ```
 
 Результирующая разметка:
+
 ```html
 <div class="oeuj905r8en1wuvw__one">
   <div class="trisd0m91p24u6ck__two"></div>

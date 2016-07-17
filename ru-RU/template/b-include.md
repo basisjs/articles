@@ -532,6 +532,7 @@ foo.tmpl:
 Для [изоляции](isolate-style.md) подключаемого шаблона, в тег `<b:include/>` добавляется атрибут `isolate`:
 
 `template.tmpl`:
+
 ```html
 <b:style>
   .some-class {
@@ -544,7 +545,9 @@ foo.tmpl:
   <b:include src="./innerTemplate.tmpl" isolate/>
 </div>
 ```
+
 `innerTemplate.tmpl`:
+
 ```html
 <b:style>
   .gold-border {
@@ -554,13 +557,16 @@ foo.tmpl:
 
 <div class="gold-border">Подключаемый шаблон</div>
 ```
+
 В результате будет сгенерировано следующее содержимое:
+
 ```html
 <div>
   <div class="some-class">Компонент</div>
   <div class="t234t23t2__gold-border">Подключаемый шаблон</div>
 </div>
 ```
+
 ```css
 .some-class {
   color: red;
@@ -569,21 +575,26 @@ foo.tmpl:
   border: 1px solid gold;
 }
 ```
+
 Можно задать собственный префикс, указав значение атрибуту `isolate`:
 
 `template.tmpl`:
+
 ```html
 ...
 <b:include src="./innerTemplate.tmpl" isolate="my-prefix_"/>
 ...
 ```
+
 В результате будет сгенерировано следующее содержимое:
+
 ```html
 <div>
   <div class="some-class">Компонент</div>
   <div class="my-prefix_gold-border">Подключаемый шаблон</div>
 </div>
 ```
+
 ```css
 .some-class {
   color: red;

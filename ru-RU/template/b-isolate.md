@@ -13,10 +13,13 @@
 
 <div class="some-class">Компонент</div>
 ```
+
 В результате будет сгененировано следующее содержимое:
+
 ```html
 <div class="i1__some-class">Компонент</div>
 ```
+
 ```css
 .i1__some-class {
   color: red;
@@ -35,10 +38,13 @@
 
 <div class="some-class">Компонент</div>
 ```
+
 В результате будет сгенерировано:
+
 ```html
 <div class="my-prefix_some-class">Компонент</div>
 ```
+
 ```css
 .my-prefix_some-class {
   color: red;
