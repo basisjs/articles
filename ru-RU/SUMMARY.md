@@ -11,7 +11,15 @@
   * [Объект](basis.data.Object.md)
   * [Набор](basis.data.datasets.md)
   * [Карта](basis.data.map.md)
-* [basis.data.dataset](basis.data.dataset.md) \[todo:complete]
+* [basis.data.dataset](basis.data.dataset.md)
+  * [Merge](dataset/merge.md) - объединение по правилу
+  * [Subtract](dataset/subtract.md) - вычитание
+  * [MapFilter](dataset/mapfilter.md) - конвертация и/или фильтрация
+  * [Filter](dataset/filter.md) - фильтрация (подмножество)
+  * [Slice](dataset/slice.md) - срез
+  * [Split](dataset/split.md) - разбиение 1:1 (группировка)
+  * [Cloud](dataset/cloud.md) - разбиение 1:M
+  * [Extract](dataset/extract.md) - разворачивание
 * [basis.dom.wrapper](basis.dom.wrapper.md)
   * [DOM](basis.dom.wrapper_dom.md)
   * [Дочерние узлы](basis.dom.wrapper_childNodes.md)
@@ -28,9 +36,17 @@
   * [Обратная связь (actions)](basis.ui_actions.md)
 * [Шаблоны](basis.template.md)
   * [Формат шаблонов](basis.template_format.md)
+    * [&lt;b:l10n&gt;](template/b-l10n.md)
+    * [&lt;b:style&gt;](template/b-style.md)
+    * [&lt;b:isolate&gt;](template/b-isolate.md)
+    * [&lt;b:define&gt;](template/b-define.md)
+    * [&lt;b:text&gt;](template/b-text.md)
+    * [&lt;b:include&gt;](template/b-include.md)
+    * [&lt;b:content&gt;](template/b-content.md)
+    * [Специальные атрибуты](template/atrtibute.md)
   * [Правила применения значений биндингам](basis.template_bindings.md)
   * [Темы](basis.template_theme.md)
-* [L10n](basis.l10n.md)
+* [basis.l10n](basis.l10n.md)
 * [basis.net](basis.net.md)
   * [basis.net.ajax](basis.net.ajax.md)
   * [basis.net.action](basis.net.action.md)

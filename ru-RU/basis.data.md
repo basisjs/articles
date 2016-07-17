@@ -45,14 +45,14 @@
   * state - новое значение состояния;
   * data - данные состояния (опционально).
 
-Если значения является неправильным (такого кода нет в `basis.data.STATE`), то будет выброшено исключение `Wrong state value`.
+Если значение является неправильным (такого кода нет в `basis.data.STATE`), то будет выброшено исключение `Wrong state value`.
 
 ```js
-var AbstractData = basis.require('basis.data').AbstractData;
 var STATE = basis.require('basis.data').STATE;
+var AbstractData = basis.require('basis.data').AbstractData;
 
 var obj = new AbstractData({
-  state: basis.data.STATE.READY    // можно задавать состояние при создании
+  state: STATE.READY               // можно задавать состояние при создании
                                    // экземпляра, по умолчанию будет UNDEFINED
 });
 
@@ -136,7 +136,6 @@ subscriber.setActive(false);
 
 ```js
 var DataObject = basis.require('basis.data').Object;
-var SUBSCRIPTION = basis.require('basis.data').SUBSCRIPTION;
 
 var Data = DataObject.subclass({
   emit_subscribersChanged: function(delta){
@@ -148,7 +147,7 @@ var a = new Data({ name: 'source A' });
 var b = new Data({ name: 'source B' });
 
 var subscriber = new DataObject({
-  // по умочанию subscribeTo: SUBSCRIPTION.DELEGATE + SUBSCRIPTION.TARGET
+  // по умочанию subscribeTo: basis.data.SUBSCRIPTION.DELEGATE + basis.data.SUBSCRIPTION.TARGET
   active: true,
   delegate: a  // subscriber ссылается на `a` свойством `delegate`
 });
@@ -264,7 +263,7 @@ basis.data.SUBSCRIPTION.add(
 
   * syncAction – метод, описывающий действия синхронизации. По умолчанию не задан (свойство равно `null`). Если свойство не задано, механизм синхронизации не будет активирован.
 
-Чтобы активировать механизм синхронизации, необходимо задать свойство `syncAction`. Оно может быть задано при создании экземпляра либо после создания методом `setSyncAction`. Метод `setSyncAction` принимает единственный параметр – новую функцию синхронизации. Если методу передано значение, которое не является функцией, `syncAction` приравнивается `null`, а сам механизм синхронизации деактивируется.
+Чтобы активировать механизм синхронизации, необходимо задать свойство `syncAction`. Оно может быть задано при создании экземпляра либо после создания, методом `setSyncAction`. Метод `setSyncAction` принимает единственный параметр – новую функцию синхронизации. Если методу передано значение, которое не является функцией, `syncAction` приравнивается `null`, а сам механизм синхронизации деактивируется.
 
 ```js
 var AbstractData = basis.require('basis.data').AbstractData;
@@ -311,6 +310,7 @@ var example = new AbstractData({
 Обычно в `syncAction` выполняется запрос к серверу для получения данных, а синхронизация инициируется при привязке объекта данных к активному представлению:
 
 ```js
+var net = basis.require('basis.net.ajax');
 var Node = basis.require('basis.ui').Node;
 var DataObject = basis.require('basis.data').Object;
 var STATE = basis.require('basis.data').STATE;
@@ -318,7 +318,7 @@ var STATE = basis.require('basis.data').STATE;
 var example = new DataObject({
   syncAction: function(){
     var self = this;
-    basis.net.request('/api/whatever',
+    net.request('/api/whatever',
       // success
       function(data){
         self.update(data);
@@ -326,7 +326,7 @@ var example = new DataObject({
       },
       // failure
       function(error){
-        self.setState(basis.data.STATE.ERROR, error);
+        self.setState(STATE.ERROR, error);
       }
     );
   }
@@ -341,11 +341,12 @@ var view = new Node({
 Для упрощения работы с запросами и сменой состояний используется модуль `basis.net.action`. Предыдущий пример может быть переписан следущим образом:
 
 ```js
+var action = basis.require('basis.net.action');
 var Node = basis.require('basis.ui').Node;
 var DataObject = basis.require('basis.data').Object;
 
 var example = new DataObject({
-  syncAction: basis.net.action.create({
+  syncAction: action.create({
     url: '/api/whatever',
     success: function(data){
       this.update(data);
@@ -362,10 +363,11 @@ var view = new Node({
 Более того, сами представления, точнее экземпляры `basis.dom.wrapper.Node`, могут получать данные без использования других объектов. Это подходит для простых случаев, когда данные не переиспользуются (но все же рекомендуется получать данные от сервера в объектах данных, а не в представлении) и предыдущий пример может выглядеть так:
 
 ```js
+var action = basis.require('basis.net.action');
 var Node = basis.require('basis.ui').Node;
 
 var view = new Node({
-  syncAction: basis.net.action.create({
+  syncAction: action.create({
     url: '/api/whatever',
     success: function(data){
       this.update(data);
@@ -384,6 +386,5 @@ var example = new DataObject({
     }.bind(this));
   }
 });
-```
 
 Для централизованной работы с сервисом (некоторым серверным API) используются экземпляры `basis.net.service.Service`, которые так же позволяет создавать `action` (используя тот же модуль `basis.net.action`), но с общими настройками по умолчанию, поддержкой сессии и прочим.
