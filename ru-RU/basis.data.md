@@ -381,9 +381,13 @@ var view = new Node({
 ```javascript
 var example = new DataObject({
   syncAction: function(){
-    return fetch('./data.json').then(function(res) {
-      this.update(res.json());
-    }.bind(this));
+    return fetch('./data.json')
+      .then(function(res) {
+        return res.json();
+      })
+      .then(function(json) {
+        this.update(json);
+      }.bind(this));
   }
 });
 
