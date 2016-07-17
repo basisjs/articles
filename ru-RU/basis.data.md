@@ -374,4 +374,23 @@ var view = new Node({
 });
 ```
 
+Если `syncAction` возвращает промис, то состояние объекта данных будет определяться автоматически, в зависимости от состояния промиса:
+
+```javascript
+var example = new Object({
+  syncAction: function(){
+    var dataInstance = this;
+    
+    return fetch('./data.json').then(function(res) {
+      dataInstance.update(res.json());
+    });
+  }
+});
+
+var view = new Node({
+  active: true,
+  delegate: example
+});
+```
+
 Для централизованной работы с сервисом (некоторым серверным API) используются экземпляры `basis.net.service.Service`, которые так же позволяет создавать `action` (используя тот же модуль `basis.net.action`), но с общими настройками по умолчанию, поддержкой сессии и прочим.
