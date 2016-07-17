@@ -1,8 +1,26 @@
 # Value
 
-Класс `basis.data.Value` ([docs](http://basisjs.com/docs#basis.data.Value)) и его потомки предназначены для хранения атомарных (не делимых) значений. Даже если значение имеет сложную структуру, например, объект, то изменения в его структуре не отслеживаются, и сам объект воспринимается как единое целое.
+Класс `basis.data.Value` ([docs](http://basisjs.com/docs#basis.data.Value)) и его потомки предназначены для хранения атомарных (неделимых) значений. Даже если значение имеет сложную структуру, например, объект, то изменения в его структуре не отслеживаются, и сам объект воспринимается как единое целое.
 
 От `basis.data.Value` образуются другие классы, например, в пространствах имен `basis.data.value` и `basis.data.index`.
+
+<!-- MarkdownTOC -->
+
+- [Работа со значением](#Работа-со-значением)
+- [Преобразование значений](#Преобразование-значений)
+  - [Value#as\(fn\)](#valueasfn)
+  - [Value#deferred\(\)](#valuedeferred)
+  - [Value#compute\(events, fn\)](#valuecomputeevents-fn)
+  - [Value#pipe\(events, fn\)](#valuepipeevents-fn)
+  - [Value#query\(path\)](#valuequerypath)
+- [Фабрики](#Фабрики)
+  - [Value.from\(target, \[events\], fn\)](#valuefromtarget-events-fn)
+  - [Value.factory\(\[events\], fn\)](#valuefactoryevents-fn)
+  - [Value.state\(\)](#valuestate)
+  - [Value.stateFactory\(\)](#valuestatefactory)
+  - [Value.query\(\[target\], path\)](#valuequerytarget-path)
+
+<!-- /MarkdownTOC -->
 
 ## Работа со значением
 

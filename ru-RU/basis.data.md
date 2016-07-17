@@ -12,6 +12,15 @@
 
   * Карта (map) – ассоциация произвольного значения с другим (на данный момент значение должно быть экземпляром [`basis.event.Emitter`](basis.event.md#emitter)) ([подробнее](basis.data.map.md))
 
+<!-- MarkdownTOC -->
+
+- [AbstractData](#abstractdata)
+  - [Состояние](#Состояние)
+  - [Подписка](#Подписка)
+  - [Абстрактная синхронизация](#Абстрактная-синхронизация)
+
+<!-- /MarkdownTOC -->
+
 ## AbstractData
 
 Класс `basis.data.AbstractData` ([docs](http://basisjs.com/docs#basis.data.AbstractData)) является основой для классов данных. От него наследуются `Value`, `Object`, `ReadOnlyDataset` и `KeyObjectMap`.
