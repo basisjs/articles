@@ -7,11 +7,11 @@
 <!-- MarkdownTOC -->
 
 - [Общие](#Общие)
-  - [-b, --base](#-b---base)
-  - [-f, --file](#-f---file)
+  - [-b, --base &lt;path>](#-b---base-ltpath)
+  - [-f, --file &lt;filename>](#-f---file-ltfilename)
   - [--preset](#--preset)
-  - [-o, --output](#-o---output)
-  - [-t, --target](#-t---target)
+  - [-o, --output &lt;path>](#-o---output-ltpath)
+  - [-t, --target &lt;target>](#-t---target-lttarget)
   - [-p, --pack](#-p---pack)
   - [--no-color](#--no-color)
   - [--verbose](#--verbose)
@@ -20,14 +20,14 @@
   - [--stat](#--stat)
 - [CSS](#css)
   - [--css-pack](#--css-pack)
-  - [-i, --css-inline-image](#-i---css-inline-image)
+  - [-i, --css-inline-image &lt;max-size>](#-i---css-inline-image-ltmax-size)
   - [--css-optimize-names](#--css-optimize-names)
   - [--css-usage](#--css-usage)
 - [JavaScript](#javascript)
   - [--js-cut-dev](#--js-cut-dev)
   - [--js-optimize-throws](#--js-optimize-throws)
   - [--js-pack](#--js-pack)
-  - [--js-pack-cmd](#--js-pack-cmd)
+  - [--js-pack-cmd &lt;string>](#--js-pack-cmd-ltstring)
 - [Misc](#misc)
   - [--l10n-package](#--l10n-package)
   - [--l10n-default-culture](#--l10n-default-culture)
@@ -40,7 +40,7 @@
 
 ## Общие
 
-### -b, --base <path>
+### -b, --base &lt;path>
 
 Задает базовый путь. По умолчанию это локация файла конфигурации (`basis.config`) или текущая папка, если конфигурационный файл не найден или не используется (указан флаг `--no-config`).
 
@@ -48,17 +48,17 @@
 
 > Предположим, что базовый путь `/foo/bar/baz`. Если в приложении встретится, например, `basis.require('/path/to/file.ext')`, то такой путь будет преобразован в `/foo/bar/baz/path/to/file.ext`. Попытки "всплыть" выше игнорируются, например, для `basis.require('/../../path/to/file.ext')` будет по прежнему получен путь `/foo/bar/baz/path/to/file.ext`.
 
-### -f, --file <filename>
+### -f, --file &lt;filename>
 
 Указывает путь к индексному файлу. По умолчанию это `index.html` в базовой папке.
 
 ### --preset
 
-### -o, --output <path>
+### -o, --output &lt;path>
 
 Указывает папку, где должен быть расположен результат. По умолчанию это `build` в базовой папке.
 
-### -t, --target <target>
+### -t, --target &lt;target>
 
 Данная опция определяет какой в каком виде необходимо получить результат. Возможны следующие варианты:
 
@@ -128,7 +128,7 @@ Build done in 1.066s
 
 Стили сжимаются как файлах, так и в атрибутах `style` (в `html` файлах и шаблонах).
 
-### -i, --css-inline-image <max-size>
+### -i, --css-inline-image &lt;max-size>
 
 Если задана эта опция, то сборщик заменяет в стилях ссылки на файлы равные или меньшие `max-size` на Data URI, то есть их base64 представление. Предположим, что для `max-size` задано значение `4096` (то есть `basis build -i 4096`) и размер `foo.png` меньше этого значения, тогда файл стилей:
 
@@ -196,7 +196,7 @@ console.log('foo');
 
 ### --js-pack
 
-### --js-pack-cmd <string>
+### --js-pack-cmd &lt;string>
 
 По умолчанию `google-closure-compiler --charset UTF-8`.
 
