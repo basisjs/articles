@@ -21,6 +21,7 @@
   - [&lt;b:remove-attr>](#ltbremove-attr)
   - [&lt;b:class>, &lt;b:append-class>](#ltbclass-ltbappend-class)
   - [&lt;b:set-class>](#ltbset-class)
+  - [&lt;b:remove-class>](#ltbremove-class)
   - [&lt;b:add-ref>](#ltbadd-ref)
   - [&lt;b:remove-ref>](#ltbremove-ref)
   - [&lt;b:role>, &lt;b:set-role>](#ltbrole-ltbset-role)
@@ -246,8 +247,9 @@ var bar = new Template('<div class="wrapper"><b:include src="#' + foo.templateId
 * [`<b:attr>`](#battr-bset-attr), [`<b:set-attr>`](#battr-bset-attr) – установка атрибута
 * [`<b:append-attr>`](#bappend-attr) – добавление значения к значению атрибута
 * [`<b:remove-attr>`](#bremove-attr) – удаление атрибута
-* [`<b:class>`](#bclass-bappend-class), [`<b:append-class>`](#bclass-bappend-class) – добавление класса (классов) в атрибут `class`;
+* [`<b:class>`](#bclass-bappend-class), [`<b:append-class>`](#bclass-bappend-class) – добавление класса (классов) в атрибут `class`
 * [`<b:set-class>`](#bset-class) – замещение значения атрибута `class`
+* [`<b:remove-class>`](#bremove-class) – удаление класса (классов) из атрибута `class`
 * [`<b:add-ref>`](#badd-ref) – добавление [ссылки](basis.template_format.md#Ссылки) на узел
 * [`<b:remove-ref>`](#bremove-ref) – удаление [ссылки](basis.template_format.md#Ссылки) на узел
 * [`<b:role>`](#brole-set-role), [`<b:set-role>`](#brole-set-role) – установка маркера роли
@@ -544,7 +546,7 @@ foo.tmpl:
 
 ### &lt;b:set-class>
 
-Замещает значение атрибута `class` на новое значение;
+Замещает значение атрибута `class` на новое.
 
 ```html
 <b:include src="./foo.tmpl">
@@ -565,6 +567,32 @@ foo.tmpl:
 ```html
 <div class="example">
   <span{label} class="foo foo_{selected}">{title}</span>
+</div>
+```
+
+### &lt;b:remove-class>
+
+Удаляет указанные в атрибуте `value` имена классов из атрибута `class` заданного элемента. Каждое имя обрабатывается отдельно, поэтому их порядок не важен.
+
+```html
+<b:include src="./foo.tmpl">
+  <b:remove-class ref="label" value="foo foo_{selected}"/>
+</b:inclide>
+```
+
+foo.tmpl:
+
+```html
+<div class="example">
+  <span{label} class="foo_{selected} bar foo">{title}</span>
+</div>
+```
+
+Результат:
+
+```html
+<div class="example">
+  <span{label} class="bar">{title}</span>
 </div>
 ```
 

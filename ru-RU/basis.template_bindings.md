@@ -1,8 +1,18 @@
 # Правила применения значений биндингам
 
-Различается 6 типов биндингов (см ["Биндинги"](basis.template_format.md#Биндинги)):
+<!-- MarkdownTOC -->
 
-  * биндинги на узлы:
+- [Биндинги на узлах](#Биндинги-на-узлах)
+- [Биндинги в атрибутах](#Биндинги-в-атрибутах)
+  - [class](#class)
+  - [style](#style)
+- [bindingBridge](#bindingbridge)
+
+<!-- /MarkdownTOC -->
+
+В зависимости от типа биндинга и назначаемого значения применяются разные правила. Основные сценарии (см ["Биндинги"](basis.template_format.md#Биндинги)):
+
+  * [биндинг на узел](#Биндинги-на-узлах):
 
       * к элементу (тегу);
 
@@ -10,19 +20,17 @@
 
       * к коментарию;
 
-  * биндинги в атрибутах:
+  * биндинг в атрибуте:
 
-      * в атрибуте `class`;
+      * в атрибуте [`class`](#class);
 
-      * в атрибуте `style`;
+      * в атрибуте [`style`](#style);
 
-      * в остальных атрибутах.
-
-В зависимости от типа биндинга и назначаемого значения применяются разные правила.
+      * в [остальных атрибутах](#Биндинги-в-атрибутах).
 
 Если для биндинга назначается то же значение, которое эквивалентно предыдущему (`===`), то никаких изменений в шаблоне не происходит.
 
-## Биндинги на узлы
+## Биндинги на узлах
 
 Узловым биндингам могут быть назначены:
 
@@ -112,6 +120,91 @@ console.log(tmpl.element.outerHTML);
 // console> <input type="checkbox">
 ```
 
+### class
+
+Для атрибута `class` используются дополнительные правила, так как он является списком значений ([DOMTokenList](https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList)). Для него не заменяется всё значение целиком, как с другими атрибутами, а добавляются или удаляются имена классов отдельными операциями. Каждый биндинг в атрибуте обрабатывается отдельно.
+
+По умолчанию применяются правила:
+
+* если значение число или строка – вставляется как есть (число приводится к строке); если значение является пустой строкой, то класс удаляется;
+
+    ```js
+    var Template = basis.require('basis.template.html').Template;
+
+    var tmpl = new Template(
+      '<div class="item {foo} {bar}">'
+    ).createInstance();
+
+    console.log(tmpl.element.outerHTML);
+    // console> <div class="item"></div>
+
+    tmpl.set('foo', 'test');
+    console.log(tmpl.element.outerHTML);
+    // console> <div class="item test"></div>
+
+    tmpl.set('bar', 123);
+    console.log(tmpl.element.outerHTML);
+    // console> <div class="item test 123"></div>
+
+    tmpl.set('foo', '');
+    console.log(tmpl.element.outerHTML);
+    // console> <div class="item 123"></div>
+    ```
+
+* все другие значения приводятся к `boolean`; если значение равнозначно `true`, то вставляется класс с именем биндинга, иначе класс удаляется;
+
+    ```js
+    var Template = basis.require('basis.template.html').Template;
+
+    var tmpl = new Template(
+      '<div class="item {foo} {bar}">'
+    ).createInstance();
+
+    console.log(tmpl.element.outerHTML);
+    // console> <div class="item"></div>
+
+    tmpl.set('foo', 'test');
+    console.log(tmpl.element.outerHTML);
+    // console> <div class="item test"></div>
+
+    tmpl.set('bar', true);
+    console.log(tmpl.element.outerHTML);
+    // console> <div class="item test bar"></div>
+
+    tmpl.set('foo', false);
+    console.log(tmpl.element.outerHTML);
+    // console> <div class="item bar"></div>
+
+    tmpl.set('bar', null);
+    console.log(tmpl.element.outerHTML);
+    // console> <div class="item"></div>
+    ```
+
+Эти правила достаточны для простых сценариев. Но являются ненадежными, так как могут приводить к непредсказуемому результату. Кроме того они не безопасны, так как, например, не любая строка может быть именем классом.
+
+Для того чтобы зафиксировать возможные значения биндига в атрибуте `class` используется инструкция [`<b:define>`](template/element/b-define.md). Она позволяет получать предсказуемые имена классов в разметке и облечает ее статический анализ для выявления проблем в шаблонах и стилях (подробнее в описании [`<b:define>`](template/element/b-define.md)).
+
+Перед любым биндингом в атрибуте `class` может быть некоторая строка - префикс. Это позволяет избегать конфликта имен классов, так как разные биндинги могут иметь одинаковые значения.
+
+```js
+var Template = require('basis.template.html').Template;
+
+var tmpl = new Template(
+  '<div class="item item_{foo} prefix{bar}">'
+).createInstance();
+
+console.log(tmpl.element.outerHTML);
+// console> <div class="item"></div>
+
+tmpl.set('foo', 'test');
+console.log(tmpl.element.outerHTML);
+// console> <div class="item item_test"></div>
+
+tmpl.set('bar', 'test');
+console.log(tmpl.element.outerHTML);
+// console> <div class="item item_test prefixtest"></div>
+```
+
 ### style
 
 При изменении биндингов в атрибуте `style` заменяется не значение атрибута, а меняется соответствующее свойство в `style`. Если значение невалидно, то значение стиля не меняется.
@@ -141,148 +234,6 @@ console.log(tmpl.element.outerHTML);
 tmpl.set('color', '');
 console.log(tmpl.element.outerHTML);
 // console> <div style=""></div>
-```
-
-### class
-
-Для атрибута `class` используются дополнительные правила, так как он является не обычным атрибутом, а списком значений ([DOMTokenList](https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList)). Для него не заменяется всё значение, как с другими атрибутами, а добавляются, удаляются или заменяются определенные классы - зависит от значения. Каждый биндинг в атрибуте обрабатывается отдельно.
-
-По умолчанию применяются правила:
-
-  * если значение число или строка – вставляется как есть (число приводится к строке); если значение является пустой строкой, то класс удаляется;
-
-    ```js
-    var Template = basis.require('basis.template.html').Template;
-
-    var tmpl = new Template(
-      '<div class="item {foo} {bar}">'
-    ).createInstance();
-
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item"></div>
-
-    tmpl.set('foo', 'test');
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item test"></div>
-
-    tmpl.set('bar', 123);
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item test 123"></div>
-
-    tmpl.set('foo', '');
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item 123"></div>
-    ```
-
-  * все другие значения приводятся к `boolean`; если значение равнозначно `true`, то вставляется класс с именем биндинга, иначе класс удаляется;
-
-    ```js
-    var Template = basis.require('basis.template.html').Template;
-
-    var tmpl = new Template(
-      '<div class="item {foo} {bar}">'
-    ).createInstance();
-
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item"></div>
-
-    tmpl.set('foo', 'test');
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item test"></div>
-
-    tmpl.set('bar', true);
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item test bar"></div>
-
-    tmpl.set('foo', false);
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item bar"></div>
-
-    tmpl.set('bar', null);
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item"></div>
-    ```
-
-Это простые правила, но они ненадежны. Для определения того, как обрабатывать значение используется тег [`<b:define>`](template/element/b-define.md). Этот тег определяет два правила:
-
-  * `bool` – значение всегда приводится к `boolean` и, в зависимости от результата, либо вставляется класс с именем биндинга, либо удаляется (не вставляется);
-
-    ```js
-    var Template = basis.require('basis.template.html').Template;
-
-    var tmpl = new Template(
-      '<b:define name="foo" type="bool"/>' +
-      '<b:define name="bar" type="bool"/>' +
-      '<div class="item {foo} {bar}">'
-    ).createInstance();
-
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item"></div>
-
-    tmpl.set('foo', 'test');
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item foo"></div>
-
-    tmpl.set('bar', true);
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item foo bar"></div>
-
-    tmpl.set('foo', 123);
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item foo bar"></div>
-
-    tmpl.set('foo', 0);
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item bar"></div>
-    ```
-
-  * `enum` – определяет значение допустимых значений; если значение равно одному из списка (сравниваются как строки), то значение вставляется как класс, иначе класс удаляется (не вставляется);
-
-    ```js
-    var Template = basis.require('basis.template.html').Template;
-
-    var tmpl = new Template(
-      '<b:define name="foo" type="enum" values="ready processing"/>' +
-      '<div class="item {foo}">'
-    ).createInstance();
-
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item"></div>
-
-    tmpl.set('foo', 'test');
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item"></div>
-
-    tmpl.set('foo', 'ready');
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item ready"></div>
-
-    tmpl.set('foo', 'selected');
-    console.log(tmpl.element.outerHTML);
-    // console> <div class="item"></div>
-    ```
-
-Определение `<b:define>` для всех биндингов в атрибуте `class`, является крайне желательным. Так как в таком случае возможно определение проблем в шаблонах и стилях, а так же минификация имен классов (подробнее в описании [`<b:define>`](template/element/b-define.md)).
-
-Перед любым биндингом в атрибуте `class` может быть некоторая строка - префикс. Это позволяет избегать конфликта имен классов, так как разные биндинги могут иметь одинаковые значения.
-
-```js
-var Template = basis.require('basis.template.html').Template;
-
-var tmpl = new Template(
-  '<div class="item item_{foo} prefix{bar}">'
-).createInstance();
-
-console.log(tmpl.element.outerHTML);
-// console> <div class="item"></div>
-
-tmpl.set('foo', 'test');
-console.log(tmpl.element.outerHTML);
-// console> <div class="item item_test"></div>
-
-tmpl.set('bar', 'test');
-console.log(tmpl.element.outerHTML);
-// console> <div class="item item_test prefixtest"></div>
 ```
 
 ## bindingBridge
