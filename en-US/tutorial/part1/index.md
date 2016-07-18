@@ -477,7 +477,7 @@ var list = new Node({
 
 Let's continue improving the code. After all, it can be written even simplier.
 
-TODO Class `Item` is not used anywhere else anymore, so it makes no sense to store it in a variable. This class can be set directly in the config file. But this is not all we can do. When you create a new class or an instance, and one of its properties is a class, and we want to create a new class based on it, there is no need to create a class explicitly. One can simply set the object which extends an old class. It may sound complicated, but it really means only that one do not need to specify `basis.ui.Node.subclass`, just pass the object like this:
+`Item` class is not used anywhere else anymore, so it makes no sense to store it in a variable. This class can be set directly in the config file. But this is not all we can do. When you create a new class or an instance, and one of its properties is a class, and we want to create a new class based on it, there is no need to create a class explicitly. One can simply set the object which extends an old class. It may sound complicated, but it really means only that one do not need to specify `basis.ui.Node.subclass`, just pass the object like this:
 
 ```js
 var Node = require('basis.ui').Node;
@@ -501,7 +501,7 @@ var list = new Node({
 });
 ```
 
-That's so much better. Now we need only to describe templates.
+That's so much better. Now we need only to describe some templates.
 
 Let's create a list template `list.tmpl`:
 
@@ -514,7 +514,7 @@ Let's create a list template `list.tmpl`:
 
 It is a common markup except that in the `ul` tag after its name there is an unfamiliar thing `{childNodesElement}`. Meet, this is also a marker. So we say we want to refer to that element by name `childNodesElement`. In fact, we ourselves do not need this reference. But the list view needs it to find out where to insert child nodes' `DOM` fragments. If we do not specify this marker, the child nodes will be inserted into the root element of the template (in this case directly in `<div id="mylist">`).
 
-So. We do not directly control `DOM` – view do this themselves. TODO START We only suggest what and where to place. And as the movement of units engaged in a view, they perfectly know what and where is, and try to do their work more optimally as possible. Moreover, it is therefore possible to update templates without reloading the page. When you change the template description, view creates a new `DOM` fragment and transfers from the old into the new fragment all necessary. TODO STOP
+So. We do not directly control `DOM`, the view does this itself. We only suggest what and where to put. And since views are busy with moving their child nodes, they know exactly what and where is located& Views are designed to do all this as effective as possible. This is why it is possible to update templates without reloading the page. When a template description is changed, its view creates a new `DOM` fragment and transfers all necessary things from the old fragment into the new one.
 
 Now one need to create a template for a list element (`item.tmpl`):
 
@@ -547,7 +547,169 @@ After reloading the page we will see our pretty three element list.
 
 ## Composition (?)
 
+We have created two views that are displayed on the page. It looks OK, but in fact there is a problem. We do not control the insertion of views in the document and their order, it all depends on the order in which we connected modules. Besides usually, not all views from connected modules are needed to be displayed at once. Let's see how we can manage it.
+
+The basic idea is that we create one view that will be inserted into the document. This view is described in a separate module. In this module there are can be other modules with their views and `DOM` fragments to ne inserted into the parent `DOM` fragments. And this may go further in depth as for example folders in a file system may be nested. Thus, the views determine which views are included in them, but not vice versa. Usually child views do not know who and how includes them.
+
+To begin with let's change modules themselves. Firstly, one need to remove the `container` property, as the parent view will determine the location . And secondly, it is necessary for the module to return that view so it could be used. One should use `exports` or `module.exports` (the same as in `node.js`).
+
+Now `hello.js` looks like this:
+
+```js
+var Node = require('basis.ui').Node;
+
+module.exports = new Node({
+  data: {
+    name: 'world'
+  },
+  template: resource('./hello.tmpl'),
+  binding: {
+    name: 'data:name'
+  },
+  action: {
+    setName: function(event){
+      this.update({
+        name: event.sender.value
+      });
+    }
+  }
+});
+```
+
+And `list.js` module looks like this:
+
+```js
+var Node = require('basis.ui').Node;
+
+module.exports = new Node({
+  template: resource('./list.tmpl'),
+  childClass: {
+    template: resource('./item.tmpl'),
+    binding: {
+      name: function(node){
+        return node.name;
+      }
+    }
+  },
+  childNodes: [
+    { name: 'foo' },
+    { name: 'bar' },
+    { name: 'baz' }
+  ]
+});
+```
+
+As one can see, not much has been changed.
+
+Any application typically has a single entry point. This is a module, which creates the root view and makes key settings. Let's create a new file (`app.js`):
+
+```js
+var Node = require('basis.ui').Node;
+
+new Node({
+  container: document.body,
+  childNodes: [
+    require('./hello.js'),
+    require('./list.js')
+  ]
+});
+```
+
+Everything here should be familiar. One can see that there is no tameplete for the view. By default an empty `<div>` will be used. And this is OK for now.
+
+It remains only to change `index.html` itself:
+
+```html
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first app on basis.js</title>
+</head>
+<body>
+  <script src="node_modules/basisjs/src/basis.js" basis-config=""></script>
+  <script>
+    basis.require('./app.js');
+  </script>
+</body>
+</html>
+```
+
+Two calls to `basis.require` were replaced by one. But one may skip even it and use `autoload` option in` basis-config` instead:
+
+```html
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first app on basis.js</title>
+</head>
+<body>
+  <script src="node_modules/basisjs/src/basis.js" basis-config="autoload: 'app'"></script>
+</body>
+</html>
+```
+
+This is much better.
+
+And still it remains a small problem. Yes, the order of children is given to a view in the root view. But they are added sequentially, one after the other. And often enough, we need to place the child views at a specific point, more complex than just an empty `<div>`. To do this one may use the satellites.
+
 ### Satellites
+
+Satellites are named child views. This mechanism is used for views, which play a certain role and are not repeated. The parent node of a satellite node will be called here as `owner`.
+
+To specify the satellites a `satellite` property is used. A `satellite:` helper can be used in bindings to provide a template the possibility to place a satellite's `DOM` fragment inside the owner's `DOM` fragment. In this case the root element of the satellite's template is passed to the owner view (remember, they operate in terms of `DOM`). And in the owner view template an insertion point will be defined.
+
+Here  how `app.js` will look like if we use satellites:
+
+```js
+var Node = require('basis.ui').Node;
+
+new Node({
+  container: document.body,
+  template: resource('./app.tmpl'),
+  binding: {
+    hello: 'satellite:hello',
+    list: 'satellite:list'
+  },
+  satellite: {
+    hello: require('./hello.js'),
+    list: require('./list.js')
+  }
+});
+```
+
+That is an example of an explicit declaration of satellites and how they are used in bindings. But the same things can be described shorter:
+
+```js
+var Node = require('basis.ui').Node;
+
+new Node({
+  container: document.body,
+  template: resource('./app.tmpl'),
+  binding: {
+    hello: require('./hello.js'),
+    list: require('./list.js')
+  }
+});
+```
+
+Here the satellites are described implicitly. In fact any instance of `basis.ui.Node` can be used as a binding. Such an instance implicitly became a satellite with the same name as this binding.
+
+It remains to describe the template that defines the layout and locations of the satellites:
+
+```html
+<div>
+  <div id="sidebar">
+    <!--{list}-->
+  </div>
+  <div id="content">
+    <!--{hello}-->
+  </div>
+</div>
+```
+
+...
 
 ## Tuning file structure
 
