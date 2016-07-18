@@ -1,6 +1,42 @@
 # Build
 
-Команда `build` осуществляет сборку приложения.
+Команда `build` производит сборку приложения.
+
+Опции:
+
+<!-- MarkdownTOC -->
+
+- [Общие](#Общие)
+  - [-b, --base](#-b---base)
+  - [-f, --file](#-f---file)
+  - [--preset](#--preset)
+  - [-o, --output](#-o---output)
+  - [-t, --target](#-t---target)
+  - [-p, --pack](#-p---pack)
+  - [--no-color](#--no-color)
+  - [--verbose](#--verbose)
+  - [--silent](#--silent)
+  - [--warnings](#--warnings)
+  - [--stat](#--stat)
+- [CSS](#css)
+  - [--css-pack](#--css-pack)
+  - [-i, --css-inline-image](#-i---css-inline-image)
+  - [--css-optimize-names](#--css-optimize-names)
+  - [--css-usage](#--css-usage)
+- [JavaScript](#javascript)
+  - [--js-cut-dev](#--js-cut-dev)
+  - [--js-optimize-throws](#--js-optimize-throws)
+  - [--js-pack](#--js-pack)
+  - [--js-pack-cmd](#--js-pack-cmd)
+- [Misc](#misc)
+  - [--l10n-package](#--l10n-package)
+  - [--l10n-default-culture](#--l10n-default-culture)
+  - [--tmpl-default-theme](#--tmpl-default-theme)
+  - [--theme](#--theme)
+  - [--same-filenames](#--same-filenames)
+  - [--single-file](#--single-file)
+
+<!-- /MarkdownTOC -->
 
 ## Общие
 
@@ -16,6 +52,8 @@
 
 Указывает путь к индексному файлу. По умолчанию это `index.html` в базовой папке.
 
+### --preset
+
 ### -o, --output <path>
 
 Указывает папку, где должен быть расположен результат. По умолчанию это `build` в базовой папке.
@@ -24,8 +62,9 @@
 
 Данная опция определяет какой в каком виде необходимо получить результат. Возможны следующие варианты:
 
-- `fs` (по умолчанию) – результат в виде множества файлов, которые необхомы для работы приложения;
-- `output-graph` – генерирует выходной граф файлов в формате `.dot`, который сохраняется в файл `output-graph.dot`.
+- `fs` (по умолчанию) – результат в виде множества файлов, которые записываются на диск (файловую систему)
+- `output-graph` – генерирует выходной граф файлов в формате `.dot`, который сохраняется в файл `output-graph.dot`
+- `none` – не производить никакого результата; может быть полезно для определения, что основной процесс сборки происходит успешно (без ошибок), но сам результат при этом не нужен
 
 ### -p, --pack
 
@@ -44,6 +83,8 @@
 ### --verbose
 
 По умолчанию выводится только основная информаци о процессе сборки. Если необходимо получить детальную информацию о процессе, то используется флаг `--verbose`. Подробная информация позволяет полную картину того, что и как делает сборщик.
+
+### --silent
 
 ### --warnings
 
@@ -76,6 +117,8 @@ Warnings: 1
     * File `template/foo.css` not found (/abs/path/to/template/foo.css)
 Build done in 1.066s
 ```
+
+### --stat
 
 ## CSS
 
@@ -123,6 +166,8 @@ Build done in 1.066s
 
 Данная трансформация является небезопасной, и может применяться, если есть гарантия что имена классов не используются, например, в JavaScript коде.
 
+### --css-usage
+
 ## JavaScript
 
 ### --js-cut-dev
@@ -157,4 +202,14 @@ console.log('foo');
 
 ## Misc
 
+### --l10n-package
+
+### --l10n-default-culture
+
 ### --tmpl-default-theme
+
+### --theme
+
+### --same-filenames
+
+### --single-file

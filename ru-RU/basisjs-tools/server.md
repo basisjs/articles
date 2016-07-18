@@ -2,6 +2,26 @@
 
 Команда `server` используется для запуска dev-сервера. Этот сервер по сути является обычным http-сервером, но имеет ряд дополнительных функций для оптимизации процесса разработки.
 
+<!-- MarkdownTOC -->
+
+- [Общие опции](#Общие-опции)
+  - [-b, --base](#-b---base)
+  - [-p, --port](#-p---port)
+  - [--verbose](#--verbose)
+  - [--no-color](#--no-color)
+  - [-e, --editor](#-e---editor)
+  - [--no-cache](#--no-cache)
+  - [--no-read-cache](#--no-read-cache)
+  - [--no-res-cache](#--no-res-cache)
+  - [-i, --index](#-i---index)
+  - [-n, --no-sync](#-n---no-sync)
+- [Дополнительные настройки](#Дополнительные-настройки)
+  - [rewrite](#rewrite)
+  - [ignore](#ignore)
+  - [plugins](#plugins)
+
+<!-- /MarkdownTOC -->
+
 ## Общие опции
 
 ### -b, --base <path>
