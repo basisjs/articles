@@ -29,7 +29,7 @@
     * [Extract](ru-RU/dataset/extract.md) - разворачивание
 * basis.data.value
 * basis.data.index
-* basis.entity
+* [basis.entity](ru-RU/basis.entity.md)
 * [basis.dom.wrapper](ru-RU/basis.dom.wrapper.md)
     * [DOM](ru-RU/basis.dom.wrapper_dom.md)
     * [Управление дочерними узлами](ru-RU/basis.dom.wrapper_childNodes.md)
@@ -61,9 +61,6 @@
 * [basis.l10n](ru-RU/basis.l10n.md)
 * [basis.net](ru-RU/basis.net.md)
     * [basis.net.ajax](ru-RU/basis.net.ajax.md)
-    * basis.net.jsonp
-    * basis.net.soap
-    * basis.net.upload
     * [basis.net.action](ru-RU/basis.net.action.md)
     * [basis.net.service](ru-RU/basis.net.service.md)
 * [basis.router](ru-RU/basis.router.md)

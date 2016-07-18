@@ -28,8 +28,8 @@
   * [Привязка данных](basis.dom.wrapper_data.md)
   * [Паттерн "владелец"](basis.dom.wrapper_owner.md) \[todo:examples]
   * [Сателлиты](basis.dom.wrapper_satellite.md)
-  * [Доступность (disabled/enabled)](basis.dom.wrapper_disabled.md) \[todo:examples]
-  * [Выделение (selection)](basis.dom.wrapper_selection.md) \[todo:examples] \[todo:Selection&context]
+  * [Доступность (disabled/enabled)](basis.dom.wrapper_disabled.md)
+  * [Выделение (selection)](basis.dom.wrapper_selection.md)
 * [Интерфейс пользователя](basis.ui.md) (basis.ui)
   * [Привязка шаблонов](basis.ui_template.md)
   * [Биндинги (bindings)](basis.ui_bindings.md)
