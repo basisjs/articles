@@ -344,11 +344,11 @@ var view = new Node({
 });
 ```
 
-The helper which was just used is only syntactic sugar. It will unfold in full form, which has been presented in the previous example. More details can be found in the article [Bindings](../../ basis.ui_bindings.md).
+The helper which was just used is only syntactic sugar. It will unfold in full form, which has been presented in the previous example. More details can be found in the article [Bindings](../../basis.ui_bindings.md).
 
 The main thing to remember is the following. A view calculates and transmits values to its template, the `binding` property is used for that. The template captures and transmits events to its view, it triggers actions listed in the `action` property. In other words `binding` and` action` are the two main points of contact between the view and its template. At the same time, the view knows almost nothing about how its template is organized, and the template knows nothing about the view realisation. All the logic (`javascript`) is on the side of the view, and all the work with `DOM` is on the side of the template. So, in most cases, a complete separation of logic and view is achieved.
 
-![Split logic and markup](../../../ru-RU/tutorial/part1/split_logic_markup.png)
+![Split logic and markup](../../../img/split_logic_markup.png)
 
 ## List
 
@@ -825,7 +825,7 @@ The most common optimization is removing debugging code and compression of `java
 
 We will see following:
 
-![Result of running `basis build --pack`](../../../ru-RU/tutorial/part1/build.png)
+![Result of running `basis build --pack`](../../../img/build.png)
 
 So the builder does a lot of work! Besides when running with a `--verbose` option it shows all those tiny little details of its work. But we may care less about creating of a builded version of a project every time we need it. Instead we will develop the app itself and do other crazy stuff.
 
