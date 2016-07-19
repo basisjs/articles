@@ -1,6 +1,7 @@
 # basis.Class (Classes)
 
 A `basis.Class` function and its methods simplify the process of designing classes. Inheritance relies on prototype-based javascript inheritance.
+
 <!-- MarkdownTOC -->
 
 - [Creating classes](#creating-classes)
@@ -12,13 +13,13 @@ A `basis.Class` function and its methods simplify the process of designing class
 - [How to check if an object is an instance of a given class](#how-to-check-if-an-object-is-an-instance-of-a-given-class)
 - [Class to instance transormation](#class-to-instance-transormation)
 - [Extensible properties](#extensible-properties)
-    - [extensibleProperty](#extensibleproperty)
-    - [customExtendProperty](#customextendproperty)
-    - [nestedExtendProperty](#nestedextendproperty)
-    - [oneFunctionProperty](#onefunctionproperty)
+  - [extensibleProperty](#extensibleproperty)
+  - [customExtendProperty](#customextendproperty)
+  - [nestedExtendProperty](#nestedextendproperty)
+  - [oneFunctionProperty](#onefunctionproperty)
 - [Helpers](#helpers)
-    - [SELF](#self)
-    - [isClass](#isclass)
+  - [SELF](#self)
+  - [isClass](#isclass)
 
 <!-- /MarkdownTOC -->
 
@@ -91,12 +92,12 @@ For the convenience of debugging one can specify a `className` property in the e
 
 ## Class properties
 
-  * className – a class name;
-  * basisClassId_ – the unique identifier of the class, it is available only in `dev` mode and is used for debugging purposes;
-  * superClass_ – link to a parent class;
-  * extendConstructor_ – a constructor, autoextension of an instance is used here (see [Creating instance patterns](#creating-instance-patterns));
-  * \_\_extend\_\_ – autoextension method, creates a new class depending on a passed argument, the new class inherits from the current class (see "[Autoextension](#autoextension)");
-  * isSubclassOf – method determines if the current class is the child of another class
+  * `className` – a class name;
+  * `basisClassId_` – the unique identifier of the class, it is available only in `dev` mode and is used for debugging purposes;
+  * `superClass_` – link to a parent class;
+  * `extendConstructor_` – a constructor, autoextension of an instance is used here (see [Creating instance patterns](#creating-instance-patterns));
+  * `__extend__` – autoextension method, creates a new class depending on a passed argument, the new class inherits from the current class (see "[Autoextension](#autoextension)");
+  * `isSubclassOf` – method determines if the current class is the child of another class
     ```js
       var Foo = basis.Class();
       var Bar = Foo.subclass(Foo);
@@ -105,8 +106,8 @@ For the convenience of debugging one can specify a `className` property in the e
       // console> true
     ```
 
-  * extend – a method to expand a ptototype class;
-  * subclass – a method to create a new class inherited from the current class. Can be an alternative to `basis.Class`; following lines are equivalent
+  * `extend` – a method to expand a ptototype class;
+  * `subclass` – a method to create a new class inherited from the current class. Can be an alternative to `basis.Class`; following lines are equivalent
     ```js
     var MyClass = basis.Class(SomeClass,  { .. });
     var MyClass = SomeClass.subclass({ .. });

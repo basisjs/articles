@@ -1,4 +1,4 @@
-# Tutorial. Part 1. Getting Started, views, modules, tools
+# Tutorial. Part 1. Getting Started: views, modules, tools
 
 [Contents](../index.md)
 
@@ -7,15 +7,15 @@
 
 - [Getting started](#getting-started)
 - [Preparations](#preparations)
-    - [Dev-server](#dev-server)
-    - [Index file and adding basis.js](#index-file-and-adding-basisjs)
+  - [Dev-server](#dev-server)
+  - [Index file and adding basis.js](#index-file-and-adding-basisjs)
 - [Our first view](#our-first-view)
 - [Modules](#modules)
-    - [Advantages of using modules](#advantages-of-using-modules)
+  - [Advantages of using modules](#advantages-of-using-modules)
 - [Bindings and actions](#bindings-and-actions)
 - [List](#list)
-- [Composition \(?\)](#composition-)
-    - [Satellites](#satellites)
+- [Composition](#composition)
+  - [Satellites](#satellites)
 - [Tuning file structure](#tuning-file-structure)
 - [Tools](#tools)
 - [Build process](#build-process)
@@ -545,7 +545,7 @@ Finally one need to connect the module to our page:
 
 After reloading the page we will see our pretty three element list.
 
-## Composition (?)
+## Composition
 
 We have created two views that are displayed on the page. It looks OK, but in fact there is a problem. We do not control the insertion of views in the document and their order, it all depends on the order in which we connected modules. Besides usually, not all views from connected modules are needed to be displayed at once. Let's see how we can manage it.
 
@@ -635,7 +635,7 @@ It remains only to change `index.html` itself:
 </html>
 ```
 
-Two calls to `basis.require` were replaced by one. But one may skip even it and use `autoload` option in` basis-config` instead:
+This single `basis.require()` can also be replaced by `autoload` option in `basis-config`:
 
 ```html
 <!doctype html>
