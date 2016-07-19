@@ -11,7 +11,7 @@ A `basis.Class` function and its methods simplify the process of designing class
 - [Creating instance patterns](#creating-instance-patterns)
 - [Autoextending](#autoextending)
 - [How to check if an object is an instance of a given class](#how-to-check-if-an-object-is-an-instance-of-a-given-class)
-- [Class to instance transormation](#class-to-instance-transormation)
+- [Class to instance transformation](#class-to-instance-transformation)
 - [Extensible properties](#extensible-properties)
   - [extensibleProperty](#extensibleproperty)
   - [customExtendProperty](#customextendproperty)
@@ -164,7 +164,7 @@ console.log(mario instanceof Gamer);
 ## How to check if an object is an instance of a given class
 
 
-## Class to instance transormation
+## Class to instance transformation
 
 ...
 

@@ -709,7 +709,9 @@ It remains to describe the template that defines the layout and locations of the
 </div>
 ```
 
-...
+Here we use comments with a marker. One can use other types of nodes, elements, or text nodes. Those nodes will be also replaced by the root elements of the satellites. But more often the use of comments is more beneficial because if a certain satellite doesn't exist, nothing is visible.
+
+There are more opportunities when using satellites. For example, satellites can be  generated automatically and can destroyed if certain conditions are met. We will cover it later. More on this in the article [Satellites](../basis.dom.wrapper_satellite.md).
 
 ## Tuning file structure
 
