@@ -715,6 +715,59 @@ There are more opportunities when using satellites. For example, satellites can 
 
 ## Tuning file structure
 
+Our experiment results to three main views, or modules, or 9 files:
+
+![File structure](../../../img/file_structure_1.png)
+
+Real applications contain tens and hundreds of modules. An average app on `basis.js` contains 800-1200 files. It is not very smart and usefull to store all files in one folder. Let's change the file structure of our app.
+
+Let's isolate the `hello` module, i.e. move `hello.js`, `hello.tmpl` and `hello.css` to a new folder `hello`. In the same way we proceed with the `list` module – move `list.js`, `list.tmpl` and `item.tmpl` to a new `list` folder. And it is left to change paths to modules in `app.js`:
+
+```js
+var Node = require('basis.ui').Node;
+
+new Node({
+  container: document.body,
+  template: resource('./app.tmpl'),
+  binding: {
+    hello: require('./hello/hello.js'),  // here
+    list: require('./list/list.js')      // and there
+  }
+});
+```
+
+That's it. Everything works in hte same way. But the file structure is following:
+
+![File structure](../../../img/file_structure_2.png)
+
+It looks OK, but files and folders of the app itself are mixed with other files and folders. That is why we put all app files and folders except `node_modules` and `index.html` in a new `src` folder. After that we'll fix a single path in `index.html`:
+
+```html
+<!-- old -->
+<script src="node_modules/basisjs/src/basis.js" basis-config="autoload: 'app'"></script>
+
+<!-- new -->
+<script src="node_modules/basisjs/src/basis.js" basis-config="autoload: 'src/app'"></script>
+```
+
+File structure should be following:
+
+![File structure](../../../img/file_structure_3.png)
+
+An extremly universal structure may look like this:
+
+![File structure](../../../img/file_structure_4.png)
+
+Child modules are placed in the `module` folder. The main `javascript` file of each module is called `index.js`. Templates and everything relates (styles, images, etc.) are placed in `template` folder. This approach to structuring files in a project is the most popular for now.
+
+This file arrangement makes module transfer easier, both inside a project, as well as between several projects. Besides it's quite simple to turn a module into a separate package (maybe even in a library) or transform it into a reusable component. Ahother simple task is to remove a module from the project or to replace it with a different implementation.
+
+Of course, one can come up with their own file structure. Whatever one prefers> THere is no limitations on it in the framework.
+
+One might have noticed that we moved several files at once, but after that it was necessary to make changes only in a single place. It's a usual case. It is the main advantage, which relative paths give us.
+
+See the final result [here](../../../code).
+
 ## Tools
 
 With the growth of the application the number of files in it increases, so does its complexity. To make the development process easier and more effective one need tools. `basis.js` has two auxiliary tool: `devpanel` and plugin for `Google Chrome`.
