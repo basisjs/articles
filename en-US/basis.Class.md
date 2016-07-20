@@ -155,16 +155,17 @@ console.log(mario instanceof Gamer);
 
 ## The life cycle of an instance
 
+See missing parts in Russian [Classes, life cycle](../ru-RU/basis.Class.md#Жизненный-цикл-экземпляра).
 
 ## Creating instance patterns
 
 ## Autoextending
 
-
 ## How to check if an object is an instance of a given class
 
-
 ## Class to instance transformation
+
+See missing parts in Russian [Classes, Class to instance transformation](../ru-RU/basis.Class.md#Преобразование-класс--экземпляр).
 
 ...
 

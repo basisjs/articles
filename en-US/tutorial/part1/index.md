@@ -256,7 +256,7 @@ Now add an input field to enter a name. And we'll see how the title is changed. 
 </div>
 ```
 
-An `<input>` element was added to our template. Same binding `{name}` is used in `value` attribute of the `<input>` and in the title. But it (TODO) works only for entries in `DOM`.
+An `<input>` element was added to our template. Same binding `{name}` is used in `value` attribute of the `<input>` and in the title. Changes in the view lead to changes in `DOM` but not visa versa.
 
 For view to react on events in its `DOM` fragment let's add to a desired element an attribute which name is the name as the event name but with the prefix` event-`. We can add any action to any element on any event. And each one event on a certain element can trigger a number of actions. To describe it just list all action using space as a separator.
 
