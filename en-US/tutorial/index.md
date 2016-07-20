@@ -9,8 +9,8 @@ Also it'll help to explain what was really going on.
 
 Content:
 
-1. [Getting started, views, modules, tools](part1/index.md)
-2. Dealing with data: models, data sets and values
+1. [Getting started: views, modules, tools](part1/index.md)
+2. Working with data: models, data sets and values
 3. UI: Organizing child nodes, dynamic satellites, UI patterns, router
 4. Themes and localization
 5. ...

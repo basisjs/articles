@@ -81,7 +81,7 @@ That attribute tells `basis.js` core where to find `<script>` tag, in which the 
 
 ## Our first view
 
-For now our page is a tabula rasa. Let's add some sense into it and output classic "Hello world".
+For now our page is blank. Let's add some sense into it and output classic "Hello world".
 
 Let's create a view with a following representaion:
 
@@ -440,9 +440,7 @@ var list = new Node({
 It 's not so interesting to create one by one child nodes of the same type. It would be good to describe configuration and make the list to create child nodes by itself if it will be necessary. And lukily there is such a possibility! This is controlled by two properties: `childClass` and `childFactory`. The first sets the class which instances can be added as child nodes. The second property defines a function, which does all the magic. By default, this function creates an instance of `childClass`, using the passed value as the config. Again by default elements of the `childNodes` list are passed as such values if an element is not an instance of `childClass`. The goal of such a `childFactory` function is to create an appropriate instance of  `childClass`.
 
 ```js
-var Node = require('basis.ui').Node;
-
-Node.prototype.childFactory = function(value){
+basis.ui.Node.prototype.childFactory = function(value){
   return new this.childClass(value);
 };
 ```
@@ -833,4 +831,4 @@ So the builder does a lot of work! Besides when running with a `--verbose` optio
 
 We covered here core concepts for app development with `basis.js`, tried few ways to define views and how to organize files in your project.
 
-Next part: [Dealing with data: models, data sets and values](../part2/index.md)
+Next part: [Working with data: models, data sets and values](../part2/index.md)

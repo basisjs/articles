@@ -1,3 +1,3 @@
 # Modularity
 
-See it in russian [Resources (modularity)](https://github.com/basisjs/articles/tree/master/ru-RU/resources.md).
+See it in Russian [Resources (modularity)](../ru-RU/resources.md).
