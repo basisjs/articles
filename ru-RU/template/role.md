@@ -10,11 +10,11 @@
 <img src="https://s16.postimg.org/7ioikngo5/basistoolsroles.png" alt="alt text" width="500">
 
 В обоих режимах включается отображение ролей и трекинга на странице, которые подсвечиваются индикаторами определенных цветов:
-серый (1) — роль есть, трекинга не ведётся
-зеленый (2) — роль и трекинг есть
-красный (3) — у компонента есть `event-click`, но роли нет
+- серый (1) — роль есть, трекинга не ведётся
+- зеленый (2) — роль и трекинг есть
+- красный (3) — у элемента есть `event-click`, но роли нет
 
-<img src="https://s21.postimg.org/5ijc0zt4n/roles_2.png" alt="alt text" width="300">
+<img src="https://s21.postimg.org/5ijc0zt4n/roles_2.png" alt="alt text" width="500">
 
 ### Roles Pick Inspector
 <img src="https://s13.postimg.org/go7atewp3/inspector.png" alt="alt text" height="30">
@@ -25,5 +25,6 @@
 – базовый режим отображение ролей 
 
 ## Tracking map
+TODO
 
 
