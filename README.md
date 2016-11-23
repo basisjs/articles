@@ -59,6 +59,7 @@
     * [Правила применения значений биндингам](ru-RU/basis.template_bindings.md)
     * [Темы](ru-RU/basis.template_theme.md)
 * [basis.l10n](ru-RU/basis.l10n.md)
+* [basis.type](ru-RU/basis.type.md)
 * [basis.net](ru-RU/basis.net.md)
     * [basis.net.ajax](ru-RU/basis.net.ajax.md)
     * [basis.net.action](ru-RU/basis.net.action.md)
