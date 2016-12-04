@@ -615,7 +615,7 @@ foo.tmpl:
 </div>
 ```
 
-Эквивалентно:
+Результат:
 
 ```html
 <div{demo} class="example">
@@ -642,7 +642,7 @@ foo.tmpl:
 </div>
 ```
 
-Эквивалентно:
+Результат:
 
 ```html
 <div class="example">
@@ -671,7 +671,7 @@ foo.tmpl:
 </div>
 ```
 
-Эквивалентно:
+Результат:
 
 ```html
 <div class="example" b:role>
@@ -700,7 +700,7 @@ foo.tmpl:
 </div>
 ```
 
-Эквивалентно:
+Результат:
 
 ```html
 <div class="example">
@@ -731,7 +731,7 @@ foo.tmpl:
 </div>
 ```
 
-Эквивалентно:
+Результат:
 
 ```html
 <div class="example" b:show="{expr1}">
