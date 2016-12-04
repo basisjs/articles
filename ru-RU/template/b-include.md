@@ -215,7 +215,7 @@ var bar = new Template('<div class="wrapper"><b:include src="#' + foo.templateId
 
 Содержимое `<b:include>` не обрамленное в [инструкции](#Инструкции) вставляется во включаемый шаблон согласно указанной в нем точки вставки. Такая точка определяется специальным тегом [`<b:content>`](b-content.md).
 
-Вложенные `<b:include/>` и `<b:content/>` вставляются в подключаемый шаблон по тем же правилам.
+Вложенные `<b:include>` и `<b:content>` вставляются в подключаемый шаблон по тем же правилам.
 
 ```html
 <b:include src="./button.tmpl">                <!-- <button><b:content/></button>-->
