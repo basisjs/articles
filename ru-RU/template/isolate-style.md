@@ -37,7 +37,7 @@
 <div class="i1__some-class">Компонент</div>
 ```
 
-Подробнее в описании [&lt;b:isolate/&gt;](b-isolate.md)
+Подробнее в описании [&lt;b:isolate&gt;](b-isolate.md)
 
 ## &lt;b:style ns/&gt;
 
@@ -96,4 +96,4 @@
 </div>
 ```
 
-Подробнее в описании [&lt;b:include/&gt;](b-include.md#Изоляция-стилей)
+Подробнее в описании [&lt;b:include&gt;](b-include.md#Изоляция-стилей)
