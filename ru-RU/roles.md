@@ -141,7 +141,7 @@ var menu = new Node({
 </b:include>
 ```
 
-2) добавить роль в шаблон компонента в [репозитории basisjs](https://github.com/basisjs/basisjs) и отправить pull request.
+2) добавить роль в шаблон компонента в [репозитории basisjs](https://github.com/basisjs/basisjs) и отправить pull request
 *было*
 ```
  <div class="Basis-Slider-ScrollbarContainer" event-click="jumpTo">
@@ -177,7 +177,6 @@ var menu = new Node({
 Особенности:
 При нажатии инспектором ролей на элемент открывается модальное окно, в котором отображается ролевой путь до конкретного элемента, информация по трекингу и в целом показывается структура ролей на странице (роли в структуре кликабельные — можно также увидеть полный путь к элементу и подробности трекинга)
 ####
-
 
 <img src="https://s22.postimg.org/8lc7i3v1t/inspectroles.png" alt="role paths and tracking info" height="450">
 
