@@ -64,6 +64,7 @@
     * [basis.net.ajax](ru-RU/basis.net.ajax.md)
     * [basis.net.action](ru-RU/basis.net.action.md)
     * [basis.net.service](ru-RU/basis.net.service.md)
+* [Роли](ru-RU/roles.md)
 * [basis.router](ru-RU/basis.router.md)
 * [basisjs-tools](ru-RU/basisjs-tools/index.md) (консольные инструменты)
     * [server](ru-RU/basisjs-tools/server.md)
