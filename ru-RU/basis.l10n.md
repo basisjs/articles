@@ -198,7 +198,7 @@ var view = new basis.ui.Node({
 });
 ```
 
-Или как альтельнатива другим функциям.
+Или как альтернатива другим функциям.
 
 ```js
 // эквивалент getCulture
@@ -216,7 +216,7 @@ basis.l10n.culture.attach(function(culture){
 });
 ```
 
-Для удаления обработчика на смену культуры нет специальной функции. Но это можно сделать импользуя метод `basis.l10n.culture.detach`.
+Для удаления обработчика на смену культуры нет специальной функции. Но это можно сделать используя метод `basis.l10n.culture.detach`.
 
 ```js
 var myCultureChangeHandler = function(culture){
