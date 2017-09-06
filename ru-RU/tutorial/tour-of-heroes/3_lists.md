@@ -86,7 +86,7 @@ module.exports = Node.subclass({
 <b:isolate/>
 
 <li>
-	<span class="badge">{id}</span> {title}
+  <span class="badge">{id}</span> {title}
 </li>
 ```
 
@@ -95,41 +95,41 @@ module.exports = Node.subclass({
 `app/components/hero/templates/hero.css`
 ```css
 li {
-	cursor: pointer;
-	position: relative;
-	left: 0;
-	background-color: #EEE;
-	margin: .5em;
-	padding: .3em 0;
-	height: 1.6em;
-	border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  left: 0;
+  background-color: #EEE;
+  margin: .5em;
+  padding: .3em 0;
+  height: 1.6em;
+  border-radius: 4px;
 }
 li.selected:hover {
-	background-color: #BBD8DC !important;
-	color: white;
+  background-color: #BBD8DC !important;
+  color: white;
 }
 li:hover {
-	color: #607D8B;
-	background-color: #DDD;
-	left: .1em;
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
 }
 .text {
-	position: relative;
-	top: -3px;
+  position: relative;
+  top: -3px;
 }
 .badge {
-	display: inline-block;
-	font-size: small;
-	color: white;
-	padding: 0.8em 0.7em 0 0.7em;
-	background-color: #607D8B;
-	line-height: 1em;
-	position: relative;
-	left: -1px;
-	top: -4px;
-	height: 1.8em;
-	margin-right: .8em;
-	border-radius: 4px 0 0 4px;
+  display: inline-block;
+  font-size: small;
+  color: white;
+  padding: 0.8em 0.7em 0 0.7em;
+  background-color: #607D8B;
+  line-height: 1em;
+  position: relative;
+  left: -1px;
+  top: -4px;
+  height: 1.8em;
+  margin-right: .8em;
+  border-radius: 4px 0 0 4px;
 }
 ```
 
@@ -219,10 +219,10 @@ BODY
 <b:style src="./layout.css"/>
 
 <div>
-	<h1>Tour of heroes</h1>
-	<ul id="heroes-list" class="heroes">
-		<!--{childNodesHere}-->
-	</ul>
+  <h1>Tour of heroes</h1>
+  <ul id="heroes-list" class="heroes">
+    <!--{childNodesHere}-->
+  </ul>
 </div>
 ```
 
