@@ -214,7 +214,7 @@ tracker.loadMap({
 tracker.loadMap(require('./tracking-map.js'));
 ```
 
-###Tracking map
+### Tracking map
 
 Что описывается:
 
