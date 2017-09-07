@@ -13,3 +13,19 @@
 3. UI: организация дочерних узлов, динамические сателлиты, UI patterns, router
 4. Темы и локализация
 5. ...
+
+Так же предлагаем вам пройти небольшой туториал с созданием небольшого приложения которые охватывает все основные темы для проектирования на `Basis.js`
+
+# Basis "Tour of heroes":
+
+В конце каждого урока есть ссылка на скачивание готового примера.
+
+1. [Вступление](tour-of-heroes/1_introduction.md)
+2. [Ноды. Редактор героев](tour-of-heroes/2_the_hero_editor.md)
+3. [Списки и дочерние элементы](tour-of-heroes/3_lists.md)
+4. [Данные и их источники](tour-of-heroes/4_data_and_sources.md)
+5. [Сателлиты, вложенные компоненты и их взаимодействие](tour-of-heroes/5_multiple_components_satellites.md)
+6. Routing - In progress
+7. Http and Enteties - In progress
+
+
