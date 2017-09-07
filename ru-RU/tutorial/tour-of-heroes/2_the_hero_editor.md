@@ -20,13 +20,13 @@
 
 ```html
 <div>
-	<h1>{title}</h1>
-	<h2>{name} is a hero!</h2>
-	<div><label>Id: </label>{id}</div>
-	<div>
-		<label>Name: </label>
-		<input value="{name}" placeholder="Enter name">
-	</div>
+    <h1>{title}</h1>
+    <h2>{name} is a hero!</h2>
+    <div><label>Id: </label>{id}</div>
+    <div>
+        <label>Name: </label>
+        <input value="{name}" placeholder="Enter name">
+    </div>
 </div>
 ```
 
@@ -43,19 +43,19 @@ module.exports = require('basis.app').create({
 
   init: function() {
     return new Node({
-	  template: resource('./app/template/layout.tmpl'),
-	  data: {
-		title: 'Basis tour of heroes',
-		hero: {
-			id: 1,
-			name: 'Superhero'
-		}
-	  },
-	  binding: {
-	  	id: 'data:hero.id',
-	  	name: 'data:hero.name',
-	  	title: 'data:'
-	  }
+      template: resource('./app/template/layout.tmpl'),
+      data: {
+        title: 'Basis tour of heroes',
+        hero: {
+            id: 1,
+            name: 'Superhero'
+        }
+      },
+      binding: {
+          id: 'data:hero.id',
+          name: 'data:hero.name',
+          title: 'data:'
+      }
     });
   }
 });
@@ -69,7 +69,7 @@ module.exports = require('basis.app').create({
 
 ```js
 binding: {
-	name: 'data:hero.name'
+    name: 'data:hero.name'
 }
 ```
 
@@ -79,7 +79,7 @@ binding: {
 
 ```js
 binding: {
-	title: 'data:'
+    title: 'data:'
 }
 ```
 
@@ -105,12 +105,12 @@ event-typeEvent="eventHandler"
 
 ```js
 action: {
-	setHeroName: function(e) {
-	  this.update({
-	    hero: {
-		  id: this.data.hero.id,
-		  name: e.sender.value
-	    }
+    setHeroName: function(e) {
+      this.update({
+        hero: {
+          id: this.data.hero.id,
+          name: e.sender.value
+        }
       });
   }
 }
