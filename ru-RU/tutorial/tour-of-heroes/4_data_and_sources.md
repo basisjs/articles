@@ -141,3 +141,6 @@ setTimeout(function() {
 
 * [DataObject](https://github.com/basisjs/articles/blob/master/ru-RU/basis.data.Object.md)
 * [DataSet](https://github.com/basisjs/articles/blob/master/ru-RU/basis.data.datasets.md)
+
+
+Полный пример урока можете скачать по [ссылке](https://github.com/prostoandrei/basis-tour-of-heroes/tree/part4)

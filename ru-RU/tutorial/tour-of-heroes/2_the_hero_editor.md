@@ -120,4 +120,4 @@ action: {
 
 В итоге получаем живое редактирование героя прямо на странице!
 
-Ссылка на готовый пример: [Part2](https://github.com/prostoandrei/basis-tour-of-heroes/tree/part2)
+Полный пример урока можете скачать по [ссылке](https://github.com/prostoandrei/basis-tour-of-heroes/tree/part2)
