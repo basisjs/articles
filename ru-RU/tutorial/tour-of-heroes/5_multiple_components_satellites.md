@@ -119,5 +119,24 @@ module.exports = require('basis.app').create({
 
 В таком случае сателлиты будут созданы неявно и всё продолжит работать также как и раньше
 
+# Делегирование
+
+Одним из важных понятий при работе с Basis является понитие делегирования. При помощи него мы можем шарить данные между компонентами и объектами.
+
+`Пример на DataObject`:
+```js
+var DataObject = basis.require('basis.data').Object;
+
+var foo = new DataObject();
+var bar = new DataObject();
+
+foo.setDelegate(bar);
+foo.update({ prop: 123 });
+
+console.log(foo.data.prop); // > 123
+console.log(bar.data.prop); // > 123
+```
+
+
 
 TODO: Переписать сюда все на data: и объясниь почему
