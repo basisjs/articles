@@ -60,7 +60,7 @@ SomeNodeOrDataObject.addHandler({
 });
 ```
 
-Подбробнее о DataObject можете почитать в [документации](https://github.com/basisjs/articles/blob/master/ru-RU/basis.data.Object.md), но сейчас давайте сконцентрируемся на нашем небольшом приложении и еще одном базовом элементе `Basis`.
+Подбробнее о DataObject можете почитать в [документации](https://github.com/basisjs/articles/blob/master/ru-RU/basis.data.Object.md), но сейчас давайте сконцентрируемся на нашем небольшом приложении и еще одном базовом элементе `basis.js`.
 
 ## Datasets
 
