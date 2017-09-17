@@ -207,6 +207,61 @@ module.exports = new Node({
 
 Чтобы приложение было более полноценным давай реализуем еще поиск по героям - мы же не можем заставлять пользователей в ручную искать героев из таких больших списков.
 
+Прежде всего давайте создадим отдельный компонент поиска. Компонент будет максимально простым и не будет сам по себе реализовать никакой логики.
+
+`app/components/search-input/index.js`
+```js
+var Node = require('basis.ui').Node;
+
+module.exports = new Node({
+    template: resource('./templates/search-input.tmpl')
+});
+```
+
+`app/components/search-input/templates/search-input.tmpl`
+
+```js
+<div>
+  <label for="search">
+    Search: <input type="text" id="search" event-input="input">
+  </label>
+</div>
+```
+
+Обратите внимание чтобы мы предоставили шаблону `event-input="input"`, хотя не написали никаких обработчиков на это действие в js фалйле компонента.
+Это сделано для того чтобы определить обработчики на этот `action` в других компонентах в которые он будет встроен.
+
+Вернёмся к `hero-list` компоненту и подключим созданный компонент как сателлит.
+
+``
+```js
+module.exports = new Node({
+    template: resource('./templates/hero-list.tmpl'),
+    binding: {
+        searchInput: searchInput,
+    },
+    active: true,
+    childClass: Hero,
+    selection: true,
+    dataSource: Heroes.all
+});
+```
+
+Теперь можно добавить действия на `input` к нашему компоненту.
+
+```js
+searchInput.action.input = function(e) {
+    console.log(e.sender.value);
+}
+```
+
+Через консоль вы можете убедиться что наш обработчик работает. Теперь нам нужно отфильтровать данные в списке согласно тексту который мы набираем в строке поиска.
+
+В случае обычных JS коллекций мы могли бы просто офильтровать данные в списке, через `.filter`, но мы работаем с `datasets`, и фильтровать нам нужно именно их. + нам еще нужен аналог `.slice`, чтобы отобразить только первые 10 героев.
+
+К счастью `basis.js` предоставлет аналог этих функций для работы с `dataset`. Полный вспомогательный функций можно посмотреть в [документации](https://github.com/basisjs/articles/blob/master/ru-RU/basis.data.dataset.md)
+
+
 
 
 
