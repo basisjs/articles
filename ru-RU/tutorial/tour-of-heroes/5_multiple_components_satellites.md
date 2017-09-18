@@ -8,19 +8,19 @@
 
 Для того чтобы использовать компонент в качестве сателлита необходимо в ноде указать свойство `satellite` и в качестве ключа указать имя сателлита по-вашему усмотрения, а в качесте значения свойста должен быть ваш компонент.
 
-Давайте немного отрефакторим наше приложение и вынесем уже существующий код в отдельные компоненты.
+Давайте немного отрефакторим наше приложение и вынесем уже существующий код из `app.js` в отдельные компоненты.
 
 Список героев:
 
 `/app/components/hero-list/index.js`:
 ```js
 var Node = require('basis.ui').Node;
-var Hero = require('../hero/hero');
+var Hero = require('../hero/index');
+var DataObject = require('basis.data').Object;
+var Dataset = require('basis.data').Dataset;
 
-module.exports = new Node({
-    template: resource('./templates/hero-list.tmpl'),
-    childClass: Hero,
-    childNodes: [
+var dataset = new Dataset({
+    items: [
         { id: 1, title: 'Headcrab' },
         { id: 2, title: 'Magnetto' },
         { id: 3, title: 'Cyclop' },
@@ -29,7 +29,20 @@ module.exports = new Node({
         { id: 6, title: 'Storm' },
         { id: 7, title: 'Flash' },
         { id: 8, title: 'Wolverine' }
-    ]
+    ].map(function (value) {
+        return new DataObject({
+            data: {
+                id: value.id,
+                title: value.title
+            }
+        });
+    })
+});
+
+module.exports = new Node({
+    template: resource('./templates/hero-list.tmpl'),
+    childClass: Hero,
+    dataSource: dataset
 });
 ```
 
@@ -40,7 +53,43 @@ module.exports = new Node({
 <ul class="heroes"></ul>
 ```
 
-Теперь когда список и компонент редактирования лежат отдельными компонентами самое время изменить наш `app.js` и использовать сателлиты.
+`/app/components/hero-list/templates/hero-list.css`
+```css
+ul {
+  padding: 0;
+}
+
+ul li {
+  list-style: none;
+}
+```
+
+И подправим немного `heroes-details`. Во второй главе данные об `id` и `title` хранились у нас в объекте `Hero`. Сейчас же у нас все данные лежать плоско, поэтому изменим код обновления биндингов и удалим жестко заданные данные в `data`:
+
+`app/components/hero-details/index.js`
+```js
+var Node = require('basis.ui').Node;
+
+var HeroDetailsNode = new Node({
+    template: resource('./templates/hero-details.tmpl'),
+    binding: {
+        id: 'data:',
+        title: 'data:',
+    },
+    action: {
+        setHeroName: function(e) {
+            this.update({
+                id: this.data.id,
+                title: e.sender.value
+            });
+        }
+    }
+});
+
+module.exports = HeroDetailsNode;
+```
+
+Теперь когда список лежат отдельным компонентом и компонент редактирования имеет сходную с остальным проектом структуру самое время изменить наш `app.js` и использовать сателлиты.
 
 Сателлиты хранятся в свойстве `satellite`, которое представляет собой объект. Ключи – это имена сателлитов, а значения – ссылки на объекты.
 
@@ -48,6 +97,9 @@ module.exports = new Node({
 
 `app.js`:
 ```js
+var List = require('./app/components/hero-list/index');
+var Details = require('./app/components/hero-details/index');
+
 // ...
 module.exports = require('basis.app').create({
     title: 'Basis tour of heroes',
@@ -102,8 +154,12 @@ module.exports = require('basis.app').create({
 
 Отлично! Т.к. запись в эта выглядит несколько многословно, существует еще способ неявного задания сателлитов:
 
+`app.js`
 ```js
-// ...
+var Node = require('basis.ui').Node;
+var List = require('./app/components/hero-list/index');
+var Details = require('./app/components/hero-details/index');
+
 module.exports = require('basis.app').create({
     title: 'Basis tour of heroes',
     init: function () {
@@ -112,7 +168,7 @@ module.exports = require('basis.app').create({
             binding: {
                 list: List,
                 details: Details
-            },
+            }
         });
     }
 });
@@ -170,9 +226,13 @@ ChildClass `Hero-list` является `Hero`. Т.к. они имеют общ�
 
 `app/components/hero/templates/hero.tmpl`
 ```html
+<b:style src="./hero.css"/>
+<b:isolate/>
+
 <li class="{selected}" event-click="select">
-    <span class="badge">{id}</span> {title}
+  <span class="badge">{id}</span> {title}
 </li>
+
 ```
 
 Добавим немного стилей для selected:
@@ -180,7 +240,7 @@ ChildClass `Hero-list` является `Hero`. Т.к. они имеют общ�
 `app/components/hero/templates/hero.css`
 ```css
 .selected {
-  background-color: #CFD8DC !important;
+  background-color: #CFD8DC;
   color: white;
 }
 ```
@@ -189,6 +249,8 @@ ChildClass `Hero-list` является `Hero`. Т.к. они имеют общ�
 
 Для этого в app.js повесим обработчик на событие выбора нашего списка.
 Для этого пвоспользуемся методом `addHandler` объекта `selection` и на событие `itemsChanged` добавим обработчик, который будет выставлять в качестве делегата выбранный нами элемент.
+
+Итоговый `app.js`:
 
 `app.js`:
 ```js

@@ -80,6 +80,14 @@ module.exports = require('basis.app').create({
 });
 ```
 
+`app/template/layout.tmpl`
+```html
+<div>
+  <h1>Tour of heroes</h1>
+  <!--{content}-->
+</div>
+```
+
 Отлично! У нас уже отображается страница по умолчанию, хоть мы и передали жесткую ссылку на компонент.
 
 Теперь нам необходимо научиться пользоваться роутером, чтобы динамичкески переключать `Pages` из `app/pages/index`. Вся суть роутинга как раз и будет заключаться в изменении значения сателлита `content`.
@@ -102,7 +110,7 @@ var page = router
 
 __Замечание:__
 
-> Значение сателлита будет изменяться динамически через роутер только в том случае, если сателлит указан явным образом, т.е. через свойтсво `satellite`. Если указывать сателлит неявно, то изменение value роутера обработано не будет, поэтмому убедитесь, что сателлит указан явно
+> Значение сателлита будет изменяться динамически через роутер только в том случае, если сателлит указан явным образом, т.е. через свойтсво `satellite`. Если указывать сателлит неявно, то изменение `value` роутера обработано не будет, поэтмому убедитесь, что сателлит указан явно
 
 `app.js`
 ```js
@@ -210,7 +218,7 @@ module.exports = new Node({
 });
 ```
 
-`app/pages/dashboard/templates/dashboard.css`
+`app/pages/dashboard/templates/dashboard.tmpl`
 ```html
 <b:style src="./dashboard.css"/>
 
@@ -289,7 +297,7 @@ h4 {
 
 И добавим Dashoard в список страниц:
 
-``
+`app/pages/index.js`
 ```js
 var Dashboard = require('./dashboard/index');
 var Heroes = require('./heroes/index');
@@ -303,17 +311,22 @@ module.exports = {
 
 Если вы сейчас будете менять роуты в строке браузера, то все будет работать без перезагрузки страницы. Но в настоящий приложениях существует навигация чтобы удобно переходить между разделами, поэтому давайте добавим компонент навигации в наше приложение.
 
+Значение `selected` мы будем вычислять также из роутера как и во время подстановки компонентов и тем самым обеспечим выделение активного пункта меню.
+
 `app/components/navigation/index.js`
 ```js
 var Node = require('basis.ui').Node;
-var router = basis.require('basis.router');
+var Value = require('basis.data').Value;
+var router = require('basis.router');
+var currentPage = Value.from(router.route(':page').param('page'));
 
 module.exports = new Node({
-    template: resource('./templates/navigation.html'),
+    template: resource('./templates/navigation.tmpl'),
     childClass: {
-        template: `
-            <a href="{link}" event-click="navigate">{title}</a>
-        `,
+        template: '<a href="{link}" class="{selected}" event-click="navigate">{title}</a>',
+        selected: currentPage.compute((node, page) => {
+            return node.link == page
+        }),
         binding: {
             title: 'title',
             link: 'link'
@@ -326,13 +339,13 @@ module.exports = new Node({
         }
     },
     childNodes: [
-        { title: 'Dashboard', link: '#dashboard' },
-        { title: 'Heroes', link: '#heroes' }
+        { title: 'Dashboard', link: 'dashboard' },
+        { title: 'Heroes', link: 'heroes' }
     ]
 });
 ```
 
-`app/components/navigation/templates/navigation.html`
+`app/components/navigation/templates/navigation.tmpl`
 ```html
 <b:style src="./navigation.css"/>
 
@@ -341,7 +354,6 @@ module.exports = new Node({
 
 `app/components/navigation/templates/navigation.css`
 ```css
-
 nav a {
   padding: 5px 10px;
   text-decoration: none;
@@ -357,7 +369,7 @@ nav a:hover {
   color: #039be5;
   background-color: #CFD8DC;
 }
-nav a.active {
+a.selected {
   color: #039be5;
 }
 ```
