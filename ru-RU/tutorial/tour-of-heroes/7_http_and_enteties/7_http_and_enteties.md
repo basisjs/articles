@@ -213,7 +213,7 @@ module.exports = new Node({
 ```js
 var Node = require('basis.ui').Node;
 
-module.exports = new Node({
+module.exports = new Node.subclass({
     template: resource('./templates/search-input.tmpl')
 });
 ```
@@ -230,11 +230,20 @@ module.exports = new Node({
 
 Обратите внимание чтобы мы предоставили шаблону `event-input="input"`, хотя не написали никаких обработчиков на это действие в js фалйле компонента.
 Это сделано для того чтобы определить обработчики на этот `action` в других компонентах в которые он будет встроен.
+Вторая вещь на которую нужно обратить внимание это создание компонента через `Node.subclass`. Если бы создали компонент как просто через `new Node`, то использование этого компонента в качестве сателлита в нескольких местах приводило бы к уничтожению его других экземпляров. С `subclass`  вы создаете экземпляр компонента непосредственно в том месте где будете его использовать.
 
-Вернёмся к `hero-list` компоненту и подключим созданный компонент как сателлит.
+Вернёмся к `hero-list` компоненту и подключим созданный компонент как сателлит. Действия обрабатываемые компонентом реализуем на месте:
 
 ``
 ```js
+var searchInput = new SearchInput({
+    action: {
+        input: function(e) {
+            console.log(e.sender.value);
+        }
+    }
+});
+
 module.exports = new Node({
     template: resource('./templates/hero-list.tmpl'),
     binding: {
@@ -247,23 +256,189 @@ module.exports = new Node({
 });
 ```
 
-Теперь можно добавить действия на `input` к нашему компоненту.
-
-```js
-searchInput.action.input = function(e) {
-    console.log(e.sender.value);
-}
-```
-
 Через консоль вы можете убедиться что наш обработчик работает. Теперь нам нужно отфильтровать данные в списке согласно тексту который мы набираем в строке поиска.
 
 В случае обычных JS коллекций мы могли бы просто офильтровать данные в списке, через `.filter`, но мы работаем с `datasets`, и фильтровать нам нужно именно их. + нам еще нужен аналог `.slice`, чтобы отобразить только первые 10 героев.
 
-К счастью `basis.js` предоставлет аналог этих функций для работы с `dataset`. Полный вспомогательный функций можно посмотреть в [документации](https://github.com/basisjs/articles/blob/master/ru-RU/basis.data.dataset.md)
+ `basis.js` предоставлет аналог этих функций для работы с `dataset`. Полный вспомогательный функций можно посмотреть в [документации](https://github.com/basisjs/articles/blob/master/ru-RU/basis.data.dataset.md)
 
+А сейчас импортируем `Slice` и `Filter` в наш файл:
 
+`app/components/hero-list/index.js`:
+```js
+// ...
+var Slice = require('basis.data.dataset').Slice;
+var Filter = require('basis.data.dataset').Filter;
 
+// ...
 
+module.exports = new Node({
+    template: resource('./templates/hero-list.tmpl'),
+    binding: {
+        searchInput: searchInput,
+    },
+    active: true,
+    childClass: Hero,
+    selection: true,
+    dataSource: Heroes.all
+});
+```
 
+Сделать нам нужнодве вещи:
 
+1. Отфильтровать героев по введенному названия
+2. Выбрать из совпадений N героев
 
+Использование `Filter` достаточно простое, вы должны указать какой `dataset` фильтровать в свойстве `source` и в `rule` указать функцию по которой должна происходить фильтрация. Slice похожая но вместо rule мы укажем свойство `limit`, которая принимает число item'ов, котороые мы должны вернуть.
+
+Обе функции возвращают новый `dataset`, поэтому мы можно последовательно использовать их в нашем коде, отдав итоговый результат в качестве значения `dataSource`.
+
+`app/components/hero-list/index.js`:
+```js
+var Node = require('basis.ui').Node;
+var Hero = require('../hero/index');
+var Heroes = require('../../type').Hero;
+var SearchInput = require('../../components/search-input/index');
+var Value = require('basis.data').Value;
+var Slice = require('basis.data.dataset').Slice;
+var Filter = require('basis.data.dataset').Filter;
+
+var searchInput = new SearchInput({
+    action: {
+        input: function(e) {
+            console.log(e.sender.value);
+        }
+    }
+});
+
+var filtered = new Filter({
+    source: Heroes.all,
+    rule: function(item) {
+        // ... логика фильтрации
+    }
+});
+var top = new Slice({ source: filtered, limit: 10 });
+
+module.exports = new Node({
+    template: resource('./templates/hero-list.tmpl'),
+    binding: {
+        searchInput: searchInput,
+    },
+    active: true,
+    childClass: Hero,
+    selection: true,
+    dataSource: top
+});
+```
+
+Но тут возникает небольшая проблема - код работает, но при вводе текста не будет ничего происходить. Это связано с тем что фильтрация применяется при создании компонента, но она не применяется каждый раз, когда значение в `input` меняется. Для этого нужно использовать `filtered.applyRule()` каждый раз когда значение `input` меняется.
+
+Для этого мы используем встроенный в `basis.js` класс [Value](https://github.com/basisjs/articles/blob/master/ru-RU/basis.data.Value.md#value), который позволяет добавлять обработчики через метод `link`, которые срабатывают в случае изменение значения хранящегося в Value. Перым параметром оно принимает значение, которые будет использоваться как `this` в случае его передачи, а второе функция слушатель. Если первый параметр `null`, то значение `this` будет браться из замыкания.
+
+Имея всё это мы можем реализовать до конца нашу фильтрацию:
+
+`app/components/hero-list/index.js`:
+```js
+var Node = require('basis.ui').Node;
+var Hero = require('../hero/index');
+var Heroes = require('../../type').Hero;
+var SearchInput = require('../../components/search-input/index');
+var Value = require('basis.data').Value;
+var Slice = require('basis.data.dataset').Slice;
+var Filter = require('basis.data.dataset').Filter;
+
+var searchedHero = new Value({ value: '' });
+
+var searchInput = new SearchInput({
+    action: {
+        input: function(e) {
+            searchedHero.set(e.sender.value);
+        }
+    }
+});
+
+var filtered = new Filter({
+    source: Heroes.all,
+    rule: function(item) {
+        return item.data.title.toLowerCase().indexOf(searchedHero.value.toLowerCase()) !== -1;
+    }
+});
+var top = new Slice({ source: filtered, limit: 10 });
+
+searchedHero.link(null, function(value) {
+    filtered.applyRule();
+})
+
+module.exports = new Node({
+    template: resource('./templates/hero-list.tmpl'),
+    binding: {
+        searchInput: searchInput,
+    },
+    active: true,
+    childClass: Hero,
+    selection: true,
+    dataSource: top
+});
+```
+Точно таким же образом мы можем добавить фильтрацию в `dashboard` компонент:
+
+`app/pages/dashboard/index.js`
+```js
+var Node = require('basis.ui').Node;
+var DataObject = require('basis.data').Object;
+var Value = require('basis.data').Value;
+var Slice = require('basis.data.dataset').Slice;
+var Filter = require('basis.data.dataset').Filter;
+var Heroes = require('../../type').Hero;
+var SearchInput = require('../../components/search-input/index');
+
+var searchedHero = new Value({ value: '' });
+
+var searchInput = new SearchInput({
+    action: {
+        input: function(e) {
+            searchedHero.set(e.sender.value);
+        }
+    }
+});
+
+var filtered = new Filter({
+    source: Heroes.all,
+    rule: function(item) {
+        return item.data.title.toLowerCase().indexOf(searchedHero.value.toLowerCase()) !== -1;
+    }
+});
+var top = new Slice({ source: filtered, limit: 4 });
+
+searchedHero.link(null, function(value) {
+    filtered.applyRule();
+})
+
+module.exports = new Node({
+    template: resource('./templates/dashboard.tmpl'),
+    binding: {
+        searchInput: searchInput,
+    },
+    childClass: {
+        template: `
+            <a class="col-1-4">
+                <div class="module hero">
+                    <h4>{title}</h4>
+                </div>
+            </a>
+        `,
+        binding: {
+            id: 'data:',
+            title: 'data:',
+        },
+    },
+    active: true,
+    dataSource: top
+});
+```
+
+Вот и все! Теперь на всех страницах у нас есть поиск!
+
+То что мы рассмотрели на протяжении этих 7ми уроков было превоначальной базой. Теперь, если вы еще подробно не смотрели [документацию](https://github.com/basisjs/articles/), то самое время это сделать это, особенно по тем ссылкам которые мы давали в течение этих уроков так как в `basis.js` есть еще много других возможностей.
+
+Продуктивной работы!
