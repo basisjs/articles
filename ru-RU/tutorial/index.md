@@ -25,7 +25,7 @@
 3. [Списки и дочерние элементы](tour-of-heroes/3_lists.md)
 4. [Данные и их источники](tour-of-heroes/4_data_and_sources.md)
 5. [Сателлиты, вложенные компоненты и их взаимодействие](tour-of-heroes/5_multiple_components_satellites.md)
-6. Routing - In progress
-7. Http and Enteties - In progress
+6. [Роутинг](tour-of-heroes/6_routing.md)
+7. [Http and Enteties](tour-of-heroes/7_http_and_entities/7_http_and_entities.md)
 
 
