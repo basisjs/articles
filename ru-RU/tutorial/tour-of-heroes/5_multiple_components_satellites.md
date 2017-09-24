@@ -55,12 +55,10 @@ module.exports = new Node({
 
 `/app/components/hero-list/templates/hero-list.css`
 ```css
-ul {
+.heroes {
+  margin: 0 0 2em 0;
+  list-style-type: none;
   padding: 0;
-}
-
-ul li {
-  list-style: none;
 }
 ```
 
@@ -144,11 +142,47 @@ module.exports = require('basis.app').create({
 Теперь связь сателлитов с шаблоном налажена, и мы можем написать в нашем шаблоне:
 `app/template/layout.tmpl`:
 ```html
-<div>
-    <h1>Tour of heroes</h1>
-    <!--{list}-->
-    <!--{details}-->
+<b:style src="./layout.css"/>
+
+<div class="wrapper">
+    <div>
+        <h1>Tour of heroes</h1>
+        <!--{list}-->
+        <!--{details}-->
+    </div>
 </div>
+```
+
+Еще немного наши стили:
+
+`layout.css`
+```css
+HTML,
+BODY
+{
+    height: 100%;
+    padding: 0;
+    margin: 0;
+
+    padding: 0;
+    margin: 0;
+    background: #d7dcc6;
+    font-family: cursive;
+    color: #333;
+}
+
+.wrapper {
+  width: 400px;
+  box-sizing: border-box;
+  margin: 50px auto 10px auto;
+  padding: 20px;
+  box-shadow: 0px 1px 8px 0px #000;
+  background-color: white;
+}
+
+h1 {
+  text-align: center;
+}
 ```
 
 Отлично!
@@ -248,7 +282,7 @@ ChildClass `Hero-list` является `Hero`. Т.к. они имеют общ�
 `app/components/hero/templates/hero.css`
 ```css
 .selected {
-  background-color: #CFD8DC;
+  background-color: #c37c5e;
   color: white;
 }
 ```

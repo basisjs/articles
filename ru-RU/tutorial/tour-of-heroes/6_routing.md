@@ -82,9 +82,11 @@ module.exports = require('basis.app').create({
 
 `app/template/layout.tmpl`
 ```html
-<div>
-  <h1>Tour of heroes</h1>
-  <!--{content}-->
+<div class="wrapper">
+    <div>
+    <h1>Tour of heroes</h1>
+    <!--{content}-->
+    </div>
 </div>
 ```
 
@@ -203,11 +205,11 @@ module.exports = new Node({
     template: resource('./templates/dashboard.tmpl'),
     childClass: {
         template: `
-            <a class="col-1-4">
-                <div class="module hero">
-                    <h4>{title}</h4>
-                </div>
-            </a>
+        <a class="col">
+            <div class="module hero">
+                <h4>{title}</h4>
+            </div>
+        </a>
         `,
         binding: {
             id: 'data:',
@@ -223,7 +225,6 @@ module.exports = new Node({
 <b:style src="./dashboard.css"/>
 
 <div>
-  <h3>Top Heroes</h3>
   <div class="grid grid-pad">
     <!--{childNodesHere}-->
   </div>
@@ -232,66 +233,50 @@ module.exports = new Node({
 
 `app/pages/dashboard/templates/dashboard.css`
 ```css
-[class*='col-'] {
-  float: left;
-  padding-right: 20px;
-  padding-bottom: 20px;
+.col {
+  box-sizing: border-box;
+  margin-top: 20px;
 }
-[class*='col-']:last-of-type {
-  padding-right: 0;
+
+.col:nth-child(odd) {
+  padding-right: 10px;
 }
+
+.col:nth-child(even) {
+  padding-left: 10px;
+}
+
 a {
   text-decoration: none;
 }
-*, *:after, *:before {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
+
 h3 {
-  text-align: center; margin-bottom: 0;
+  text-align: center;
+  margin-bottom: 0;
 }
+
 h4 {
   position: relative;
 }
 .grid {
   margin: 0;
 }
-.col-1-4 {
-  width: 25%;
+.col {
+  width: 50%;
+  display: inline-block;
 }
 .module {
   padding: 20px;
   text-align: center;
   color: #eee;
-  max-height: 120px;
-  min-width: 120px;
-  background-color: #607D8B;
+  background-color: #da9b85;
+  font-weight: bold;
   border-radius: 2px;
 }
 .module:hover {
-  background-color: #EEE;
+  background-color: #c37c5e;
   cursor: pointer;
-  color: #607d8b;
-}
-.grid-pad {
-  padding: 10px 0;
-}
-.grid-pad > [class*='col-']:last-of-type {
-  padding-right: 20px;
-}
-@media (max-width: 600px) {
-  .module {
-    font-size: 10px;
-    max-height: 75px; }
-}
-@media (max-width: 1024px) {
-  .grid {
-    margin: 0;
-  }
-  .module {
-    min-width: 60px;
-  }
+  color: white;
 }
 ```
 
@@ -354,23 +339,31 @@ module.exports = new Node({
 
 `app/components/navigation/templates/navigation.css`
 ```css
+nav {
+  text-align: center;
+}
+
 nav a {
   padding: 5px 10px;
   text-decoration: none;
   margin-top: 10px;
   display: inline-block;
-  background-color: #eee;
+  margin: 0 10px;
+  background-color: #da9b85;
+  color: white;
   border-radius: 4px;
 }
-nav a:visited, a:link {
-  color: #607D8B;
+nav a:visited {
+  color: #c37c5e;
+  box-shadow: 1px 1px 4px 0px #000;
 }
 nav a:hover {
-  color: #039be5;
-  background-color: #CFD8DC;
+  color: wthie;
+  background-color: #da9b85;
 }
 a.selected {
-  color: #039be5;
+  color: white;
+  background: #c37c5e;
 }
 ```
 
@@ -397,10 +390,12 @@ var Navigation = require('./app/components/navigation/index');
 ```html
  <b:style src="./layout.css"/>
 
-<div>
-  <h1>Tour of heroes</h1>
-  <!--{navigation}-->
-  <!--{content}-->
+<div class="wrapper">
+    <div>
+        <h1>Tour of heroes</h1>
+        <!--{navigation}-->
+        <!--{content}-->
+    </div>
 </div>
 ```
 

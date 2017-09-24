@@ -188,7 +188,7 @@ module.exports = new Node({
     template: resource('./templates/dashboard.tmpl'),
     childClass: {
         template: `
-            <a class="col-1-4">
+            <a class="col">
                 <div class="module hero">
                     <h4>{title}</h4>
                 </div>
@@ -236,13 +236,30 @@ module.exports = new Node.subclass({
 ```
 
 `app/components/search-input/templates/search-input.tmpl`
+```html
+<b:style src="./search-input.css"/>
+<b:isolate/>
 
-```js
-<div>
-  <label for="search">
-    Search: <input type="text" id="search" event-input="input">
-  </label>
+<div class="search-wrapper">
+  <label for="search">Search: </label>
+  <input type="text" id="search" event-input="input">
 </div>
+```
+
+
+`app/components/search-input/templates/search-input.css`
+```css
+.search-wrapper {
+  text-align: center;
+  margin: 10px 0;
+}
+
+label {
+  vertical-align: middle;
+}
+input {
+  vertical-align: middle;
+}
 ```
 
 Обратите внимание что мы предоставили шаблону `event-input="input"`, хотя не написали никаких обработчиков на это действие в js файле компонента.
@@ -277,16 +294,18 @@ module.exports = new Node({
     selection: true,
     dataSource: Heroes.all
 });
-
 ```
 
 `app/components/hero-list/templates/hero-list.tmpl`
 ```html
 <b:style src="./hero-list.css"/>
+<b:isolate/>
 
 <div>
   <!--{searchInput}-->
-  <ul class="heroes"></ul>
+  <ul class="heroes">
+    <!--{childNodesHere}-->
+  </ul>
 </div>
 ```
 
