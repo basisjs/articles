@@ -1,4 +1,4 @@
- # Lists
+# Lists
 
 В этой части мы научимся как правильно выводить списки.
 
@@ -110,22 +110,22 @@ li.selected:hover {
   color: white;
 }
 li:hover {
-	color: white;
-	background-color: #c37c5e;
-	left: .1em;
+  color: white;
+  background-color: #c37c5e;
+  left: .1em;
 }
 .text {
-	position: relative;
-	top: -3px;
+  position: relative;
+  top: -3px;
 }
 .badge {
-	font-size: small;
-	color: white;
-	text-align: center;
-	background-color: #587e74;
-	line-height: 1em;
-	position: relative;
-	margin-right: .8em;
+  font-size: small;
+  color: white;
+  text-align: center;
+  background-color: #587e74;
+  line-height: 1em;
+  position: relative;
+  margin-right: .8em;
   border-radius: 4px 0 0 4px;
   width:25px;
   vertical-align: middle;

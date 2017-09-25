@@ -64,12 +64,12 @@ API для получения данных по героям - https://api.opend
 Ответ сервера:
 ```json
 {
-  attack_type: "Melee",
-  id: 1,
-  legs: 2,
-  localized_name: "Anti-Mage",
-  name: "npc_dota_hero_antimage",
-  primary_attr: "agi",
+  "attack_type": "Melee",
+  "id": 1,
+  "legs": 2,
+  "localized_name": "Anti-Mage",
+  "name": "npc_dota_hero_antimage",
+  "primary_attr": "agi",
 }
 ```
 
@@ -90,7 +90,7 @@ var Hero = entity.createType('Hero', {
 
 На этот случай у сущностей есть метод `extendReader`, который позволяет приводить приходящие данные к нужному виду.
 
-``app/type/hero.js`:`
+`app/type/hero.js`:
 ```js
 var entity = require('basis.entity');
 
@@ -187,13 +187,7 @@ var Heroes = require('../../type').Hero;
 module.exports = new Node({
     template: resource('./templates/dashboard.tmpl'),
     childClass: {
-        template: `
-            <a class="col">
-                <div class="module hero">
-                    <h4>{title}</h4>
-                </div>
-            </a>
-        `,
+        template: resource('./templates/dashboard-item.tmpl'),
         binding: {
             id: 'data:',
             title: 'data:',
@@ -474,13 +468,7 @@ module.exports = new Node({
         searchInput: searchInput,
     },
     childClass: {
-        template: `
-            <a class="col-1-4">
-                <div class="module hero">
-                    <h4>{title}</h4>
-                </div>
-            </a>
-        `,
+        template: resource('./templates/dashboard-item.tmpl'),
         binding: {
             id: 'data:',
             title: 'data:',
