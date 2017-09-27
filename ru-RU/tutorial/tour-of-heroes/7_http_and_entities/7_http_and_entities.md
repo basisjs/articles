@@ -10,7 +10,7 @@
 ```js
 var entity = require('basis.entity');
 
-var Hero = entity.createType({
+var hero = entity.createType({
   name: 'Hero',
   fields: {
     // описание полей
@@ -28,12 +28,12 @@ var Hero = entity.createType({
 ```js
 var entity = require('basis.entity');
 
-var Hero = entity.createType('Hero', {
+var hero = entity.createType('Hero', {
     id: entity.IntId,
     title: String
 });
 
-module.exports = Hero;
+module.exports = hero;
 ```
 
 В приложении как правило много различных моделей, поэтому создадим корневой файл `type.js` хранящий ссылки на все наши модели:
@@ -41,14 +41,14 @@ module.exports = Hero;
 `app/type.js`
 ```js
 module.exports = {
-    Hero: require('./type/hero')
+    hero: require('./type/hero')
 };
 ```
 
 В результате в `Hero` будет хранится функция, которая по сути является фабрикой экземпляров, и чтобы в дальнейшем заполнить нашу сущность данными, можно вызывать эту функцию с передачей ей объекта со свойствами согласно объявленной сущности. Но таким образом сущности заполняются редко:
 
 ```js
-Hero({ id: 1, title: 'Your title' });
+hero({ id: 1, title: 'Your title' });
 ```
 
 Для ознакомления со всеми возможностями и свойствами `Entity` рекомендуем прочесть соответствующий раздел документации после прохождения этой главы. ([ссылка](https://github.com/basisjs/articles/blob/master/ru-RU/basis.entity.md))
@@ -77,7 +77,7 @@ API для получения данных по героям - https://api.opend
 
 `app/type/hero.js`:
 ```js
-var Hero = entity.createType('Hero', {
+var hero = entity.createType('Hero', {
     id: entity.IntId,
     title: String,
     name: String,
@@ -94,7 +94,7 @@ var Hero = entity.createType('Hero', {
 ```js
 var entity = require('basis.entity');
 
-var Hero = entity.createType('Hero', {
+var hero = entity.createType('Hero', {
     id: entity.IntId,
     title: String,
     name: String,
@@ -102,11 +102,11 @@ var Hero = entity.createType('Hero', {
     attack_type: String
 });
 
-Hero.extendReader(function(data) {
+hero.extendReader(function(data) {
     data.title = data.localized_name;
 });
 
-module.exports = Hero;
+module.exports = hero;
 ```
 
 Отлично, с `title` разобрались. Теперь осталось понять, как эти данные правильно запросить и передать в представление.
@@ -141,7 +141,7 @@ module.exports = Hero;
 var entity = require('basis.entity');
 var action = require('basis.net.action');
 
-var Hero = entity.createType('Hero', {
+var hero = entity.createType('Hero', {
     id: entity.IntId,
     title: String,
     name: String,
@@ -149,18 +149,18 @@ var Hero = entity.createType('Hero', {
     attack_type: String
 });
 
-Hero.all.setSyncAction(action.create({
+hero.all.setSyncAction(action.create({
     url: 'https://api.opendota.com/api/heroes',
     success: function(data) {
-        this.setAndDestroyRemoved(Hero.readList(data));
+        this.setAndDestroyRemoved(hero.readList(data));
     }
 }));
 
-Hero.extendReader(function(data) {
+hero.extendReader(function(data) {
     data.title = data.localized_name;
 });
 
-module.exports = Hero;
+module.exports = hero;
 ```
 
 Как видно из данного примера `action.create` принимает на вход конфиг с `url` адресом для синхронизации, а так же свойство `success` в котором содержится функция которая выполнится, если действия завершится успешно.
@@ -175,14 +175,14 @@ module.exports = Hero;
 * `abort()` - вызывается при отмене запроса;
 * `complete()` - вызывается при завершении запроса независимо от его статуса.
 
-Здесь `Hero.readList` это метод которые преобразует полученные данные в пригодные для `basis.js` сущности, `setAndDestroyRemoved` запишет эти данные в набор нашей сущности `Hero` и обеспечит их разрушение если они будут удалены.
+Здесь `hero.readList` это метод которые преобразует полученные данные в пригодные для `basis.js` сущности, `setAndDestroyRemoved` запишет эти данные в набор нашей сущности `Hero` и обеспечит их разрушение если они будут удалены.
 
-Теперь в `hero-list` и `dashboard` нужно немного поменять код привязки `dataSource` на `Heroes.all`, чтобы указать на набор данных, а также выставить нодам `active: true`, чтобы источник данных синхронизировал свои данные сразу при создании компонентов:
+Теперь в `hero-list` и `dashboard` нужно немного поменять код привязки `dataSource` на `heroes.all`, чтобы указать на набор данных, а также выставить нодам `active: true`, чтобы источник данных синхронизировал свои данные сразу при создании компонентов:
 
 `app/pages/dashboard/index.js`
 ```js
 var Node = require('basis.ui').Node;
-var Heroes = require('../../type').Hero;
+var heroes = require('../../type').hero;
 
 module.exports = new Node({
     template: resource('./templates/dashboard.tmpl'),
@@ -191,24 +191,24 @@ module.exports = new Node({
         binding: {
             id: 'data:',
             title: 'data:',
-        },
+        }
     },
-    dataSource: Heroes.all
+    dataSource: heroes.all
 });
 ```
 
 `app/components/hero-list/index.js`
 ```js
 var Node = require('basis.ui').Node;
-var Hero = require('../hero/index');
-var Heroes = require('../../type').Hero;
+var hero = require('../hero/index');
+var heroes = require('../../type').hero;
 
 module.exports = new Node({
     template: resource('./templates/hero-list.tmpl'),
     active: true,
-    childClass: Hero,
+    childClass: hero,
     selection: true,
-    dataSource: Heroes.all
+    dataSource: heroes.all
 });
 ```
 
@@ -266,8 +266,8 @@ input {
 `app/components/hero-list/index.js`
 ```js
 var Node = require('basis.ui').Node;
-var Hero = require('../hero/index');
-var Heroes = require('../../type').Hero;
+var hero = require('../hero/index');
+var heroes = require('../../type').hero;
 var SearchInput = require('../../components/search-input/index');
 
 var searchInput = new SearchInput({
@@ -284,9 +284,9 @@ module.exports = new Node({
         searchInput: searchInput,
     },
     active: true,
-    childClass: Hero,
+    childClass: hero,
     selection: true,
-    dataSource: Heroes.all
+    dataSource: heroes.all
 });
 ```
 
@@ -325,9 +325,9 @@ module.exports = new Node({
         searchInput: searchInput,
     },
     active: true,
-    childClass: Hero,
+    childClass: hero,
     selection: true,
-    dataSource: Heroes.all
+    dataSource: heroes.all
 });
 ```
 
@@ -343,8 +343,8 @@ module.exports = new Node({
 `app/components/hero-list/index.js`:
 ```js
 var Node = require('basis.ui').Node;
-var Hero = require('../hero/index');
-var Heroes = require('../../type').Hero;
+var hero = require('../hero/index');
+var heroes = require('../../type').hero;
 var SearchInput = require('../../components/search-input/index');
 var Value = require('basis.data').Value;
 var Slice = require('basis.data.dataset').Slice;
@@ -359,7 +359,7 @@ var searchInput = new SearchInput({
 });
 
 var filtered = new Filter({
-    source: Heroes.all,
+    source: heroes.all,
     rule: function(item) {
         // ... логика фильтрации
     }
@@ -372,7 +372,7 @@ module.exports = new Node({
         searchInput: searchInput,
     },
     active: true,
-    childClass: Hero,
+    childClass: hero,
     selection: true,
     dataSource: top
 });
@@ -382,13 +382,17 @@ module.exports = new Node({
 
 Для этого мы используем встроенный в `basis.js` класс [Value](https://github.com/basisjs/articles/blob/master/ru-RU/basis.data.Value.md#value), который позволяет добавлять обработчики через метод `link`, которые срабатывают в случае изменение значения, хранящегося в `Value`. Метод `link` первым параметром принимает значение, которые будет использоваться как `this` в случае его передачи, а вторым параметром функцию слушателя. Если первый параметр `null`, то значение `this` будет браться из замыкания.
 
+Дополнительно зададим нашим компонентам правила сортировки через свойство `sorting`, задав ему значение `data.id`, что приведет к сортировке `childNode` по `id`.
+
+Такую же сортировку нужно прописать и в `Slice`, чтобы не получить случайные 10 значений.
+
 Имея всё это, мы можем реализовать до конца нашу фильтрацию:
 
 `app/components/hero-list/index.js`:
 ```js
 var Node = require('basis.ui').Node;
-var Hero = require('../hero/index');
-var Heroes = require('../../type').Hero;
+var hero = require('../hero/index');
+var heroes = require('../../type').hero;
 var SearchInput = require('../../components/search-input/index');
 var Value = require('basis.data').Value;
 var Slice = require('basis.data.dataset').Slice;
@@ -405,12 +409,12 @@ var searchInput = new SearchInput({
 });
 
 var filtered = new Filter({
-    source: Heroes.all,
+    source: heroes.all,
     rule: function(item) {
         return item.data.title.toLowerCase().indexOf(searchedHero.value.toLowerCase()) !== -1;
     }
 });
-var top = new Slice({ source: filtered, limit: 10 });
+var top = new Slice({ source: filtered, limit: 10, sorting: 'data.id' });
 
 searchedHero.link(null, function(value) {
     filtered.applyRule();
@@ -422,8 +426,9 @@ module.exports = new Node({
         searchInput: searchInput,
     },
     active: true,
-    childClass: Hero,
+    childClass: hero,
     selection: true,
+	sorting: 'data.id',
     dataSource: top
 });
 ```
@@ -437,7 +442,7 @@ var DataObject = require('basis.data').Object;
 var Value = require('basis.data').Value;
 var Slice = require('basis.data.dataset').Slice;
 var Filter = require('basis.data.dataset').Filter;
-var Heroes = require('../../type').Hero;
+var heroes = require('../../type').hero;
 var SearchInput = require('../../components/search-input/index');
 
 var searchedHero = new Value({ value: '' });
@@ -451,7 +456,7 @@ var searchInput = new SearchInput({
 });
 
 var filtered = new Filter({
-    source: Heroes.all,
+    source: heroes.all,
     rule: function(item) {
         return item.data.title.toLowerCase().indexOf(searchedHero.value.toLowerCase()) !== -1;
     }
@@ -475,6 +480,7 @@ module.exports = new Node({
         },
     },
     active: true,
+	sorting: 'data.id',
     dataSource: top
 });
 ```

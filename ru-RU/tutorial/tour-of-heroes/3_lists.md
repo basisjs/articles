@@ -11,7 +11,7 @@
 ```js
 var Node = require('basis.ui').Node;
 
-var HeroDetailsNode = new Node({
+var heroDetailsNode = new Node({
     template: resource('./templates/hero-details.tmpl'),
     data: {
         id: 1,
@@ -33,7 +33,7 @@ var HeroDetailsNode = new Node({
     }
 });
 
-module.exports = HeroDetailsNode;
+module.exports = heroDetailsNode;
 ```
 
 `app/components/hero-details/templates/hero-details.tmpl`:
@@ -86,7 +86,7 @@ module.exports = Node.subclass({
 <b:isolate/>
 
 <li>
-    <span class="badge">{id}</span> <span class="title">{title}</span>
+  <span class="badge">{id}</span> <span class="title">{title}</span>
 </li>
 ```
 
@@ -158,14 +158,14 @@ li:hover {
 `app.js`:
 ```js
 var Node = require('basis.ui').Node;
-var Hero = require('./app/components/hero/index');
+var hero = require('./app/components/hero/index');
 
 module.exports = require('basis.app').create({
     title: 'Basis tour of heroes',
     init: function () {
         return new Node({
             template: resource('./app/template/layout.tmpl'),
-            childClass: Hero,
+            childClass: hero,
             childNodes: [
                 { id: 1, title: 'Headcrab' },
                 { id: 2, title: 'Magnetto' },

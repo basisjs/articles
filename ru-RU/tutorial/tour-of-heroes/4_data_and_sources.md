@@ -9,12 +9,12 @@
 ```js
 action: {
     setHeroName: function(e) {
-      this.update({
-        hero: {
-          id: this.data.hero.id,
-          name: e.sender.value
-        }
-      });
+        this.update({
+            hero: {
+                id: this.data.hero.id,
+                name: e.sender.value
+            }
+        });
   }
 }
 ```
@@ -79,7 +79,7 @@ SomeNodeOrDataObject.addHandler({
 `app.js`:
 ```js
 var Node = require('basis.ui').Node;
-var Hero = require('./app/components/hero/index');
+var hero = require('./app/components/hero/index');
 var DataObject = require('basis.data').Object;
 var Dataset = require('basis.data').Dataset;
 
@@ -108,7 +108,7 @@ module.exports = require('basis.app').create({
     init: function () {
         return new Node({
             template: resource('./app/template/layout.tmpl'),
-            childClass: Hero,
+            childClass: hero,
             dataSource: dataset
         });
     }

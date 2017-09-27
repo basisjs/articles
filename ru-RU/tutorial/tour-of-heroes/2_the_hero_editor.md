@@ -12,13 +12,13 @@
 Для начала опишем шаблон куда будем выводить наши данные в файле `layout.tmpl`:
 ```html
 <div>
-    <h1>{title}</h1>
-    <h2>{name} is a hero!</h2>
-    <div><label>Id: </label>{id}</div>
-    <div>
-        <label>Name: </label>
-        <input value="{name}" placeholder="Enter name">
-    </div>
+  <h1>{title}</h1>
+  <h2>{name} is a hero!</h2>
+  <div><label>Id: </label>{id}</div>
+  <div>
+    <label>Name: </label>
+    <input value="{name}" placeholder="Enter name">
+  </div>
 </div>
 ```
 
@@ -31,25 +31,25 @@
 var Node = require('basis.ui').Node;
 
 module.exports = require('basis.app').create({
-  title: 'Basisjs tour of heroes',
+    title: 'Basisjs tour of heroes',
 
-  init: function() {
-    return new Node({
-      template: resource('./app/template/layout.tmpl'),
-      data: {
-        title: 'Basis tour of heroes',
-        hero: {
-            id: 1,
-            name: 'Superhero'
-        }
-      },
-      binding: {
-          id: 'data:hero.id',
-          name: 'data:hero.name',
-          title: 'data:'
-      }
-    });
-  }
+    init: function() {
+        return new Node({
+            template: resource('./app/template/layout.tmpl'),
+            data: {
+                title: 'Basis tour of heroes',
+                hero: {
+                    id: 1,
+                    name: 'Superhero'
+                }
+            },
+            binding: {
+                id: 'data:hero.id',
+                name: 'data:hero.name',
+                title: 'data:'
+            }
+        });
+    }
 });
 ```
 
@@ -96,8 +96,8 @@ event-typeEvent="eventHandlerName"
   <h2>{name} is a hero!</h2>
   <div><label>Id: </label>{id}</div>
   <div>
-      <label>Name: </label>
-      <input value="{name}" event-input="setHeroName" placeholder="Enter name">
+    <label>Name: </label>
+    <input value="{name}" event-input="setHeroName" placeholder="Enter name">
   </div>
 </div>
 ```

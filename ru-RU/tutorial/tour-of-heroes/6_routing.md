@@ -14,11 +14,11 @@
 
 `/app/pages/index.js`
 ```js
-var Heroes = require('./heroes/index');
+var heroes = require('./heroes/index');
 
 module.exports = {
-    '': Heroes,
-    'heroes': Heroes
+    '': heroes,
+    'heroes': heroes
 }
 ```
 
@@ -33,20 +33,20 @@ module.exports = {
 `app/pages/heroes/index.js`
 ```js
 var Node = require('basis.ui').Node;
-var List = require('../../components/hero-list/index');
-var Details = require('../../components/hero-details/index');
+var list = require('../../components/hero-list/index');
+var details = require('../../components/hero-details/index');
 
-List.selection.addHandler({
+list.selection.addHandler({
     itemsChanged: function(sender) {
-        Details.setDelegate(sender.pick());
+        details.setDelegate(sender.pick());
     }
 });
 
 module.exports = new Node({
     template: resource('./templates/heroes.tmpl'),
     binding: {
-        list: List,
-        details: Details
+        list: list,
+        details: details
     }
 });
 ```
@@ -83,10 +83,10 @@ module.exports = require('basis.app').create({
 `app/template/layout.tmpl`
 ```html
 <div class="wrapper">
-    <div>
+  <div>
     <h1>Tour of heroes</h1>
     <!--{content}-->
-    </div>
+  </div>
 </div>
 ```
 
@@ -137,7 +137,7 @@ module.exports = require('basis.app').create({
             },
             satellite: {
                 content: page
-            },
+            }
         });
     }
 });
@@ -182,12 +182,12 @@ module.exports = heroesDataset;
 `app/components/hero-list/index.js`
 ```js
 var Node = require('basis.ui').Node;
-var Hero = require('../hero/index');
+var hero = require('../hero/index');
 var dataset = require('../../mockData/heroes');
 
 module.exports = new Node({
     template: resource('./templates/hero-list.tmpl'),
-    childClass: Hero,
+    childClass: hero,
     selection: true,
     dataSource: dataset
 });
@@ -230,7 +230,7 @@ module.exports = new Node({
 ```html
 <a class="col">
   <div class="module hero">
-      <h4>{title}</h4>
+    <h4>{title}</h4>
   </div>
 </a>
 ```
@@ -288,13 +288,13 @@ h4 {
 
 `app/pages/index.js`
 ```js
-var Dashboard = require('./dashboard/index');
-var Heroes = require('./heroes/index');
+var dashboard = require('./dashboard/index');
+var heroes = require('./heroes/index');
 
 module.exports = {
-    '': Heroes,
-    'heroes': Heroes,
-    'dashboard': Dashboard
+    '': heroes,
+    'heroes': heroes,
+    'dashboard': dashboard
 }
 ```
 
@@ -313,7 +313,7 @@ module.exports = new Node({
     template: resource('./templates/navigation.tmpl'),
     childClass: {
         template: '<a href="{link}" class="{selected}" event-click="navigate">{title}</a>',
-        selected: currentPage.compute((node, page) => {
+        selected: currentPage.compute(function(node, page) {
             return node.link == page
         }),
         binding: {
@@ -377,14 +377,14 @@ a.selected {
 ```js
 // ...
 var pages = require('./app/pages/index');
-var Navigation = require('./app/components/navigation/index');
+var navigation = require('./app/components/navigation/index');
 // ...
     binding: {
         navigation: 'satellite:',
         content: 'satellite:'
     },
     satellite: {
-        navigation: Navigation,
+        navigation: navigation,
         content: page
     },
 // ...
@@ -395,11 +395,11 @@ var Navigation = require('./app/components/navigation/index');
  <b:style src="./layout.css"/>
 
 <div class="wrapper">
-    <div>
-        <h1>Tour of heroes</h1>
-        <!--{navigation}-->
-        <!--{content}-->
-    </div>
+  <div>
+    <h1>Tour of heroes</h1>
+    <!--{navigation}-->
+    <!--{content}-->
+  </div>
 </div>
 ```
 

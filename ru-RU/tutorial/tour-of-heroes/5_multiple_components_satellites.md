@@ -15,7 +15,7 @@
 `/app/components/hero-list/index.js`:
 ```js
 var Node = require('basis.ui').Node;
-var Hero = require('../hero/index');
+var hero = require('../hero/index');
 var DataObject = require('basis.data').Object;
 var Dataset = require('basis.data').Dataset;
 
@@ -41,7 +41,7 @@ var dataset = new Dataset({
 
 module.exports = new Node({
     template: resource('./templates/hero-list.tmpl'),
-    childClass: Hero,
+    childClass: hero,
     dataSource: dataset
 });
 ```
@@ -68,7 +68,7 @@ module.exports = new Node({
 ```js
 var Node = require('basis.ui').Node;
 
-var HeroDetailsNode = new Node({
+var heroDetailsNode = new Node({
     template: resource('./templates/hero-details.tmpl'),
     binding: {
         id: 'data:',
@@ -84,7 +84,7 @@ var HeroDetailsNode = new Node({
     }
 });
 
-module.exports = HeroDetailsNode;
+module.exports = heroDetailsNode;
 ```
 
 Теперь, когда список лежит отдельным компонентом и компонент редактирования имеет сходную с остальным проектом структуру самое время изменить наш `app.js` и использовать сателлиты.
@@ -95,8 +95,8 @@ module.exports = HeroDetailsNode;
 
 `app.js`:
 ```js
-var List = require('./app/components/hero-list/index');
-var Details = require('./app/components/hero-details/index');
+var list = require('./app/components/hero-list/index');
+var details = require('./app/components/hero-details/index');
 
 // ...
 module.exports = require('basis.app').create({
@@ -105,8 +105,8 @@ module.exports = require('basis.app').create({
         return new Node({
             // ...
             satellite: {
-                list: List,
-                details: Details
+                list: list,
+                details: details
             },
             // ...
         });
@@ -129,8 +129,8 @@ module.exports = require('basis.app').create({
                 details: 'satellite:details',
             },
             satellite: {
-                list: List,
-                details: Details
+                list: list,
+                details: details
             },
             // ...
         });
@@ -143,8 +143,8 @@ module.exports = require('basis.app').create({
 ```js
 // ...
 binding: {
-  list: 'satellite:',
-  details: 'satellite:',
+    list: 'satellite:',
+    details: 'satellite:',
 },
 // ...
 ```
@@ -156,11 +156,11 @@ binding: {
 <b:style src="./layout.css"/>
 
 <div class="wrapper">
-    <div>
-        <h1>Tour of heroes</h1>
-        <!--{list}-->
-        <!--{details}-->
-    </div>
+  <div>
+    <h1>Tour of heroes</h1>
+      <!--{list}-->
+      <!--{details}-->
+  </div>
 </div>
 ```
 
@@ -204,8 +204,8 @@ h1 {
 `app.js`
 ```js
 var Node = require('basis.ui').Node;
-var List = require('./app/components/hero-list/index');
-var Details = require('./app/components/hero-details/index');
+var list = require('./app/components/hero-list/index');
+var details = require('./app/components/hero-details/index');
 
 module.exports = require('basis.app').create({
     title: 'Basis tour of heroes',
@@ -213,8 +213,8 @@ module.exports = require('basis.app').create({
         return new Node({
             template: resource('./app/template/layout.tmpl'),
             binding: {
-                list: List,
-                details: Details
+                list: list,
+                details: details
             }
         });
     }
@@ -263,7 +263,7 @@ console.log(bar.data.prop); // > 123
 ```js
 module.exports = new Node({
     template: resource('./templates/hero-list.tmpl'),
-    childClass: Hero,
+    childClass: hero,
     selection: true,
     dataSource: dataset
 });
@@ -307,9 +307,26 @@ ChildClass `Hero-list` является `Hero`. Т.к. они имеют общ�
 
 `app.js`:
 ```js
-List.selection.addHandler({
-    itemsChanged: function(sender){
-        Details.setDelegate(sender.pick());
+var Node = require('basis.ui').Node;
+var list = require('./app/components/hero-list/index');
+var details = require('./app/components/hero-details/index');
+
+list.selection.addHandler({
+    itemsChanged: function(sender) {
+        details.setDelegate(sender.pick());
+    }
+});
+
+module.exports = require('basis.app').create({
+    title: 'Basis tour of heroes',
+    init: function () {
+        return new Node({
+            template: resource('./app/template/layout.tmpl'),
+            binding: {
+                list: list,
+                details: details
+            }
+        });
     }
 });
 ```
