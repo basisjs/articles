@@ -461,7 +461,7 @@ var filtered = new Filter({
         return item.data.title.toLowerCase().indexOf(searchedHero.value.toLowerCase()) !== -1;
     }
 });
-var top = new Slice({ source: filtered, limit: 4 });
+var top = new Slice({ source: filtered, limit: 4, sorting: 'data.id' });
 
 searchedHero.link(null, function(value) {
     filtered.applyRule();
