@@ -10,20 +10,18 @@
 
 Для начала нам понадобятся несколько инструментов:
 
-> [Node](https://nodejs.org/en/) - серверная реализация языка программирования JavaScript, основанная на движке V8.
-
-> [Npm](https://www.npmjs.com/) - пакетный менеджер для JavaScript
-
-> [Basis-tools](https://github.com/basisjs/basisjs-tools) - это набор инструментов для разработки на `basis.js` (для установки нужно набрать в консоли `npm install -g basisjs-tools`)
+- [node](https://nodejs.org/en/) - серверная реализация языка программирования JavaScript, основанная на движке V8.
+- [npm](https://www.npmjs.com/) - пакетный менеджер для JavaScript
+- [basis-tools](https://github.com/basisjs/basisjs-tools) - это набор инструментов для разработки на `basis.js` (для установки нужно набрать в консоли `npm install -g basisjs-tools`)
 
 После установки инструментов в консоли наберите:
 
-`basis create app tour-of-heroes && cd tour-of-heroes`
+> basis create app tour-of-heroes && cd tour-of-heroes
 
 Это команда генерирует базовый шаблон проекта на `basis.js` с которого мы начнем разрабатывать наше приложение.
 Теперь пора запустить наш сервер:
 
-`basis server`
+> basis server
 
 Теперь перейдите в браузер по адресу [http://localhost:8001/](http://localhost:8001/) и увидите, что наше приложение работает!
 
