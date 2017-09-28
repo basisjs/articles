@@ -143,4 +143,7 @@ setTimeout(function() {
 * [DataObject](https://github.com/basisjs/articles/blob/master/ru-RU/basis.data.Object.md)
 * [DataSet](https://github.com/basisjs/articles/blob/master/ru-RU/basis.data.datasets.md)
 
-Полный пример урока можете скачать по [ссылке](https://github.com/prostoandrei/basis-tour-of-heroes/tree/part4)
+В следующем уроке мы узнаем как создавать представления состоящие из нескольких компонент.
+
+- [Исходный код урока](https://github.com/prostoandrei/basis-tour-of-heroes/tree/part4)
+- Следующий урок: [Сателлиты: вложенные компоненты и их взаимодействие](5_multiple_components_satellites.md)

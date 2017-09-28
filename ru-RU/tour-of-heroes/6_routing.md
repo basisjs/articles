@@ -405,4 +405,7 @@ var navigation = require('./app/components/navigation/index');
 
 Теперь у нас есть два полноценных роута с нашими компонентами. Можете считать, что вы написали первое SPA на `basis.js`!
 
-В следующей главе мы поговорим о том, как работать с HTTP и синхронизировать наши данные с сервером.
+В следующей главе мы поговорим о том, как синхронизировать наши данные с сервером.
+
+- [Исходный код урока](https://github.com/prostoandrei/basis-tour-of-heroes/tree/part6)
+- Следующий урок: [Http and Entities](7_http_and_entities.md)

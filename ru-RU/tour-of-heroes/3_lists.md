@@ -236,9 +236,7 @@ BODY
 
 Вот теперь наш список героев готов!
 
-Полный пример урока можете скачать по [ссылке](https://github.com/prostoandrei/basis-tour-of-heroes/tree/part3)
-
 В следующем уроке мы научимся более эффективно разбивать и располагать компоненты и обсудим важную тему сателлитов.
 
-
-
+- [Исходный код урока](https://github.com/prostoandrei/basis-tour-of-heroes/tree/part3)
+- Следующий урок: [Данные и их источники](4_data_and_sources.md)

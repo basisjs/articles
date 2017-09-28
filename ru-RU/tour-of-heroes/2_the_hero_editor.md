@@ -147,4 +147,5 @@ module.exports = require('basis.app').create({
 
 В итоге получаем живое редактирование героя прямо на странице!
 
-Полный пример урока можете скачать по [ссылке](https://github.com/prostoandrei/basis-tour-of-heroes/tree/part2)
+- [Исходный код урока](https://github.com/prostoandrei/basis-tour-of-heroes/tree/part2)
+- Следующий урок: [Списки и дочерние элементы](3_lists.md)
