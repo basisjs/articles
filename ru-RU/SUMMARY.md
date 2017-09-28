@@ -61,3 +61,4 @@
 * [Руководство](tutorial/index.md)
   * [Часть 1. Начало работы, представления, модули, инструменты](tutorial/part1/index.md)
   * [Часть 2. Работа с данными: модели, наборы и значения](tutorial/part2/index.md)
+* [Туториал: Tour of heroes](tour-of-heroes/index.md)

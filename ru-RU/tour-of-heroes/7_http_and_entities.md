@@ -131,7 +131,7 @@ module.exports = hero;
 
 `Схема переключения состояний:`
 
-![states](sheme.png)
+![states](img/sheme.png)
 
 Но давайте лучше разберем все это на практике!
 

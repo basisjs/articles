@@ -71,3 +71,4 @@
     * [build](ru-RU/basisjs-tools/build.md)
 * [Руководство](ru-RU/tutorial/index.md)
     * [Часть 1. Начало работы, представления, модули, инструменты](ru-RU/tutorial/part1/index.md)
+* [Туториал: Tour of heroes](ru-RU/tour-of-heroes/index.md)
